@@ -39,11 +39,12 @@
 * User can see their own profile and the profiles of others and edit with interests 
 * User can create a new event/schedule it
 * User can see announcements/notifications from clubhouse 
+* User can logout/deactivate their account
 
 **Optional Nice-to-have Stories**
 
 * [fill in your required user stories here]
-* ...
+* User can connect their account to other social medias: Twitter, Instagram, etc. 
 
 ### 2. Screen Archetypes
 
@@ -63,7 +64,11 @@
 * Notifications Screen 
    * User can see announcements/notifications from clubhouse 
 * Profile Screen 
-   * User can see their own profile and the profiles of others and edit with interests 
+   * User can see their own profile and the profiles of others 
+* Interests Screen 
+   * User can toggle which interests they have 
+* Account Screen
+   * User can logout/deactivate their account
 
 ### 3. Navigation
 
@@ -90,10 +95,10 @@
    * Notifications Screen
    * Profile Screen 
 * Profile Screen
-   * Search Screen
-   * Event Screen 
-   * Notifications Screen
-   * Profile Screen 
+   * Account Screen
+   * Interests Screen
+   * What's New/ FAQ/ Community Guidelines/Terms of Service/Privacy policy 
+
 
 ## Wireframes
 [Add picture of your hand sketched wireframes in this section]
