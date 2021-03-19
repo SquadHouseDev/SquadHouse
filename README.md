@@ -30,7 +30,9 @@ Original App Design Project - README Template
 **Required Must-have Stories**
 
 * [fill in your required user stories here]
-* ...
+* User can create a new audio room with designated participants/groups of people.
+* User can invite/endorse people. 
+* User can sign up via phone number 
 
 **Optional Nice-to-have Stories**
 
