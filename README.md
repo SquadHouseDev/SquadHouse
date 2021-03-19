@@ -17,7 +17,7 @@ Original App Design Project - README Template
 [Evaluation of your app across the following attributes]
 - **Category:** Social/Audio
 - **Mobile:** Will be a purely mobile experience to allow users freedom of hearing/joining in on audio rooms on the fly.
-- **Story:** Allows user to share their opinions and have conversations with
+- **Story:** Allows user to share their opinions and have conversations with people in various fields/interests. 
 - **Market:** Anyone that wants to talk about current events or hear what professionals are conversing about in their respective fields. 
 - **Habit:** Users can open audio rooms at any point and invite people they want to converse with as they wish or make the room public for free entry/leave.
 - **Scope:** Rather narrow scope of audio rooms, similar even to podcasts/radio sessions but could branch out to some functionality similar to the 'live' features found commonly on platforms like Instagram, TikTok, so on so forth. 
