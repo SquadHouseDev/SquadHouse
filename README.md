@@ -102,6 +102,13 @@
 
 ## Wireframes
 [Add picture of your hand sketched wireframes in this section]
+
+* Home page 
+<img src="/docs/HomePage.png" width=600>
+* Event Details 
+<img src="/docs/NewEventDetailsPage.png" width=600>
+* New Event Page
+<img src="/docs/NewEventPage.png" width=600>
 * Profile Page
 <img src="/docs/ProfilePage.png" width=600>
 * Settings Page
