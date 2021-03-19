@@ -12,6 +12,7 @@ Original App Design Project - README Template
 ## Overview
 ### Description
 [Description of your app]
+'SquadHouse' is an audio-chat application designed to allow and facilitate conversations between individuals on the platform concerning any perceivable topic they wish to entertain.
 
 ### App Evaluation
 [Evaluation of your app across the following attributes]
