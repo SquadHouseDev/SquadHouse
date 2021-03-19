@@ -102,7 +102,14 @@
 
 ## Wireframes
 [Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
+* Profile Page
+<img src="/docs/ProfilePage.png" width=600>
+* Settings Page
+<img src="/docs/SettingsPage.png" width=600>
+* Interests Page
+<img src="/docs/InterestsSettings.png" width=600>
+* Account Settings Page
+<img src="/docs/AccountSettingsPage.png" width=600>
 
 ### [BONUS] Digital Wireframes & Mockups
 
