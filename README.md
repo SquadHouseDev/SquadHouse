@@ -38,6 +38,7 @@
 * User can see other people currently in the audio room they are with 
 * User can see their own profile and the profiles of others and edit with interests 
 * User can create a new event/schedule it
+* User can see announcements/notifications from clubhouse 
 
 **Optional Nice-to-have Stories**
 
@@ -59,6 +60,8 @@
    * User can create a new event/schedule it
 * Search Screen 
    * User can search up topics/interests/users.
+* Notifications Screen 
+   * User can see announcements/notifications from clubhouse 
 * Profile Screen 
    * User can see their own profile and the profiles of others and edit with interests 
 
@@ -75,12 +78,22 @@
 
 **Flow Navigation** (Screen to Screen)
 
-* [list first screen here]
-   * [list screen navigation here]
-   * ...
-* [list second screen here]
-   * [list screen navigation here]
-   * ...
+* Login Screen 
+   * Home
+   * Waiting Screen ?
+* Registration Screen
+   * Home 
+   * Waiting Screen ? 
+* Home Feed
+   * Search Screen
+   * Event Screen 
+   * Notifications Screen
+   * Profile Screen 
+* Profile Screen
+   * Search Screen
+   * Event Screen 
+   * Notifications Screen
+   * Profile Screen 
 
 ## Wireframes
 [Add picture of your hand sketched wireframes in this section]
