@@ -49,9 +49,6 @@
 * [list first screen here]
    * [list associated required story here]
    * ...
-* [list second screen here]
-   * [list associated required story here]
-   * ...
 * Login Screen
    * User can sign up via phone number. 
 * Home Screen
@@ -69,9 +66,12 @@
 
 **Tab Navigation** (Tab to Screen)
 
-* [fill out your first tab]
-* [fill out your second tab]
-* [fill out your third tab]
+* Home Feed
+* Search User/Interests/Groups
+* Invite Tab
+* Event Tab
+* Activity Tab
+* Profile Tab
 
 **Flow Navigation** (Screen to Screen)
 
