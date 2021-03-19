@@ -1,4 +1,3 @@
-Original App Design Project - README Template
 ===
 
 # SquadHouse/KekHouse/PepeHouse ??
@@ -32,7 +31,13 @@ Original App Design Project - README Template
 * [fill in your required user stories here]
 * User can create a new audio room with designated participants/groups of people.
 * User can invite/endorse people. 
-* User can sign up via phone number 
+* User can sign up via phone number.
+* User can search up topics/interests/users.
+* User can see currently open audio rooms of people they follow.
+* User can see audio rooms of other topics they might possibly be interested in.
+* User can see other people currently in the audio room they are with 
+* User can see their own profile and the profiles of others and edit with interests 
+* User can create a new event/schedule it
 
 **Optional Nice-to-have Stories**
 
@@ -47,6 +52,18 @@ Original App Design Project - README Template
 * [list second screen here]
    * [list associated required story here]
    * ...
+* Login Screen
+   * User can sign up via phone number. 
+* Home Screen
+   * User can create a new audio room with designated participants/groups of people. 
+   * User can see currently open audio rooms of people they follow.
+   * User can see audio rooms of other topics they might possibly be interested in.
+* New Event Screen/Page
+   * User can create a new event/schedule it
+* Search Screen 
+   * User can search up topics/interests/users.
+* Profile Screen 
+   * User can see their own profile and the profiles of others and edit with interests 
 
 ### 3. Navigation
 
