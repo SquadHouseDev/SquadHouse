@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>472</x>
+      <y>352</y>
+      <w>200</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>Activity
+--
+- actor: User
+- receiver: User
+- description: String
+- type: String
+- objectId: String
+- updatedAt: Datetime
+- createdAt: Datetime</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>152</x>
+      <y>712</y>
+      <w>472</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>Settings
+--
+- active: boolean
+- interests: HashMap&lt;String, List&lt;String&gt; &gt;
+# could be a url to the github wiki or w/e publicly available page maintained for app updates
+- releaseNotesUrl: String
+# link to github hosted FAQ
+- faqContactUsUrl: String
+- communityGuidelinesUrl: String
+- termsOfServiceUrl: String
+- privacyPolicyUrl: String
+- interests: List&lt;Interest&gt;
+- objectId: String
+- updatedAt: Datetime
+- createdAt: Datetime</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>152</x>
+      <y>352</y>
+      <w>232</w>
+      <h>304</h>
+    </coordinates>
+    <panel_attributes>User
+--
+- fullName: String
+- userName: String
+- password: String
+- phoneNumber: String
+- followerCount: Int
+- followingCount: Int
+- followers: List&lt;User&gt;
+- following: List&lt;User&gt;
+- email: String
+- about: String
+- twitterUrl: String
+- instagramUrl: String
+- nomination: Activity
+- settings: Settings
+- incomingActivities: List&lt;Activity&gt;
+- outgoingActivities: List&lt;Activity&gt;
+- calendar: Calendar
+- invites: Int
+- objectId: String
+- updatedAt: Datetime
+- createdAt: Datetime
+- clubs: List&lt;Club&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>56</x>
+      <y>944</y>
+      <w>784</w>
+      <h>176</h>
+    </coordinates>
+    <panel_attributes>Calendar
+--
+- objectId: String
+- updatedAt: Datetime
+- createdAt: Datetime
+--
+# How is a calendar generated for a user?
+# The calendar appears to be a list of events recommended to a user given their interests1
+# Likely to be some algo that finds all events that exist in their user's set of interests sorted by macgnitude of event's interests intersecting the user's interest
+# from which an algo that is biased towards recommending trending events would recommend the event on:
+# Event's group size, group followers, group followers velocity,
+# This feature technically requires backend engineering to implement b/c computation is likely to be extremley costly ie no good to run locally on a phone
+ </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>472</x>
+      <y>88</y>
+      <w>344</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>Event
+--
+- host: User
+- cohosts: List&lt;User&gt;
+- datetime: Datetime
+- groupName: String
+- exclusivityStatus: String or an enum (1: open, 2: social,3: closed)
+- description: String
+- participants: List&lt;User&gt;
+- allowHandRaise: Boolean
+- objectId: String
+- updatedAt: Datetime
+- createdAt: Datetime
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>48</x>
+      <y>64</y>
+      <w>336</w>
+      <h>176</h>
+    </coordinates>
+    <panel_attributes>Club
+--
+- members: List&lt;User&gt;
+- memberCount: Int
+- followers: List&lt;User&gt;
+- followerCount: Int
+- name: String
+# clubhouse supports emojis... what sort of encoding is needed
+# for displaying?
+- about: String 
+- objectId: String
+- updatedAt: Datetime
+- createdAt: Datetime</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>472</x>
+      <y>536</y>
+      <w>224</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>Interest
+--
+- name: String
+- categories: List&lt;String&gt;
+- user: String
+- club: String
+- objectId: String
+- updatedAt: Datetime
+- createdAt: Datetime</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>256</x>
+      <y>648</y>
+      <w>24</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>376</x>
+      <y>408</y>
+      <w>112</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;120.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>224</x>
+      <y>232</y>
+      <w>24</w>
+      <h>136</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;150.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>376</x>
+      <y>584</y>
+      <w>112</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;120.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>312</x>
+      <y>248</y>
+      <w>352</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;130.0;10.0;50.0;420.0;50.0;420.0;10.0</additional_attributes>
+  </element>
+</diagram>
