@@ -27,15 +27,14 @@
 
 **Required Must-have Stories**
 
-* User can create a new audio room with designated participants/groups of people.
 * User can sign up via phone number.
+* User can logout of their account
+* Users can search up other users.
+* User can create a new audio room with designated participants/groups of people.
 * User can see currently open audio rooms of people they follow.
 * User can see audio rooms of other topics they might possibly be interested in.
 * User can see other people currently in the audio room they are with 
 * User can see their own profile and the profiles of others and edit with interests 
-* User can create a new event/schedule it
-* User can logout of their account
-* Users can search up other users.
 * User can invite people. 
 
 **Optional Nice-to-have Stories**
@@ -45,6 +44,8 @@
 * User can search up topics/interests.
 * User can endorse/verify new users.
 * User can deactivate their account. 
+* User can create a new event/schedule it
+* User can create a group 
 
 ### 2. Screen Archetypes
 
