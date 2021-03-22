@@ -27,29 +27,28 @@
 
 **Required Must-have Stories**
 
-* [fill in your required user stories here]
-* User can create a new audio room with designated participants/groups of people.
-* User can invite/endorse people. 
 * User can sign up via phone number.
-* User can search up topics/interests/users.
+* User can logout of their account
+* Users can search up other users.
+* User can create a new audio room with designated participants/groups of people.
 * User can see currently open audio rooms of people they follow.
 * User can see audio rooms of other topics they might possibly be interested in.
 * User can see other people currently in the audio room they are with 
 * User can see their own profile and the profiles of others and edit with interests 
-* User can create a new event/schedule it
-* User can see announcements/notifications from clubhouse 
-* User can logout/deactivate their account
+* User can invite people. 
 
 **Optional Nice-to-have Stories**
 
 * [fill in your required user stories here]
 * User can connect their account to other social medias: Twitter, Instagram, etc. 
+* User can search up topics/interests.
+* User can endorse/verify new users.
+* User can deactivate their account. 
+* User can create a new event/schedule it
+* User can create a group 
 
 ### 2. Screen Archetypes
 
-* [list first screen here]
-   * [list associated required story here]
-   * ...
 * Login Screen
    * User can sign up via phone number. 
 * Home Screen
@@ -73,7 +72,7 @@
 
 **Tab Navigation** (Tab to Screen)
 
-* Home Feed
+* Home Feed/Page
 * Search User/Interests/Groups
 * Invite Tab
 * Event Tab
