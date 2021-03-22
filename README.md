@@ -37,7 +37,6 @@
 * User can see other people currently in the audio room they are with 
 * User can see their own profile and the profiles of others and edit with interests 
 * User can create a new event/schedule it
-* User can see announcements/notifications from clubhouse 
 * User can logout/deactivate their account
 
 **Optional Nice-to-have Stories**
