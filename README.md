@@ -27,7 +27,6 @@
 
 **Required Must-have Stories**
 
-* [fill in your required user stories here]
 * User can create a new audio room with designated participants/groups of people.
 * User can sign up via phone number.
 * User can see currently open audio rooms of people they follow.
@@ -72,7 +71,7 @@
 
 **Tab Navigation** (Tab to Screen)
 
-* Home Feed
+* Home Feed/Page
 * Search User/Interests/Groups
 * Invite Tab
 * Event Tab
