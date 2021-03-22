@@ -35,7 +35,7 @@
 * User can see other people currently in the audio room they are with 
 * User can see their own profile and the profiles of others and edit with interests 
 * User can create a new event/schedule it
-* User can logout/deactivate their account
+* User can logout of their account
 * Users can search up other users.
 * User can invite people. 
 
@@ -45,6 +45,7 @@
 * User can connect their account to other social medias: Twitter, Instagram, etc. 
 * User can search up topics/interests.
 * User can endorse/verify new users.
+* User can deactivate their account. 
 
 ### 2. Screen Archetypes
 
