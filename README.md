@@ -155,19 +155,6 @@
 #### List of network requests by screen
    - Home Screen
       - (Read/GET) Query all events taking place later (MAX 1 Day) where user has an interest
-         ```java
-         let query = PFQuery(className:"Post")
-         query.whereKey("author", equalTo: currentUser)
-         query.order(byDescending: "createdAt")
-         query.findObjectsInBackground { (posts: [PFObject]?, error: Error?) in
-            if let error = error {
-               print(error.localizedDescription)
-            } else if let posts = posts {
-               print("Successfully retrieved \(posts.count) posts.")
-           // TODO: Do something with posts...
-            }
-         }
-         ```
       - (Create/POST) Create a new room
    - Configure Room Pullup Screen
       - (Create/POST) Create a new room object
