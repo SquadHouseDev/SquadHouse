@@ -16,10 +16,10 @@
 [Evaluation of your app across the following attributes]
 - **Category:** Social/Audio
 - **Mobile:** Will be a purely mobile experience to allow users freedom of hearing/joining in on audio rooms on the fly.
-- **Story:** Allows user to share their opinions and have conversations with people in various fields/interests. 
-- **Market:** Anyone that wants to talk about current events or hear what professionals are conversing about in their respective fields. 
+- **Story:** Allows user to share their opinions and have conversations with people in various fields/interests.
+- **Market:** Anyone that wants to talk about current events or hear what professionals are conversing about in their respective fields.
 - **Habit:** Users can open audio rooms at any point and invite people they want to converse with as they wish or make the room public for free entry/leave.
-- **Scope:** Rather narrow scope of audio rooms, similar even to podcasts/radio sessions but could branch out to some functionality similar to the 'live' features found commonly on platforms like Instagram, TikTok, so on so forth. 
+- **Scope:** Rather narrow scope of audio rooms, similar even to podcasts/radio sessions but could branch out to some functionality similar to the 'live' features found commonly on platforms like Instagram, TikTok, so on so forth.
 
 ## Product Spec
 
@@ -33,38 +33,38 @@
 * User can create a new audio room with designated participants/groups of people.
 * User can see currently open audio rooms of people they follow.
 * User can see audio rooms of other topics they might possibly be interested in.
-* User can see other people currently in the audio room they are with 
-* User can see their own profile and the profiles of others and edit with interests 
-* User can invite people. 
+* User can see other people currently in the audio room they are with
+* User can see their own profile and the profiles of others and edit with interests
+* User can invite people.
 
 **Optional Nice-to-have Stories**
 
 * [fill in your required user stories here]
-* User can connect their account to other social medias: Twitter, Instagram, etc. 
+* User can connect their account to other social medias: Twitter, Instagram, etc.
 * User can search up topics/interests.
 * User can endorse/verify new users.
-* User can deactivate their account. 
+* User can deactivate their account.
 * User can create a new event/schedule it
-* User can create a group 
+* User can create a group
 
 ### 2. Screen Archetypes
 
 * Login Screen
-   * User can sign up via phone number. 
+   * User can sign up via phone number.
 * Home Screen
-   * User can create a new audio room with designated participants/groups of people. 
+   * User can create a new audio room with designated participants/groups of people.
    * User can see currently open audio rooms of people they follow.
    * User can see audio rooms of other topics they might possibly be interested in.
 * New Event Screen/Page
    * User can create a new event/schedule it
-* Search Screen 
+* Search Screen
    * User can search up topics/interests/users.
-* Notifications Screen 
-   * User can see announcements/notifications from clubhouse 
-* Profile Screen 
-   * User can see their own profile and the profiles of others 
-* Interests Screen 
-   * User can toggle which interests they have 
+* Notifications Screen
+   * User can see announcements/notifications from clubhouse
+* Profile Screen
+   * User can see their own profile and the profiles of others
+* Interests Screen
+   * User can toggle which interests they have
 * Account Screen
    * User can logout/deactivate their account
 
@@ -81,29 +81,30 @@
 
 **Flow Navigation** (Screen to Screen)
 
-* Login Screen 
+* Login Screen
    * Home
    * Waiting Screen ?
 * Registration Screen
-   * Home 
-   * Waiting Screen ? 
+   * Home
+   * Waiting Screen ?
 * Home Feed
    * Search Screen
-   * Event Screen 
+   * Event Screen
    * Notifications Screen
-   * Profile Screen 
+   * Profile Screen
 * Profile Screen
    * Account Screen
    * Interests Screen
-   * What's New/ FAQ/ Community Guidelines/Terms of Service/Privacy policy 
+   * What's New/ FAQ/ Community Guidelines/Terms of Service/Privacy policy
 
 
 ## Wireframes
 [Add picture of your hand sketched wireframes in this section]
 
-* Home page 
+* Home page
 <img src="/docs/HomePage.png" width=600>
-* Event Details 
+* Event Details
+
 <img src="/docs/NewEventDetailsPage.png" width=600>
 * New Event Page
 <img src="/docs/NewEventPage.png" width=600>
@@ -120,10 +121,27 @@
 
 ### [BONUS] Interactive Prototype
 
-## Schema 
-[This section will be completed in Unit 9]
+## Schema
 ### Models
-[Add table of models]
+#### User
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the user post (default field) |
+   | createdAt     | DateTime | date when post is created (default field) |
+   | updatedAt     | DateTime | date when post is last updated (default field) |
+   | image         | File     | image that user posts |
+   | biography       | String   | user biography |
+   | username       | String   | username set by user |
+   | lastname       | String   | last name set by user |
+   | firstname       | String   | first name set by user |
+   | password       | String   | password set by user |
+   | phoneNumber       | String   | user phone number  |
+   | email       | String   | email address  |
+   | image       | File   | image uploaded by author |
+
+
+
 ### Networking
 - [Add list of network requests by screen ]
 - [Create basic snippets for each Parse network request]
