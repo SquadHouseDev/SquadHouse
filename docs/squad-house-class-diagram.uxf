@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
-  <zoom_level>6</zoom_level>
+  <zoom_level>11</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>390</x>
-      <y>372</y>
-      <w>150</w>
-      <h>96</h>
+      <x>649</x>
+      <y>979</y>
+      <w>275</w>
+      <h>176</h>
     </coordinates>
     <panel_attributes>Activity
 bg=yellow
@@ -24,10 +24,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>150</x>
-      <y>756</y>
-      <w>354</w>
-      <h>144</h>
+      <x>209</x>
+      <y>1683</y>
+      <w>649</w>
+      <h>264</h>
     </coordinates>
     <panel_attributes>Settings
 bg=yellow
@@ -50,27 +50,28 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>150</x>
-      <y>372</y>
-      <w>174</w>
-      <h>360</h>
+      <x>209</x>
+      <y>979</y>
+      <w>264</w>
+      <h>693</h>
     </coordinates>
     <panel_attributes>User
 bg=green
 --
-Core
+*Core*
+- objectId: String
+- updatedAt: Datetime
+- createdAt: Datetime
+
+- image: File
+- biography: String
 - fullName: String
 - userName: String
 - password: String
 - phoneNumber: String
 - email: String
-- biography: String
-- objectId: String
-- updatedAt: Datetime
-- createdAt: Datetime
 
-
-Stretch 1
+*Stretch 1*
 - nomination: Activity
 - invites: Int
 
@@ -98,10 +99,10 @@ Stretch 3-</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>36</x>
-      <y>912</y>
-      <w>588</w>
-      <h>132</h>
+      <x>0</x>
+      <y>1969</y>
+      <w>1078</w>
+      <h>242</h>
     </coordinates>
     <panel_attributes>Calendar
 bg=yellow
@@ -122,26 +123,32 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>390</x>
-      <y>66</y>
-      <w>258</w>
-      <h>234</h>
+      <x>649</x>
+      <y>308</y>
+      <w>473</w>
+      <h>495</h>
     </coordinates>
     <panel_attributes>Room
 bg=green
 --
-Core
-- host: User
-- roomName: 
-- cohosts: List&lt;User&gt;
-- participants: List&lt;User&gt;
-- datetime: Datetime
+*Core*
 - objectId: String
 - updatedAt: Datetime
 - createdAt: Datetime
-- title: String
+- user: Pointer to User
 
-Stretch 1
+- host: User
+- roomName: String
+- cohosts: List&lt;User&gt;
+- participants: List&lt;User&gt;
+- startedAt: Datetime
+- endedAt: Datetime 
+
+*Stretch 1*
+
+- isActive: bool...?
+- isScheduled: bool...?
+
 - clubName: String
 - title: String
 - description: String
@@ -155,10 +162,10 @@ Stretch 1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>72</x>
-      <y>156</y>
-      <w>252</w>
-      <h>132</h>
+      <x>66</x>
+      <y>583</y>
+      <w>462</w>
+      <h>242</h>
     </coordinates>
     <panel_attributes>Club
 bg=yellow
@@ -179,10 +186,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>390</x>
-      <y>510</y>
-      <w>168</w>
-      <h>84</h>
+      <x>649</x>
+      <y>1232</y>
+      <w>308</w>
+      <h>154</h>
     </coordinates>
     <panel_attributes>Interest
 bg=yellow
@@ -199,10 +206,10 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>228</x>
-      <y>750</y>
-      <w>18</w>
-      <h>18</h>
+      <x>352</x>
+      <y>1672</y>
+      <w>33</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;10.0</additional_attributes>
@@ -210,21 +217,21 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>318</x>
-      <y>414</y>
-      <w>84</w>
-      <h>18</h>
+      <x>462</x>
+      <y>1056</y>
+      <w>209</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;120.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>204</x>
-      <y>282</y>
-      <w>18</w>
-      <h>102</h>
+      <x>308</x>
+      <y>814</y>
+      <w>33</w>
+      <h>187</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;150.0;10.0;10.0</additional_attributes>
@@ -232,32 +239,32 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>318</x>
-      <y>546</y>
-      <w>84</w>
-      <h>18</h>
+      <x>462</x>
+      <y>1298</y>
+      <w>209</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;120.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>270</x>
-      <y>294</y>
-      <w>264</w>
-      <h>90</h>
+      <x>429</x>
+      <y>792</y>
+      <w>484</w>
+      <h>209</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;130.0;10.0;50.0;420.0;50.0;420.0;10.0</additional_attributes>
+    <additional_attributes>10.0;170.0;10.0;90.0;420.0;90.0;420.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>552</x>
-      <y>732</y>
-      <w>126</w>
-      <h>114</h>
+      <x>946</x>
+      <y>1639</y>
+      <w>231</w>
+      <h>209</h>
     </coordinates>
     <panel_attributes>*Priority Legend*
 --
@@ -268,10 +275,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>492</x>
-      <y>0</y>
-      <w>60</w>
-      <h>42</h>
+      <x>836</x>
+      <y>198</y>
+      <w>110</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>Event
 bg=yellow
@@ -281,21 +288,21 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>516</x>
-      <y>36</y>
-      <w>18</w>
-      <h>42</h>
+      <x>880</x>
+      <y>264</y>
+      <w>33</w>
+      <h>66</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>558</x>
-      <y>780</y>
-      <w>60</w>
-      <h>18</h>
+      <x>957</x>
+      <y>1727</y>
+      <w>110</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>Stretch
 bg=yellow</panel_attributes>
@@ -304,10 +311,10 @@ bg=yellow</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>558</x>
-      <y>756</y>
-      <w>60</w>
-      <h>18</h>
+      <x>957</x>
+      <y>1683</y>
+      <w>110</w>
+      <h>33</h>
     </coordinates>
     <panel_attributes>Core
 bg=green</panel_attributes>

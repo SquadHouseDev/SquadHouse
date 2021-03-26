@@ -124,21 +124,32 @@
 ## Schema
 ### Models
 #### User
+| Property      | Type     | Description |
+| ------------- | -------- | ------------|
+| objectId      | String   | unique id for the user post (default field) |
+| createdAt     | DateTime | date when post is created (default field) |
+| updatedAt     | DateTime | date when post is last updated (default field) |
+| biography       | String   | user biography |
+| username       | String   | username set by user |
+| lastname       | String   | last name set by user |
+| firstname       | String   | first name set by user |
+| password       | String   | password set by user |
+| phoneNumber       | String   | user phone number  |
+| email       | String   | email address  |
+| image       | File   | image uploaded by author |
 
-   | Property      | Type     | Description |
-   | ------------- | -------- | ------------|
-   | objectId      | String   | unique id for the user post (default field) |
-   | createdAt     | DateTime | date when post is created (default field) |
-   | updatedAt     | DateTime | date when post is last updated (default field) |
-   | image         | File     | image that user posts |
-   | biography       | String   | user biography |
-   | username       | String   | username set by user |
-   | lastname       | String   | last name set by user |
-   | firstname       | String   | first name set by user |
-   | password       | String   | password set by user |
-   | phoneNumber       | String   | user phone number  |
-   | email       | String   | email address  |
-   | image       | File   | image uploaded by author |
+#### Room
+| Property      | Type     | Description |
+| ------------- | -------- | ------------|
+| objectId      | String   | unique id for the user post (default field) |
+| createdAt     | DateTime | date when post is created (default field) |
+| updatedAt     | DateTime | date when post is last updated (default field) |
+| user     | Pointer to User | address of User object in database |
+| host     | User | User that is the host of the room |
+| cohosts     | List of User | User(s) that have speaker permissions in the room |
+| name       | String   | name of the room |
+| startedAt       | DateTime   | date when room was started  |
+| endedAt       | DateTime   | date when the room ended  |
 
 
 
