@@ -4,21 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.WelcomeActivity"
-    android:orientation="vertical">
+    android:layout_margin="16dp"
+    android:orientation="vertical"
+    tools:context=".activities.LoginActivity">
 
-    <TextView
-        android:id="@+id/textView"
+    <EditText
+        android:id="@+id/etUsername"
         android:layout_width="match_parent"
-        android:layout_height="246dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="199dp"
-        tools:layout_editor_absoluteY="210dp" />
+        android:layout_height="wrap_content"
+        android:cursorVisible="true"
+        android:ems="10"
+        android:hint="username"
+        android:textCursorDrawable="@drawable/cursorcolor"
+        />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:cursorVisible="true"
+        android:ems="10"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:textCursorDrawable="@drawable/cursorcolor"
+        />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:text="Button" />
+        android:layout_below="@+id/etPassword"
+        android:layout_marginBottom="16dp"
+        android:text="Login"
+        android:textAllCaps="false"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btnSignup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnLogin"
+        android:layout_centerHorizontal="true"
+        android:text="Sign Up"
+        android:textAllCaps="false"
+        android:textSize="16sp" />
+
+
 </LinearLayout>

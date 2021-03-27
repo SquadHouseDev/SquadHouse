@@ -27,25 +27,25 @@
 
 **Required Must-have Stories**
 
-* User can sign up via phone number.
-* User can logout of their account
-* Users can search up other users.
-* User can create a new audio room with designated participants/groups of people.
-* User can see currently open audio rooms of people they follow.
-* User can see audio rooms of other topics they might possibly be interested in.
-* User can see other people currently in the audio room they are with
-* User can see their own profile and the profiles of others and edit with interests
-* User can invite people.
+* [ ] User can sign up via phone number.
+* [ ] User can logout of their account
+* [ ] Users can search up other users.
+* [ ] User can create a new audio room with designated participants/groups of people.
+* [ ] User can see currently open audio rooms of people they follow.
+* [ ] User can see audio rooms of other topics they might possibly be interested in.
+* [ ] User can see other people currently in the audio room they are with
+* [ ] User can see their own profile and the profiles of others and edit with interests
+* [ ] User can invite people.
 
 **Optional Nice-to-have Stories**
 
 * [fill in your required user stories here]
-* User can connect their account to other social medias: Twitter, Instagram, etc.
-* User can search up topics/interests.
-* User can endorse/verify new users.
-* User can deactivate their account.
-* User can create a new event/schedule it
-* User can create a group
+* [ ] User can connect their account to other social medias: Twitter, Instagram, etc.
+* [ ] User can search up topics/interests.
+* [ ] User can endorse/verify new users.
+* [ ] User can deactivate their account.
+* [ ] User can create a new event/schedule it
+* [ ] User can create a group
 
 ### 2. Screen Archetypes
 
@@ -97,25 +97,22 @@
    * Interests Screen
    * What's New/ FAQ/ Community Guidelines/Terms of Service/Privacy policy
 
-
 ## Wireframes
-[Add picture of your hand sketched wireframes in this section]
-
 * Home page
-<img src="/docs/HomePage.png" width=600>
-* Event Details
+<img src="/docs/HomePage.png" width=200>
 
-<img src="/docs/NewEventDetailsPage.png" width=600>
+* Event Details
+<img src="/docs/NewEventDetailsPage.png" width=200>
 * New Event Page
-<img src="/docs/NewEventPage.png" width=600>
+<img src="/docs/NewEventPage.png" width=200>
 * Profile Page
-<img src="/docs/ProfilePage.png" width=600>
+<img src="/docs/ProfilePage.png" width=200>
 * Settings Page
-<img src="/docs/SettingsPage.png" width=600>
+<img src="/docs/SettingsPage.png" width=200>
 * Interests Page
-<img src="/docs/InterestsSettings.png" width=600>
+<img src="/docs/InterestsSettings.png" width=200>
 * Account Settings Page
-<img src="/docs/AccountSettingsPage.png" width=600>
+<img src="/docs/AccountSettingsPage.png" width=200>
 
 ### [BONUS] Digital Wireframes & Mockups
 
@@ -157,7 +154,9 @@
       - (Read/GET) Query all events taking place later (MAX 1 Day) where user has an interest
       - (Create/POST) Create a new room
    - Configure Room Pullup Screen
-      - (Create/POST) Create a new room object
+      - (Create/POST) Create a new room object of type
+        - Allow configuration of: Open, Social, Closed
+        - Allow configuration of: Topic
    - Profile Screen
       - (Read/GET) Query logged in user object
       - (Update/PUT) Update user profile image

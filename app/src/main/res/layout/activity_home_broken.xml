@@ -13,18 +13,35 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="600dp"
         android:text="+ Create Room"
-        app:layout_constraintBottom_toBottomOf="@+id/swipeContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/swipeContainer" />
+
+    <ImageButton
+        android:id="@+id/btnCreateFriendRoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="300dp"
+        android:layout_marginTop="600dp"
+        android:background="#00FFFFFF"
+
+        android:tint="@android:color/secondary_text_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/swipeContainer"
+        app:layout_constraintEnd_toEndOf="@+id/swipeContainer"
+        app:layout_constraintStart_toStartOf="@+id/swipeContainer"
+        app:layout_constraintTop_toTopOf="@+id/swipeContainer"
+        app:srcCompat="@drawable/ic_baseline_group_add_24" />
 
     <ImageButton
         android:id="@+id/btnSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="300dp"
-        android:layout_marginBottom="750dp"
+        android:layout_marginBottom="600dp"
+        android:background="#00FFFFFF"
 
+        android:tint="@android:color/secondary_text_dark"
         app:layout_constraintBottom_toBottomOf="@+id/swipeContainer"
         app:layout_constraintEnd_toEndOf="@+id/swipeContainer"
         app:layout_constraintStart_toStartOf="@+id/swipeContainer"
@@ -36,8 +53,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="300dp"
-        android:layout_marginBottom="750dp"
+        android:layout_marginBottom="600dp"
+        android:background="#00FFFFFF"
 
+        android:tint="@android:color/secondary_text_dark"
         app:layout_constraintBottom_toBottomOf="@+id/swipeContainer"
         app:layout_constraintEnd_toEndOf="@+id/swipeContainer"
         app:layout_constraintStart_toStartOf="@+id/swipeContainer"
@@ -49,9 +68,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="200dp"
-        android:layout_marginBottom="750dp"
+        android:layout_marginBottom="600dp"
+        android:background="#00FFFFFF"
 
-
+        android:tint="@android:color/secondary_text_dark"
         app:layout_constraintBottom_toBottomOf="@+id/swipeContainer"
         app:layout_constraintEnd_toEndOf="@+id/swipeContainer"
         app:layout_constraintStart_toStartOf="@+id/swipeContainer"
@@ -63,8 +83,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginBottom="750dp"
+        android:layout_marginBottom="600dp"
+        android:background="#00FFFFFF"
 
+        android:tint="@android:color/secondary_text_dark"
         app:layout_constraintBottom_toBottomOf="@+id/swipeContainer"
         app:layout_constraintEnd_toEndOf="@+id/swipeContainer"
         app:layout_constraintStart_toStartOf="@+id/swipeContainer"
@@ -75,46 +97,15 @@
         android:id="@+id/btnInvite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="750dp"
+        android:layout_marginBottom="600dp"
+        android:background="#00FFFFFF"
 
+        android:tint="@android:color/secondary_text_dark"
         app:layout_constraintBottom_toBottomOf="@+id/swipeContainer"
         app:layout_constraintEnd_toEndOf="@+id/swipeContainer"
         app:layout_constraintStart_toStartOf="@+id/swipeContainer"
         app:layout_constraintTop_toTopOf="@+id/swipeContainer"
         app:srcCompat="@drawable/ic_baseline_mail_24" />
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabCreateRoomWithFollowers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="300dp"
-        android:layout_marginTop="600dp"
-        android:clickable="true"
-        android:src="@drawable/ic_baseline_group_add_24"
-        app:layout_constraintBottom_toBottomOf="@+id/swipeContainer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeContainer"
-        android:layout_width="415dp"
-        android:layout_height="680dp"
-        android:layout_marginTop="320dp"
-        android:foregroundTint="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvRooms"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
