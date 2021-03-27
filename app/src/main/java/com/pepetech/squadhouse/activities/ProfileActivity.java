@@ -1,6 +1,7 @@
 package com.pepetech.squadhouse.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.pepetech.squadhouse.R;
 
 import android.os.Bundle;
 
