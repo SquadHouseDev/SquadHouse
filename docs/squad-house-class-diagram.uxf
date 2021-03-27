@@ -138,7 +138,7 @@ bg=green
 - user: Pointer to User
 
 - host: User
-- roomName: String
+- name: String
 - cohosts: List&lt;User&gt;
 - participants: List&lt;User&gt;
 - startedAt: Datetime
@@ -149,7 +149,7 @@ bg=green
 - isActive: bool...?
 - isScheduled: bool...?
 
-- clubName: String
+- club: Club
 - title: String
 - description: String
 - exclusivityStatus: String or an enum (1: open, 2: social,3: closed)

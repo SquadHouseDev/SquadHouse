@@ -1,9 +1,15 @@
 package com.pepetech.squadhouse.activities;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.parse.ParseUser;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.adapters.RoomsAdapter;
+import com.pepetech.squadhouse.models.Room;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +17,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     public static final String TAG = "HomeActivity";
@@ -23,20 +32,31 @@ public class HomeActivity extends AppCompatActivity {
     ImageButton btnCalendar;
     ImageButton btnInvite;
 
+    RecyclerView rvRooms;
+    RoomsAdapter adapter;
+    
+    List<Room> allRooms;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        // initialize buttons
         fabCreateRoomWithFollowers = findViewById(R.id.fabCreateRoomWithFollowers);
-
         btnCreateRoom = findViewById(R.id.btnCreateRoom);
         btnSearch = findViewById(R.id.btnSearch);
         btnProfile = findViewById(R.id.btnProfile);
         btnActivityHistory = findViewById(R.id.btnActivityHistory);
         btnCalendar = findViewById(R.id.btnCalendar);
         btnInvite = findViewById(R.id.btnInvite);
-
+        // setup recycler view
+        allRooms = new ArrayList<>();
+        rvRooms = findViewById(R.id.rvRooms);
+        adapter = new RoomsAdapter(this, allRooms);
+        rvRooms.setAdapter(adapter);
+        rvRooms.setLayoutManager(new LinearLayoutManager(this));
+        queryRooms();
+        // setup button click listeners
         setupOnClickListeners();
     }
 
@@ -88,6 +108,26 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "Invite clicked!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void queryRooms() {
+        ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
+        query.include(Room.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<Room>() {
+            @Override
+            public void done(List<Room> rooms, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+//                for (Room p : posts) {
+//                    Log.i(TAG, "Room: " + p.getDescription() + ", username: " + p.getUser().getUsername());
+//                }
+                allRooms.addAll(rooms);
+                adapter.notifyDataSetChanged();
             }
         });
     }
