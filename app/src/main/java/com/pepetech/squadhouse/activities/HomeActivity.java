@@ -113,9 +113,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+
+    /**
+     *
+     */
     private void queryRooms() {
         ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
-        query.include(Room.KEY_CREATED_AT);
+        query.include(Room.KEY_IS_ACTIVE);
         query.findInBackground(new FindCallback<Room>() {
             @Override
             public void done(List<Room> rooms, ParseException e) {
