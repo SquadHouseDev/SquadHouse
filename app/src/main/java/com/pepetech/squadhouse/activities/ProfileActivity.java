@@ -8,6 +8,7 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.models.User;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ import android.widget.Toast;
 public class ProfileActivity extends AppCompatActivity {
     public static final String TAG = "ProfileActivity";
     AppCompatImageView ivProfile, ivProfileNominator;
-    TextView tvFullName, tvUsername, tvFollowers, tvFollowing, tvBiography, tvUserJoinDate, tvNominator;
+    TextView tvFullName, tvUsername, tvFollowersCount, tvFollowingCount, tvBiography, tvUserJoinDate, tvNominator;
     Button btnLogout;
 
     @Override
@@ -34,8 +35,8 @@ public class ProfileActivity extends AppCompatActivity {
         // text views
         tvFullName = findViewById(R.id.tvFullName);
         tvUsername = findViewById(R.id.tvUsername);
-        tvFollowers = findViewById(R.id.tvFollowers);
-        tvFollowing = findViewById(R.id.tvFollowing);
+        tvFollowersCount = findViewById(R.id.tvFollowersCount);
+        tvFollowingCount = findViewById(R.id.tvFollowingCount);
         tvBiography = findViewById(R.id.tvBiography);
         tvUserJoinDate = findViewById(R.id.tvUserJoinDate);
         tvNominator = findViewById(R.id.tvNominator);
@@ -58,10 +59,25 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setupProfile() {
+        // load profile picture
         ParseUser user = ParseUser.getCurrentUser();
         ParseFile image = user.getParseFile("image");
         if (image != null)
-            Glide.with(this.getBaseContext()).load(image.getUrl()).into(ivProfile);
+            Glide.with(this.getBaseContext())
+                    .load(image.getUrl())
+                    .circleCrop()
+                    .into(ivProfile);
+        // load profile text information
+        tvFullName.setText(user.getString(User.KEY_FIRST_NAME) + " " + user.getString(User.KEY_LAST_NAME));
+        tvBiography.setText(user.getString(User.KEY_BIO));
+        tvUsername.setText("@" + user.getUsername());
+        // load following and followers count
+        tvFollowersCount.setText("69"); // DEBUG
+        tvFollowingCount.setText("96"); // DEBUG
+    }
+
+    private void queryUserProfile() {
+
     }
 
     private void signoutUser() {
@@ -69,7 +85,7 @@ public class ProfileActivity extends AppCompatActivity {
         ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
     }
 
-    private void goToLoginActivity(){
+    private void goToLoginActivity() {
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
         finish(); // disable user ability to renavigate after a successful login
