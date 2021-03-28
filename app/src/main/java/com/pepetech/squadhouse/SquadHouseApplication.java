@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 import com.pepetech.squadhouse.models.Room;
 
 import okhttp3.OkHttpClient;
@@ -35,7 +36,8 @@ public class SquadHouseApplication extends Application {
                 .server("https://parseapi.back4app.com")
                 .build()
         );
-
+        // handle error in which session token is invalid
+        ParseUser.enableRevocableSessionInBackground();
     }
 
 }
