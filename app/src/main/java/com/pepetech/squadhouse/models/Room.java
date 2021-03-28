@@ -11,12 +11,12 @@ public class Room extends ParseObject {
     public static final String KEY_TITLE = "title";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_CLUB_NAME = "clubName";
-
     public static final String KEY_HOST = "host";
     public static final String KEY_COHOSTS = "cohosts";
     public static final String KEY_PARTICIPANTS = "participants";
     public static final String KEY_STARTED_AT = "startedAt";
     public static final String KEY_ENDED_AT = "endedAt";
+    public static final String KEY_IS_ACTIVE = "isActive";
 
 
     public String getDescription() {
@@ -25,6 +25,14 @@ public class Room extends ParseObject {
 
     public void setDescription(String newDescription) {
         put(KEY_DESCRIPTION, newDescription);
+    }
+
+    public boolean isActive () {
+        return getBoolean(KEY_IS_ACTIVE);
+    }
+
+    public void setActiveState(boolean newRoomState) {
+        put(KEY_IS_ACTIVE, newRoomState);
     }
 
     public String getTitle() {
