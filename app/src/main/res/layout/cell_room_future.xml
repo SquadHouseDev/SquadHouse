@@ -8,26 +8,20 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tvCallToAction"
+        android:id="@+id/tvClubName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:padding="8dp"
         tools:text="Pepe Tech" />
 
-    <ImageView
-        android:id="@+id/ivProfileAdd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:srcCompat="@tools:sample/avatars" />
-
     <TextView
-        android:id="@+id/tvSearch"
+        android:id="@+id/tvFutureRoomName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:padding="8dp"
 
-        tools:text="Filthy Frank (Joji)" />
+        tools:text="Dank Memes Pawg" />
 
 </LinearLayout>
