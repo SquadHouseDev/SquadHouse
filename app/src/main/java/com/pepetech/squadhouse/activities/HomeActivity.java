@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,19 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TODO: add cell_search to the recycler view
+ * TODO: add cell_room_future to the recycler view
+ * Recycler view should start with:
+ * 1. cell_search
+ * 2. cell_room_future
+ * 3. cell_room_active
+ * 4. cell_room_active
+ * .
+ * .
+ * N
+ *
+ */
 public class HomeActivity extends AppCompatActivity {
     public static final String TAG = "HomeActivity";
 
@@ -90,24 +104,34 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "Profile clicked!", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "Profile clicked!");
+                Intent profileIntent = new Intent(v.getContext(), ProfileActivity.class );
+                v.getContext().startActivity(profileIntent);
+                overridePendingTransition( R.anim.slide_from_left, R.anim.slide_to_right);
             }
         });
         btnActivityHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "Activity hisory clicked!", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "Activity hisory clicked!");
+
             }
         });
         btnCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "Calendar clicked!", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "Calendar clicked!");
+
             }
         });
         btnInvite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "Invite clicked!", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "Invite clicked!");
+
             }
         });
     }
