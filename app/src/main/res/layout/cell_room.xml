@@ -1,40 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@drawable/room_border"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/tvClubName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:padding="8dp"
-
-        android:text="Pepe Tech"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:text="Pepe Tech" />
 
     <TextView
         android:id="@+id/tvRoomName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:padding="8dp"
-        android:text="Dank Memes Pawg"
 
-        app:layout_constraintTop_toBottomOf="@+id/tvClubName"
-        tools:layout_editor_absoluteX="-16dp" />
+        tools:text="Dank Memes Pawg" />
 
     <TextView
         android:id="@+id/tvSpeakers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:padding="8dp"
-        android:text="Filthy Frank (Joji)"
-        app:layout_constraintTop_toBottomOf="@+id/tvRoomName"
-        tools:layout_editor_absoluteX="0dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        tools:text="Filthy Frank (Joji)" />
+
+</LinearLayout>
