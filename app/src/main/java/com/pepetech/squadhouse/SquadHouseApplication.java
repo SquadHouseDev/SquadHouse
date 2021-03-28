@@ -30,8 +30,8 @@ public class SquadHouseApplication extends Application {
         // set applicationId, and server server based on the values in the back4app settings.
         // any network interceptors must be added with the Configuration Builder given this syntax
         Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("qb7d9CWVF9pXpGcjtUV7K4dPRy8WwbV8AWaJEG7A")
-                .clientKey("zof0bRDisJvyV1suSxw8MfBCM5i6D5hj115ewTk0")
+                .applicationId("zeWif7JuAu8yjGcetjhFUkfNbbdvWnmcciFEvMJA")
+                .clientKey("5MYxEN3UHd1JIdpajxRKqvrcAB7WNEJPwJXHeGLb")
                 .server("https://parseapi.back4app.com")
                 .build()
         );
