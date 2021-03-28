@@ -1,8 +1,10 @@
 package com.pepetech.squadhouse.activities;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.adapters.RoomsAdapter;
 import com.pepetech.squadhouse.models.Room;
@@ -10,6 +12,7 @@ import com.pepetech.squadhouse.models.Room;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,7 +36,6 @@ import java.util.List;
  * .
  * .
  * N
- *
  */
 public class HomeActivity extends AppCompatActivity {
     public static final String TAG = "HomeActivity";
@@ -48,14 +50,18 @@ public class HomeActivity extends AppCompatActivity {
 
     RecyclerView rvRooms;
     RoomsAdapter adapter;
-    
+
     List<Room> allRooms;
+
+    SwipeRefreshLayout swipeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        ////////////////////////////////////////////////////////////
         // initialize buttons
+        ////////////////////////////////////////////////////////////
         fabCreateRoomWithFollowers = findViewById(R.id.fabCreateRoomWithFollowers);
         btnCreateRoom = findViewById(R.id.btnCreateRoom);
         btnSearch = findViewById(R.id.btnSearch);
@@ -63,15 +69,35 @@ public class HomeActivity extends AppCompatActivity {
         btnActivityHistory = findViewById(R.id.btnActivityHistory);
         btnCalendar = findViewById(R.id.btnCalendar);
         btnInvite = findViewById(R.id.btnInvite);
+        ////////////////////////////////////////////////////////////
         // setup recycler view
+        ////////////////////////////////////////////////////////////
         allRooms = new ArrayList<>();
         rvRooms = findViewById(R.id.rvRooms);
         adapter = new RoomsAdapter(this, allRooms);
         rvRooms.setAdapter(adapter);
         rvRooms.setLayoutManager(new LinearLayoutManager(this));
-        queryRooms();
+        ////////////////////////////////////////////////////////////
         // setup button click listeners
+        ////////////////////////////////////////////////////////////
         setupOnClickListeners();
+        ////////////////////////////////////////////////////////////
+        // setup swipe to refresh feature
+        ////////////////////////////////////////////////////////////
+        swipeContainer = findViewById(R.id.swipeContainer);
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.i(TAG, "Refresh called -> fetching new data!");
+                queryRooms();
+            }
+        });
+        queryRooms();
     }
 
     /**
@@ -105,9 +131,9 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "Profile clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Profile clicked!");
-                Intent profileIntent = new Intent(v.getContext(), ProfileActivity.class );
+                Intent profileIntent = new Intent(v.getContext(), ProfileActivity.class);
                 v.getContext().startActivity(profileIntent);
-                overridePendingTransition( R.anim.slide_from_left, R.anim.slide_to_right);
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
             }
         });
         btnActivityHistory.setOnClickListener(new View.OnClickListener() {
@@ -136,8 +162,6 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-
-
     /**
      *
      */
@@ -158,5 +182,7 @@ public class HomeActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
+
+
     }
 }
