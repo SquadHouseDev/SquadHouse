@@ -23,12 +23,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="300dp"
-        android:layout_marginBottom="750dp"
 
+        android:layout_marginBottom="700dp"
         app:layout_constraintBottom_toBottomOf="@+id/swipeContainer"
         app:layout_constraintEnd_toEndOf="@+id/swipeContainer"
-        app:layout_constraintStart_toStartOf="@+id/swipeContainer"
-        app:layout_constraintTop_toTopOf="@+id/swipeContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_search_24" />
 
     <ImageButton
@@ -36,12 +36,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="300dp"
-        android:layout_marginBottom="750dp"
+        android:layout_marginBottom="700dp"
 
         app:layout_constraintBottom_toBottomOf="@+id/swipeContainer"
         app:layout_constraintEnd_toEndOf="@+id/swipeContainer"
-        app:layout_constraintStart_toStartOf="@+id/swipeContainer"
-        app:layout_constraintTop_toTopOf="@+id/swipeContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_group_add_24" />
 
     <ImageButton
@@ -49,13 +49,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="200dp"
-        android:layout_marginBottom="750dp"
+        android:layout_marginBottom="700dp"
 
 
         app:layout_constraintBottom_toBottomOf="@+id/swipeContainer"
         app:layout_constraintEnd_toEndOf="@+id/swipeContainer"
-        app:layout_constraintStart_toStartOf="@+id/swipeContainer"
-        app:layout_constraintTop_toTopOf="@+id/swipeContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_group_add_24" />
 
     <ImageButton
@@ -63,24 +63,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginBottom="750dp"
+        android:layout_marginBottom="700dp"
 
         app:layout_constraintBottom_toBottomOf="@+id/swipeContainer"
         app:layout_constraintEnd_toEndOf="@+id/swipeContainer"
-        app:layout_constraintStart_toStartOf="@+id/swipeContainer"
-        app:layout_constraintTop_toTopOf="@+id/swipeContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_calendar_today_24" />
 
     <ImageButton
         android:id="@+id/btnInvite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="750dp"
+        android:layout_marginBottom="700dp"
 
         app:layout_constraintBottom_toBottomOf="@+id/swipeContainer"
         app:layout_constraintEnd_toEndOf="@+id/swipeContainer"
-        app:layout_constraintStart_toStartOf="@+id/swipeContainer"
-        app:layout_constraintTop_toTopOf="@+id/swipeContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_mail_24" />
 
 
@@ -99,8 +99,8 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
-        android:layout_width="415dp"
-        android:layout_height="680dp"
+        android:layout_width="406dp"
+        android:layout_height="697dp"
         android:layout_marginTop="320dp"
         android:foregroundTint="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
