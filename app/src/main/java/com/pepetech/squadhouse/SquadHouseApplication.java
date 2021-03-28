@@ -36,7 +36,8 @@ public class SquadHouseApplication extends Application {
                 .server("https://parseapi.back4app.com")
                 .build()
         );
-        // handle error in which session token is invalid
+        // handle error in which session token is invalid, does not handle case in which
+        // password has been directly changed in the backend
         ParseUser.enableRevocableSessionInBackground();
     }
 
