@@ -133,6 +133,8 @@ public class HomeActivity extends AppCompatActivity {
                 Log.i(TAG, "Profile clicked!");
                 Intent profileIntent = new Intent(v.getContext(), ProfileActivity.class);
                 v.getContext().startActivity(profileIntent);
+                // arg_1: page to navigate to slides from the right
+                // arg_2: page navigating from slides to the left
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
             }
         });
