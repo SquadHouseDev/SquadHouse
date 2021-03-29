@@ -28,7 +28,7 @@
 **Required Must-have Stories**
 
 * [ ] User can sign up via phone number.
-* [ ] User can logout of their account
+* [x] User can logout of their account
 * [ ] Users can search up other users.
 * [ ] User can create a new audio room with designated participants/groups of people.
 * [ ] User can see currently open audio rooms of people they follow.
@@ -98,20 +98,25 @@
    * What's New/ FAQ/ Community Guidelines/Terms of Service/Privacy policy
 
 ## Wireframes
-* Home page
+#### Home page
 <img src="/docs/HomePage.png" width=200>
 
-* Event Details
+#### Event Details
 <img src="/docs/NewEventDetailsPage.png" width=200>
-* New Event Page
+
+#### New Event Page
 <img src="/docs/NewEventPage.png" width=200>
-* Profile Page
+
+#### Profile Page
 <img src="/docs/ProfilePage.png" width=200>
-* Settings Page
+
+#### Settings Page
 <img src="/docs/SettingsPage.png" width=200>
-* Interests Page
+
+#### Interests Page
 <img src="/docs/InterestsSettings.png" width=200>
-* Account Settings Page
+
+#### Account Settings Page
 <img src="/docs/AccountSettingsPage.png" width=200>
 
 ### [BONUS] Digital Wireframes & Mockups
