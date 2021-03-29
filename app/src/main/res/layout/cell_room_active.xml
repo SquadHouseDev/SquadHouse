@@ -5,32 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/room_border"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <TextView
         android:id="@+id/tvClubName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:padding="8dp"
-        tools:text="Pepe Tech" />
+        android:padding="5dp"
+        tools:text="PEPE TECH" />
 
     <TextView
         android:id="@+id/tvRoomName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:padding="8dp"
+        android:padding="5dp"
 
+        android:textStyle="bold"
         tools:text="Dank Memes Pawg" />
 
     <TextView
-        android:id="@+id/tvSearch"
+        android:id="@+id/tvParticipants"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:padding="8dp"
+        android:padding="5dp"
 
+        android:text="Filthy Frank (Joji)"
         tools:text="Filthy Frank (Joji)" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tvParticipantCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:padding="0dp"
+            android:text="1"
+            android:textStyle="bold"
+            tools:text="1" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/tvParticipantCount"
+            app:srcCompat="@drawable/ic_baseline_person_24"
+            tools:layout_centerInParent="true"></ImageView>
+
+    </RelativeLayout>
 
 </LinearLayout>
