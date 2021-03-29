@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ public class ProfileActivity extends AppCompatActivity {
     AppCompatImageView ivProfile, ivProfileNominator;
     TextView tvFullName, tvUsername, tvFollowersCount, tvFollowingCount, tvBiography, tvUserJoinDate, tvNominator;
     Button btnLogout;
+    ImageButton btnSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
         tvNominator = findViewById(R.id.tvNominator);
         // buttons
         btnLogout = findViewById(R.id.btnLogout);
+        btnSettings = findViewById(R.id.btnSettings);
         setupProfile();
         setupOnClickListeners();
     }
@@ -56,6 +59,16 @@ public class ProfileActivity extends AppCompatActivity {
                 goToLoginActivity();
             }
         });
+
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(getBaseContext(), "Settings button clicked!", Toast.LENGTH_SHORT);
+                Log.i(TAG, "Settings button clicked!");
+                goToSettingsActivity();
+            }
+        });
+
     }
 
     private void setupProfile() {
@@ -89,6 +102,13 @@ public class ProfileActivity extends AppCompatActivity {
         Intent i = new Intent(this, LoginActivity.class);
         startActivity(i);
         finish(); // disable user ability to renavigate after a successful login
+    }
+
+    private void goToSettingsActivity() {
+        Intent i = new Intent(this, SettingsActivity.class);
+        startActivity(i);
+//        overridePendingTransition(R.anim.slide_to_top, R.anim.slide_to_left);
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
 
 }
