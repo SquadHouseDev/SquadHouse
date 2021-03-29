@@ -99,25 +99,25 @@
 
 ## Wireframes
 #### Home page
-<img src="/docs/HomePage.png" width=200>
+<img src="/docs/wireframes/HomePage.png" width=200>
 
 #### Event Details
-<img src="/docs/NewEventDetailsPage.png" width=200>
+<img src="/docs/wireframes/NewEventDetailsPage.png" width=200>
 
 #### New Event Page
-<img src="/docs/NewEventPage.png" width=200>
+<img src="/docs/wireframes/NewEventPage.png" width=200>
 
 #### Profile Page
-<img src="/docs/ProfilePage.png" width=200>
+<img src="/docs/wireframes/ProfilePage.png" width=200>
 
 #### Settings Page
-<img src="/docs/SettingsPage.png" width=200>
+<img src="/docs/wireframes/SettingsPage.png" width=200>
 
 #### Interests Page
-<img src="/docs/InterestsSettings.png" width=200>
+<img src="/docs/wireframes/InterestsSettings.png" width=200>
 
 #### Account Settings Page
-<img src="/docs/AccountSettingsPage.png" width=200>
+<img src="/docs/wireframes/AccountSettingsPage.png" width=200>
 
 ### [BONUS] Digital Wireframes & Mockups
 
