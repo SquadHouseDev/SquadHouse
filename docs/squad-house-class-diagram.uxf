@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
-  <zoom_level>11</zoom_level>
+  <zoom_level>9</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>649</x>
-      <y>979</y>
-      <w>275</w>
-      <h>176</h>
+      <x>630</x>
+      <y>639</y>
+      <w>225</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>Activity
 bg=yellow
@@ -24,10 +24,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>209</x>
-      <y>1683</y>
-      <w>649</w>
-      <h>264</h>
+      <x>270</x>
+      <y>1215</y>
+      <w>531</w>
+      <h>216</h>
     </coordinates>
     <panel_attributes>Settings
 bg=yellow
@@ -50,10 +50,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>209</x>
-      <y>979</y>
-      <w>264</w>
-      <h>693</h>
+      <x>270</x>
+      <y>639</y>
+      <w>216</w>
+      <h>567</h>
     </coordinates>
     <panel_attributes>User
 bg=green
@@ -74,6 +74,7 @@ bg=green
 *Stretch 1*
 - nomination: Activity
 - invites: Int
+- isSeed: Boolean
 
 - clubs: List&lt;Club&gt;
 - followerCount: Int
@@ -99,10 +100,10 @@ Stretch 3-</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
-      <y>1969</y>
-      <w>1078</w>
-      <h>242</h>
+      <x>99</x>
+      <y>1449</y>
+      <w>882</w>
+      <h>198</h>
     </coordinates>
     <panel_attributes>Calendar
 bg=yellow
@@ -123,10 +124,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>649</x>
-      <y>308</y>
-      <w>473</w>
-      <h>495</h>
+      <x>630</x>
+      <y>90</y>
+      <w>387</w>
+      <h>405</h>
     </coordinates>
     <panel_attributes>Room
 bg=green
@@ -151,6 +152,7 @@ bg=green
 
 - club: Club
 - title: String
+.
 - description: String
 - exclusivityStatus: String or an enum (1: open, 2: social,3: closed)
 - groupName: String
@@ -162,10 +164,10 @@ bg=green
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>66</x>
-      <y>583</y>
-      <w>462</w>
-      <h>242</h>
+      <x>153</x>
+      <y>315</y>
+      <w>378</w>
+      <h>198</h>
     </coordinates>
     <panel_attributes>Club
 bg=yellow
@@ -186,10 +188,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>649</x>
-      <y>1232</y>
-      <w>308</w>
-      <h>154</h>
+      <x>630</x>
+      <y>846</y>
+      <w>252</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>Interest
 bg=yellow
@@ -206,10 +208,10 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>352</x>
-      <y>1672</y>
-      <w>33</w>
-      <h>33</h>
+      <x>387</x>
+      <y>1206</y>
+      <w>27</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;10.0</additional_attributes>
@@ -217,10 +219,10 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>462</x>
-      <y>1056</y>
-      <w>209</w>
-      <h>33</h>
+      <x>477</x>
+      <y>702</y>
+      <w>171</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
@@ -228,10 +230,10 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>308</x>
-      <y>814</y>
-      <w>33</w>
-      <h>187</h>
+      <x>351</x>
+      <y>504</y>
+      <w>27</w>
+      <h>153</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;150.0;10.0;10.0</additional_attributes>
@@ -239,10 +241,10 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>462</x>
-      <y>1298</y>
-      <w>209</w>
-      <h>33</h>
+      <x>477</x>
+      <y>900</y>
+      <w>171</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
@@ -250,10 +252,10 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>429</x>
-      <y>792</y>
-      <w>484</w>
-      <h>209</h>
+      <x>450</x>
+      <y>486</y>
+      <w>396</w>
+      <h>171</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;170.0;10.0;90.0;420.0;90.0;420.0;10.0</additional_attributes>
@@ -261,10 +263,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>946</x>
-      <y>1639</y>
-      <w>231</w>
-      <h>209</h>
+      <x>873</x>
+      <y>1179</y>
+      <w>189</w>
+      <h>171</h>
     </coordinates>
     <panel_attributes>*Priority Legend*
 --
@@ -275,10 +277,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>836</x>
-      <y>198</y>
-      <w>110</w>
-      <h>77</h>
+      <x>783</x>
+      <y>0</y>
+      <w>90</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>Event
 bg=yellow
@@ -288,10 +290,10 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>880</x>
-      <y>264</y>
-      <w>33</w>
-      <h>66</h>
+      <x>819</x>
+      <y>54</y>
+      <w>27</w>
+      <h>54</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
@@ -299,10 +301,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>957</x>
-      <y>1727</y>
-      <w>110</w>
-      <h>33</h>
+      <x>882</x>
+      <y>1251</y>
+      <w>90</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>Stretch
 bg=yellow</panel_attributes>
@@ -311,10 +313,10 @@ bg=yellow</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>957</x>
-      <y>1683</y>
-      <w>110</w>
-      <h>33</h>
+      <x>882</x>
+      <y>1215</y>
+      <w>90</w>
+      <h>27</h>
     </coordinates>
     <panel_attributes>Core
 bg=green</panel_attributes>
