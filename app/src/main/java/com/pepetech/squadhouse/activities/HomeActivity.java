@@ -10,6 +10,8 @@ import com.pepetech.squadhouse.adapters.RoomsAdapter;
 import com.pepetech.squadhouse.models.Room;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NavUtils;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -17,6 +19,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -48,6 +52,7 @@ public class HomeActivity extends AppCompatActivity {
     ImageButton btnCalendar;
     ImageButton btnInvite;
 
+    Toolbar tbHome;
     RecyclerView rvRooms;
     RoomsAdapter adapter;
 
@@ -118,50 +123,6 @@ public class HomeActivity extends AppCompatActivity {
                 Toast.makeText(v.getContext(), "Create room with follower(s) clicked!", Toast.LENGTH_SHORT).show();
             }
         });
-        btnSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Search clicked!", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "Search clicked!");
-
-            }
-        });
-        btnProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Profile clicked!", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "Profile clicked!");
-                Intent profileIntent = new Intent(v.getContext(), ProfileActivity.class);
-                v.getContext().startActivity(profileIntent);
-                // arg_1: page to navigate to slides from the right
-                // arg_2: page navigating from slides to the left
-                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-            }
-        });
-        btnActivityHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Activity hisory clicked!", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "Activity hisory clicked!");
-
-            }
-        });
-        btnCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Calendar clicked!", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "Calendar clicked!");
-
-            }
-        });
-        btnInvite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Invite clicked!", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "Invite clicked!");
-
-            }
-        });
     }
 
     /**
@@ -184,7 +145,62 @@ public class HomeActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
-
-
     }
+
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent i;
+        switch (item.getItemId()) {
+            case R.id.action_calendar:
+                Toast.makeText(this, "Calendar clicked!", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "Calendar clicked!");
+//                i = new Intent(this, ProfileActivity.class);
+//                this.startActivity(profileIntent);
+                // arg_1: page to navigate to slides from the right
+                // arg_2: page navigating from slides to the left
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                return true;
+            case R.id.action_history:
+                Toast.makeText(this, "History clicked!", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "History clicked!");
+                // arg_1: page to navigate to slides from the right
+                // arg_2: page navigating from slides to the left
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                return true;
+            case R.id.action_invite:
+                Toast.makeText(this, "Invite clicked!", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "Invite clicked!");
+                // arg_1: page to navigate to slides from the right
+                // arg_2: page navigating from slides to the left
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                return true;
+
+            case R.id.action_profile:
+                Toast.makeText(this, "Profile clicked!", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "Profile clicked!");
+                i = new Intent(this, ProfileActivity.class);
+                this.startActivity(i);
+                // arg_1: page to navigate to slides from the right
+                // arg_2: page navigating from slides to the left
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                return true;
+            case R.id.action_search:
+                Toast.makeText(this, "Search clicked!", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "Search clicked!");
+//                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
 }
