@@ -69,11 +69,6 @@ public class HomeActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////
         fabCreateRoomWithFollowers = findViewById(R.id.fabCreateRoomWithFollowers);
         btnCreateRoom = findViewById(R.id.btnCreateRoom);
-        btnSearch = findViewById(R.id.btnSearch);
-        btnProfile = findViewById(R.id.btnProfile);
-        btnActivityHistory = findViewById(R.id.btnActivityHistory);
-        btnCalendar = findViewById(R.id.btnCalendar);
-        btnInvite = findViewById(R.id.btnInvite);
         ////////////////////////////////////////////////////////////
         // setup recycler view
         ////////////////////////////////////////////////////////////
