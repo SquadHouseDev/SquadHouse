@@ -103,7 +103,7 @@ public class HomeActivity extends AppCompatActivity {
         btnCreateRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(getBaseContext(), "Create room clicked!", Toast.LENGTH_SHORT);
+                Toast.makeText(getBaseContext(), "Create room clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Create room clicked!");
                 // TODO: Call a bottom sheet here
             }

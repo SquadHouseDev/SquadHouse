@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import com.pepetech.squadhouse.R;
+
 public class ClubActivity extends AppCompatActivity {
     public static final String TAG = "ClubActivity";
     TextView tvClubName, tvClubDescription, tvInterests;
