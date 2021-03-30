@@ -1,7 +1,9 @@
 package com.pepetech.squadhouse.adapters;
 
 //import androidx.recyclerview.widget.RecyclerView;
+
 import com.pepetech.squadhouse.R;
+
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +19,7 @@ import com.pepetech.squadhouse.models.Room;
 import java.util.List;
 
 public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHolder> {
-    public static final String TAG = "RoomsAdapter";
+    public static final String TAG = "HomeFeedAdapter";
 
     private Context context;
     private List<Room> rooms;
@@ -26,7 +28,6 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
         this.context = context;
         this.rooms = rooms;
     }
-
 
     @NonNull
     @Override
@@ -64,7 +65,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
 //            ivItemPostImage = itemView.findViewById(R.id.ivItemPostImage);
         }
 
-        public void bind(Room room){
+        public void bind(Room room) {
             // Bind data of post to the view element
             tvClubName.setText(room.getClubName());
             tvRoomName.setText(room.getTitle());
@@ -86,12 +87,10 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
     }
 
     /**
-     *
      * @param unicode
-     * @return
-     * U+x1F4AC => 0x1F4AC
+     * @return U+x1F4AC => 0x1F4AC
      */
-    public String getEmojiByUnicode(int unicode){
+    public String getEmojiByUnicode(int unicode) {
         return new String(Character.toChars(unicode));
     }
 

@@ -98,7 +98,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     /**
-     * Main method for configuring button listeners
+     * Setup non-toolbar buttons to route to associated pages
      */
     private void setupOnClickListeners() {
         btnCreateRoom.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +147,11 @@ public class HomeActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Setup toolbar buttons to route to associated pages
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent i;
