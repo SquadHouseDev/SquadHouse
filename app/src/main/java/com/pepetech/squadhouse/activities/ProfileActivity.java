@@ -93,7 +93,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void populateProfileElements() {
         Log.i(TAG, "Populating profile elements");
-
         // load profile picture
         ParseFile image = user.getParseFile("image");
         if (image != null)
@@ -106,9 +105,7 @@ public class ProfileActivity extends AppCompatActivity {
         tvBiography.setText(user.getString(User.KEY_BIO));
         tvUsername.setText("@" + user.getUsername());
         // load following and followers count
-//        tvFollowersCount.setText("69"); // DEBUG
         tvFollowersCount.setText(String.valueOf(followers.size()));
-//        tvFollowingCount.setText("96"); // DEBUG
         tvFollowingCount.setText(String.valueOf(following.size()));
     }
 
@@ -118,25 +115,18 @@ public class ProfileActivity extends AppCompatActivity {
         Log.i(TAG, "User object_id: " + user.getObjectId());
         following = user.getList(User.KEY_FOLLOWING);
         followers = user.getList(User.KEY_FOLLOWERS);
-
-        if (following != null) {
-            Log.i(TAG, "Following: " + following.size());
-            for (ParseObject u : following) {
-                Log.i(TAG, "following User: " + u.getObjectId());
-            }
-        }
-        else {
+        // empty case
+        if (following == null) {
             following = new ArrayList<>();
         }
-        if (followers != null) {
-            Log.i(TAG, "Followers: " + followers.size());
-            Log.i(TAG, "Followers: " + followers.isEmpty());
-            for (ParseObject u : followers) {
-                Log.i(TAG, "follower User: " + u.getObjectId());
-            }
+        else {
+            Log.i(TAG, "Following size: " + following.size());
+        }
+        if (followers == null) {
+            followers = new ArrayList<>();
         }
         else {
-            followers = new ArrayList<>();
+            Log.i(TAG, "Followers: " + followers.size());
         }
     }
 
