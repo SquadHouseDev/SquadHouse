@@ -9,141 +9,42 @@
     tools:context=".activities.ProfileActivity">
 
 
-    <RelativeLayout
-        android:id="@+id/rlProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="207dp">
-
-        <ImageButton
-            android:id="@+id/btnSettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="15dp"
-            app:srcCompat="@drawable/ic_baseline_settings_24" />
-
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_toStartOf="@+id/btnSettings"
-            android:text="Sign Out" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivProfile"
-            android:layout_width="250dp"
-            android:layout_height="125dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="255dp"
-            app:srcCompat="@drawable/ic_baseline_person_24" />
-
-        <TextView
-            android:id="@+id/tvFullName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/tvUsername"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="255dp"
-            android:layout_marginBottom="5dp"
-            android:text="John Doe"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvUsername"
-            android:layout_width="127dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/tvFollowers"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="258dp"
-            android:layout_marginBottom="5dp"
-            android:text="\@johndoe" />
-
-        <TextView
-            android:id="@+id/tvFollowers"
-            android:layout_width="68dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="186dp"
-            android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@+id/tvFollowersCount"
-            android:text="followers" />
-
-        <TextView
-            android:id="@+id/tvFollowersCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="15dp"
-            android:layout_marginBottom="5dp"
-            android:text="69696969"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvFollowingCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="-150dp"
-            android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@+id/tvFollowers"
-            android:text="69696969"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvFollowing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@+id/tvFollowingCount"
-            android:text="following" />
-
-    </RelativeLayout>
-
     <ScrollView
-        android:id="@+id/svProfile"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvBiography"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="125dp"
-                android:text="I like Jane Doe's..." />
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
             <RelativeLayout
-                android:id="@+id/rlNominator"
+                android:id="@+id/rlProfile"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="207dp">
+
+                <ImageButton
+                    android:id="@+id/btnSettings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="15dp"
+                    app:srcCompat="@drawable/ic_baseline_settings_24" />
+
+                <Button
+                    android:id="@+id/btnLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_toStartOf="@+id/btnSettings"
+                    android:text="Sign Out" />
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivProfileNominator"
+                    android:id="@+id/ivProfile"
                     android:layout_width="250dp"
                     android:layout_height="125dp"
                     android:layout_alignParentStart="true"
@@ -155,56 +56,166 @@
                     app:srcCompat="@drawable/ic_baseline_person_24" />
 
                 <TextView
-                    android:id="@+id/tvUserJoinDate"
+                    android:id="@+id/tvFullName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/tvUsername"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="255dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="John Doe"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvUsername"
+                    android:layout_width="127dp"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/tvFollowers"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="258dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="\@johndoe" />
+
+                <TextView
+                    android:id="@+id/tvFollowers"
+                    android:layout_width="68dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="186dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toEndOf="@+id/tvFollowersCount"
+                    android:text="followers" />
+
+                <TextView
+                    android:id="@+id/tvFollowersCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="200dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="87dp"
-                    android:text="Joined Jan 1, 2021" />
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="69696969"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvNominator"
-                    android:layout_width="184dp"
+                    android:id="@+id/tvFollowingCount"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvUserJoinDate"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="200dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="29dp"
-                    android:text="Nominated by Jane " />
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="-150dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toEndOf="@+id/tvFollowers"
+                    android:text="69696969"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvFollowing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toEndOf="@+id/tvFollowingCount"
+                    android:text="following" />
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/rlClubs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+            <ScrollView
+                android:id="@+id/svProfile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/tvMemberOf"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:text="Member of"></TextView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                <GridLayout
-                    android:id="@+id/glClubIcons"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvMemberOf"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="0dp"/>
+                    <TextView
+                        android:id="@+id/tvBiography"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="125dp"
+                        android:text="I like Jane Doe's..." />
 
-            </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/rlNominator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivProfileNominator"
+                            android:layout_width="250dp"
+                            android:layout_height="125dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="255dp"
+                            app:srcCompat="@drawable/ic_baseline_person_24" />
+
+                        <TextView
+                            android:id="@+id/tvUserJoinDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginStart="200dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="87dp"
+                            android:text="Joined Jan 1, 2021" />
+
+                        <TextView
+                            android:id="@+id/tvNominator"
+                            android:layout_width="184dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tvUserJoinDate"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginStart="200dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="29dp"
+                            android:text="Nominated by Jane " />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlClubs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvMemberOf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:text="Member of"></TextView>
+
+                        <GridLayout
+                            android:id="@+id/glClubIcons"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tvMemberOf"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="0dp" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+
+            </ScrollView>
         </LinearLayout>
-
-
     </ScrollView>
 
 </LinearLayout>
