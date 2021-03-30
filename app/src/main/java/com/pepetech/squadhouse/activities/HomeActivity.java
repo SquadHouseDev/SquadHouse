@@ -6,7 +6,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
-import com.pepetech.squadhouse.adapters.RoomsAdapter;
+import com.pepetech.squadhouse.adapters.HomeFeedAdapter;
 import com.pepetech.squadhouse.models.Room;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,7 +54,7 @@ public class HomeActivity extends AppCompatActivity {
 
     Toolbar tbHome;
     RecyclerView rvRooms;
-    RoomsAdapter adapter;
+    HomeFeedAdapter adapter;
 
     List<Room> allRooms;
 
@@ -74,8 +74,8 @@ public class HomeActivity extends AppCompatActivity {
         // Setup recycler view
         ////////////////////////////////////////////////////////////
         allRooms = new ArrayList<>();
-        rvRooms = findViewById(R.id.rvRooms);
-        adapter = new RoomsAdapter(this, allRooms);
+        rvRooms = findViewById(R.id.rvHomeFeed);
+        adapter = new HomeFeedAdapter(this, allRooms);
         rvRooms.setAdapter(adapter);
         rvRooms.setLayoutManager(new LinearLayoutManager(this));
         ////////////////////////////////////////////////////////////

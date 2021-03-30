@@ -3,6 +3,7 @@ package com.pepetech.squadhouse.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import com.pepetech.squadhouse.R;
 
 public class ClubActivity extends AppCompatActivity {
 
