@@ -94,7 +94,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void populateProfileElements() {
         Log.i(TAG, "Populating profile elements");
         // load profile picture
-        ParseFile image = user.getParseFile("image");
+        ParseFile image = user.getParseFile(User.KEY_IMAGE);
         if (image != null)
             Glide.with(this.getBaseContext())
                     .load(image.getUrl())
