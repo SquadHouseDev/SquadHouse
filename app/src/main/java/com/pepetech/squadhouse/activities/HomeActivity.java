@@ -4,12 +4,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.adapters.HomeFeedAdapter;
 import com.pepetech.squadhouse.models.Room;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NavUtils;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -28,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Refer to feature-home-activity branch for development
  * TODO: add cell_search to the recycler view
  * TODO: add cell_room_future to the recycler view
  * Recycler view should start with:
@@ -97,7 +98,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     /**
-     * Setup non-toolbar buttons to route to associated pages
+     * Main method for configuring button listeners
      */
     private void setupOnClickListeners() {
         btnCreateRoom.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +106,12 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(getBaseContext(), "Create room clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Create room clicked!");
-                // TODO: Call a bottom sheet here
+
+                Intent i = new Intent(HomeActivity.this, RoomActivity.class);
+                startActivity(i);
+                // arg_1: page to navigate to slides from the right
+                // arg_2: page navigating from slides to the left
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
             }
         });
 
@@ -113,7 +119,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "Create room with follower(s) clicked!", Toast.LENGTH_SHORT).show();
-
             }
         });
     }
@@ -148,11 +153,6 @@ public class HomeActivity extends AppCompatActivity {
         return true;
     }
 
-    /**
-     * Setup toolbar buttons to route to associated pages
-     * @param item
-     * @return
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent i;
@@ -184,7 +184,7 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.action_profile:
                 Toast.makeText(this, "Profile clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Profile clicked!");
-                i = new Intent(this, ViewMyProfileActivity.class);
+                i = new Intent(this, ProfileActivity.class);
                 this.startActivity(i);
                 // arg_1: page to navigate to slides from the right
                 // arg_2: page navigating from slides to the left
