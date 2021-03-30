@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,8 @@ public class ProfileActivity extends AppCompatActivity {
     TextView tvFullName, tvUsername, tvFollowersCount, tvFollowingCount, tvBiography, tvUserJoinDate, tvNominator;
     Button btnLogout;
     ImageButton btnSettings;
+    //    RecyclerView rvProfile;
+    ScrollView svProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,8 @@ public class ProfileActivity extends AppCompatActivity {
         // buttons
         btnLogout = findViewById(R.id.btnLogout);
         btnSettings = findViewById(R.id.btnSettings);
+        // recycler view
+//        rvProfile = findViewById(R.id.rvProfile);
         setupProfile();
         setupOnClickListeners();
     }
