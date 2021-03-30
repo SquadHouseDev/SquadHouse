@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import com.pepetech.squadhouse.R;
 
+import com.pepetech.squadhouse.R;
+
 public class ClubActivity extends AppCompatActivity {
 
     @Override
