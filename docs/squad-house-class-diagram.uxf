@@ -165,13 +165,14 @@ bg=green
     <id>UMLClass</id>
     <coordinates>
       <x>153</x>
-      <y>315</y>
+      <y>306</y>
       <w>378</w>
       <h>198</h>
     </coordinates>
     <panel_attributes>Club
 bg=yellow
 --
+- image: File
 - members: List&lt;User&gt;
 - memberCount: Int
 - followers: List&lt;User&gt;
@@ -231,12 +232,12 @@ bg=yellow
     <id>Relation</id>
     <coordinates>
       <x>351</x>
-      <y>504</y>
+      <y>495</y>
       <w>27</w>
-      <h>153</h>
+      <h>162</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;150.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;160.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
