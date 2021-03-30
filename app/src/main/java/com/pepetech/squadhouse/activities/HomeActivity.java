@@ -65,12 +65,13 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ////////////////////////////////////////////////////////////
-        // initialize buttons
+        // Setup buttons
         ////////////////////////////////////////////////////////////
         fabCreateRoomWithFollowers = findViewById(R.id.fabCreateRoomWithFollowers);
         btnCreateRoom = findViewById(R.id.btnCreateRoom);
+        setupOnClickListeners();
         ////////////////////////////////////////////////////////////
-        // setup recycler view
+        // Setup recycler view
         ////////////////////////////////////////////////////////////
         allRooms = new ArrayList<>();
         rvRooms = findViewById(R.id.rvRooms);
@@ -78,11 +79,7 @@ public class HomeActivity extends AppCompatActivity {
         rvRooms.setAdapter(adapter);
         rvRooms.setLayoutManager(new LinearLayoutManager(this));
         ////////////////////////////////////////////////////////////
-        // setup button click listeners
-        ////////////////////////////////////////////////////////////
-        setupOnClickListeners();
-        ////////////////////////////////////////////////////////////
-        // setup swipe to refresh feature
+        // Setup swipe to refresh feature
         ////////////////////////////////////////////////////////////
         swipeContainer = findViewById(R.id.swipeContainer);
         // Configure the refreshing colors
