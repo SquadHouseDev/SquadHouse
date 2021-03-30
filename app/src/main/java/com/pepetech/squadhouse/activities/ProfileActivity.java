@@ -20,20 +20,28 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProfileActivity extends AppCompatActivity {
+    ParseUser user;
     public static final String TAG = "ProfileActivity";
     AppCompatImageView ivProfile, ivProfileNominator;
     TextView tvFullName, tvUsername, tvFollowersCount, tvFollowingCount, tvBiography, tvUserJoinDate, tvNominator;
     Button btnLogout;
     ImageButton btnSettings;
-    //    RecyclerView rvProfile;
-    ScrollView svProfile;
+
+    List<ParseObject> following;
+    List<ParseObject> followers;
+//    ScrollView svProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        // setup view elements
+        ////////////////////////////////////////////////////////////
+        // Setup view elements
+        ////////////////////////////////////////////////////////////
         // image views
         ivProfile = findViewById(R.id.ivProfile);
         ivProfileNominator = findViewById(R.id.ivProfileNominator);
@@ -45,13 +53,20 @@ public class ProfileActivity extends AppCompatActivity {
         tvBiography = findViewById(R.id.tvBiography);
         tvUserJoinDate = findViewById(R.id.tvUserJoinDate);
         tvNominator = findViewById(R.id.tvNominator);
-        // buttons
+        ////////////////////////////////////////////////////////////
+        // Setup buttons
+        ////////////////////////////////////////////////////////////
         btnLogout = findViewById(R.id.btnLogout);
         btnSettings = findViewById(R.id.btnSettings);
-        // recycler view
-//        rvProfile = findViewById(R.id.rvProfile);
-        setupProfile();
         setupOnClickListeners();
+        ////////////////////////////////////////////////////////////
+        // setting up user profile
+        ////////////////////////////////////////////////////////////
+        // 1. query profile data
+        queryUserProfile();
+        // 2. populate profile with queried profile data
+        populateProfileElements();
+
     }
 
     private void setupOnClickListeners() {
@@ -76,9 +91,10 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    private void setupProfile() {
+    private void populateProfileElements() {
+        Log.i(TAG, "Populating profile elements");
+
         // load profile picture
-        ParseUser user = ParseUser.getCurrentUser();
         ParseFile image = user.getParseFile("image");
         if (image != null)
             Glide.with(this.getBaseContext())
@@ -90,12 +106,38 @@ public class ProfileActivity extends AppCompatActivity {
         tvBiography.setText(user.getString(User.KEY_BIO));
         tvUsername.setText("@" + user.getUsername());
         // load following and followers count
-        tvFollowersCount.setText("69"); // DEBUG
-        tvFollowingCount.setText("96"); // DEBUG
+//        tvFollowersCount.setText("69"); // DEBUG
+        tvFollowersCount.setText(String.valueOf(followers.size()));
+//        tvFollowingCount.setText("96"); // DEBUG
+        tvFollowingCount.setText(String.valueOf(following.size()));
     }
 
     private void queryUserProfile() {
+        Log.i(TAG, "Querying user profile data");
+        user = ParseUser.getCurrentUser();
+        Log.i(TAG, "User object_id: " + user.getObjectId());
+        following = user.getList(User.KEY_FOLLOWING);
+        followers = user.getList(User.KEY_FOLLOWERS);
 
+        if (following != null) {
+            Log.i(TAG, "Following: " + following.size());
+            for (ParseObject u : following) {
+                Log.i(TAG, "following User: " + u.getObjectId());
+            }
+        }
+        else {
+            following = new ArrayList<>();
+        }
+        if (followers != null) {
+            Log.i(TAG, "Followers: " + followers.size());
+            Log.i(TAG, "Followers: " + followers.isEmpty());
+            for (ParseObject u : followers) {
+                Log.i(TAG, "follower User: " + u.getObjectId());
+            }
+        }
+        else {
+            followers = new ArrayList<>();
+        }
     }
 
     private void signoutUser() {
