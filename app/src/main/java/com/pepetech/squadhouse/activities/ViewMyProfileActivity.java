@@ -194,6 +194,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
 //        boolean isSeed = user.isSeed();
         if (!user.isSeed()){
             loadNominatorProfileImage();
+            tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
         }
     }
 
@@ -255,7 +256,6 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                     .load(image.getUrl())
                     .circleCrop()
                     .into(ivProfileNominator);
-        tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
     }
 
 }
