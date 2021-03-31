@@ -24,6 +24,7 @@ import java.util.List;
 
 /**
  * TODO:
+ * ProfileActivity.java
  * - fullname edit w/ prompt for confirmation of changing name
  * - image edit w/ tap on profile to upload a new photo w/ confirmation of completing activity
  * - username edit w/ tap to edit
@@ -34,6 +35,10 @@ import java.util.List;
  * - club tap on profile image to view
  * - add button for linking twitter
  * - add button for linking instagram
+ * - add button and functionality for sharing
+ *
+ * activity_profile.XML
+ * - add button for sharing
  */
 public class ProfileActivity extends AppCompatActivity {
     ParseUser user;
