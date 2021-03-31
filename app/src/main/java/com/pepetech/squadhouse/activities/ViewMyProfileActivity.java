@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bumptech.glide.Glide;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -24,7 +25,7 @@ import java.util.List;
 
 /**
  * TODO:
- * ProfileActivity.java
+ * ViewMyProfileActivity.java
  * - fullname edit w/ prompt for confirmation of changing name
  * - image edit w/ tap on profile to upload a new photo w/ confirmation of completing activity
  * - username edit w/ tap to edit
@@ -32,24 +33,25 @@ import java.util.List;
  * - followers tap to view
  * - biography tap to edit
  * - nominator tap profile image to view
+ * - add nominators join date (TBD) -- need further consideration for backend design
  * - club tap on profile image to view
  * - add button for linking twitter
  * - add button for linking instagram
  * - add button and functionality for sharing
  * - add biography MAX String length checking when user is editting
- * activity_profile.XML
+ * activity_view_my_profile.XML
  * - add button for sharing
  * - fix biography TextView to show proper start and end margins
  */
-public class ProfileActivity extends AppCompatActivity {
+public class ViewMyProfileActivity extends AppCompatActivity {
     ParseUser parseUser;
     User user;
     public static final String TAG = "ProfileActivity";
     AppCompatImageView ivProfile, ivProfileNominator;
-    TextView tvFullName, tvUsername, tvFollowersCount, tvFollowingCount, tvBiography, tvUserJoinDate, tvNominator;
+    TextView tvFullName, tvUsername, tvFollowersCount, tvFollowingCount, tvBiography, tvUserJoinDate, tvNominatorName;
     Button btnLogout;
     ImageButton btnSettings;
-
+    ParseObject nominator;
     List<ParseObject> following;
     List<ParseObject> followers;
 //    ScrollView svProfile;
@@ -57,7 +59,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_view_my_profile);
         ////////////////////////////////////////////////////////////
         // Setup view elements
         ////////////////////////////////////////////////////////////
@@ -71,7 +73,7 @@ public class ProfileActivity extends AppCompatActivity {
         tvFollowingCount = findViewById(R.id.tvFollowingCount);
         tvBiography = findViewById(R.id.tvBiography);
         tvUserJoinDate = findViewById(R.id.tvUserJoinDate);
-        tvNominator = findViewById(R.id.tvNominator);
+        tvNominatorName = findViewById(R.id.tvNominatorName);
         ////////////////////////////////////////////////////////////
         // Setup buttons
         ////////////////////////////////////////////////////////////
@@ -173,7 +175,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void populateProfileElements() {
         Log.i(TAG, "Populating profile elements");
-        // load profile picture
+        // load user's profile picture
         ParseFile image = parseUser.getParseFile(User.KEY_IMAGE);
         if (image != null)
             Glide.with(this)
@@ -187,6 +189,18 @@ public class ProfileActivity extends AppCompatActivity {
         // load following and followers count
         tvFollowersCount.setText(String.valueOf(followers.size()));
         tvFollowingCount.setText(String.valueOf(following.size()));
+        // load nominator's profile picture
+        try {
+            image = nominator.fetchIfNeeded().getParseFile("image");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (image != null)
+            Glide.with(this)
+                    .load(image.getUrl())
+                    .circleCrop()
+                    .into(ivProfileNominator);
+        tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
     }
 
     private void queryUserProfile() {
@@ -206,6 +220,7 @@ public class ProfileActivity extends AppCompatActivity {
         } else {
             Log.i(TAG, "Followers: " + followers.size());
         }
+        nominator = user.getNominator();
     }
 
     private void signoutUser() {
@@ -226,7 +241,7 @@ public class ProfileActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
 
-    private void goToNominatorActivity() {
+    private void goToViewAProfileActivity() {
 //        Intent i = new Intent(this, SettingsActivity.class);
 //        startActivity(i);
 //        overridePendingTransition(R.anim.slide_to_top, R.anim.slide_to_left);

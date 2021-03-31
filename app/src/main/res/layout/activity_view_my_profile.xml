@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/eggshell"
     android:orientation="vertical"
-    tools:context=".activities.ProfileActivity">
+    tools:context=".activities.ViewMyProfileActivity">
 
 
     <RelativeLayout
@@ -63,7 +63,7 @@
             android:id="@+id/tvUsername"
             android:layout_width="127dp"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/tvFollowers"
+            android:layout_above="@+id/tvFollowersLabel"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="15dp"
@@ -72,7 +72,7 @@
             android:text="\@johndoe" />
 
         <TextView
-            android:id="@+id/tvFollowers"
+            android:id="@+id/tvFollowersLabel"
             android:layout_width="68dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -100,12 +100,12 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="-150dp"
             android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@+id/tvFollowers"
+            android:layout_toEndOf="@+id/tvFollowersLabel"
             android:text="69696969"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvFollowing"
+            android:id="@+id/tvFollowingLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -140,7 +140,8 @@
             <RelativeLayout
                 android:id="@+id/rlNominator"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivProfileNominator"
@@ -161,29 +162,39 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="200dp"
+                    android:layout_marginStart="175dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="87dp"
                     android:text="Joined Jan 1, 2021" />
 
                 <TextView
-                    android:id="@+id/tvNominator"
-                    android:layout_width="184dp"
+                    android:id="@+id/tvNominatorLabel"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvUserJoinDate"
                     android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="200dp"
+                    android:layout_marginStart="175dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginEnd="29dp"
-                    android:text="Nominated by Jane " />
+                    android:text="Nominated by" />
+
+                <TextView
+                    android:id="@+id/tvNominatorName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/tvNominatorLabel"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_toEndOf="@+id/tvNominatorLabel"
+                    android:text="Jane"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rlClubs"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/tvMemberOf"
@@ -198,7 +209,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvMemberOf"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="0dp"/>
+                    android:layout_marginTop="0dp" />
 
             </RelativeLayout>
 
