@@ -6,7 +6,9 @@ import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.models.Club;
+import com.pepetech.squadhouse.models.Interest;
 import com.pepetech.squadhouse.models.Room;
+import com.pepetech.squadhouse.models.User;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -17,6 +19,7 @@ public class SquadHouseApplication extends Application {
         super.onCreate();
         // Register needed modesl hosted on backend
         ParseObject.registerSubclass(Room.class);
+        ParseObject.registerSubclass(Interest.class);
         ParseObject.registerSubclass(Club.class);
 
         // Use for troubleshooting -- remove this line for production
