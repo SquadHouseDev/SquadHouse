@@ -36,7 +36,7 @@ import java.util.List;
  * - add button for linking twitter
  * - add button for linking instagram
  * - add button and functionality for sharing
- *
+ * - add biography MAX String length checking when user is editting
  * activity_profile.XML
  * - add button for sharing
  */
