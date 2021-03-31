@@ -33,10 +33,12 @@ public class User {
     public static final String KEY_BIOGRAPHY = "biography";
     public static final String KEY_FOLLOWING = "following";
     public static final String KEY_FOLLOWERS = "followers";
+    public static final String KEY_CLUBS = "clubs";
     public static final String KEY_INTERESTS = "interests";
     public static final String KEY_PHONE_NUMBER = "phoneNumber";
     public static final String KEY_NOMINATOR = "nominator";
     public static final String KEY_IS_SEED = "isSeed";
+
 
     private ParseUser user;
 
@@ -63,6 +65,14 @@ public class User {
     public ArrayList<ParseObject> getFollowing() {
         ArrayList<ParseObject> rv;
         rv = (ArrayList<ParseObject>) user.get(KEY_FOLLOWING);
+        if (rv == null)
+            return new ArrayList<ParseObject>();
+        return rv;
+    }
+
+    public ArrayList<ParseObject> getClubs() {
+        ArrayList<ParseObject> rv;
+        rv = (ArrayList<ParseObject>) user.get(KEY_CLUBS);
         if (rv == null)
             return new ArrayList<ParseObject>();
         return rv;
