@@ -22,6 +22,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Refer to feature-profile-activity branch for development
+ */
 public class ProfileActivity extends AppCompatActivity {
     ParseUser user;
     public static final String TAG = "ProfileActivity";
