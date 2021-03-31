@@ -30,7 +30,6 @@ public class User {
 
     private ParseUser user;
 
-
     public void User(ParseUser user) {
         this.user = user;
     }
