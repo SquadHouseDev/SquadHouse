@@ -111,6 +111,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                 Toast t = Toast.makeText(v.getContext(), "Settings button clicked!", Toast.LENGTH_SHORT);
                 t.show();
                 Log.i(TAG, "Settings button clicked!");
+                // TODO: Call a bottom sheet here
                 goToSettingsActivity();
             }
         });
@@ -227,6 +228,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         finish(); // disable user ability to renavigate after a successful login
     }
 
+    // TODO: refactor to use a bottom sheet
     private void goToSettingsActivity() {
         Intent i = new Intent(this, SettingsActivity.class);
         startActivity(i);
