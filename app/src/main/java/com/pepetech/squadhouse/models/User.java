@@ -22,9 +22,7 @@ import java.util.List;
  * Reference: https://guides.codepath.com/android/Troubleshooting-Common-Issues-with-Parse#extending-parseuser
  *
  * TODO: README documentation in network
- * TODO: delete user from following
  * TODO: read followers - a query needs to find all users whose following list contain the target user
- * TODO: delete an interest from interests
  */
 public class User {
     public static final String KEY_FIRST_NAME = "firstName";
@@ -59,7 +57,6 @@ public class User {
 
     public boolean isSeed() { return (boolean) user.getBoolean(KEY_IS_SEED); }
 
-    // TODO: currently broken
     public ParseObject getNominator() { return (ParseObject) user.get(KEY_NOMINATOR); }
 
     public ArrayList<ParseObject> getFollowing() {
@@ -94,9 +91,9 @@ public class User {
 //        return (ArrayList<ParseObject>) user.get(KEY_FOLLOWERS);
 //    }
 
-    //////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
     // Setter Methods: need to call saveInBackground on ParseUser in order to effect changes
-    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
     public void setFirstName(String firstname) { user.put(KEY_FIRST_NAME, firstname); }
 
     public void setLastName(String lastName) { user.put(KEY_LAST_NAME, lastName); }
@@ -107,15 +104,28 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) { user.put(KEY_PHONE_NUMBER, phoneNumber); }
 
-    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
     // Update Methods: automatically calls saveInBackground on ParseUser to effect updates
-    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////
     public boolean addFollowing(ParseObject user){
         ArrayList<ParseObject> following = getFollowing();
         if (following.contains(user)){
             return false;
         }
         following.add(user);
+        user.put("following", following);
+        user.saveInBackground();
+        return true;
+    }
+
+    public boolean removeFollowing(ParseObject user) {
+        ArrayList<ParseObject> following = getFollowing();
+        if (!following.contains(user)) {
+            return false;
+        }
+        else {
+            following.remove(user);
+        }
         user.put("following", following);
         user.saveInBackground();
         return true;
@@ -130,5 +140,43 @@ public class User {
         user.put("interests", interests);
         user.saveInBackground();
         return true;
+    }
+
+    public boolean deleteInterest(Interest interest){
+        ArrayList<ParseObject> interests = getInterests();
+        if (!interests.contains(interest)) {
+            return false;
+        }
+        else {
+            interests.remove(interest);
+        }
+        user.put("interests", interests);
+        user.saveInBackground();
+        return true;
+    }
+
+    public void updateFirstName(String firstname) {
+        setFirstName(firstname);
+        user.saveInBackground();
+    }
+
+    public void updateLastName(String lastName) {
+        setLastName(lastName);
+        user.saveInBackground();
+    }
+
+    public void updateBiography(String biography) {
+        setBiography(biography);
+        user.saveInBackground();
+    }
+
+    public void updateImage(File image) {
+        setImage(image);
+        user.saveInBackground();
+    }
+
+    public void updatePhoneNumber(String phoneNumber) {
+        setPhoneNumber(phoneNumber);
+        user.saveInBackground();
     }
 }
