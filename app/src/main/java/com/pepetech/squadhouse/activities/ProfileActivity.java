@@ -23,7 +23,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Refer to feature-profile-activity branch for development
+ * TODO:
+ * ProfileActivity.java
+ * - fullname edit w/ prompt for confirmation of changing name
+ * - image edit w/ tap on profile to upload a new photo w/ confirmation of completing activity
+ * - username edit w/ tap to edit
+ * - following tap to view
+ * - followers tap to view
+ * - biography tap to edit
+ * - nominator tap profile image to view
+ * - club tap on profile image to view
+ * - add button for linking twitter
+ * - add button for linking instagram
+ * - add button and functionality for sharing
+ *
+ * activity_profile.XML
+ * - add button for sharing
  */
 public class ProfileActivity extends AppCompatActivity {
     ParseUser user;
