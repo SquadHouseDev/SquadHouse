@@ -9,12 +9,12 @@ import java.util.ArrayList;
 
 /**
  * Extension of the ParseUser class
- * 
+ *
  * Implementation follows a delegate pattern to avoid issues associated with
  * subclassing the ParseUser class.
- * 
+ *
  * Reference: https://guides.codepath.com/android/Troubleshooting-Common-Issues-with-Parse#extending-parseuser
- * 
+ *
  * TODO: README documentation in network
  * TODO: delete/add user from following
  * TODO: read followers - a query needs to find all users whose following list contain the target user
