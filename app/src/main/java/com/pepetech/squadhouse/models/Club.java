@@ -20,26 +20,15 @@ public class Club extends ParseObject {
     ////////////////////////////////////////////////////////////
     // Getter Methods
     ////////////////////////////////////////////////////////////
-    public String getName() {
-        return getString(KEY_NAME);
-    }
+    public String getName() { return getString(KEY_NAME); }
 
-    public String getDescription() {
-        return getString(KEY_DESCRIPTION);
-    }
+    public String getDescription() { return getString(KEY_DESCRIPTION); }
 
-    public String getFollowers() {
-        return getString(KEY_FOLLOWERS);
-    }
+    public String getFollowers() { return getString(KEY_FOLLOWERS); }
 
-    public ParseFile getImage() {
-        return getParseFile(KEY_IMAGE);
-    }
+    public ParseFile getImage() { return getParseFile(KEY_IMAGE); }
 
-    public List<Object> getMembers() {
-        return getList(KEY_MEMBERS);
-
-    }
+    public List<Object> getMembers() { return getList(KEY_MEMBERS); }
 
     public List<ParseObject> getInterests() {
         List<ParseObject> rv;
@@ -52,21 +41,13 @@ public class Club extends ParseObject {
     //////////////////////////////////////////////////////////////////////////////////
     // Setter Methods: need to call saveInBackground on ParseUser in order to effect changes
     /////////////////////////////////////////////////////////////////////////////////
-    public void setName(String newName) {
-        put(KEY_NAME, newName);
-    }
+    public void setName(String newName) { put(KEY_NAME, newName); }
 
-    public void setDescription(String newDescription) {
-        put(KEY_DESCRIPTION, newDescription);
-    }
+    public void setDescription(String newDescription) { put(KEY_DESCRIPTION, newDescription); }
 
-    public void setImage(File newImage) {
-        put(KEY_IMAGE, new ParseFile(newImage));
-    }
+    public void setImage(File newImage) { put(KEY_IMAGE, new ParseFile(newImage)); }
 
-    public void setImage(ParseFile newImage) {
-        put(KEY_IMAGE, newImage);
-    }
+    public void setImage(ParseFile newImage) { put(KEY_IMAGE, newImage); }
 
     /////////////////////////////////////////////////////////////////////////////////
     // Update Methods: automatically calls saveInBackground on ParseUser to effect updates
