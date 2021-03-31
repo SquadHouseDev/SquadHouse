@@ -30,16 +30,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * TODO: create heterogenous recycler view
  * TODO: add cell_search to the recycler view
  * TODO: add cell_room_future to the recycler view
+ * Reference: https://guides.codepath.com/android/Heterogeneous-Layouts-inside-RecyclerView#prerequisite
  * Recycler view should start with:
- * 1. cell_search
- * 2. cell_room_future
- * 3. cell_room_active
- * 4. cell_room_active
+ * 1. cell_search.xml
+ * 2. cell_room_future.xml
+ * 3. cell_room_active.xml
+ * 4. cell_room_active.xml
  * .
  * .
- * N
+ * N. n-cell_room_active.xml
  */
 public class HomeActivity extends AppCompatActivity {
     public static final String TAG = "HomeActivity";
