@@ -180,7 +180,6 @@ bg=green
 - members: List&lt;User&gt;
 - memberCount: Int
 - followers: List&lt;User&gt;
-
 - name: String
 # clubhouse supports emojis... what sort of encoding is needed
 # for displaying?
@@ -195,21 +194,25 @@ bg=green
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>490</x>
+      <x>469</x>
       <y>721</y>
-      <w>196</w>
-      <h>98</h>
+      <w>343</w>
+      <h>154</h>
     </coordinates>
     <panel_attributes>Interest
 bg=yellow
 --
 - name: String
-- categories: List&lt;String&gt;
-- user: String
-- club: String
+- icon: Image
+
 - objectId: String
 - updatedAt: Datetime
-- createdAt: Datetime</panel_attributes>
+- createdAt: Datetime
+
+# users can add and delete from their list of interests
+# clubs can add and delete from their list of interests
+# the database of interests for the most part is static, only sys admin 
+# are allowed to create new interest labels</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -222,17 +225,6 @@ bg=yellow
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>371</x>
-      <y>609</y>
-      <w>133</w>
-      <h>21</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -250,11 +242,11 @@ bg=yellow
     <coordinates>
       <x>371</x>
       <y>763</y>
-      <w>133</w>
+      <w>112</w>
       <h>21</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;140.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -328,5 +320,16 @@ bg=yellow</panel_attributes>
     <panel_attributes>Core
 bg=green</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>371</x>
+      <y>609</y>
+      <w>133</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>170.0;10.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
