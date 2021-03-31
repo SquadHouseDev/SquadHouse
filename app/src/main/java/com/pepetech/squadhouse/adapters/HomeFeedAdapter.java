@@ -54,7 +54,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
         private TextView tvParticipants;
 
 //        private TextView tvDescription;
-        // TODO: add swipe right on cell to reveal a button to hide the recommended active room
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvClubName = itemView.findViewById(R.id.tvClubName);
