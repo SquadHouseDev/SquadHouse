@@ -22,9 +22,9 @@ import java.util.List;
  * Reference: https://guides.codepath.com/android/Troubleshooting-Common-Issues-with-Parse#extending-parseuser
  *
  * TODO: README documentation in network
- * TODO: delete/add user from following
+ * TODO: delete user from following
  * TODO: read followers - a query needs to find all users whose following list contain the target user
- * TODO: fix get nominator, not broken
+ * TODO: delete an interest from interests
  */
 public class User {
     public static final String KEY_FIRST_NAME = "firstName";
@@ -33,15 +33,17 @@ public class User {
     public static final String KEY_BIOGRAPHY = "biography";
     public static final String KEY_FOLLOWING = "following";
     public static final String KEY_FOLLOWERS = "followers";
+    public static final String KEY_INTERESTS = "interests";
     public static final String KEY_PHONE_NUMBER = "phoneNumber";
     public static final String KEY_NOMINATOR = "nominator";
+    public static final String KEY_IS_SEED = "isSeed";
 
     private ParseUser user;
 
     public void User(ParseUser user) { this.user = user; }
 
     ////////////////////////////////////////////////////////////
-    // Getters
+    // Getter Methods
     ////////////////////////////////////////////////////////////
     public ParseFile getImage() { return user.getParseFile(KEY_IMAGE); }
 
@@ -53,6 +55,8 @@ public class User {
 
     public String getPhoneNumber() { return (String) user.get(KEY_PHONE_NUMBER); }
 
+    public boolean isSeed() { return (boolean) user.getBoolean(KEY_IS_SEED); }
+
     // TODO: currently broken
     public ParseObject getNominator() { return (ParseObject) user.get(KEY_NOMINATOR); }
 
@@ -61,7 +65,15 @@ public class User {
         rv = (ArrayList<ParseObject>) user.get(KEY_FOLLOWING);
         if (rv == null)
             return new ArrayList<ParseObject>();
-        return (ArrayList<ParseObject>) user.get(KEY_FOLLOWING);
+        return rv;
+    }
+
+    public ArrayList<ParseObject> getInterests() {
+        ArrayList<ParseObject> rv;
+        rv = (ArrayList<ParseObject>) user.get(KEY_INTERESTS);
+        if (rv == null)
+            return new ArrayList<ParseObject>();
+        return rv;
     }
 
 //    public ArrayList<ParseObject> getFollowers() {
@@ -73,7 +85,7 @@ public class User {
 //    }
 
     //////////////////////////////////////////////////////////////////////////////////
-    // Setters: need to call saveInBackground on ParseUser in order to effect changes
+    // Setter Methods: need to call saveInBackground on ParseUser in order to effect changes
     /////////////////////////////////////////////////////////////////////////////////
     public void setFirstName(String firstname) { user.put(KEY_FIRST_NAME, firstname); }
 
@@ -86,7 +98,7 @@ public class User {
     public void setPhoneNumber(String phoneNumber) { user.put(KEY_PHONE_NUMBER, phoneNumber); }
 
     /////////////////////////////////////////////////////////////////////////////////
-    // Update: automatically calls saveInBackground on ParseUser to effect updates
+    // Update Methods: automatically calls saveInBackground on ParseUser to effect updates
     /////////////////////////////////////////////////////////////////////////////////
     public boolean addFollowing(ParseObject user){
         ArrayList<ParseObject> following = getFollowing();
@@ -98,13 +110,15 @@ public class User {
         user.saveInBackground();
         return true;
     }
-//    public void setFollowing() {
-//        return KEY_FOLLOWING;
-//    }
 
-//    public void setFollowers() {
-//        return KEY_FOLLOWERS;
-//    }
-
-
+    public boolean addInterest(ParseObject interest) {
+        ArrayList<ParseObject> interests = getInterests();
+        if (interests.contains(interest)) {
+            return false;
+        }
+        interests.add(interest);
+        user.put("interests", interests);
+        user.saveInBackground();
+        return true;
+    }
 }
