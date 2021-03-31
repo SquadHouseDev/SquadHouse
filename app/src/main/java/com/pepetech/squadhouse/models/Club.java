@@ -4,6 +4,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ParseClassName("Club")
@@ -13,6 +14,7 @@ public class Club extends ParseObject {
     public static final String KEY_FOLLOWERS = "followers";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_MEMBERS = "members";
+    public static final String KEY_INTERESTS = "interests";
 
 
     public String getName() {
@@ -34,5 +36,12 @@ public class Club extends ParseObject {
     public List<Object> getMembers() {
         return getList(KEY_MEMBERS);
 
+    }
+    public List<ParseObject> getInterests() {
+        List<ParseObject> rv;
+        rv =  getList(KEY_INTERESTS);
+        if (rv == null)
+            return new ArrayList<ParseObject>();
+        return rv;
     }
 }
