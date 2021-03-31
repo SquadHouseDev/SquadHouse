@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
-  <zoom_level>9</zoom_level>
+  <zoom_level>7</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>630</x>
-      <y>639</y>
-      <w>225</w>
-      <h>144</h>
+      <x>490</x>
+      <y>560</y>
+      <w>175</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>Activity
 bg=yellow
@@ -24,10 +24,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>270</x>
-      <y>1215</y>
-      <w>531</w>
-      <h>216</h>
+      <x>210</x>
+      <y>1057</y>
+      <w>413</w>
+      <h>168</h>
     </coordinates>
     <panel_attributes>Settings
 bg=yellow
@@ -50,10 +50,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>270</x>
-      <y>639</y>
-      <w>216</w>
-      <h>567</h>
+      <x>210</x>
+      <y>560</y>
+      <w>168</w>
+      <h>441</h>
     </coordinates>
     <panel_attributes>User
 bg=green
@@ -62,25 +62,29 @@ bg=green
 - objectId: String
 - updatedAt: Datetime
 - createdAt: Datetime
+- emailVerified: boolean
 
-- image: File
+
 - biography: String
-- fullName: String
+- image: File
 - userName: String
+- firstName: String
+- lastName: String
 - password: String
 - phoneNumber: String
 - email: String
+- following: List&lt;User&gt;
+- followers: List&lt;User&gt;
+- clubs: List&lt;Club&gt;
 
 *Stretch 1*
 - nomination: Activity
 - invites: Int
 - isSeed: Boolean
-
-- clubs: List&lt;Club&gt;
 - followerCount: Int
 - followingCount: Int
-- followers: List&lt;User&gt;
-- following: List&lt;User&gt;
+
+
 - twitterUrl: String
 - instagramUrl: String
 
@@ -100,10 +104,10 @@ Stretch 3-</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>99</x>
-      <y>1449</y>
-      <w>882</w>
-      <h>198</h>
+      <x>70</x>
+      <y>1295</y>
+      <w>686</w>
+      <h>154</h>
     </coordinates>
     <panel_attributes>Calendar
 bg=yellow
@@ -124,10 +128,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>630</x>
-      <y>90</y>
-      <w>387</w>
-      <h>405</h>
+      <x>490</x>
+      <y>133</y>
+      <w>301</w>
+      <h>315</h>
     </coordinates>
     <panel_attributes>Room
 bg=green
@@ -136,26 +140,21 @@ bg=green
 - objectId: String
 - updatedAt: Datetime
 - createdAt: Datetime
-- user: Pointer to User
 
-- host: User
-- name: String
-- cohosts: List&lt;User&gt;
+
+- title: String
+- clubName: String
 - participants: List&lt;User&gt;
+- host: User
+- isActive: bool...?
+- cohosts: List&lt;User&gt;
 - startedAt: Datetime
 - endedAt: Datetime 
 
 *Stretch 1*
-
-- isActive: bool...?
 - isScheduled: bool...?
 
-- club: Club
-- title: String
-.
-- description: String
 - exclusivityStatus: String or an enum (1: open, 2: social,3: closed)
-- groupName: String
 - allowHandRaise: Boolean
 
 </panel_attributes>
@@ -164,35 +163,42 @@ bg=green
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>153</x>
-      <y>306</y>
-      <w>378</w>
-      <h>198</h>
+      <x>119</x>
+      <y>203</y>
+      <w>294</w>
+      <h>252</h>
     </coordinates>
     <panel_attributes>Club
-bg=yellow
+bg=green
 --
+*Core*
+- objectId: String
+- updatedAt: Datetime
+- createdAt: Datetime
+
 - image: File
 - members: List&lt;User&gt;
 - memberCount: Int
 - followers: List&lt;User&gt;
-- followerCount: Int
+
 - name: String
 # clubhouse supports emojis... what sort of encoding is needed
 # for displaying?
-- about: String 
-- objectId: String
-- updatedAt: Datetime
-- createdAt: Datetime</panel_attributes>
+- description: String 
+
+- followerCount: Int
+*Stretch 1*
+
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>630</x>
-      <y>846</y>
-      <w>252</w>
-      <h>126</h>
+      <x>490</x>
+      <y>721</y>
+      <w>196</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>Interest
 bg=yellow
@@ -209,10 +215,10 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>387</x>
-      <y>1206</y>
-      <w>27</w>
-      <h>27</h>
+      <x>301</x>
+      <y>1050</y>
+      <w>21</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;10.0</additional_attributes>
@@ -220,10 +226,10 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>477</x>
-      <y>702</y>
-      <w>171</w>
-      <h>27</h>
+      <x>371</x>
+      <y>609</y>
+      <w>133</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
@@ -231,10 +237,10 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>351</x>
-      <y>495</y>
-      <w>27</w>
-      <h>162</h>
+      <x>273</x>
+      <y>448</y>
+      <w>21</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;160.0;10.0;10.0</additional_attributes>
@@ -242,10 +248,10 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>477</x>
-      <y>900</y>
-      <w>171</w>
-      <h>27</h>
+      <x>371</x>
+      <y>763</y>
+      <w>133</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
@@ -253,10 +259,10 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
-      <y>486</y>
-      <w>396</w>
-      <h>171</h>
+      <x>350</x>
+      <y>441</y>
+      <w>308</w>
+      <h>133</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;170.0;10.0;90.0;420.0;90.0;420.0;10.0</additional_attributes>
@@ -264,10 +270,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>873</x>
-      <y>1179</y>
-      <w>189</w>
-      <h>171</h>
+      <x>679</x>
+      <y>980</y>
+      <w>147</w>
+      <h>133</h>
     </coordinates>
     <panel_attributes>*Priority Legend*
 --
@@ -278,10 +284,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>783</x>
-      <y>0</y>
-      <w>90</w>
-      <h>63</h>
+      <x>609</x>
+      <y>63</y>
+      <w>70</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>Event
 bg=yellow
@@ -291,10 +297,10 @@ bg=yellow
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>819</x>
-      <y>54</y>
-      <w>27</w>
-      <h>54</h>
+      <x>637</x>
+      <y>105</y>
+      <w>21</w>
+      <h>42</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
@@ -302,10 +308,10 @@ bg=yellow
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>882</x>
-      <y>1251</y>
-      <w>90</w>
-      <h>27</h>
+      <x>686</x>
+      <y>1036</y>
+      <w>70</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>Stretch
 bg=yellow</panel_attributes>
@@ -314,10 +320,10 @@ bg=yellow</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>882</x>
-      <y>1215</y>
-      <w>90</w>
-      <h>27</h>
+      <x>686</x>
+      <y>1008</y>
+      <w>70</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>Core
 bg=green</panel_attributes>
