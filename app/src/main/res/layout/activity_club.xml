@@ -1,9 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
     tools:context=".activities.ClubActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/tvClubName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="JOJI CLUB">
+
+    </TextView>
+
+    <ImageView
+        android:id="@+id/ivClubImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvClubDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:text="Bitches ain't shit but hoes and tricks Bitches ain't shit but hoes and tricks Lick on these nuts and suck the dick Gets the fuck on after you're done Then I hops in my coupe to make a quick run Bitches ain't shit but hoes and tricks Lick on these nuts and suck the dick Gets the fuck on after you're done Then I hops in my coupe to make a quick run I used to know a bitch named Eric Wright We used to roll around and fuck the hoes at night Tight than a motherfucka with the gangsta beats And we was ballin' on the motherfuckin' Compton streets Peep, the shit got deep and it was on Number one song after number one song Long as my motherfuckin' pockets was fat I didn't give a fuck where the bitch was at But she was hangin' with a white bitch doin' the shit she do Suckin' on his dick just to get a buck or two And the few ends she got didn't mean nothin' Now she's suing 'cause shit that she be doin' ain't shit Bitch can't hang with the streets, she found herself short So now she's takin' me to court That's real conversation for yo' ass So recognize and pass to Daz ">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/tvInterests"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:gravity="center"
+        android:text="Joji">
+
+    </TextView>
+
+</LinearLayout>
