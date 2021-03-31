@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -102,7 +101,7 @@ public class ProfileActivity extends AppCompatActivity {
                     .into(ivProfile);
         // load profile text information
         tvFullName.setText(user.getString(User.KEY_FIRST_NAME) + " " + user.getString(User.KEY_LAST_NAME));
-        tvBiography.setText(user.getString(User.KEY_BIO));
+        tvBiography.setText(user.getString(User.KEY_BIOGRAPHY));
         tvUsername.setText("@" + user.getUsername());
         // load following and followers count
         tvFollowersCount.setText(String.valueOf(followers.size()));
