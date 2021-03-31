@@ -39,6 +39,7 @@ import java.util.List;
  * - add biography MAX String length checking when user is editting
  * activity_profile.XML
  * - add button for sharing
+ * - fix biography TextView to show proper start and end margins
  */
 public class ProfileActivity extends AppCompatActivity {
     ParseUser user;
