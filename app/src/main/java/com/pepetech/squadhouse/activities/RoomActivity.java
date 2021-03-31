@@ -1,6 +1,8 @@
 package com.pepetech.squadhouse.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +38,9 @@ public class RoomActivity extends AppCompatActivity {
 
     Button display_button;
 
+    //make room model/class push to back4app
+    //github
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +68,10 @@ public class RoomActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i(TAG, "invite button clicked");
                 Toast.makeText(v.getContext(), "Invite clicked!", Toast.LENGTH_SHORT).show();
+
+//                Intent i = new Intent(RoomActivity.this, InviteActivity.class);
+//                i.putExtra("allUsers", (Parcelable) allUsers);
+//                startActivity(i);
             }
         });
 
@@ -79,10 +88,8 @@ public class RoomActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i(TAG, "display button clicked");
 
-
                 user = ParseUser.getCurrentUser();
-
-
+                Log.i(TAG, user.toString());
                 Toast.makeText(v.getContext(), "End Button clicked!", Toast.LENGTH_SHORT).show();
             }
         });
