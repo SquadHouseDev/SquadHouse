@@ -190,17 +190,10 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         tvFollowersCount.setText(String.valueOf(followers.size()));
         tvFollowingCount.setText(String.valueOf(following.size()));
         // load nominator's profile picture
-        try {
-            image = nominator.fetchIfNeeded().getParseFile("image");
-        } catch (ParseException e) {
-            e.printStackTrace();
+//        boolean isSeed = user.isSeed();
+        if (!user.isSeed()){
+            loadNominatorProfileImage();
         }
-        if (image != null)
-            Glide.with(this)
-                    .load(image.getUrl())
-                    .circleCrop()
-                    .into(ivProfileNominator);
-        tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
     }
 
     private void queryUserProfile() {
@@ -246,6 +239,21 @@ public class ViewMyProfileActivity extends AppCompatActivity {
 //        startActivity(i);
 //        overridePendingTransition(R.anim.slide_to_top, R.anim.slide_to_left);
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+    }
+
+    private void loadNominatorProfileImage(){
+        ParseFile image = null;
+        try {
+            image = nominator.fetchIfNeeded().getParseFile("image");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (image != null)
+            Glide.with(this)
+                    .load(image.getUrl())
+                    .circleCrop()
+                    .into(ivProfileNominator);
+        tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
     }
 
 }
