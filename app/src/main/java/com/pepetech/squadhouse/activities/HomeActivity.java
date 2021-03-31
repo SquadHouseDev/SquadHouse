@@ -105,6 +105,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast t = Toast.makeText(getBaseContext(), "Create room clicked!", Toast.LENGTH_SHORT);
                 Log.i(TAG, "Create room clicked!");
+                // TODO: Call a bottom sheet here
             }
         });
 
@@ -112,6 +113,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "Create room with follower(s) clicked!", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
