@@ -8,8 +8,7 @@
         android:id="@+id/followerText"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:text="Followers/Friends"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:text="Followers/Friends" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFollowers"
@@ -24,9 +23,10 @@
         android:layout_height="35dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginStart="192dp"
         android:layout_marginLeft="65dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="37dp"
+        android:layout_marginEnd="9dp"
+        android:layout_toEndOf="@+id/followerText"
         android:text="Done" />
 
 
