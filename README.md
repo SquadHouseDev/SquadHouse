@@ -20,7 +20,7 @@
 - **Scope:** Rather narrow scope of audio rooms, similar even to podcasts/radio sessions but could branch out to some functionality similar to the 'live' features found commonly on platforms like Instagram, TikTok, so on so forth.
 
 ### Demo
-<img src="/docs/v1.0.0-demo.gif" width=200>
+<img src="/docs/demo/v1.0.0-demo.gif" width=200>
 
 
 ## Product Spec
