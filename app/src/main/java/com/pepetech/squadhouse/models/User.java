@@ -94,19 +94,20 @@ public class User {
     /////////////////////////////////////////////////////////////////////////////////////////////
     // Setter Methods: need to call saveInBackground on ParseUser in order to effect changes
     /////////////////////////////////////////////////////////////////////////////////////////////
-    public void setFirstName(String firstname) { user.put(KEY_FIRST_NAME, firstname); }
+    private void setFirstName(String firstname) { user.put(KEY_FIRST_NAME, firstname); }
 
-    public void setLastName(String lastName) { user.put(KEY_LAST_NAME, lastName); }
+    private void setLastName(String lastName) { user.put(KEY_LAST_NAME, lastName); }
 
-    public void setBiography(String biography) { user.put(KEY_BIOGRAPHY, biography); }
+    private void setBiography(String biography) { user.put(KEY_BIOGRAPHY, biography); }
 
-    public void setImage(File image) { user.put(KEY_IMAGE, new ParseFile(image)); }
+    private void setImage(File image) { user.put(KEY_IMAGE, new ParseFile(image)); }
 
-    public void setPhoneNumber(String phoneNumber) { user.put(KEY_PHONE_NUMBER, phoneNumber); }
+    private void setPhoneNumber(String phoneNumber) { user.put(KEY_PHONE_NUMBER, phoneNumber); }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     // Update Methods: automatically calls saveInBackground on ParseUser to effect updates
     /////////////////////////////////////////////////////////////////////////////////////////////
+    // TODO: broken, need to update follower for the input user
     public boolean addFollowing(ParseObject user){
         ArrayList<ParseObject> following = getFollowing();
         if (following.contains(user)){
@@ -142,7 +143,7 @@ public class User {
         return true;
     }
 
-    public boolean deleteInterest(Interest interest){
+    public boolean removeInterest(Interest interest){
         ArrayList<ParseObject> interests = getInterests();
         if (!interests.contains(interest)) {
             return false;
