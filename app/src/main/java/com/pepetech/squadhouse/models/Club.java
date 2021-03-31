@@ -28,7 +28,7 @@ public class Club extends ParseObject {
 
     public ParseFile getImage() { return getParseFile(KEY_IMAGE); }
 
-    public List<Object> getMembers() { return getList(KEY_MEMBERS); }
+    public List<ParseObject> getMembers() { return getList(KEY_MEMBERS); }
 
     public List<ParseObject> getInterests() {
         List<ParseObject> rv;
@@ -41,13 +41,13 @@ public class Club extends ParseObject {
     ////////////////////////////////////////////////////////////////////////////////////////////
     // Setter Methods: need to call saveInBackground on ParseUser in order to effect changes
     ////////////////////////////////////////////////////////////////////////////////////////////
-    public void setName(String newName) { put(KEY_NAME, newName); }
+    private void setName(String newName) { put(KEY_NAME, newName); }
 
-    public void setDescription(String newDescription) { put(KEY_DESCRIPTION, newDescription); }
+    private void setDescription(String newDescription) { put(KEY_DESCRIPTION, newDescription); }
 
-    public void setImage(File newImage) { put(KEY_IMAGE, new ParseFile(newImage)); }
+    private void setImage(File newImage) { put(KEY_IMAGE, new ParseFile(newImage)); }
 
-    public void setImage(ParseFile newImage) { put(KEY_IMAGE, newImage); }
+    private void setImage(ParseFile newImage) { put(KEY_IMAGE, newImage); }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
     // Update Methods: automatically calls saveInBackground on ParseUser to effect updates
@@ -63,7 +63,37 @@ public class Club extends ParseObject {
         return true;
     }
 
+    public boolean addMember(ParseObject member) {
+        List<ParseObject> members = getMembers();
+        if (members.contains(member)) {
+            return false;
+        }
+        members.add(member);
+        put("interests", members);
+        saveInBackground();
+        return true;
+    }
+
+    public boolean removeMember(ParseObject member){
+        List<ParseObject> members = getMembers();
+        if (!members.contains(member)) {
+            return false;
+        }
+        else {
+            members.remove(member);
+        }
+        put("interests", members);
+        saveInBackground();
+        return true;
+    }
+
     public boolean updateImage(File image) {
+        setImage(image);
+        saveInBackground();
+        return true;
+    }
+    
+    public boolean updateImage(ParseFile image) {
         setImage(image);
         saveInBackground();
         return true;
@@ -71,6 +101,12 @@ public class Club extends ParseObject {
 
     public boolean updateDescription(String description) {
         setDescription(description);
+        saveInBackground();
+        return true;
+    }
+
+    public boolean updateName(String name) {
+        setName(name);
         saveInBackground();
         return true;
     }
