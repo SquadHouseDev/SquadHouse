@@ -42,7 +42,8 @@ import java.util.List;
  * - fix biography TextView to show proper start and end margins
  */
 public class ProfileActivity extends AppCompatActivity {
-    ParseUser user;
+    ParseUser parseUser;
+    User user;
     public static final String TAG = "ProfileActivity";
     AppCompatImageView ivProfile, ivProfileNominator;
     TextView tvFullName, tvUsername, tvFollowersCount, tvFollowingCount, tvBiography, tvUserJoinDate, tvNominator;
@@ -80,6 +81,9 @@ public class ProfileActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////
         // setting up user profile
         ////////////////////////////////////////////////////////////
+        parseUser = ParseUser.getCurrentUser();
+        user = new User();
+        user.User(parseUser);
         // 1. query profile data
         queryUserProfile();
         // 2. populate profile with queried profile data
@@ -91,7 +95,8 @@ public class ProfileActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(getBaseContext(), "Sign out button clicked!", Toast.LENGTH_SHORT);
+                Toast t = Toast.makeText(v.getContext(), "Sign out button clicked!", Toast.LENGTH_SHORT);
+                t.show();
                 Log.i(TAG, "Sign out button clicked!");
                 signoutUser();
                 goToLoginActivity();
@@ -101,27 +106,84 @@ public class ProfileActivity extends AppCompatActivity {
         btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(getBaseContext(), "Settings button clicked!", Toast.LENGTH_SHORT);
+                Toast t = Toast.makeText(v.getContext(), "Settings button clicked!", Toast.LENGTH_SHORT);
+                t.show();
                 Log.i(TAG, "Settings button clicked!");
                 goToSettingsActivity();
             }
         });
-
+        // TODO
+        ivProfileNominator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
+                t.show();
+                Log.i(TAG, "Nominator profile clicked!");
+//                ParseObject nominator = user.getNominator()
+//                goToProfileActivity();
+            }
+        });
+        // TODO
+        ivProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
+                t.show();
+                Log.i(TAG, "Nominator profile clicked!");
+//                ParseObject nominator = user.getNominator()
+//                goToProfileActivity();
+            }
+        });
+        // TODO
+        tvUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(v.getContext(), "Username clicked!", Toast.LENGTH_SHORT);
+                t.show();
+                Log.i(TAG, "Username clicked!");
+//                ParseObject nominator = user.getNominator()
+//                goToProfileActivity();
+            }
+        });
+        // TODO
+        tvFullName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(v.getContext(), "Fullname clicked!", Toast.LENGTH_SHORT);
+                t.show();
+                Log.i(TAG, "Fullname clicked!");
+//                ParseObject nominator = user.getNominator()
+//                goToProfileActivity();
+            }
+        });
+        // TODO
+        tvBiography.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(ProfileActivity.this, "Biography clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getConte, "Biography clicked!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "Biography clicked!", Toast.LENGTH_SHORT).show();
+//                t.show();
+                Log.i(TAG, "Biography clicked!");
+//                ParseObject nominator = user.getNominator()
+//                goToProfileActivity();
+            }
+        });
     }
 
     private void populateProfileElements() {
         Log.i(TAG, "Populating profile elements");
         // load profile picture
-        ParseFile image = user.getParseFile(User.KEY_IMAGE);
+        ParseFile image = parseUser.getParseFile(User.KEY_IMAGE);
         if (image != null)
-            Glide.with(this.getBaseContext())
+            Glide.with(this)
                     .load(image.getUrl())
                     .circleCrop()
                     .into(ivProfile);
         // load profile text information
-        tvFullName.setText(user.getString(User.KEY_FIRST_NAME) + " " + user.getString(User.KEY_LAST_NAME));
-        tvBiography.setText(user.getString(User.KEY_BIOGRAPHY));
-        tvUsername.setText("@" + user.getUsername());
+        tvFullName.setText(parseUser.getString(User.KEY_FIRST_NAME) + " " + parseUser.getString(User.KEY_LAST_NAME));
+        tvBiography.setText(parseUser.getString(User.KEY_BIOGRAPHY));
+        tvUsername.setText("@" + parseUser.getUsername());
         // load following and followers count
         tvFollowersCount.setText(String.valueOf(followers.size()));
         tvFollowingCount.setText(String.valueOf(following.size()));
@@ -129,21 +191,19 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void queryUserProfile() {
         Log.i(TAG, "Querying user profile data");
-        user = ParseUser.getCurrentUser();
-        Log.i(TAG, "User object_id: " + user.getObjectId());
-        following = user.getList(User.KEY_FOLLOWING);
-        followers = user.getList(User.KEY_FOLLOWERS);
+        parseUser = ParseUser.getCurrentUser();
+        Log.i(TAG, "User object_id: " + parseUser.getObjectId());
+        following = parseUser.getList(User.KEY_FOLLOWING);
+        followers = parseUser.getList(User.KEY_FOLLOWERS);
         // empty case
         if (following == null) {
             following = new ArrayList<>();
-        }
-        else {
+        } else {
             Log.i(TAG, "Following size: " + following.size());
         }
         if (followers == null) {
             followers = new ArrayList<>();
-        }
-        else {
+        } else {
             Log.i(TAG, "Followers: " + followers.size());
         }
     }
@@ -162,6 +222,13 @@ public class ProfileActivity extends AppCompatActivity {
     private void goToSettingsActivity() {
         Intent i = new Intent(this, SettingsActivity.class);
         startActivity(i);
+//        overridePendingTransition(R.anim.slide_to_top, R.anim.slide_to_left);
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+    }
+
+    private void goToNominatorActivity() {
+//        Intent i = new Intent(this, SettingsActivity.class);
+//        startActivity(i);
 //        overridePendingTransition(R.anim.slide_to_top, R.anim.slide_to_left);
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }

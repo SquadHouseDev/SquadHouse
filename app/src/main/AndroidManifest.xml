@@ -18,7 +18,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".activities.SignUpActivity"></activity>
         <activity android:name=".activities.ClubActivity"></activity>
-        <activity android:name=".activities.ProfileActivity" />
+        <activity android:name=".activities.ViewMyProfileActivity" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.LoginActivity">
             <!-- Set default startup screen -->
