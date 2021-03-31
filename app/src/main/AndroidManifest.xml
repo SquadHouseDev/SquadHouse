@@ -17,10 +17,8 @@
         android:theme="@style/Theme.SquadHouse"
         android:usesCleartextTraffic="true">
         <activity android:name=".activities.ClubActivity"></activity>
-        <activity android:name=".activities.ProfileActivity"></activity>
-        <activity android:name=".activities.SettingsActivity"></activity>
+        <activity android:name=".activities.HomeActivity"></activity>
         <activity android:name=".activities.LoginActivity">
-
             <!-- Set default startup screen -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.HomeActivity"></activity>
+        <activity android:name=".activities.ProfileActivity"></activity>
+        <activity android:name=".activities.SettingsActivity"></activity>
+        <activity android:name=".activities.SignUpActivity"></activity>
         <activity android:name=".activities.WelcomeActivity"></activity>
     </application>
 

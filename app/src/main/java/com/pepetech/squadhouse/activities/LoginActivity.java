@@ -80,12 +80,13 @@ public class LoginActivity extends AppCompatActivity {
         Log.i(TAG, "Attempting to sign up user");
         Intent i = new Intent(this, SignUpActivity.class);
         startActivity(i);
-        finish(); // disable user ability to renavigate after a successful login
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
 
     private void goToHomeActivity() {
         Intent i = new Intent(this, HomeActivity.class);
         startActivity(i);
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
         finish(); // disable user ability to renavigate after a successful login
     }
 }
