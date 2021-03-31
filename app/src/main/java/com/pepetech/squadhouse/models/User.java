@@ -30,32 +30,20 @@ public class User {
 
     private ParseUser user;
 
-    public void User(ParseUser user) {
-        this.user = user;
-    }
+    public void User(ParseUser user) { this.user = user; }
 
     ////////////////////////////////////////////////////////////
     // Getters
     ////////////////////////////////////////////////////////////
-    public ParseFile getImage() {
-        return user.getParseFile(KEY_IMAGE);
-    }
+    public ParseFile getImage() { return user.getParseFile(KEY_IMAGE); }
 
-    public String getFirstName() {
-        return (String) user.get(KEY_FIRST_NAME);
-    }
+    public String getFirstName() { return (String) user.get(KEY_FIRST_NAME); }
 
-    public String getLastName() {
-        return (String) user.get(KEY_LAST_NAME);
-    }
+    public String getLastName() { return (String) user.get(KEY_LAST_NAME); }
 
-    public String getBiography() {
-        return (String) user.get(KEY_BIOGRAPHY);
-    }
+    public String getBiography() { return (String) user.get(KEY_BIOGRAPHY); }
 
-    public String getPhoneNumber() {
-        return (String) user.get(KEY_PHONE_NUMBER);
-    }
+    public String getPhoneNumber() { return (String) user.get(KEY_PHONE_NUMBER); }
 
     public ArrayList<ParseObject> getFollowing() {
         ArrayList<ParseObject> rv;
@@ -76,21 +64,13 @@ public class User {
     ////////////////////////////////////////////////////////////
     // Setters
     ////////////////////////////////////////////////////////////
-    public void setFirstName(String firstname) {
-        user.put(KEY_FIRST_NAME, firstname);
-    }
+    public void setFirstName(String firstname) { user.put(KEY_FIRST_NAME, firstname); }
 
-    public void setLastName(String lastName) {
-        user.put(KEY_LAST_NAME, lastName);
-    }
+    public void setLastName(String lastName) { user.put(KEY_LAST_NAME, lastName); }
 
-    public void setBiography(String biography) {
-        user.put(KEY_BIOGRAPHY, biography);
-    }
+    public void setBiography(String biography) { user.put(KEY_BIOGRAPHY, biography); }
 
-    public void setImage(File image) {
-        user.put(KEY_IMAGE, new ParseFile(image));
-    }
+    public void setImage(File image) { user.put(KEY_IMAGE, new ParseFile(image)); }
 
 //    public void setFollowing() {
 //        return KEY_FOLLOWING;
@@ -100,7 +80,5 @@ public class User {
 //        return KEY_FOLLOWERS;
 //    }
 
-    public void setPhoneNumber(String phoneNumber) {
-        user.put(KEY_PHONE_NUMBER, phoneNumber);
-    }
+    public void setPhoneNumber(String phoneNumber) { user.put(KEY_PHONE_NUMBER, phoneNumber); }
 }
