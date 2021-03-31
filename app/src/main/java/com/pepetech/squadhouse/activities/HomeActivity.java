@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Refer to feature-home-activity branch for development
  * TODO: add cell_search to the recycler view
  * TODO: add cell_room_future to the recycler view
  * Recycler view should start with:
