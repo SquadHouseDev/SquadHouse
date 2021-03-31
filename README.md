@@ -9,11 +9,9 @@
 
 ## Overview
 ### Description
-[Description of your app]
-'SquadHouse' is an audio-chat application designed to allow and facilitate conversations between individuals on the platform concerning any perceivable topic they wish to entertain.
+**SquadHouse** is an audio-chat application designed to allow and facilitate conversations between individuals on the platform concerning any perceivable topic they wish to entertain.
 
 ### App Evaluation
-[Evaluation of your app across the following attributes]
 - **Category:** Social/Audio
 - **Mobile:** Will be a purely mobile experience to allow users freedom of hearing/joining in on audio rooms on the fly.
 - **Story:** Allows user to share their opinions and have conversations with people in various fields/interests.
@@ -21,13 +19,17 @@
 - **Habit:** Users can open audio rooms at any point and invite people they want to converse with as they wish or make the room public for free entry/leave.
 - **Scope:** Rather narrow scope of audio rooms, similar even to podcasts/radio sessions but could branch out to some functionality similar to the 'live' features found commonly on platforms like Instagram, TikTok, so on so forth.
 
+### Demo
+<img src="/docs/demo/v1.0.0-demo.gif" width=200>
+
+
 ## Product Spec
 
 ### 1. User Stories (Required and Optional)
 
 **Required Must-have Stories**
 
-* [ ] User can sign up via phone number.
+* [x] User can sign up
 * [x] User can logout of their account
 * [ ] Users can search up other users.
 * [ ] User can create a new audio room with designated participants/groups of people.
@@ -38,8 +40,7 @@
 * [ ] User can invite people.
 
 **Optional Nice-to-have Stories**
-
-* [fill in your required user stories here]
+* [ ] User can sign up via phone number.
 * [ ] User can connect their account to other social medias: Twitter, Instagram, etc.
 * [ ] User can search up topics/interests.
 * [ ] User can endorse/verify new users.
@@ -131,14 +132,31 @@
 | objectId      | String   | unique id for the user post (default field) |
 | createdAt     | DateTime | date when post is created (default field) |
 | updatedAt     | DateTime | date when post is last updated (default field) |
+| emailVerified     | boolean | user has verified through email |
 | biography       | String   | user biography |
+| image       | File   | image uploaded by author |
 | username       | String   | username set by user |
-| lastname       | String   | last name set by user |
 | firstname       | String   | first name set by user |
+| lastname       | String   | last name set by user |
 | password       | String   | password set by user |
 | phoneNumber       | String   | user phone number  |
 | email       | String   | email address  |
-| image       | File   | image uploaded by author |
+| following       | List<User>   | collection of users that a particular user is following  |
+| followers       | List<User>   | collection of users that are following the user  |
+| clubs       | List<Club>   | collection of clubs that are followed  |
+
+#### Club
+| Property      | Type     | Description |
+| ------------- | -------- | ------------|
+| objectId      | String   | unique id for the user post (default field) |
+| createdAt     | DateTime | date when post is created (default field) |
+| updatedAt     | DateTime | date when post is last updated (default field) |
+| members     |  List<User> | collection of users defining the club roster  |
+| followers     | List<User>  | collection of users following the club  |
+| followers     | List<User>  | collection of users following the club  |
+| name  |  String | name of the club  |
+| description     |  String| description of the club  |
+| image |  File| club profile picture  |
 
 #### Room
 | Property      | Type     | Description |
@@ -146,28 +164,40 @@
 | objectId      | String   | unique id for the user post (default field) |
 | createdAt     | DateTime | date when post is created (default field) |
 | updatedAt     | DateTime | date when post is last updated (default field) |
-| user     | Pointer to User | address of User object in database |
+|title |String  |name of the room |
+| clubName|String  | optional field for associated club |
+| participants| List<User>  | collection of users defining all users in the room|
 | host     | User | User that is the host of the room |
-| cohosts     | List of User | User(s) that have speaker permissions in the room |
-| name       | String   | name of the room |
-| startedAt       | DateTime   | date when room was started  |
-| endedAt       | DateTime   | date when the room ended  |
+| isActive (*TBD*)     | boolean | status of room being live |
+| cohosts     | List<User> | User(s) that have speaker permissions in the room with limited admin privileges|
+| startedAt (*TBD*)       | DateTime   | date when room was started  |
+| endedAt (*TBD*)       | DateTime   | date when the room ended  |
 
 ### Networking
 #### List of network requests by screen
    - Home Screen
       - (Read/GET) Query all events taking place later (MAX 1 Day) where user has an interest
       - (Create/POST) Create a new room
+   - Login Screen
+      - (Read/GET) Query for existing user
+    - Signup Screen
+      - (Create/POST) Create new user
    - Configure Room Pullup Screen
       - (Create/POST) Create a new room object of type
         - Allow configuration of: Open, Social, Closed
         - Allow configuration of: Topic
    - Profile Screen
       - (Read/GET) Query logged in user object
+      - (Read/GET) Query user followers
+      - (Read/GET) Query user profile image
+      - (Read/GET) Query user profile biography
+      - (Read/GET) Query user profile firstname
+      - (Read/GET) Query user profile lastname
+      - (Read/GET) Query user profile username
       - (Update/PUT) Update user profile image
       - (Update/PUT) Update user profile biography
       - (Update/PUT) Update user profile username
       - (Update/PUT) Update user profile firstname
       - (Update/PUT) Update user profile lastname
-      - Stretch
-        - (Update/PUT) Update user profile interests
+      - (Update/PUT) Update user profile interests
+      - (Update/PUT) Update user profile following
