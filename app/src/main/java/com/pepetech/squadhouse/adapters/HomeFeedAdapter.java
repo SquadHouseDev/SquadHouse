@@ -60,9 +60,6 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
             tvClubName = itemView.findViewById(R.id.tvClubName);
             tvRoomName = itemView.findViewById(R.id.tvRoomName);
             tvParticipants = itemView.findViewById(R.id.tvParticipants);
-//            tvItemUsername = itemView.findViewById(R.id.tvItemUsername);
-//            tvItemDescription = itemView.findViewById(R.id.tvItemDescription);
-//            ivItemPostImage = itemView.findViewById(R.id.ivItemPostImage);
         }
 
         public void bind(Room room) {
@@ -71,18 +68,8 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
             tvRoomName.setText(room.getTitle());
             String emojiStr = getEmojiByUnicode(0x1F4AC);
             String newText = tvParticipants.getText() + " " + getEmojiByUnicode(0x1F4AC);
-//            tvParticipants.setText(tvParticipants.getText() + " " + getEmojiByUnicode(0x1F4AC)); // DEBUG with emoji in unicode format
             tvParticipants.setText(newText); // DEBUG with emoji in unicode format
             Log.i(TAG, newText);
-//            for (int i =0; i < emojiStr.length(); i++ ){
-//                Log.i(TAG, String.valueOf(emojiStr.charAt(i)));
-//            }
-//            tvItemUsername.setText(room.getUser().getUsername());
-//            tvItemDescription.setText(room.getDescription());
-//            ParseFile image = room.getImage();
-//            if (image != null)
-//                Glide.with(context).load(image.getUrl()).into(ivItemPostImage);
-////            ivItemPostImage.
         }
     }
 
