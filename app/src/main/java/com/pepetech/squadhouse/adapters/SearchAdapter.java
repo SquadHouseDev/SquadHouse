@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -80,7 +81,18 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                         .load(image.getUrl())
                         .circleCrop()
                         .into(ivFoundProfileImage);
+            setupButtons();
+        }
 
+        private void setupButtons(){
+            btnFollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "Follow button clicked!", Toast.LENGTH_SHORT).show();
+                    Log.i(TAG, "Follow button clicked!");
+                    // TODO: Call method for following the selected User
+                }
+            });
         }
     }
 
