@@ -15,11 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.models.User;
 
@@ -30,10 +26,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     private Context context;
     private List<User> allUsers;
+    private User currentUser;
 
-    public SearchAdapter(Context context, List<User> users) {
+    public SearchAdapter(Context context, List<User> users, User currentUser) {
         this.context = context;
         this.allUsers = users;
+        this.currentUser = currentUser;
     }
 
     @NonNull
@@ -62,8 +60,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         private Button btnFollow;
         boolean wasFollowed;
 
-        //        private TextView tvDescription;
-        // TODO: add swipe right on cell to reveal a button to hide the recommended active room
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvFoundName = itemView.findViewById(R.id.tvFoundName);
@@ -73,20 +69,41 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             wasFollowed = false;
         }
 
-        public void bind(User user) {
+        public void bind(User userElement) {
             // Bind data of post to the view element
-            tvFoundName.setText(user.getFirstName() + " " + user.getLastName());
-            tvDescription.setText(user.getBiography());
-            ParseFile image = user.getImage();
+            tvFoundName.setText(userElement.getFirstName() + " " + userElement.getLastName());
+            tvDescription.setText(userElement.getBiography());
+            ParseFile image = userElement.getImage();
             if (image != null)
                 Glide.with(context)
                         .load(image.getUrl())
                         .circleCrop()
                         .into(ivFoundProfileImage);
-            setupButtons();
+            setupFollowButton(userElement);
         }
 
-        private void setupButtons() {
+        /**
+         * Main method for configuring the follow button
+         * @param userElement
+         */
+        private void setupFollowButton(User userElement) {
+            String userElementId = userElement.getParseUser().getObjectId();
+            if (currentUser.getFollowing().contains(userElementId)){
+                Log.i(TAG, userElement.getFirstName() + " is currently followed by " + currentUser.getFirstName());
+                btnFollow.setText("Following");
+                setupCurrentlyFollowingButton(userElementId);
+            }
+            else {
+                setupDefaultFollowButton(userElementId);
+            }
+        }
+
+        /**
+         * Current User is not following the User in the row therefore configure
+         * buttons to reflect the default case of encouraging the User to follow.
+         * @param userElementId
+         */
+        private void setupDefaultFollowButton(String userElementId){
             btnFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -96,12 +113,40 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                     if (wasFollowed) {
                         wasFollowed = false;
                         btnFollow.setText("Follow");
-                    }
-                    else {
+                        // TODO: apply unfollow
+
+                    } else {
                         wasFollowed = true;
                         btnFollow.setText("Following");
+                        // apply follow
+                        currentUser.addFollowing(userElementId);
                     }
-                    // TODO: Call method for following the selected User
+                }
+            });
+        }
+
+        /**
+         * Configuration of follow button when current user is already following
+         * a User
+         * @param userElementId
+         */
+        private void setupCurrentlyFollowingButton(String userElementId){
+            btnFollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "Follow button clicked!", Toast.LENGTH_SHORT).show();
+                    Log.i(TAG, "Follow button clicked!");
+                    // toggle button follow
+                    if (wasFollowed) {
+                        wasFollowed = false;
+                        btnFollow.setText("Following");
+                        // apply follow
+                        currentUser.addFollowing(userElementId);
+                    } else {
+                        wasFollowed = true;
+                        btnFollow.setText("Follow");
+                        // TODO: apply unfollow
+                    }
                 }
             });
         }

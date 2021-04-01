@@ -45,6 +45,8 @@ public class User {
     ////////////////////////////////////////////////////////////
     // Getter Methods
     ////////////////////////////////////////////////////////////
+    public ParseUser getParseUser() { return user;}
+
     public ParseFile getImage() { return user.getParseFile(KEY_IMAGE); }
 
     public String getFirstName() { return (String) user.get(KEY_FIRST_NAME); }
@@ -115,6 +117,14 @@ public class User {
         }
         following.add(user);
         user.put("following", following);
+        user.saveInBackground();
+        return true;
+    }
+
+    public boolean addFollowing(String userId){
+        List<String> followings = new ArrayList<String>();
+        followings.add(userId);
+        user.addAllUnique("following", followings);
         user.saveInBackground();
         return true;
     }
