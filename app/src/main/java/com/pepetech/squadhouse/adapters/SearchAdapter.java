@@ -60,6 +60,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         private TextView tvDescription;
         private ImageView ivFoundProfileImage;
         private Button btnFollow;
+        boolean wasFollowed;
 
         //        private TextView tvDescription;
         // TODO: add swipe right on cell to reveal a button to hide the recommended active room
@@ -69,6 +70,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             tvDescription = itemView.findViewById(R.id.tvDescription);
             ivFoundProfileImage = itemView.findViewById(R.id.ivFoundProfileImage);
             btnFollow = itemView.findViewById(R.id.btnFollow);
+            wasFollowed = false;
         }
 
         public void bind(User user) {
@@ -84,12 +86,21 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             setupButtons();
         }
 
-        private void setupButtons(){
+        private void setupButtons() {
             btnFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context, "Follow button clicked!", Toast.LENGTH_SHORT).show();
                     Log.i(TAG, "Follow button clicked!");
+                    // toggle button follow
+                    if (wasFollowed) {
+                        wasFollowed = false;
+                        btnFollow.setText("Follow");
+                    }
+                    else {
+                        wasFollowed = true;
+                        btnFollow.setText("Following");
+                    }
                     // TODO: Call method for following the selected User
                 }
             });
