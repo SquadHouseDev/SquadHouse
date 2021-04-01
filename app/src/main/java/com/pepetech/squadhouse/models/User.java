@@ -112,18 +112,6 @@ public class User {
     /////////////////////////////////////////////////////////////////////////////////////////////
     // Update Methods: automatically calls saveInBackground on ParseUser to effect updates
     /////////////////////////////////////////////////////////////////////////////////////////////
-    // TODO: broken, need to update follower for the input user
-//    public boolean addFollowing(ParseObject user){
-//        ArrayList<ParseObject> following = getFollowing();
-//        if (following.contains(user)){
-//            return false;
-//        }
-//        following.add(user);
-//        user.put("following", following);
-//        user.saveInBackground();
-//        return true;
-//    }
-
     public boolean addFollowing(String userId){
         List<String> followings = new ArrayList<String>();
         followings.add(userId);
@@ -144,18 +132,6 @@ public class User {
         return true;
     }
 
-//    public boolean removeFollowing(ParseObject user) {
-//        ArrayList<ParseObject> following = getFollowing();
-//        if (!following.contains(user)) {
-//            return false;
-//        }
-//        else {
-//            following.remove(user);
-//        }
-//        user.put("following", following);
-//        user.saveInBackground();
-//        return true;
-//    }
     // TODO: testing needed
     public boolean addInterest(ParseObject interest) {
         ArrayList<ParseObject> interests = getInterests();
