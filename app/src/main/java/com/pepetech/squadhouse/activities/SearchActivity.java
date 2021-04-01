@@ -59,9 +59,9 @@ public class SearchActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(getBaseContext(), "Search button clicked!", Toast.LENGTH_SHORT);
+                Toast.makeText(getBaseContext(), "Search button clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Search button clicked!");
-                // TODO: Call a bottom sheet here
+                queryAllUsers(); // DEBUG
             }
         });
     }
@@ -86,5 +86,9 @@ public class SearchActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    void queryByKeywordSearch(){
+
     }
 }
