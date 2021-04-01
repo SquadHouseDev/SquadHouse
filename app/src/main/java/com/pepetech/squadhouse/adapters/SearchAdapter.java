@@ -113,7 +113,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                     if (wasFollowed) {
                         wasFollowed = false;
                         btnFollow.setText("Follow");
-                        // TODO: apply unfollow
+                        // apply unfollow
+                        currentUser.removeFollowing(userElementId);
 
                     } else {
                         wasFollowed = true;
@@ -145,7 +146,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                     } else {
                         wasFollowed = true;
                         btnFollow.setText("Follow");
-                        // TODO: apply unfollow
+                        // apply unfollow
+                        currentUser.removeFollowing(userElementId);
                     }
                 }
             });
