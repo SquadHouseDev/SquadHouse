@@ -184,7 +184,7 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.action_profile:
                 Toast.makeText(this, "Profile clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Profile clicked!");
-                i = new Intent(this, ProfileActivity.class);
+                i = new Intent(HomeActivity.this, ViewMyProfileActivity.class);
                 this.startActivity(i);
                 // arg_1: page to navigate to slides from the right
                 // arg_2: page navigating from slides to the left

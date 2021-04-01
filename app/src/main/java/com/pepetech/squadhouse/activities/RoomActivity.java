@@ -32,14 +32,14 @@ public class RoomActivity extends AppCompatActivity {
     Button invite_button;
     Button end_button;
     RecyclerView rvParticipants;
-
-    List<ParseObject> allUsers;
     ParticipantAdapter adapter;
 
     Button display_button;
 
     //make room model/class push to back4app
-    //github
+    List<ParseObject> allUsers;
+    //create room here, instantiate participant list, in inviteactivity, make calls to back4app
+    //to update room.participantList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +58,14 @@ public class RoomActivity extends AppCompatActivity {
 
         display_button = findViewById(R.id.display_button);
 
-        setOnClickListeners();
+        queryUsers();
 
+        setOnClickListeners();
+    }
+
+    private void queryUsers() {
+
+        //based on room.participantList, display ppl with adapter??
     }
 
     private void setOnClickListeners() {
@@ -69,9 +75,8 @@ public class RoomActivity extends AppCompatActivity {
                 Log.i(TAG, "invite button clicked");
                 Toast.makeText(v.getContext(), "Invite clicked!", Toast.LENGTH_SHORT).show();
 
-//                Intent i = new Intent(RoomActivity.this, InviteActivity.class);
-//                i.putExtra("allUsers", (Parcelable) allUsers);
-//                startActivity(i);
+                Intent i = new Intent(RoomActivity.this, InviteActivity.class);
+                startActivity(i);
             }
         });
 
