@@ -101,12 +101,11 @@ public class SearchActivity extends AppCompatActivity {
     void queryFollowing(){
         List<String> followingIds = ParseUser.getCurrentUser().getList("following");
 
-        if(!followingIds.isEmpty()){
-            for (String id: followingIds) {
-                Log.i(TAG, id);
-                queryUser(id);
-            }
+        for (String id: followingIds) {
+            Log.i(TAG, id);
+            queryUser(id);
         }
+
     }
 
     void queryUser(String id){
