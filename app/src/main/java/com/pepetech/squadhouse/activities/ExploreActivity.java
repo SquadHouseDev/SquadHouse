@@ -2,15 +2,12 @@ package com.pepetech.squadhouse.activities;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
-import com.pepetech.squadhouse.adapters.HomeFeedAdapter;
-import com.pepetech.squadhouse.adapters.InterestAdapter;
-import com.pepetech.squadhouse.adapters.SearchAdapter;
+import com.pepetech.squadhouse.adapters.ExploreInterestAdapter;
+import com.pepetech.squadhouse.adapters.ExploreUserAdapter;
 import com.pepetech.squadhouse.models.Interest;
 import com.pepetech.squadhouse.models.User;
 
@@ -19,31 +16,28 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.opengl.ETC1;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity {
+public class ExploreActivity extends AppCompatActivity {
     public static final String TAG = "SearchActivity";
     List<User> allUsers;
     TextView tvElementsLabel;
     RecyclerView rvElementsFound, rvInterests;
     EditText etSearch;
     Button btnSearch;
-    SearchAdapter searchAdapter;
-    InterestAdapter interestAdapter;
+    ExploreUserAdapter exploreUserAdapter;
+    ExploreInterestAdapter exploreInterestAdapter;
     List<User> users;
     List<Interest> allInterests;
     private LinkedHashMap<String, List<Interest>> interestsGrouped;
@@ -53,10 +47,10 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-
+        setContentView(R.layout.activity_explore);
+        // disable auto focus keyboard
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
+        // setup current User and the collection of Users
         currentUser = new User();
         currentUser.User(ParseUser.getCurrentUser());
         users = new ArrayList<>();
@@ -68,28 +62,28 @@ public class SearchActivity extends AppCompatActivity {
         btnSearch = findViewById(R.id.btnSearch);
         setupOnClickListeners();
         ////////////////////////////////////////////////////////////
-        // Setup recycler view
+        // Setup recycler views
         ////////////////////////////////////////////////////////////
-
         allUsers = new ArrayList<>();
         rvElementsFound = findViewById(R.id.rvElementsFound);
-        searchAdapter = new SearchAdapter(this, allUsers, currentUser);
-        rvElementsFound.setAdapter(searchAdapter);
+        exploreUserAdapter = new ExploreUserAdapter(this, allUsers, currentUser);
+        rvElementsFound.setAdapter(exploreUserAdapter);
         rvElementsFound.setLayoutManager(new LinearLayoutManager(this));
-        queryFollowing();
 
         allInterests = new ArrayList<>();
 //        interestsGrouped = new LinkedHashMap<>();
-
         rvInterests = findViewById(R.id.rvInterests);
-        interestAdapter = new InterestAdapter(this, allInterests);
+        exploreInterestAdapter = new ExploreInterestAdapter(this, allInterests);
 //        interestAdapter = new InterestAdapter(this, interestsGrouped);
-        rvInterests.setAdapter(interestAdapter);
+        rvInterests.setAdapter(exploreInterestAdapter);
         rvInterests.setLayoutManager(new GridLayoutManager(this, 2));
+        queryFollowing();
         queryInterests();
-
     }
 
+    /** TODO: need to fix grouping of interests by archetypes ie "Tech" : [Engineering, SaaS, DTC, ...]
+     * Main method for query interests
+     */
     private void queryInterests() {
         ParseQuery<Interest> query = ParseQuery.getQuery(Interest.class);
 //        query.include("archetype");
@@ -125,11 +119,15 @@ public class SearchActivity extends AppCompatActivity {
                 allInterests.addAll(interests);
                 Log.i(TAG, "Length of all interests: " + String.valueOf(allInterests.size()));
 
-                interestAdapter.notifyDataSetChanged();
+                exploreInterestAdapter.notifyDataSetChanged();
             }
         });
     }
 
+    /**
+     *
+     * @param interests
+     */
     private void groupInterestsByArchetype(List<Interest> interests) {
         for (Interest i : interests) {
             if (!interestsGrouped.containsKey(i.getArchetype())) {
@@ -172,11 +170,14 @@ public class SearchActivity extends AppCompatActivity {
                     converted.User(u);
                     allUsers.add(converted);
                 }
-                searchAdapter.notifyDataSetChanged();
+                exploreUserAdapter.notifyDataSetChanged();
             }
         });
     }
 
+    /**
+     * Query for all Users followed by the current User
+     */
     void queryFollowing() {
         List<String> followingIds = ParseUser.getCurrentUser().getList("following");
 
