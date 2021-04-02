@@ -16,10 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SquadHouse"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.ClubActivity"></activity>
-        <activity android:name=".activities.ViewMyProfileActivity"></activity>
-        <activity android:name=".activities.SettingsActivity"></activity>
-        <activity android:name=".activities.RoomActivity"></activity>
+        <activity android:name=".activities.SearchActivity"></activity>
+        <activity android:name=".activities.SignUpActivity" />
+        <activity android:name=".activities.ClubActivity" />
+        <activity android:name=".activities.ViewMyProfileActivity" />
+        <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.LoginActivity">
 
             <!-- Set default startup screen -->
@@ -29,13 +30,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.HomeActivity"></activity>
-        <activity android:name=".activities.WelcomeActivity"></activity>
-        <activity android:name=".activities.InviteActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.RoomActivity"></meta-data>
-        </activity>
+        <activity android:name=".activities.HomeActivity" />
+        <activity android:name=".activities.WelcomeActivity" />
     </application>
 
 </manifest>

@@ -25,6 +25,9 @@ import java.util.List;
  * TODO: read followers - a query needs to find all users whose following list contain the target user
  */
 public class User {
+    ////////////////////////////////////////////////////////////
+    // ParseUser Column Names
+    ////////////////////////////////////////////////////////////
     public static final String KEY_FIRST_NAME = "firstName";
     public static final String KEY_LAST_NAME = "lastName";
     public static final String KEY_IMAGE = "image";
@@ -45,6 +48,8 @@ public class User {
     ////////////////////////////////////////////////////////////
     // Getter Methods
     ////////////////////////////////////////////////////////////
+    public ParseUser getParseUser() { return user;}
+
     public ParseFile getImage() { return user.getParseFile(KEY_IMAGE); }
 
     public String getFirstName() { return (String) user.get(KEY_FIRST_NAME); }
@@ -107,31 +112,27 @@ public class User {
     /////////////////////////////////////////////////////////////////////////////////////////////
     // Update Methods: automatically calls saveInBackground on ParseUser to effect updates
     /////////////////////////////////////////////////////////////////////////////////////////////
-    // TODO: broken, need to update follower for the input user
-    public boolean addFollowing(ParseObject user){
-        ArrayList<ParseObject> following = getFollowing();
-        if (following.contains(user)){
-            return false;
-        }
-        following.add(user);
-        user.put("following", following);
+    public boolean addFollowing(String userId){
+        List<String> followings = new ArrayList<String>();
+        followings.add(userId);
+        user.addAllUnique("following", followings);
         user.saveInBackground();
         return true;
     }
 
-    public boolean removeFollowing(ParseObject user) {
-        ArrayList<ParseObject> following = getFollowing();
-        if (!following.contains(user)) {
+    public boolean removeFollowing(String userId){
+        ArrayList<ParseObject> followings = getFollowing();
+        if (!followings.contains(userId)){
             return false;
         }
-        else {
-            following.remove(user);
-        }
-        user.put("following", following);
+        ArrayList<String> toRemove = new ArrayList<>();
+        toRemove.add(userId);
+        user.removeAll(KEY_FOLLOWING, toRemove);
         user.saveInBackground();
         return true;
     }
 
+    // TODO: testing needed
     public boolean addInterest(ParseObject interest) {
         ArrayList<ParseObject> interests = getInterests();
         if (interests.contains(interest)) {
@@ -143,6 +144,7 @@ public class User {
         return true;
     }
 
+    // TODO: testing needed
     public boolean removeInterest(Interest interest){
         ArrayList<ParseObject> interests = getInterests();
         if (!interests.contains(interest)) {
@@ -155,27 +157,27 @@ public class User {
         user.saveInBackground();
         return true;
     }
-
+    // TODO: testing needed
     public void updateFirstName(String firstname) {
         setFirstName(firstname);
         user.saveInBackground();
     }
-
+    // TODO: testing needed
     public void updateLastName(String lastName) {
         setLastName(lastName);
         user.saveInBackground();
     }
-
+    // TODO: testing needed
     public void updateBiography(String biography) {
         setBiography(biography);
         user.saveInBackground();
     }
-
+    // TODO: testing needed
     public void updateImage(File image) {
         setImage(image);
         user.saveInBackground();
     }
-
+    // TODO: testing needed
     public void updatePhoneNumber(String phoneNumber) {
         setPhoneNumber(phoneNumber);
         user.saveInBackground();
