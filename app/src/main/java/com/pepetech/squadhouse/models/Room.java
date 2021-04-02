@@ -25,6 +25,18 @@ public class Room extends ParseObject {
     public static final String KEY_ENDED_AT = "endedAt";
     public static final String KEY_IS_ACTIVE = "isActive";
 
+    public Room(){};
+
+    //work on refactoring cohosts to be list of strings of the objectIDS???
+    public Room(String title, String description, String clubName, ParseUser host, ArrayList<ParseObject> cohosts){
+        this.setTitle(title);
+        this.setDescription(description);
+        this.setClubName(clubName);
+        this.setHost(host);
+        this.setCohosts(cohosts);
+    }
+
+
     ////////////////////////////////////////////////////////////
     // Getters
     ////////////////////////////////////////////////////////////
@@ -65,31 +77,31 @@ public class Room extends ParseObject {
     ////////////////////////////////////////////////////////////
     // Setters
     ////////////////////////////////////////////////////////////
-    private void setDescription(String newDescription) {
+    public void setDescription(String newDescription) {
         put(KEY_DESCRIPTION, newDescription);
     }
 
-    private void setActiveState(boolean newRoomState) {
+    public void setActiveState(boolean newRoomState) {
         put(KEY_IS_ACTIVE, newRoomState);
     }
 
-    private void setTitle(String newTitle) {
+    public void setTitle(String newTitle) {
         put(KEY_TITLE, newTitle);
     }
 
-    private void setClubName(String newName) {
+    public void setClubName(String newName) {
         put(KEY_CLUB_NAME, newName);
     }
 
-    private void setParticipants(ArrayList<ParseObject> participants) {
+    public void setParticipants(ArrayList<ParseObject> participants) {
         put(KEY_PARTICIPANTS, participants);
     }
 
-    private void setCohosts(ArrayList<ParseObject> cohosts) {
+    public void setCohosts(ArrayList<ParseObject> cohosts) {
         put(KEY_COHOSTS, cohosts);
     }
 
-    private void setHost(ParseUser newParseUser) {
+    public void setHost(ParseUser newParseUser) {
         put(KEY_HOST, newParseUser);
     }
 

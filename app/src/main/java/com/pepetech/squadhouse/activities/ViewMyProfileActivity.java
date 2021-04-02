@@ -84,8 +84,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         // setting up user profile
         ////////////////////////////////////////////////////////////
         parseUser = ParseUser.getCurrentUser();
-        user = new User();
-        user.User(parseUser);
+        user = new User(parseUser);
         // 1. query profile data
         queryUserProfile();
         // 2. populate profile with queried profile data

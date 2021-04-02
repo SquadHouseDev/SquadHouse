@@ -4,9 +4,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.adapters.HomeFeedAdapter;
 import com.pepetech.squadhouse.models.Room;
+import com.pepetech.squadhouse.models.User;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,6 +18,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,9 +62,14 @@ public class HomeActivity extends AppCompatActivity {
 
     SwipeRefreshLayout swipeContainer;
 
+    User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        user = new User(ParseUser.getCurrentUser());
+
         setContentView(R.layout.activity_home);
         ////////////////////////////////////////////////////////////
         // Setup buttons
@@ -106,6 +114,9 @@ public class HomeActivity extends AppCompatActivity {
                 Toast t = Toast.makeText(getBaseContext(), "Create room clicked!", Toast.LENGTH_SHORT);
                 Log.i(TAG, "Create room clicked!");
                 // TODO: Call a bottom sheet here
+                Intent i = new Intent(HomeActivity.this, RoomActivity.class);
+                //i.putExtra("User", (Parcelable) user);
+                startActivity(i);
             }
         });
 
