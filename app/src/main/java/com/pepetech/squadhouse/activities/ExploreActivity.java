@@ -51,8 +51,7 @@ public class ExploreActivity extends AppCompatActivity {
         // disable auto focus keyboard
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         // setup current User and the collection of Users
-        currentUser = new User();
-        currentUser.User(ParseUser.getCurrentUser());
+        currentUser = new User(ParseUser.getCurrentUser());
         users = new ArrayList<>();
         ////////////////////////////////////////////////////////////
         // Setup view elements
@@ -166,8 +165,7 @@ public class ExploreActivity extends AppCompatActivity {
                     return;
                 }
                 for (ParseUser u : users) {
-                    User converted = new User();
-                    converted.User(u);
+                    User converted = new User(u);
                     allUsers.add(converted);
                 }
                 exploreUserAdapter.notifyDataSetChanged();
@@ -198,8 +196,7 @@ public class ExploreActivity extends AppCompatActivity {
             public void done(ParseUser awesome, ParseException e) {
                 if (e == null) {
 //                    rv[0] = awesome;
-                    User u = new User();
-                    u.User(awesome);
+                    User u = new User(awesome);
                     Log.i(TAG, u.getLastName() + u.getFirstName() + u.getBiography() + u.getPhoneNumber());
                     users.add(u);
                     Log.i(TAG, String.valueOf(users.size()));
