@@ -45,8 +45,8 @@ public class User {
 
 
     private ParseUser user;
-
-    public void User(ParseUser user) { this.user = user; }
+    public User() {}
+    public User(ParseUser user) { this.user = user; }
 
     ////////////////////////////////////////////////////////////
     // Getter Methods
