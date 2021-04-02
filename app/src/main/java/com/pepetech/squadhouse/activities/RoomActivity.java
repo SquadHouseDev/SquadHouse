@@ -40,6 +40,7 @@ public class RoomActivity extends AppCompatActivity {
     List<ParseObject> allUsers;
     //create room here, instantiate participant list, in inviteactivity, make calls to back4app
     //to update room.participantList
+    Room newRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +59,16 @@ public class RoomActivity extends AppCompatActivity {
 
         display_button = findViewById(R.id.display_button);
 
+        setUpRoom();
         queryUsers();
 
         setOnClickListeners();
+    }
+
+    private void setUpRoom() {
+        newRoom = new Room();
+
+
     }
 
     private void queryUsers() {
