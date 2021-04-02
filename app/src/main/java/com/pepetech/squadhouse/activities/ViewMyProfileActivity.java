@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bumptech.glide.Glide;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -12,11 +11,18 @@ import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.models.User;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,12 +54,14 @@ public class ViewMyProfileActivity extends AppCompatActivity {
     User user;
     public static final String TAG = "ProfileActivity";
     AppCompatImageView ivProfile, ivProfileNominator;
-    TextView tvFullName, tvUsername, tvFollowersCount, tvFollowingCount, tvBiography, tvUserJoinDate, tvNominatorName;
+    TextView tvFullName, tvUsername, tvFollowersCount, tvFollowingCount, tvBiography, tvUserJoinDate, tvNominatorName,tvTitleText;
     Button btnLogout;
     ImageButton btnSettings;
     ParseObject nominator;
     List<ParseObject> following;
     List<ParseObject> followers;
+
+
 //    ScrollView svProfile;
 
     @Override
@@ -79,6 +87,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////
         btnLogout = findViewById(R.id.btnLogout);
         btnSettings = findViewById(R.id.btnSettings);
+//        msgBttn = findViewById(R.id.msgBttn);
         setupOnClickListeners();
         ////////////////////////////////////////////////////////////
         // setting up user profile
@@ -154,8 +163,11 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                 Toast t = Toast.makeText(v.getContext(), "Fullname clicked!", Toast.LENGTH_SHORT);
                 t.show();
                 Log.i(TAG, "Fullname clicked!");
+                PopUpWindowActivity pw = new PopUpWindowActivity();
+                pw.displayPopupWindow(v);
 //                ParseObject nominator = user.getNominator()
 //                goToProfileActivity();
+
             }
         });
         // TODO
@@ -169,9 +181,13 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                 Log.i(TAG, "Biography clicked!");
 //                ParseObject nominator = user.getNominator()
 //                goToProfileActivity();
+
+
             }
         });
     }
+
+
 
     private void populateProfileElements() {
         Log.i(TAG, "Populating profile elements");
@@ -190,10 +206,10 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         tvFollowersCount.setText(String.valueOf(followers.size()));
         tvFollowingCount.setText(String.valueOf(following.size()));
         // load nominator's profile picture
-//        boolean isSeed = user.isSeed();
+        boolean isSeed = user.isSeed();
         if (!user.isSeed()){
-            loadNominatorProfileImage();
-            tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
+//            loadNominatorProfileImage();
+//            tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
         }
     }
 
@@ -235,6 +251,10 @@ public class ViewMyProfileActivity extends AppCompatActivity {
 //        overridePendingTransition(R.anim.slide_to_top, R.anim.slide_to_left);
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
+//    private void goToUpdateFullNameActivity()
+//    {
+//
+//    }
 
     private void goToViewAProfileActivity() {
 //        Intent i = new Intent(this, SettingsActivity.class);
@@ -243,18 +263,18 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
 
-    private void loadNominatorProfileImage(){
-        ParseFile image = null;
-        try {
-            image = nominator.fetchIfNeeded().getParseFile("image");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if (image != null)
-            Glide.with(this)
-                    .load(image.getUrl())
-                    .circleCrop()
-                    .into(ivProfileNominator);
-    }
+//    private void loadNominatorProfileImage(){
+//        ParseFile image = null;
+//        try {
+//            image = nominator.fetchIfNeeded().getParseFile("image");
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        if (image != null)
+//            Glide.with(this)
+//                    .load(image.getUrl())
+//                    .circleCrop()
+//                    .into(ivProfileNominator);
+//    }
 
 }
