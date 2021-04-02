@@ -8,7 +8,9 @@
     android:layout_marginStart="10dp"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
-    android:background="@drawable/layout_cell_seach_interest_bg">
+    android:background="@drawable/cell_background"
+    android:elevation="4dp"
+    android:outlineSpotShadowColor="@color/grey">
 
     <TextView
         android:id="@+id/tvArchetypeEmoji"
@@ -53,7 +55,7 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:text="Startups, Engineering, Marketing, Products, SaaS, DTC"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
