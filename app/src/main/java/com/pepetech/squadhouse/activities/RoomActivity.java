@@ -19,15 +19,20 @@ import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.adapters.HomeFeedAdapter;
 import com.pepetech.squadhouse.adapters.ParticipantAdapter;
 import com.pepetech.squadhouse.models.Room;
+import com.pepetech.squadhouse.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.twilio.twiml.voice.Conference;
+import com.twilio.twiml.voice.Dial;
+import com.twilio.twiml.VoiceResponse;
+import com.twilio.twiml.TwiMLException;
 
 public class RoomActivity extends AppCompatActivity {
 
     public static final String TAG = "RoomActivity";
 
-    ParseUser user;
+    User user;
 
     Button invite_button;
     Button end_button;
@@ -58,17 +63,42 @@ public class RoomActivity extends AppCompatActivity {
         rvParticipants.setLayoutManager(new LinearLayoutManager(this));
 
         display_button = findViewById(R.id.display_button);
+        user = new User(ParseUser.getCurrentUser());
 
         setUpRoom();
         queryUsers();
-
         setOnClickListeners();
+        
+        setUpConference();
+        
+    }
+
+    private void setUpConference() {
+        Log.i(TAG, "setting up conference call");
+
+        Conference conference = new Conference.Builder("Room 1234").build();
+        Dial dial = new Dial.Builder().conference(conference).build();
+        VoiceResponse response = new VoiceResponse.Builder().dial(dial).build();
+        try {
+            System.out.println(response.toXml());
+        } catch (TwiMLException e) {
+            e.printStackTrace();
+        }
+        Log.i(TAG, "finished setting up conference call");
     }
 
     private void setUpRoom() {
+        Log.i(TAG, "initiating room");
         newRoom = new Room();
+        newRoom.setTitle("newROom from blah");
+
+        //set the host equal to the current user, getParseUser  returns a ParseUser which
+        //will reflect in back4app.com as a pointer to a specific user.
+        newRoom.setHost(user.getParseUser());
 
 
+        newRoom.saveInBackground();
+        Log.i(TAG, "finished initiating room");
     }
 
     private void queryUsers() {
@@ -101,7 +131,6 @@ public class RoomActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i(TAG, "display button clicked");
 
-                user = ParseUser.getCurrentUser();
                 Log.i(TAG, user.toString());
                 Toast.makeText(v.getContext(), "End Button clicked!", Toast.LENGTH_SHORT).show();
             }
