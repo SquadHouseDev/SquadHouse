@@ -1,6 +1,7 @@
 package com.pepetech.squadhouse.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,24 +12,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.activities.ViewAUserActivity;
 import com.pepetech.squadhouse.models.User;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
+public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.ViewHolder> {
     public static final String TAG = "SearchAdapter";
 
     private Context context;
     private List<User> allUsers;
     private User currentUser;
 
-    public SearchAdapter(Context context, List<User> users, User currentUser) {
+    public ExploreUserAdapter(Context context, List<User> users, User currentUser) {
         this.context = context;
         this.allUsers = users;
         this.currentUser = currentUser;
@@ -36,13 +41,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     @NonNull
     @Override
-    public SearchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.cell_found, parent, false);
-        return new SearchAdapter.ViewHolder(view);
+    public ExploreUserAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.cell_explore_found, parent, false);
+        return new ExploreUserAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ExploreUserAdapter.ViewHolder holder, int position) {
         User user = allUsers.get(position);
         holder.bind(user);
     }
@@ -57,6 +62,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         private TextView tvFoundName;
         private TextView tvDescription;
         private ImageView ivFoundProfileImage;
+        private ConstraintLayout clProfile;
         private Button btnFollow;
         boolean wasFollowed;
 
@@ -66,6 +72,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             tvDescription = itemView.findViewById(R.id.tvDescription);
             ivFoundProfileImage = itemView.findViewById(R.id.ivFoundProfileImage);
             btnFollow = itemView.findViewById(R.id.btnFollow);
+            clProfile = itemView.findViewById(R.id.clProfile);
             wasFollowed = false;
         }
 
@@ -80,6 +87,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                         .circleCrop()
                         .into(ivFoundProfileImage);
             setupFollowButton(userElement);
+            clProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i(TAG, userElement.getFirstName() + " was selected!");
+                    Toast.makeText(v.getContext(), "Selected " + userElement.getFirstName(), Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(context, ViewAUserActivity.class);
+                    i.putExtra("user", Parcels.wrap(userElement));
+                    context.startActivity(i);
+                }
+            });
         }
 
         /**

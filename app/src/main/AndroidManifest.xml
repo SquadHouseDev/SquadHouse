@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SquadHouse"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.SearchActivity"></activity>
+        <activity android:name=".activities.ViewAUserActivity"></activity>
+        <activity android:name=".activities.ExploreActivity" />
         <activity android:name=".activities.SignUpActivity" />
         <activity android:name=".activities.ClubActivity" />
         <activity android:name=".activities.ViewMyProfileActivity" />

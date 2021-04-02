@@ -1,7 +1,6 @@
 package com.pepetech.squadhouse.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,33 +16,32 @@ import com.pepetech.squadhouse.models.Interest;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class InterestAdapter extends RecyclerView.Adapter<InterestAdapter.ViewHolder> {
+public class ExploreInterestAdapter extends RecyclerView.Adapter<ExploreInterestAdapter.ViewHolder> {
     public static final String TAG = "InterestAdapter";
 
     private Context context;
     private List<Interest> interests;
     private LinkedHashMap<String, List<Interest>> interestsGrouped;
 
-
 //    public InterestAdapter(Context context, LinkedHashMap<String, List<Interest>> interestsGrouped) {
 //        this.context = context;
 //        this.interestsGrouped = interestsGrouped;
 //    }
 
-    public InterestAdapter(Context context,  List<Interest> interests) {
+    public ExploreInterestAdapter(Context context, List<Interest> interests) {
         this.context = context;
         this.interests = interests;
     }
 
     @NonNull
     @Override
-    public InterestAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.cell_search_interest, parent, false);
-        return new InterestAdapter.ViewHolder(view);
+    public ExploreInterestAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.cell_explore_interest, parent, false);
+        return new ExploreInterestAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull InterestAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ExploreInterestAdapter.ViewHolder holder, int position) {
 //        List<Interest> interest = (List<Interest>) interestsGrouped.get(position);
         Interest interest = interests.get(position);
         holder.bind(interest);
