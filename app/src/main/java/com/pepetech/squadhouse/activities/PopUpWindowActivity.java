@@ -13,6 +13,12 @@ import android.widget.Toast;
 import com.pepetech.squadhouse.R;
 
 public class PopUpWindowActivity {
+    //buttons
+    Button buttonUpdateName;
+    Button createAlias;
+    Button cancel;
+    //text views
+    TextView textPrompt;
     public void displayPopupWindow(final View v) {
 
         Toast.makeText(v.getContext(),"WOW, THAT SHIT IS POPPIN",Toast.LENGTH_SHORT).show();
@@ -28,11 +34,12 @@ public class PopUpWindowActivity {
        final PopupWindow pw = new PopupWindow(popupView,width,height,focusable);
         //SET LOCATION OF THE WINDOW ON THE SCREEN
         pw.showAtLocation(v, Gravity.CENTER,0,0);
-        //INITIALIZE THE ELEMENTS OF OUR WINDOW, INSTALL THE HANDLER
-        TextView test2 = popupView.findViewById(R.id.titleText);
-        test2.setText(R.string.app_name);
-        Button buttonEdit = popupView.findViewById(R.id.mssgBttn);
-        buttonEdit.setOnClickListener(new View.OnClickListener() {
+        //INITIALIZE THE ELEMENTS OF OUR WINDOW
+         textPrompt    = popupView.findViewById(R.id.tvPrompt);
+         buttonUpdateName = popupView.findViewById(R.id.updateNameButton);
+        createAlias = popupView.findViewById(R.id.createAliasButton);
+        cancel = popupView.findViewById(R.id.CancelButton);
+        buttonUpdateName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //As an example, display the message
