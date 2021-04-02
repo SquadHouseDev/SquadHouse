@@ -5,6 +5,8 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.parceler.Parcel;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ import java.util.List;
  * TODO: README documentation in network
  * TODO: read followers - a query needs to find all users whose following list contain the target user
  */
+@Parcel
 public class User {
     ////////////////////////////////////////////////////////////
     // ParseUser Column Names
