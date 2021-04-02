@@ -43,7 +43,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="300dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvElementsLabel"
@@ -51,6 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
+            android:layout_marginBottom="10dp"
             android:text="PEOPLE TO FOLLOW">
 
 
@@ -66,6 +67,34 @@
             android:layout_marginEnd="0dp"
             android:layout_weight="0" />
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvInterestsLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="FIND CONVERSATIONS ABOUT...">
+
+
+        </androidx.appcompat.widget.AppCompatTextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvInterests"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tvInterestsLabel"
+            app:columnCount="2"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
     </RelativeLayout>
 
 </LinearLayout>
