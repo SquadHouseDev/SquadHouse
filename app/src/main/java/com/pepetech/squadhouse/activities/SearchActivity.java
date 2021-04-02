@@ -1,7 +1,10 @@
 package com.pepetech.squadhouse.activities;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
@@ -33,11 +36,16 @@ public class SearchActivity extends AppCompatActivity {
     EditText etSearch;
     Button btnSearch;
     SearchAdapter adapter;
+    List<User> users;
+    User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        currentUser = new User();
+        currentUser.User(ParseUser.getCurrentUser());
+        users = new ArrayList<>();
         ////////////////////////////////////////////////////////////
         // Setup view elements
         ////////////////////////////////////////////////////////////
@@ -50,9 +58,11 @@ public class SearchActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////
         allUsers = new ArrayList<>();
         rvElementsFound = findViewById(R.id.rvElementsFound);
-        adapter = new SearchAdapter(this, allUsers);
+        adapter = new SearchAdapter(this, allUsers, currentUser);
         rvElementsFound.setAdapter(adapter);
         rvElementsFound.setLayoutManager(new LinearLayoutManager(this));
+        queryFollowing();
+
     }
 
     private void setupOnClickListeners() {
@@ -86,6 +96,41 @@ public class SearchActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    void queryFollowing(){
+        List<String> followingIds = ParseUser.getCurrentUser().getList("following");
+
+        for (String id: followingIds) {
+            Log.i(TAG, id);
+            queryUser(id);
+        }
+
+    }
+
+    void queryUser(String id){
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereEqualTo("objectId", id);
+//        final ParseUser[] rv = {null};
+        query.getFirstInBackground(new GetCallback<ParseUser>() {
+            @Override
+            public void done(ParseUser awesome, ParseException e) {
+                if (e == null) {
+//                    rv[0] = awesome;
+                    User u = new User();
+                    u.User(awesome);
+                    Log.i(TAG, u.getLastName() + u.getFirstName() + u.getBiography() + u.getPhoneNumber() );
+                    users.add(u);
+                    Log.i(TAG, String.valueOf(users.size()));
+                    Log.i(TAG, String.valueOf(users));
+                    Log.i(TAG, "Proceed to populate from here or notify that adapter that the data has changed");
+//                    onAwesome(awesome, post, itemView);
+                } else {
+//                    onAwesome(null, post, itemView);
+                }
+            }
+        });
+
     }
 
     void queryByKeywordSearch(){
