@@ -21,31 +21,32 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/titleText"
-                android:layout_gravity = "center"
+                android:id="@+id/tvPrompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textSize = "20sp"
-                android:textStyle = "bold"
+                android:layout_gravity="center"
                 android:padding="10dp"
-                />
+                android:text="Change your full name?"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <Button
-                android:id="@+id/mssgBttn"
+                android:id="@+id/updateNameButton"
                 android:layout_width="413dp"
                 android:layout_height="140dp"
-                android:text="@string/app_name" />
+                android:text="Update real name" />
+
             <Button
-                android:id="@+id/mssgBttn2"
+                android:id="@+id/createAliasButton"
                 android:layout_width="413dp"
                 android:layout_height="140dp"
-                android:text="@string/app_name" />
+                android:text="Add my creator alias" />
+
             <Button
-                android:id="@+id/mssgBttn3"
+                android:id="@+id/CancelButton"
                 android:layout_width="413dp"
                 android:layout_height="140dp"
-                android:text="@string/app_name" />
+                android:text="Cancel" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
