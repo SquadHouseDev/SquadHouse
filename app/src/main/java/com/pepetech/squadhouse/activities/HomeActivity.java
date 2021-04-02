@@ -150,6 +150,7 @@ public class HomeActivity extends AppCompatActivity {
 
     /**
      * Setup toolbar buttons to route to associated pages
+     *
      * @param item
      * @return
      */
@@ -192,8 +193,11 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             case R.id.action_search:
                 Toast.makeText(this, "Search clicked!", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "Search clicked!");
-//                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                i = new Intent(this, ExploreActivity.class);
+                this.startActivity(i);
+                // arg_1: page to navigate to slides from the right
+                // arg_2: page navigating from slides to the left
+                overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
