@@ -75,24 +75,12 @@ public class SignUpActivity extends AppCompatActivity {
         user.setPassword(password);
 
         Toast.makeText(getBaseContext(), "Starting sign up", Toast.LENGTH_SHORT);
+        // initial user signup
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
                     Log.i(TAG, "Successfully created account!");
                     Toast.makeText(getBaseContext(), "Account created!", Toast.LENGTH_SHORT);
-                    // apply first and last name fields after initial user creation
-                    user.put(User.KEY_FIRST_NAME, firstName);
-                    user.put(User.KEY_LAST_NAME, lastName);
-                    user.saveInBackground();
-                    // navigate to home feed
-                    // TODO: navigation to stretch profile creation pages
-                    // - link social media
-                    // - upload profile picture
-                    // - upload biography
-                    // - navigate to interets
-                    // perform login
-                    ParseUser.logInInBackground(username, password);
-                    goToHomeActivity();
                 } else {
                     // TODO add addtional cases in which a user's input is "incorrect"
                     // 1. password is insecure
@@ -117,6 +105,26 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+        // update fields after successful basic account creation
+        Log.i(TAG, "firstname: " + firstName);
+        Log.i(TAG, "lastname: " + lastName);
+        user.put(User.KEY_FIRST_NAME, firstName);
+        user.put(User.KEY_LAST_NAME, lastName);
+        user.saveInBackground();
+        ParseUser.logInInBackground(username, password);
+        goToHomeActivity();
+        // apply first and last name fields after initial user creation
+
+//                    User u = new User(user);
+//                    u.saveInBackground();
+//                    user.saveInBackground();
+        // navigate to home feed
+        // TODO: navigation to stretch profile creation pages
+        // - link social media
+        // - upload profile picture
+        // - upload biography
+        // - navigate to interets
+        // perform login
     }
 
     private void goToHomeActivity() {
