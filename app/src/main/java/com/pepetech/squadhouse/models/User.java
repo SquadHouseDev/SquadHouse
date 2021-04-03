@@ -12,19 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Extension of the ParseUser class
- *
- * Implementation follows a delegate pattern to avoid issues associated with
+ * Wrapper class for interacting with the ParseUser class using an adapter pattern to avoid issues associated with
  * subclassing the ParseUser class.
- *
- * Note that when developing and testing the backend, a user logged in needs to be
- * signed out and signed in to query the newly created tables. Accessing newly added
- * column fields without doing so will result in null objects despite proper querying.
- *
- * Reference: https://guides.codepath.com/android/Troubleshooting-Common-Issues-with-Parse#extending-parseuser
- *
- * TODO: README documentation in network
- * TODO: read followers - a query needs to find all users whose following list contain the target user
  */
 @Parcel
 public class User {
@@ -43,29 +32,86 @@ public class User {
     public static final String KEY_NOMINATOR = "nominator";
     public static final String KEY_IS_SEED = "isSeed";
 
-
+    ////////////////////////////////////////////////////////////
+    // Attributes
+    ////////////////////////////////////////////////////////////
+    private String firstName, lastName, biography, phoneNumber;
+    private boolean isSeed;
+    private ParseUser nominator;
+    private List<String> following, followers;
     private ParseUser user;
-    public User() {}
-    public User(ParseUser user) { this.user = user; }
+
+    ////////////////////////////////////////////////////////////
+    // Constructors
+    ////////////////////////////////////////////////////////////
+    public User() {
+        this(null, "", "", null, false, new ArrayList<>(), new ArrayList<>());
+    }
+
+    public User(ParseUser user, String firstName, String lastName) {
+        this.user = user;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        nominator = null;
+        isSeed = false;
+        following = new ArrayList<>();
+        followers = new ArrayList<>();
+    }
+
+    public User(ParseUser user, String firstName, String lastName, ParseUser nominator, boolean isSeed, List<String> following, List<String> followers) {
+        this.user = user;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nominator = nominator;
+        this.isSeed = isSeed;
+        this.followers = followers;
+        this.following = following;
+    }
+
+    public void saveInBackground() {
+        user.put(KEY_FIRST_NAME, firstName);
+        user.put(KEY_LAST_NAME, lastName);
+//        user.put(KEY_NOMINATOR, nominator);
+        user.put(KEY_IS_SEED, isSeed);
+        user.put(KEY_FOLLOWING, following);
+        user.put(KEY_FOLLOWERS, followers);
+        user.saveInBackground();
+    }
 
     ////////////////////////////////////////////////////////////
     // Getter Methods
     ////////////////////////////////////////////////////////////
-    public ParseUser getParseUser() { return user;}
+    public ParseUser getParseUser() {
+        return user;
+    }
 
-    public ParseFile getImage() { return user.getParseFile(KEY_IMAGE); }
+    public ParseFile getImage() {
+        return user.getParseFile(KEY_IMAGE);
+    }
 
-    public String getFirstName() { return (String) user.get(KEY_FIRST_NAME); }
+    public String getFirstName() {
+        return (String) user.get(KEY_FIRST_NAME);
+    }
 
-    public String getLastName() { return (String) user.get(KEY_LAST_NAME); }
+    public String getLastName() {
+        return (String) user.get(KEY_LAST_NAME);
+    }
 
-    public String getBiography() { return (String) user.get(KEY_BIOGRAPHY); }
+    public String getBiography() {
+        return (String) user.get(KEY_BIOGRAPHY);
+    }
 
-    public String getPhoneNumber() { return (String) user.get(KEY_PHONE_NUMBER); }
+    public String getPhoneNumber() {
+        return (String) user.get(KEY_PHONE_NUMBER);
+    }
 
-    public boolean isSeed() { return (boolean) user.getBoolean(KEY_IS_SEED); }
+    public boolean isSeed() {
+        return (boolean) user.getBoolean(KEY_IS_SEED);
+    }
 
-    public ParseObject getNominator() { return (ParseObject) user.get(KEY_NOMINATOR); }
+    public ParseObject getNominator() {
+        return (ParseObject) user.get(KEY_NOMINATOR);
+    }
 
     public ArrayList<ParseObject> getFollowing() {
         ArrayList<ParseObject> rv;
@@ -102,20 +148,30 @@ public class User {
     /////////////////////////////////////////////////////////////////////////////////////////////
     // Setter Methods: need to call saveInBackground on ParseUser in order to effect changes
     /////////////////////////////////////////////////////////////////////////////////////////////
-    private void setFirstName(String firstname) { user.put(KEY_FIRST_NAME, firstname); }
+    private void setFirstName(String firstname) {
+        user.put(KEY_FIRST_NAME, firstname);
+    }
 
-    private void setLastName(String lastName) { user.put(KEY_LAST_NAME, lastName); }
+    private void setLastName(String lastName) {
+        user.put(KEY_LAST_NAME, lastName);
+    }
 
-    private void setBiography(String biography) { user.put(KEY_BIOGRAPHY, biography); }
+    private void setBiography(String biography) {
+        user.put(KEY_BIOGRAPHY, biography);
+    }
 
-    private void setImage(File image) { user.put(KEY_IMAGE, new ParseFile(image)); }
+    private void setImage(File image) {
+        user.put(KEY_IMAGE, new ParseFile(image));
+    }
 
-    private void setPhoneNumber(String phoneNumber) { user.put(KEY_PHONE_NUMBER, phoneNumber); }
+    private void setPhoneNumber(String phoneNumber) {
+        user.put(KEY_PHONE_NUMBER, phoneNumber);
+    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     // Update Methods: automatically calls saveInBackground on ParseUser to effect updates
     /////////////////////////////////////////////////////////////////////////////////////////////
-    public boolean addFollowing(String userId){
+    public boolean addFollowing(String userId) {
         List<String> followings = new ArrayList<String>();
         followings.add(userId);
         user.addAllUnique("following", followings);
@@ -123,9 +179,9 @@ public class User {
         return true;
     }
 
-    public boolean removeFollowing(String userId){
+    public boolean removeFollowing(String userId) {
         ArrayList<ParseObject> followings = getFollowing();
-        if (!followings.contains(userId)){
+        if (!followings.contains(userId)) {
             return false;
         }
         ArrayList<String> toRemove = new ArrayList<>();
@@ -148,38 +204,42 @@ public class User {
     }
 
     // TODO: testing needed
-    public boolean removeInterest(Interest interest){
+    public boolean removeInterest(Interest interest) {
         ArrayList<ParseObject> interests = getInterests();
         if (!interests.contains(interest)) {
             return false;
-        }
-        else {
+        } else {
             interests.remove(interest);
         }
         user.put("interests", interests);
         user.saveInBackground();
         return true;
     }
+
     // TODO: testing needed
     public void updateFirstName(String firstname) {
         setFirstName(firstname);
         user.saveInBackground();
     }
+
     // TODO: testing needed
     public void updateLastName(String lastName) {
         setLastName(lastName);
         user.saveInBackground();
     }
+
     // TODO: testing needed
     public void updateBiography(String biography) {
         setBiography(biography);
         user.saveInBackground();
     }
+
     // TODO: testing needed
     public void updateImage(File image) {
         setImage(image);
         user.saveInBackground();
     }
+
     // TODO: testing needed
     public void updatePhoneNumber(String phoneNumber) {
         setPhoneNumber(phoneNumber);
