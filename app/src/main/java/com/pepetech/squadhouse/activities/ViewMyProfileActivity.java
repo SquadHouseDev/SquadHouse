@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bumptech.glide.Glide;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -49,6 +51,19 @@ import java.util.List;
  * - add button for sharing
  * - fix biography TextView to show proper start and end margins
  */
+/*
+
+Roadmap of my thought process:
+
+Home Activity ->
+                clicks ViewMyProfileActivity ->
+                                                clicks pepegachu ->
+                                                                    displayPopupWindow
+                                                                                -> inflate popupwindow
+                                                                                    ->user clicks the update real name button
+                                                                                            ->UpdateRealNameActivity
+
+ */
 public class ViewMyProfileActivity extends AppCompatActivity {
     ParseUser parseUser;
     User user;
@@ -60,6 +75,13 @@ public class ViewMyProfileActivity extends AppCompatActivity {
     ParseObject nominator;
     List<ParseObject> following;
     List<ParseObject> followers;
+
+    Button buttonUpdateName;
+    Button createAlias;
+    Button cancel;
+    //text views
+    TextView textPrompt;
+    PopupWindow pw = null;
 
 
 //    ScrollView svProfile;
@@ -130,6 +152,11 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                 Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
                 t.show();
                 Log.i(TAG, "Nominator profile clicked!");
+                if(nominator != null)
+                {
+                    Intent i = new Intent(v.getContext(),ViewAUserProfileActivity.class);
+//                    User toPass = new User(nominator);
+                }
 //                ParseObject nominator = user.getNominator()
 //                goToProfileActivity();
             }
@@ -162,11 +189,38 @@ public class ViewMyProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast t = Toast.makeText(v.getContext(), "Fullname clicked!", Toast.LENGTH_SHORT);
                 t.show();
-                Log.i(TAG, "Fullname clicked!");
-                PopUpWindowActivity pw = new PopUpWindowActivity();
-                pw.displayPopupWindow(v);
-//                ParseObject nominator = user.getNominator()
-//                goToProfileActivity();
+                //inflate the layout
+                LayoutInflater inflater = (LayoutInflater) v.getContext().getSystemService(v.getContext().LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.activity_popup_window,null);
+                //intialize the size of our layout
+                int width = LinearLayout.LayoutParams.MATCH_PARENT;
+                int height = LinearLayout.LayoutParams.MATCH_PARENT;
+
+                boolean focusable = true;
+                //place all features into PopupWindow
+                 pw = new PopupWindow(popupView,width,height,focusable);
+
+                pw.showAtLocation(v, Gravity.CENTER,0,0);
+                //INITIALIZE THE ELEMENTS OF OUR WINDOW
+                textPrompt    = popupView.findViewById(R.id.tvFirstName);buttonUpdateName = popupView.findViewById(R.id.updateNameButton);
+                createAlias = popupView.findViewById(R.id.createAliasButton);
+                cancel = popupView.findViewById(R.id.CancelButton);
+                setup_Popup_Window_On_Click_Listeners();
+
+                //if tapped outside, dismiss popup window
+                popupView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+
+                        //Close the window when clicked
+                        //use later for cancel button
+                        pw.dismiss();
+                        return true;
+                    }
+                });
+
+
+
 
             }
         });
@@ -206,11 +260,11 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         tvFollowersCount.setText(String.valueOf(followers.size()));
         tvFollowingCount.setText(String.valueOf(following.size()));
         // load nominator's profile picture
-        boolean isSeed = user.isSeed();
-        if (!user.isSeed()){
-//            loadNominatorProfileImage();
-//            tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
-        }
+//        boolean isSeed = user.isSeed();
+//        if (!user.isSeed()){
+////            loadNominatorProfileImage();
+////            tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
+//        }
     }
 
     private void queryUserProfile() {
@@ -251,30 +305,39 @@ public class ViewMyProfileActivity extends AppCompatActivity {
 //        overridePendingTransition(R.anim.slide_to_top, R.anim.slide_to_left);
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
-//    private void goToUpdateFullNameActivity()
-//    {
-//
-//    }
-
-    private void goToViewAProfileActivity() {
-//        Intent i = new Intent(this, SettingsActivity.class);
-//        startActivity(i);
-//        overridePendingTransition(R.anim.slide_to_top, R.anim.slide_to_left);
-        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+    private void goToUpdateFullNameActivity()
+    {
+        Intent i = new Intent(this,UpdateFullNameActivity.class);
+        startActivity(i);
     }
 
-//    private void loadNominatorProfileImage(){
-//        ParseFile image = null;
-//        try {
-//            image = nominator.fetchIfNeeded().getParseFile("image");
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        if (image != null)
-//            Glide.with(this)
-//                    .load(image.getUrl())
-//                    .circleCrop()
-//                    .into(ivProfileNominator);
-//    }
+    //pop up window buttons
+    public void setup_Popup_Window_On_Click_Listeners() {
+        buttonUpdateName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG,"UPDATE BUTTON CLICKED");
+                goToUpdateFullNameActivity();
+            }
+        });
+        /*
+
+        IMPORT TO IMPLEMENT FIRST
+
+         */
+        cancel.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                pw.dismiss();
+            }
+        });
+        createAlias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
 
 }
