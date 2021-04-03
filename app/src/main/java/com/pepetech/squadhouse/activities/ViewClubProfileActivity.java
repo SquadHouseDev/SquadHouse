@@ -13,6 +13,8 @@ import com.pepetech.squadhouse.models.Interest;
 import com.pepetech.squadhouse.models.User;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,7 +26,7 @@ import java.util.List;
 // 2nd section should be a recycler of all members with buttons to follow
 // NOTE: current code reflects testing using clubs followed by a user
 public class ViewClubProfileActivity extends AppCompatActivity {
-    public static final String TAG = "ClubActivity";
+    public static final String TAG = "ViewClubProfileActivity";
     TextView tvClubName, tvClubDescription, tvInterests;
     ImageView ivClubImage;
     Club club;
@@ -46,7 +48,9 @@ public class ViewClubProfileActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////
         // Query club info and populate
         ////////////////////////////////////////////////////////////
+        // call club profile info loading methods here
         queryClubProfile();
+        // call club element populating methods here
         populateClubProfileElements();
     }
 
@@ -55,15 +59,26 @@ public class ViewClubProfileActivity extends AppCompatActivity {
         loadClubProfileImage();
         tvClubDescription.setText(club.getDescription());
         tvClubName.setText(club.getName());
+        String interestsStr = "";
+        for (ParseObject i : interests) {
+            Interest interest = ((Interest) i);
+            interestsStr += interest.getArchetypeEmoji() + interest.getName();
+            if (interests.size() > 1)
+                interestsStr += "·";    // append floating middle dot
+        }
+        tvInterests.setText(interestsStr);
+
     }
 
     // TODO complete club profile data querying
     private void queryClubProfile() {
         // test code needs to be updated to reflect a club a user has clicked on
-        User user = new User();
-        user.User(ParseUser.getCurrentUser());
+        User user = new User(ParseUser.getCurrentUser());
         allClubs = user.getClubs(); // TESTING
-        interests = club.getInterests();
+        club = (Club) allClubs.get(0); // TESTING
+        interests = (List<ParseObject>) club.getInterests();
+        for (ParseObject i : interests)
+            Log.i(TAG, ((Interest) i).getName());
 //        loadClubProfileImage();
     }
 
@@ -85,5 +100,16 @@ public class ViewClubProfileActivity extends AppCompatActivity {
                     .into(ivClubImage);
     }
 
+    /**
+     * Method for creating the action Club bar menu
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_club_profile, menu);
+        return true;
+    }
 
 }
