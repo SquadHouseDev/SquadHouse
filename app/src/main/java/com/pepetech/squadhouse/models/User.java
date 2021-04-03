@@ -45,10 +45,6 @@ public class User {
     ////////////////////////////////////////////////////////////
     // Constructors
     ////////////////////////////////////////////////////////////
-    public User() {
-        this(null, "", "", null, false, new ArrayList<>(), new ArrayList<>());
-    }
-
     public User(ParseUser user) {
         this(user, "", "", null, false, new ArrayList<>(), new ArrayList<>());
     }
