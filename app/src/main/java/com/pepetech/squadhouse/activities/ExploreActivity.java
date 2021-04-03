@@ -7,8 +7,10 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.adapters.ExploreClubAdapter;
 import com.pepetech.squadhouse.adapters.ExploreInterestAdapter;
 import com.pepetech.squadhouse.adapters.ExploreUserAdapter;
+import com.pepetech.squadhouse.models.Club;
 import com.pepetech.squadhouse.models.Interest;
 import com.pepetech.squadhouse.models.User;
 
@@ -19,10 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,14 +34,20 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+/**
+ * TODO: add handling for empty keyword search
+ */
 public class ExploreActivity extends AppCompatActivity {
     public static final String TAG = "SearchActivity";
     List<User> allUsers;
+    List<Club> allClubs;
     TextView tvElementsLabel;
     RecyclerView rvElementsFound, rvInterests;
     EditText etSearch;
     Button btnSearch;
+    Switch switchUserClub;
     ExploreUserAdapter exploreUserAdapter;
+    ExploreClubAdapter exploreClubAdapter;
     ExploreInterestAdapter exploreInterestAdapter;
     List<User> users;
     List<Interest> allInterests;
@@ -60,27 +70,28 @@ public class ExploreActivity extends AppCompatActivity {
         tvElementsLabel = findViewById(R.id.tvElementsLabel);
         etSearch = findViewById(R.id.etSearch);
         btnSearch = findViewById(R.id.btnSearch);
+        switchUserClub = findViewById(R.id.switchUserClub);
         setupOnClickListeners();
         ////////////////////////////////////////////////////////////
         // Setup recycler views
         ////////////////////////////////////////////////////////////
         allUsers = new ArrayList<>();
+        allClubs = new ArrayList<>();
         rvElementsFound = findViewById(R.id.rvElementsFound);
+        exploreClubAdapter = new ExploreClubAdapter(this, allClubs, currentUser);
         exploreUserAdapter = new ExploreUserAdapter(this, allUsers, currentUser);
-        rvElementsFound.setAdapter(exploreUserAdapter);
+
+        //
         rvElementsFound.setLayoutManager(new LinearLayoutManager(this));
 
         allInterests = new ArrayList<>();
-//        interestsGrouped = new LinkedHashMap<>();
         rvInterests = findViewById(R.id.rvInterests);
         exploreInterestAdapter = new ExploreInterestAdapter(this, allInterests);
-//        interestAdapter = new InterestAdapter(this, interestsGrouped);
         rvInterests.setAdapter(exploreInterestAdapter);
         rvInterests.setLayoutManager(new GridLayoutManager(this, 2));
         queryFollowing();
         queryInterests();
     }
-
     /**
      * TODO: need to fix grouping of interests by archetypes ie "Tech" : [Engineering, SaaS, DTC, ...]
      * Main method for query interests
@@ -128,13 +139,25 @@ public class ExploreActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Search button clicked!", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "Search button clicked!");
-//                Log.i(TAG, String.valueOf(etSearch.getText()));
-//                queryAllUsers(); // DEBUG
-                queryByKeywordSearch(etSearch.getText().toString());
+                Toast.makeText(v.getContext(), "Search button clicked!", Toast.LENGTH_SHORT).show();
+                if (switchUserClub.isChecked()) {
+                    queryClubsByKeyword(etSearch.getText().toString());
+                    rvElementsFound.setAdapter(exploreClubAdapter);
+
+                } else {
+                    queryUsersByKeyword(etSearch.getText().toString());
+                    rvElementsFound.setAdapter(exploreUserAdapter);
+
+                }
+
             }
         });
+
+        if (switchUserClub.isChecked()) {
+            Toast.makeText(getBaseContext(), "Search for Users", Toast.LENGTH_SHORT).show(); // display the current state for switch's
+        } else {
+            Toast.makeText(getBaseContext(), "Search for Clubs", Toast.LENGTH_SHORT).show(); // display the current state for switch's
+        }
     }
 
     /**
@@ -202,7 +225,7 @@ public class ExploreActivity extends AppCompatActivity {
      *
      * @param keyword
      */
-    void queryByKeywordSearch(String keyword) {
+    void queryUsersByKeyword(String keyword) {
         // reset list of Users found
         allUsers.clear();
         // substring querying
@@ -250,4 +273,44 @@ public class ExploreActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Keyword searching for Clubs by the union of Users that have one or more fields: name, description
+     * that contain the substring of the input keyword
+     *
+     * @param keyword
+     */
+    void queryClubsByKeyword(String keyword) {
+        // reset list of Clubs found
+        allClubs.clear();
+        // substring querying
+        // create querying by name
+        ParseQuery<Club> queryByName = new ParseQuery<Club>(Club.class);
+        queryByName.whereContains("name", keyword);
+        // create querying by description
+        ParseQuery<Club> queryByDescription = new ParseQuery<Club>(Club.class);
+        // create the collection of queries
+        List<ParseQuery<Club>> queries = new ArrayList<ParseQuery<Club>>();
+        queries.add(queryByName);
+        queries.add(queryByDescription);
+        // create the union for all queries
+        ParseQuery<Club> mainQuery = ParseQuery.or(queries);
+        mainQuery.findInBackground(new FindCallback<Club>() {
+            @Override
+            public void done(List<Club> objects, ParseException e) {
+                if (e == null) {
+//                    allUsers.clear();
+                    for (Club c : objects) {
+                        if (!allClubs.contains(c))
+                            allClubs.add(c);
+                        Log.i(TAG, c.getName());
+                    }
+                } else {
+                }
+                exploreClubAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+
 }
