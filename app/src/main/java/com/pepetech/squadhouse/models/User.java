@@ -1,6 +1,7 @@
 package com.pepetech.squadhouse.models;
 
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -86,44 +87,118 @@ public class User {
     }
 
     public ParseFile getImage() {
-        return user.getParseFile(KEY_IMAGE);
-    }
+        ParseFile rv = null;
+        try {
+            rv = user.fetchIfNeeded().getParseFile(KEY_IMAGE);
+            return rv;
 
-    public String getFirstName() {
-        return (String) user.get(KEY_FIRST_NAME);
-    }
-
-    public String getLastName() {
-        return (String) user.get(KEY_LAST_NAME);
-    }
-
-    public String getBiography() {
-        return (String) user.get(KEY_BIOGRAPHY);
-    }
-
-    public String getPhoneNumber() {
-        return (String) user.get(KEY_PHONE_NUMBER);
-    }
-
-    public boolean isSeed() {
-        return (boolean) user.getBoolean(KEY_IS_SEED);
-    }
-
-    public ParseObject getNominator() {
-        return (ParseObject) user.get(KEY_NOMINATOR);
-    }
-
-    public ArrayList<ParseObject> getFollowing() {
-        ArrayList<ParseObject> rv;
-        rv = (ArrayList<ParseObject>) user.get(KEY_FOLLOWING);
-        if (rv == null)
-            return new ArrayList<ParseObject>();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return rv;
     }
 
-    public ArrayList<ParseObject> getClubs() {
-        ArrayList<ParseObject> rv;
-        rv = (ArrayList<ParseObject>) user.get(KEY_CLUBS);
+    public String getFirstName() {
+        String rv = null;
+        try {
+            rv = user.fetchIfNeeded().getString(KEY_FIRST_NAME);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return rv;
+    }
+
+    public String getLastName() {
+        String rv = null;
+        try {
+            rv = user.fetchIfNeeded().getString(KEY_LAST_NAME);
+            return rv;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return rv;
+    }
+
+    public String getBiography() {
+        String rv = null;
+        try {
+            rv = user.fetchIfNeeded().getString(KEY_BIOGRAPHY);
+            return rv;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return rv;
+
+    }
+
+    public String getPhoneNumber() {
+        String rv = null;
+        try {
+            rv = user.fetchIfNeeded().getString(KEY_PHONE_NUMBER);
+            return rv;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return rv;
+    }
+
+    public boolean isSeed() {
+        boolean rv = Boolean.parseBoolean(null);
+        try {
+            rv = user.fetchIfNeeded().getBoolean(KEY_IS_SEED);
+            return rv;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return rv;
+    }
+
+    public ParseUser getNominator() {
+        ParseUser rv = null;
+        try {
+            rv = user.fetchIfNeeded().getParseUser(KEY_NOMINATOR);
+            return rv;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return rv;
+    }
+
+//    public ArrayList<ParseObject> getFollowing() {
+//        ArrayList<ParseObject> rv;
+//        rv = (ArrayList<ParseObject>) user.get(KEY_FOLLOWING);
+//        if (rv == null)
+//            return new ArrayList<ParseObject>();
+//        return rv;
+//    }
+
+    public List<? extends Object> getFollowing() {
+        List<Object> rv = null;
+        try {
+            rv = user.fetchIfNeeded().getList(KEY_FOLLOWING);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (rv == null)
+            return new ArrayList<ParseUser>();
+        return rv;
+    }
+
+    public List<? extends Object> getClubs() {
+        List<Object> rv = null;
+        try {
+            rv = user.fetchIfNeeded().getList(KEY_CLUBS);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (rv == null)
             return new ArrayList<ParseObject>();
         return rv;
@@ -180,7 +255,7 @@ public class User {
     }
 
     public boolean removeFollowing(String userId) {
-        ArrayList<ParseObject> followings = getFollowing();
+        ArrayList<ParseObject> followings = (ArrayList<ParseObject>) getFollowing();
         if (!followings.contains(userId)) {
             return false;
         }
