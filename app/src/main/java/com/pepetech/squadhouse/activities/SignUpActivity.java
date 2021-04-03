@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -51,6 +52,13 @@ public class SignUpActivity extends AppCompatActivity {
                 String firstName = etFirstName.getText().toString();
                 String lastName = etLastName.getText().toString();
                 signUpUser(username, password, email, firstName, lastName);
+                try {
+                    ParseUser.logIn(username, password);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                goToHomeActivity();
+
             }
         });
     }
@@ -63,19 +71,19 @@ public class SignUpActivity extends AppCompatActivity {
                 // results has the list of users that match either the email address or username
             }
         });
-
-//        if ParseQuery.getQuery(User.)
         return false;
     }
 
     private void signUpUser(String username, String password, String email, String firstName, String lastName) {
         user = new ParseUser();
+        // configure standard ParseUser fields
         user.setEmail(email);
         user.setUsername(username);
         user.setPassword(password);
-
+        // configure extra ParseUser fields
+        user.put(User.KEY_FIRST_NAME, etFirstName.getText().toString());
+        user.put(User.KEY_LAST_NAME,  etLastName.getText().toString());
         Toast.makeText(getBaseContext(), "Starting sign up", Toast.LENGTH_SHORT);
-        // initial user signup
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
@@ -105,26 +113,6 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
-        // update fields after successful basic account creation
-        Log.i(TAG, "firstname: " + firstName);
-        Log.i(TAG, "lastname: " + lastName);
-        user.put(User.KEY_FIRST_NAME, firstName);
-        user.put(User.KEY_LAST_NAME, lastName);
-        user.saveInBackground();
-        ParseUser.logInInBackground(username, password);
-        goToHomeActivity();
-        // apply first and last name fields after initial user creation
-
-//                    User u = new User(user);
-//                    u.saveInBackground();
-//                    user.saveInBackground();
-        // navigate to home feed
-        // TODO: navigation to stretch profile creation pages
-        // - link social media
-        // - upload profile picture
-        // - upload biography
-        // - navigate to interets
-        // perform login
     }
 
     private void goToHomeActivity() {
