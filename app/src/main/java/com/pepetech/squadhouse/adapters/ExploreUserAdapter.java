@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
 import com.pepetech.squadhouse.R;
@@ -27,7 +26,7 @@ import org.parceler.Parcels;
 import java.util.List;
 
 public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.ViewHolder> {
-    public static final String TAG = "SearchAdapter";
+    public static final String TAG = "ExploreUserAdapter";
 
     private Context context;
     private List<User> allUsers;
@@ -101,16 +100,16 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
 
         /**
          * Main method for configuring the follow button
+         *
          * @param userElement
          */
         private void setupFollowButton(User userElement) {
             String userElementId = userElement.getParseUser().getObjectId();
-            if (currentUser.getFollowing().contains(userElementId)){
+            if (currentUser.getFollowing().contains(userElementId)) {
                 Log.i(TAG, userElement.getFirstName() + " is currently followed by " + currentUser.getFirstName());
                 btnFollow.setText("Following");
                 setupCurrentlyFollowingButton(userElementId);
-            }
-            else {
+            } else {
                 setupDefaultFollowButton(userElementId);
             }
         }
@@ -118,9 +117,10 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
         /**
          * Current User is not following the User in the row therefore configure
          * buttons to reflect the default case of encouraging the User to follow.
+         *
          * @param userElementId
          */
-        private void setupDefaultFollowButton(String userElementId){
+        private void setupDefaultFollowButton(String userElementId) {
             btnFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -132,7 +132,6 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
                         btnFollow.setText("Follow");
                         // apply unfollow
                         currentUser.removeFollowing(userElementId);
-
                     } else {
                         wasFollowed = true;
                         btnFollow.setText("Following");
@@ -146,9 +145,10 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
         /**
          * Configuration of follow button when current user is already following
          * a User
+         *
          * @param userElementId
          */
-        private void setupCurrentlyFollowingButton(String userElementId){
+        private void setupCurrentlyFollowingButton(String userElementId) {
             btnFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
