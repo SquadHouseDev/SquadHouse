@@ -3,6 +3,7 @@ package com.pepetech.squadhouse.activities;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
@@ -80,7 +81,8 @@ public class ExploreActivity extends AppCompatActivity {
         queryInterests();
     }
 
-    /** TODO: need to fix grouping of interests by archetypes ie "Tech" : [Engineering, SaaS, DTC, ...]
+    /**
+     * TODO: need to fix grouping of interests by archetypes ie "Tech" : [Engineering, SaaS, DTC, ...]
      * Main method for query interests
      */
     private void queryInterests() {
@@ -94,27 +96,7 @@ public class ExploreActivity extends AppCompatActivity {
                     Log.e(TAG, "Issue with getting posts", e);
                     return;
                 }
-                // 1st version of grouping
-//                for (Interest i : interests) {
-//                    if (interestsGrouped.containsKey(i.getArchetype())) {
-//                        interestsGrouped.get(i.getArchetype()).add(i);
-//                    } else {
-//                        ArrayList<Interest> grouped = new ArrayList<>();
-//                        grouped.add(i);
-//                        interestsGrouped.put(i.getArchetype(), grouped);
-//                    }
-//                }
-                // 2nd method of grouping
-//                for (Interest i : interests) {
-//                    if (!interestsGrouped.containsKey(i.getArchetype())) {
-//                        interestsGrouped.put(i.getArchetype(), new ArrayList<>());
-//                        interestsGrouped.get(i.getArchetype()).add(i);
-//                    } else {
-////                ArrayList<Interest> grouped = new ArrayList<>();
-////                grouped.add(i);
-//                        interestsGrouped.get(i.getArchetype()).add(i);
-//                    }
-//                }
+                // TODO: needs refactor to incorporate all interest names to be under one archetype
                 allInterests.addAll(interests);
                 Log.i(TAG, "Length of all interests: " + String.valueOf(allInterests.size()));
 
@@ -124,6 +106,8 @@ public class ExploreActivity extends AppCompatActivity {
     }
 
     /**
+     * TODO: Query creates of list of Interests but does not consolidate all interest names under one umbrella term.
+     * TODO: The result (Ex. Archetype=Sport : InterestNames=[ Tennis, Basketball, Badminton, Swimming])
      *
      * @param interests
      */
@@ -147,7 +131,8 @@ public class ExploreActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), "Search button clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Search button clicked!");
 //                Log.i(TAG, String.valueOf(etSearch.getText()));
-                queryAllUsers(); // DEBUG
+//                queryAllUsers(); // DEBUG
+                queryByKeywordSearch(etSearch.getText().toString());
             }
         });
     }
@@ -198,6 +183,7 @@ public class ExploreActivity extends AppCompatActivity {
 //                    rv[0] = awesome;
                     User u = new User(awesome);
                     Log.i(TAG, u.getLastName() + u.getFirstName() + u.getBiography() + u.getPhoneNumber());
+//                    users.clear();
                     users.add(u);
                     Log.i(TAG, String.valueOf(users.size()));
                     Log.i(TAG, String.valueOf(users));
@@ -208,10 +194,60 @@ public class ExploreActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
-    void queryByKeywordSearch() {
-
+    /**
+     * Keyword searching for Users by the union of Users that have one or more fields: username, firstname, lastname, biography
+     * that contain the substring of the input keyword excluding the current application's User self
+     *
+     * @param keyword
+     */
+    void queryByKeywordSearch(String keyword) {
+        // reset list of Users found
+        allUsers.clear();
+        // substring querying
+        // create querying by username
+        ParseQuery<ParseUser> queryByUsername = ParseUser.getQuery();
+        queryByUsername.whereContains("username", keyword);
+        queryByUsername.whereNotEqualTo("objectId", currentUser.getParseUser().getObjectId());    // exclude the user's self
+        // create querying by firstname
+        ParseQuery<ParseUser> queryByFirstName = ParseUser.getQuery();
+        queryByFirstName.whereNotEqualTo("objectId", currentUser.getParseUser().getObjectId());    // exclude the user's self
+        queryByFirstName.whereContains("firstName", keyword);
+        // create querying by lastname
+        ParseQuery<ParseUser> queryByLastName = ParseUser.getQuery();
+        queryByLastName.whereNotEqualTo("objectId", currentUser.getParseUser().getObjectId());    // exclude the user's self
+        queryByLastName.whereContains("lastName", keyword);
+        // create querying by biography
+        ParseQuery<ParseUser> queryByBiography = ParseUser.getQuery();
+        queryByBiography.whereNotEqualTo("objectId", currentUser.getParseUser().getObjectId());    // exclude the user's self
+        queryByBiography.whereContains("biography", keyword);
+        // create the collection of queries
+        List<ParseQuery<ParseUser>> queries = new ArrayList<ParseQuery<ParseUser>>();
+        queries.add(queryByUsername);
+        queries.add(queryByFirstName);
+        queries.add(queryByLastName);
+        queries.add(queryByBiography);
+        // create the union for all queries
+        ParseQuery<ParseUser> mainQuery = ParseQuery.or(queries);
+        mainQuery.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> objects, ParseException e) {
+                if (e == null) {
+//                    allUsers.clear();
+                    for (ParseUser o : objects) {
+                        User u = new User(o);
+                        Log.i(TAG, u.getLastName() + u.getFirstName() + u.getBiography() + u.getPhoneNumber());
+                        if (!allUsers.contains(u))
+                            allUsers.add(u);
+                        Log.i(TAG, String.valueOf(users.size()));
+                        Log.i(TAG, String.valueOf(users));
+                        Log.i(TAG, "Proceed to populate from here or notify that adapter that the data has changed");
+                    }
+                } else {
+                }
+                exploreUserAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }
