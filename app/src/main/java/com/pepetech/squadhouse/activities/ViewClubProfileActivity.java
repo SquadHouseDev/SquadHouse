@@ -9,6 +9,7 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.models.Club;
+import com.pepetech.squadhouse.models.Interest;
 import com.pepetech.squadhouse.models.User;
 
 import android.os.Bundle;
@@ -16,22 +17,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // TODO: implement heterogenous recycler view
 // 1st section should be the club profile
 // 2nd section should be a recycler of all members with buttons to follow
 // NOTE: current code reflects testing using clubs followed by a user
-public class ClubActivity extends AppCompatActivity {
+public class ViewClubProfileActivity extends AppCompatActivity {
     public static final String TAG = "ClubActivity";
     TextView tvClubName, tvClubDescription, tvInterests;
     ImageView ivClubImage;
     Club club;
-    ArrayList<ParseObject> allClubs;
+    ArrayList<ParseObject> allClubs;    // TESTING
+    List<ParseObject> interests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_club);
+        setContentView(R.layout.activity_view_club_profile);
         ////////////////////////////////////////////////////////////
         // Initialize club page variables
         ////////////////////////////////////////////////////////////
@@ -59,14 +62,15 @@ public class ClubActivity extends AppCompatActivity {
         // test code needs to be updated to reflect a club a user has clicked on
         User user = new User();
         user.User(ParseUser.getCurrentUser());
-        allClubs = user.getClubs();
+        allClubs = user.getClubs(); // TESTING
+        interests = club.getInterests();
 //        loadClubProfileImage();
     }
 
     private void loadClubProfileImage() {
         // needs to be updated to reflect a club a user has clicked on
         ParseFile image = null;
-        club = (Club) allClubs.get(0); // TEST CODE
+        club = (Club) allClubs.get(0); // TESTING
         try {
             if (club == null)
                 return;
@@ -80,5 +84,6 @@ public class ClubActivity extends AppCompatActivity {
                     .circleCrop()
                     .into(ivClubImage);
     }
+
 
 }
