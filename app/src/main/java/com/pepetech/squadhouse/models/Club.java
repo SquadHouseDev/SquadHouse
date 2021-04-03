@@ -75,8 +75,8 @@ public class Club extends ParseObject {
         return rv;
     }
 
-    public List<ParseObject> getInterests() {
-        List<ParseObject> rv = null;
+    public List<? extends ParseObject> getInterests() {
+        List<Interest> rv = null;
         try {
             rv = fetchIfNeeded().getList(KEY_INTERESTS);
             return rv;
@@ -84,7 +84,7 @@ public class Club extends ParseObject {
             e.printStackTrace();
         }
         if (rv == null)
-            return new ArrayList<ParseObject>();
+            return new ArrayList<Interest>();
         return rv;
     }
 
