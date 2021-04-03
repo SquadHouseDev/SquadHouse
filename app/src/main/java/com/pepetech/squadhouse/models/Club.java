@@ -1,6 +1,7 @@
 package com.pepetech.squadhouse.models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 
@@ -20,19 +21,68 @@ public class Club extends ParseObject {
     ////////////////////////////////////////////////////////////
     // Getter Methods
     ////////////////////////////////////////////////////////////
-    public String getName() { return getString(KEY_NAME); }
+    public String getName() {
+        try {
+            String rv = fetchIfNeeded().getString(KEY_NAME);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return getString(KEY_NAME);
+    }
 
-    public String getDescription() { return getString(KEY_DESCRIPTION); }
+    public String getDescription() {
+        try {
+            String rv = fetchIfNeeded().getString(KEY_DESCRIPTION);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return getString(KEY_DESCRIPTION);
+    }
 
-    public String getFollowers() { return getString(KEY_FOLLOWERS); }
+    public String getFollowers() {
+        try {
+            String rv = fetchIfNeeded().getString(KEY_FOLLOWERS);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return getString(KEY_FOLLOWERS);
+    }
 
-    public ParseFile getImage() { return getParseFile(KEY_IMAGE); }
+    public ParseFile getImage() {
+        ParseFile rv = null;
+        try {
+            rv = fetchIfNeeded().getParseFile(KEY_IMAGE);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return rv;
+    }
 
-    public List<ParseObject> getMembers() { return getList(KEY_MEMBERS); }
+    public List<ParseObject> getMembers() {
+        List<ParseObject> rv = null;
+        try {
+            rv = fetchIfNeeded().getList(KEY_MEMBERS);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (rv == null)
+            return new ArrayList<ParseObject>();
+        return rv;
+    }
 
     public List<ParseObject> getInterests() {
-        List<ParseObject> rv;
-        rv = getList(KEY_INTERESTS);
+        List<ParseObject> rv = null;
+        try {
+            rv = fetchIfNeeded().getList(KEY_INTERESTS);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (rv == null)
             return new ArrayList<ParseObject>();
         return rv;
@@ -41,13 +91,21 @@ public class Club extends ParseObject {
     ////////////////////////////////////////////////////////////////////////////////////////////
     // Setter Methods: need to call saveInBackground on ParseUser in order to effect changes
     ////////////////////////////////////////////////////////////////////////////////////////////
-    private void setName(String newName) { put(KEY_NAME, newName); }
+    private void setName(String newName) {
+        put(KEY_NAME, newName);
+    }
 
-    private void setDescription(String newDescription) { put(KEY_DESCRIPTION, newDescription); }
+    private void setDescription(String newDescription) {
+        put(KEY_DESCRIPTION, newDescription);
+    }
 
-    private void setImage(File newImage) { put(KEY_IMAGE, new ParseFile(newImage)); }
+    private void setImage(File newImage) {
+        put(KEY_IMAGE, new ParseFile(newImage));
+    }
 
-    private void setImage(ParseFile newImage) { put(KEY_IMAGE, newImage); }
+    private void setImage(ParseFile newImage) {
+        put(KEY_IMAGE, newImage);
+    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////
     // Update Methods: automatically calls saveInBackground on ParseUser to effect updates
@@ -74,12 +132,11 @@ public class Club extends ParseObject {
         return true;
     }
 
-    public boolean removeMember(ParseObject member){
+    public boolean removeMember(ParseObject member) {
         List<ParseObject> members = getMembers();
         if (!members.contains(member)) {
             return false;
-        }
-        else {
+        } else {
             members.remove(member);
         }
         put("interests", members);
@@ -92,7 +149,7 @@ public class Club extends ParseObject {
         saveInBackground();
         return true;
     }
-    
+
     public boolean updateImage(ParseFile image) {
         setImage(image);
         saveInBackground();
