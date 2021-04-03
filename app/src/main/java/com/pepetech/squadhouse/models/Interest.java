@@ -70,7 +70,7 @@ public class Interest extends ParseObject {
     }
 
     /**
-     * TODO
+     * TODO: create and populate field for each Interest instance on the Parse Server
      * Accessor to the Interest emoji. The emoji is the visual representation of the Interest name.
      *
      * @return the Interest archetypeEmoji
