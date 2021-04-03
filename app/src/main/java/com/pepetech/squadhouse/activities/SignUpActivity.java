@@ -83,12 +83,15 @@ public class SignUpActivity extends AppCompatActivity {
                     // apply first and last name fields after initial user creation
                     user.put(User.KEY_FIRST_NAME, firstName);
                     user.put(User.KEY_LAST_NAME, lastName);
+                    user.saveInBackground();
                     // navigate to home feed
                     // TODO: navigation to stretch profile creation pages
                     // - link social media
                     // - upload profile picture
                     // - upload biography
                     // - navigate to interets
+                    // perform login
+                    ParseUser.logInInBackground(username, password);
                     goToHomeActivity();
                 } else {
                     // TODO add addtional cases in which a user's input is "incorrect"
@@ -121,4 +124,5 @@ public class SignUpActivity extends AppCompatActivity {
         startActivity(i);
         finish(); // disable user ability to renavigate after a successful login
     }
+
 }
