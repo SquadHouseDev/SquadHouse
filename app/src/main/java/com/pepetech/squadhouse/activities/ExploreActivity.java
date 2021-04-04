@@ -185,8 +185,10 @@ public class ExploreActivity extends AppCompatActivity {
      * Query for all Users followed by the current User
      */
     void queryFollowing() {
-        List<String> followingIds = ParseUser.getCurrentUser().getList("following");
-
+        List<String> followingIds = (List<String>) currentUser.getFollowing();
+        if (followingIds==null){
+            return;
+        }
         if (!followingIds.isEmpty()) {
             for (String id : followingIds) {
                 Log.i(TAG, id);
