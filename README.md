@@ -6,6 +6,7 @@
 1. [Product Spec](#Product-Spec)
 1. [Wireframes](#Wireframes)
 2. [Schema](#Schema)
+3. [Gifs](#Gifs)
 
 ## Overview
 ### Description
@@ -29,24 +30,27 @@
 
 **Required Must-have Stories**
 
-* [x] User can sign up
+* [x] User can sign up (basic basic sign up w/ username password combination email only)
+* [ ] User can verify their phone number (required to be able to start audio rooms)
+* [ ] User can sign up via phone number.
 * [x] User can logout of their account
-* [ ] Users can search up other users.
+* [x] Users can search up other users.
 * [ ] User can create a new audio room with designated participants/groups of people.
 * [ ] User can see currently open audio rooms of people they follow.
 * [ ] User can see audio rooms of other topics they might possibly be interested in.
 * [ ] User can see other people currently in the audio room they are with
-* [ ] User can see their own profile and the profiles of others and edit with interests
-* [ ] User can invite people.
+* [x] User can see their own profile 
+* [x] User can see other people's profiles (from search bar) 
+* [ ] User can edit their own interests
 
 **Optional Nice-to-have Stories**
-* [ ] User can sign up via phone number.
 * [ ] User can connect their account to other social medias: Twitter, Instagram, etc.
 * [ ] User can search up topics/interests.
 * [ ] User can endorse/verify new users.
 * [ ] User can deactivate their account.
 * [ ] User can create a new event/schedule it
 * [ ] User can create a group
+* [ ] User can invite people.
 
 ### 2. Screen Archetypes
 
@@ -201,3 +205,5 @@
       - (Update/PUT) Update user profile lastname
       - (Update/PUT) Update user profile interests
       - (Update/PUT) Update user profile following
+
+## Gifs
