@@ -90,7 +90,7 @@ public class ExploreActivity extends AppCompatActivity {
         rvInterests.setLayoutManager(new GridLayoutManager(this, 2));
         exploreInterestAdapter = new ExploreInterestAdapter(this, interestsGrouped);
         rvInterests.setAdapter(exploreInterestAdapter);
-        
+
         // query data for populating with adapters
         queryFollowing();
         queryAndGroupInterestsByArchetype();
@@ -363,6 +363,4 @@ public class ExploreActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }
