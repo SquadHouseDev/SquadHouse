@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
@@ -16,6 +17,7 @@ import org.parceler.Parcels;
 
 public class ViewAClubActivity extends AppCompatActivity {
     public static final String TAG = "ViewAClubActivity";
+    ConstraintLayout clFollowers, clFollowing;
     TextView tvClubName, tvClubDescription, tvInterests;
     ImageView ivClubImage;
     Club club;
@@ -34,6 +36,8 @@ public class ViewAClubActivity extends AppCompatActivity {
         tvInterests = findViewById(R.id.tvInterests);
         tvClubName = findViewById(R.id.tvClubName);
         ivClubImage = findViewById(R.id.ivClubImage);
+        clFollowers = findViewById(R.id.clFollowers);
+        clFollowing = findViewById(R.id.clFollowing);
 
         ////////////////////////////////////////////////////////////
         // Query club info and populate
