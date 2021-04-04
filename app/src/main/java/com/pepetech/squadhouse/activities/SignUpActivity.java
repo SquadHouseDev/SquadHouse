@@ -1,7 +1,5 @@
 package com.pepetech.squadhouse.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,16 +8,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.models.User;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class SignUpActivity extends AppCompatActivity {
@@ -48,48 +45,47 @@ public class SignUpActivity extends AppCompatActivity {
                 String username = etUserName.getText().toString();
                 String password = etPassword.getText().toString();
                 String email = etEmail.getText().toString();
-                String firstName = etFirstName.getText().toString();
-                String lastName = etLastName.getText().toString();
-                signUpUser(username, password, email, firstName, lastName);
+                signUpUser(etUserName.getText().toString(), etPassword.getText().toString(), etEmail.getText().toString());
+                try {
+                    ParseUser.logIn(username, password);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                // add methods for navigating to new activity here
+                goToHomeActivity();
             }
         });
     }
 
-    private boolean isValidFields(String username, String password, String email, String firstName, String lastName) {
-        final ParseQuery<ParseUser> emailQuery = ParseUser.getQuery();
-        emailQuery.whereEqualTo("email", email);
-        emailQuery.findInBackground(new FindCallback<ParseUser>() {
-            public void done(List<ParseUser> results, ParseException e) {
-                // results has the list of users that match either the email address or username
-            }
-        });
-
-//        if ParseQuery.getQuery(User.)
-        return false;
-    }
-
-    private void signUpUser(String username, String password, String email, String firstName, String lastName) {
+    /**
+     * Method for ingesting application user input information for creation
+     * of a User account
+     * @param username
+     * @param password
+     * @param email
+     */
+    private void signUpUser(String username, String password, String email) {
         user = new ParseUser();
+        // configure standard ParseUser fields
         user.setEmail(email);
         user.setUsername(username);
         user.setPassword(password);
-
+        // configure extra ParseUser fields
+        user.put(User.KEY_FIRST_NAME, etFirstName.getText().toString());
+        user.put(User.KEY_LAST_NAME,  etLastName.getText().toString());
+        user.put(User.KEY_FOLLOWERS,  new ArrayList<String>());
+        user.put(User.KEY_FOLLOWING,  new ArrayList<String>());
+        user.put(User.KEY_IS_SEED,  true);
+//        user.put(User.KEY_NOMINATOR,  );  // need feature for invite / approving sign ups
+        user.put(User.KEY_BIOGRAPHY,  "");
+        user.put(User.KEY_PHONE_NUMBER,  ""); // need feature for pinging user for phone number verification
         Toast.makeText(getBaseContext(), "Starting sign up", Toast.LENGTH_SHORT);
+        // POST request to the Parse Server
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
                     Log.i(TAG, "Successfully created account!");
                     Toast.makeText(getBaseContext(), "Account created!", Toast.LENGTH_SHORT);
-                    // apply first and last name fields after initial user creation
-                    user.put(User.KEY_FIRST_NAME, firstName);
-                    user.put(User.KEY_LAST_NAME, lastName);
-                    // navigate to home feed
-                    // TODO: navigation to stretch profile creation pages
-                    // - link social media
-                    // - upload profile picture
-                    // - upload biography
-                    // - navigate to interets
-                    goToHomeActivity();
                 } else {
                     // TODO add addtional cases in which a user's input is "incorrect"
                     // 1. password is insecure
@@ -121,4 +117,5 @@ public class SignUpActivity extends AppCompatActivity {
         startActivity(i);
         finish(); // disable user ability to renavigate after a successful login
     }
+
 }

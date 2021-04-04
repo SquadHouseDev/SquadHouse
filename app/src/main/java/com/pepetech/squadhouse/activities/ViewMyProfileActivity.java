@@ -259,10 +259,10 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         tvFollowingCount.setText(String.valueOf(following.size()));
         // load nominator's profile picture
 //        boolean isSeed = user.isSeed();
-//        if (!user.isSeed()){
-////            loadNominatorProfileImage();
-////            tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
-//        }
+        if (!user.isSeed() && nominator != null){
+            loadNominatorProfileImage();
+            tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
+        }
     }
 
     private void queryUserProfile() {
@@ -338,6 +338,20 @@ public class ViewMyProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
             }
         });
+    private void loadNominatorProfileImage(){
+        ParseFile image = null;
+        if (nominator == null)
+                return;
+        try {
+            image = nominator.fetchIfNeeded().getParseFile("image");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (image != null)
+            Glide.with(this)
+                    .load(image.getUrl())
+                    .circleCrop()
+                    .into(ivProfileNominator);
     }
 
 }

@@ -15,7 +15,7 @@
         android:cursorVisible="true"
         android:ems="10"
         android:hint="username"
-        android:textCursorDrawable="@drawable/cursorcolor"
+        android:inputType="textPersonName"
         />
 
     <EditText
@@ -26,8 +26,6 @@
         android:ems="10"
         android:hint="password"
         android:inputType="textPassword"
-        android:padding="10dp"
-        android:textCursorDrawable="@drawable/cursorcolor"
         />
 
     <Button
