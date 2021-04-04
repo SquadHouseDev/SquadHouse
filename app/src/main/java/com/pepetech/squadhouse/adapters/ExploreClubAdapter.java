@@ -97,7 +97,7 @@ public class ExploreClubAdapter extends RecyclerView.Adapter<ExploreClubAdapter.
 //                    Log.i(TAG, clubElement.getFirstName() + " was selected!");
                     Toast.makeText(v.getContext(), "Selected " + clubElement.getName(), Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(context, ViewAClubActivity.class);
-                    i.putExtra("Club", Parcels.wrap(clubElement));
+                    i.putExtra("club", Parcels.wrap(clubElement));
                     context.startActivity(i);
                 }
             });
