@@ -26,6 +26,7 @@ import com.pepetech.squadhouse.adapters.ExploreInterestAdapter;
 import com.pepetech.squadhouse.adapters.ExploreUserAdapter;
 import com.pepetech.squadhouse.models.Club;
 import com.pepetech.squadhouse.models.Interest;
+import com.pepetech.squadhouse.models.InterestGroup;
 import com.pepetech.squadhouse.models.User;
 
 import java.util.ArrayList;
@@ -47,9 +48,10 @@ public class ExploreActivity extends AppCompatActivity {
     ExploreUserAdapter exploreUserAdapter;
     ExploreClubAdapter exploreClubAdapter;
     ExploreInterestAdapter exploreInterestAdapter;
+    ExploreInterestAdapter exploreInterestAdapter;
     List<User> users;
     List<Interest> allInterests;
-    private LinkedHashMap<String, List<Interest>> interestsGrouped;
+    private List<InterestGroup> interestsGrouped;
 
     User currentUser;
 
@@ -75,6 +77,7 @@ public class ExploreActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////
         // Setup recycler views
         ////////////////////////////////////////////////////////////
+        interestsGrouped = new ArrayList<>();
         allUsers = new ArrayList<>();
         allClubs = new ArrayList<>();
         allInterests = new ArrayList<>();
@@ -84,10 +87,11 @@ public class ExploreActivity extends AppCompatActivity {
         // configure layout managers
         rvElementsFound.setLayoutManager(new LinearLayoutManager(this));
         rvInterests.setLayoutManager(new GridLayoutManager(this, 2));
-        exploreInterestAdapter = new ExploreInterestAdapter(this, allInterests);
+        exploreInterestAdapter = new ExploreInterestAdapter(this, interestsGrouped);
         rvInterests.setAdapter(exploreInterestAdapter);
         queryFollowing();
-        queryInterests();
+        queryAndGroupInterestsByArchetype();
+//        queryInterests();
     }
 
     /**
@@ -146,22 +150,45 @@ public class ExploreActivity extends AppCompatActivity {
     }
 
     /**
-     * TODO: Query creates of list of Interests but does not consolidate all interest names under one umbrella term.
-     * TODO: The result (Ex. Archetype=Sport : InterestNames=[ Tennis, Basketball, Badminton, Swimming])
-     *
-     * @param interests
+     * Function for querying for all Interests and organizing the collection of Interests into an InterestGroup object.
+     * InterestGroup is used to store the string aggregation of Interest names that share
+     * the same archetype.
      */
-    private void groupInterestsByArchetype(List<Interest> interests) {
-        for (Interest i : interests) {
-            if (!interestsGrouped.containsKey(i.getArchetype())) {
-                interestsGrouped.put(i.getArchetype(), new ArrayList<>());
-                interestsGrouped.get(i.getArchetype()).add(i);
-            } else {
-//                ArrayList<Interest> grouped = new ArrayList<>();
-//                grouped.add(i);
-                interestsGrouped.get(i.getArchetype()).add(i);
+    private void queryAndGroupInterestsByArchetype() {
+        ParseQuery<Interest> query = ParseQuery.getQuery(Interest.class);
+        query.setLimit(200);
+        query.findInBackground(new FindCallback<Interest>() {
+            @Override
+            public void done(List<Interest> interests, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+                LinkedHashMap<String, List<Interest>> lhmInterests = new LinkedHashMap<>();
+                for (Interest i : interests) {
+                    if (!lhmInterests.keySet().contains(i.getArchetype())) {
+                        lhmInterests.put(i.getArchetype(), new ArrayList<>());
+                        lhmInterests.get(i.getArchetype()).add(i);
+                        Log.i(TAG, "Not in hashmap keys: " + i.getArchetype() + " ==> " + i.toString());
+                    } else {
+                        Log.i(TAG, "Key exists adding: " + i.toString());
+                        lhmInterests.get(i.getArchetype()).add(i);
+                    }
+                }
+                for (String k : lhmInterests.keySet()) {
+                    String names = "";
+                    for (Interest i : lhmInterests.get(k)) {
+                        names += i.getName() + ", ";
+                    }
+                    InterestGroup ig = new InterestGroup();
+                    ig.names = names;
+                    ig.archetypeEmoji = lhmInterests.get(k).get(0).getArchetypeEmoji();
+                    ig.archetype = lhmInterests.get(k).get(0).getArchetype();
+                    interestsGrouped.add(ig);
+                }
+                exploreInterestAdapter.notifyDataSetChanged();
             }
-        }
+        });
     }
 
 
