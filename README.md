@@ -6,6 +6,7 @@
 1. [Product Spec](#Product-Spec)
 1. [Wireframes](#Wireframes)
 2. [Schema](#Schema)
+3. [Gifs](#Gifs)
 
 ## Overview
 ### Description
@@ -204,3 +205,5 @@
       - (Update/PUT) Update user profile lastname
       - (Update/PUT) Update user profile interests
       - (Update/PUT) Update user profile following
+
+## Gifs
