@@ -33,9 +33,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-/**
- * TODO: add handling for empty keyword search
- */
 public class ExploreActivity extends AppCompatActivity {
     public static final String TAG = "ExploreActivity";
     List<User> allUsers;
@@ -51,18 +48,13 @@ public class ExploreActivity extends AppCompatActivity {
     List<User> users;
     List<Interest> allInterests;
     private List<InterestGroup> interestsGrouped;
-
     User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explore);
-        // disable auto focus keyboard
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        // setup current User and the collection of Users
-        currentUser = new User(ParseUser.getCurrentUser());
-        users = new ArrayList<>();
+
         ////////////////////////////////////////////////////////////
         // Setup view elements
         ////////////////////////////////////////////////////////////
@@ -73,6 +65,14 @@ public class ExploreActivity extends AppCompatActivity {
         rvElementsFound = findViewById(R.id.rvElementsFound);
         rvInterests = findViewById(R.id.rvInterests);
         setupOnClickListeners();
+
+        // setup current User and the collection of Users
+        currentUser = new User(ParseUser.getCurrentUser());
+        users = new ArrayList<>();
+
+        // disable auto focus keyboard
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         ////////////////////////////////////////////////////////////
         // Setup recycler views
         ////////////////////////////////////////////////////////////
@@ -80,17 +80,20 @@ public class ExploreActivity extends AppCompatActivity {
         allUsers = new ArrayList<>();
         allClubs = new ArrayList<>();
         allInterests = new ArrayList<>();
+
         // 2 adapters to toggle between with the toggle switch
         exploreClubAdapter = new ExploreClubAdapter(this, allClubs, currentUser);
         exploreUserAdapter = new ExploreUserAdapter(this, allUsers, currentUser);
+
         // configure layout managers
         rvElementsFound.setLayoutManager(new LinearLayoutManager(this));
         rvInterests.setLayoutManager(new GridLayoutManager(this, 2));
         exploreInterestAdapter = new ExploreInterestAdapter(this, interestsGrouped);
         rvInterests.setAdapter(exploreInterestAdapter);
+        
+        // query data for populating with adapters
         queryFollowing();
         queryAndGroupInterestsByArchetype();
-//        queryInterests();
     }
 
     /**
@@ -105,32 +108,33 @@ public class ExploreActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "Search button clicked!", Toast.LENGTH_SHORT).show();
-                // check state of toggle switch for selecting which adapter to use when populating
-                if (switchUserClub.isChecked()) {
-                    queryClubsByKeyword(etSearch.getText().toString());
-                    rvElementsFound.setAdapter(exploreClubAdapter);
-                } else {
-                    queryUsersByKeyword(etSearch.getText().toString());
-                    rvElementsFound.setAdapter(exploreUserAdapter);
+                // qualify if there exists a keyword search entry
+                if (etSearch.getText().toString().length() > 1) {
+                    // check state of toggle switch for selecting which adapter to use when populating
+                    if (switchUserClub.isChecked()) {
+                        queryClubsByKeyword(etSearch.getText().toString());
+                        rvElementsFound.setAdapter(exploreClubAdapter);
+                    } else {
+                        queryUsersByKeyword(etSearch.getText().toString());
+                        rvElementsFound.setAdapter(exploreUserAdapter);
+                    }
                 }
             }
         });
-
+        // DEBUG
         if (switchUserClub.isChecked()) {
-            Toast.makeText(getBaseContext(), "Search for Users", Toast.LENGTH_SHORT).show(); // display the current state for switch's
+            Toast.makeText(getBaseContext(), "Search for Users", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getBaseContext(), "Search for Clubs", Toast.LENGTH_SHORT).show(); // display the current state for switch's
+            Toast.makeText(getBaseContext(), "Search for Clubs", Toast.LENGTH_SHORT).show();
         }
     }
 
 
     /**
-     * TODO: need to fix grouping of interests by archetypes ie "Tech" : [Engineering, SaaS, DTC, ...]
-     * Main method for query interests
+     * Testing method for querying all existing Interest instances
      */
     private void queryInterests() {
         ParseQuery<Interest> query = ParseQuery.getQuery(Interest.class);
-//        query.include("archetype");
         query.setLimit(200);
         query.findInBackground(new FindCallback<Interest>() {
             @Override
@@ -142,7 +146,6 @@ public class ExploreActivity extends AppCompatActivity {
                 // TODO: needs refactor to incorporate all interest names to be under one archetype
                 allInterests.addAll(interests);
                 Log.i(TAG, "Length of all interests: " + String.valueOf(allInterests.size()));
-
                 exploreInterestAdapter.notifyDataSetChanged();
             }
         });
@@ -216,7 +219,6 @@ public class ExploreActivity extends AppCompatActivity {
      * Query for all Users followed by the current User
      */
     void queryFollowing() {
-//        List<String> followingIds = ParseUser.getCurrentUser().getList("following");
         List<String> followingIds = (List<String>) currentUser.getFollowing();
         if (followingIds == null)
             return;
@@ -237,7 +239,6 @@ public class ExploreActivity extends AppCompatActivity {
                 if (e == null) {
                     User u = new User(awesome);
                     Log.i(TAG, u.getLastName() + u.getFirstName() + u.getBiography() + u.getPhoneNumber());
-//                    users.clear();
                     users.add(u);
                     Log.i(TAG, String.valueOf(users.size()));
                     Log.i(TAG, String.valueOf(users));
@@ -262,29 +263,41 @@ public class ExploreActivity extends AppCompatActivity {
     void queryUsersByKeyword(String keyword) {
         // reset list of Users found
         allUsers.clear();
+
         // substring querying
         // create querying by username
         ParseQuery<ParseUser> queryByUsername = ParseUser.getQuery();
         queryByUsername.whereContains("username", keyword);
-        queryByUsername.whereNotEqualTo("objectId", currentUser.getParseUser().getObjectId());    // exclude the user's self
+        // exclude the user's self
+        queryByUsername.whereNotEqualTo("objectId",
+                currentUser.getParseUser().getObjectId());
+
         // create querying by firstname
         ParseQuery<ParseUser> queryByFirstName = ParseUser.getQuery();
-        queryByFirstName.whereNotEqualTo("objectId", currentUser.getParseUser().getObjectId());    // exclude the user's self
+        // exclude the user's self
+        queryByFirstName.whereNotEqualTo("objectId",
+                currentUser.getParseUser().getObjectId());
         queryByFirstName.whereContains("firstName", keyword);
+
         // create querying by lastname
         ParseQuery<ParseUser> queryByLastName = ParseUser.getQuery();
-        queryByLastName.whereNotEqualTo("objectId", currentUser.getParseUser().getObjectId());    // exclude the user's self
+        // exclude the user's self
+        queryByLastName.whereNotEqualTo("objectId", currentUser.getParseUser().getObjectId());
         queryByLastName.whereContains("lastName", keyword);
+
         // create querying by biography
         ParseQuery<ParseUser> queryByBiography = ParseUser.getQuery();
-        queryByBiography.whereNotEqualTo("objectId", currentUser.getParseUser().getObjectId());    // exclude the user's self
+        // exclude the user's self
+        queryByBiography.whereNotEqualTo("objectId", currentUser.getParseUser().getObjectId());
         queryByBiography.whereContains("biography", keyword);
+
         // create the collection of queries
         List<ParseQuery<ParseUser>> queries = new ArrayList<ParseQuery<ParseUser>>();
         queries.add(queryByUsername);
         queries.add(queryByFirstName);
         queries.add(queryByLastName);
         queries.add(queryByBiography);
+
         // create the union for all queries
         ParseQuery<ParseUser> mainQuery = ParseQuery.or(queries);
         mainQuery.findInBackground(new FindCallback<ParseUser>() {
@@ -320,23 +333,25 @@ public class ExploreActivity extends AppCompatActivity {
     void queryClubsByKeyword(String keyword) {
         // reset list of Clubs found
         allClubs.clear();
-        // substring querying
+        // substring query creation
         // create querying by name
         ParseQuery<Club> queryByName = new ParseQuery<Club>(Club.class);
         queryByName.whereContains("name", keyword);
+
         // create querying by description
         ParseQuery<Club> queryByDescription = new ParseQuery<Club>(Club.class);
+
         // create the collection of queries
         List<ParseQuery<Club>> queries = new ArrayList<ParseQuery<Club>>();
         queries.add(queryByName);
         queries.add(queryByDescription);
+
         // create the union for all queries
         ParseQuery<Club> mainQuery = ParseQuery.or(queries);
         mainQuery.findInBackground(new FindCallback<Club>() {
             @Override
             public void done(List<Club> objects, ParseException e) {
                 if (e == null) {
-//                    allUsers.clear();
                     for (Club c : objects) {
                         if (!allClubs.contains(c))
                             allClubs.add(c);
