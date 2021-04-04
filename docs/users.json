@@ -1,0 +1,99 @@
+{
+    "results": [
+        {
+            "firstName": "Joseph",
+            "lastName": "Brandon",
+            "email": "0@0.com",
+            "username": "pacifiedCheetah3",
+            "nominator": {
+                "__type": "Pointer",
+                "className": "_User",
+                "objectId": "1cJoazExtk"
+            },
+            "clubs": [],
+            "following": [
+                "1cJoazExtk"
+            ],
+            "followers": [],
+            "biography": "",
+            "isSeed": false,
+            "password": "123"
+        },
+        {
+            "firstName": "Joshua",
+            "lastName": "Sarah",
+            "email": "1@1.com",
+            "username": "amusedBass3",
+            "nominator": {
+                "__type": "Pointer",
+                "className": "_User",
+                "objectId": "1cJoazExtk"
+            },
+            "clubs": [],
+            "following": [
+                "1cJoazExtk"
+            ],
+            "followers": [],
+            "biography": "",
+            "isSeed": false,
+            "password": "123"
+        },
+        {
+            "firstName": "Amanda",
+            "lastName": "Ryan",
+            "email": "2@2.com",
+            "username": "excludedSnipe3",
+            "nominator": {
+                "__type": "Pointer",
+                "className": "_User",
+                "objectId": "1cJoazExtk"
+            },
+            "clubs": [],
+            "following": [
+                "1cJoazExtk"
+            ],
+            "followers": [],
+            "biography": "Frances is an ambitious drama student who finds it hard to trust people. She looks relatively fit. She strongly dislikes her girlfriend. She must use her talent for playing video games to heal the people around her before she can work on her own problems.",
+            "isSeed": false,
+            "password": "123"
+        },
+        {
+            "firstName": "Ryan",
+            "lastName": "Nicole",
+            "email": "3@3.com",
+            "username": "jubilantBittern8",
+            "nominator": {
+                "__type": "Pointer",
+                "className": "_User",
+                "objectId": "1cJoazExtk"
+            },
+            "clubs": [],
+            "following": [
+                "1cJoazExtk"
+            ],
+            "followers": [],
+            "biography": "Marjorie McLaughlin is a dishy woman from Dallas who can only laugh when facing north. People often compare her to a supermodel. Her biggest fear is her friends discovering that she can't sleep. She is particularly interested in making sandwiches out of vegetables.",
+            "isSeed": false,
+            "password": "123"
+        },
+        {
+            "firstName": "Jonathan",
+            "lastName": "Matthew",
+            "email": "4@4.com",
+            "username": "murkyFish4",
+            "nominator": {
+                "__type": "Pointer",
+                "className": "_User",
+                "objectId": "1cJoazExtk"
+            },
+            "clubs": [],
+            "following": [
+                "1cJoazExtk"
+            ],
+            "followers": [],
+            "biography": "Breanna is a caring teenager who finds it hard to do the right thing. She has eyes like saucers. She strongly dislikes anteaters. She is particularly interested in hosting dangerous guests.",
+            "isSeed": false,
+            "password": "123"
+        }
+    ]
+}
