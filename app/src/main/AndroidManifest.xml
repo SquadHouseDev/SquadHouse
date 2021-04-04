@@ -19,7 +19,7 @@
         <activity android:name=".activities.ViewAUserProfileActivity"></activity>
         <activity android:name=".activities.ExploreActivity" />
         <activity android:name=".activities.SignUpActivity" />
-        <activity android:name=".activities.ViewClubProfileActivity">
+        <activity android:name=".activities.ViewClubProfileActivity" >
             <!-- Set default startup screen -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +30,7 @@
         <activity android:name=".activities.ViewMyProfileActivity" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.LoginActivity">
+
 
         </activity>
         <activity android:name=".activities.HomeActivity" />
