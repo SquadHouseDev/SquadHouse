@@ -193,7 +193,7 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             case R.id.action_search:
                 Toast.makeText(this, "Search clicked!", Toast.LENGTH_SHORT).show();
-                i = new Intent(this, SearchActivity.class);
+                i = new Intent(this, ExploreActivity.class);
                 this.startActivity(i);
                 // arg_1: page to navigate to slides from the right
                 // arg_2: page navigating from slides to the left
