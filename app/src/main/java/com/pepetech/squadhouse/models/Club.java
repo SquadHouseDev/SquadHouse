@@ -4,7 +4,6 @@ import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
-import com.parse.ParseUser;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -42,17 +41,14 @@ public class Club extends ParseObject {
         return getString(KEY_DESCRIPTION);
     }
 
-    public List<? extends Object> getFollowers() {
-        List<Object> rv = null;
+    public String getFollowers() {
         try {
-            rv = fetchIfNeeded().getList(KEY_FOLLOWERS);
+            String rv = fetchIfNeeded().getString(KEY_FOLLOWERS);
             return rv;
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        if (rv == null)
-            return new ArrayList<ParseUser>();
-        return rv;
+        return getString(KEY_FOLLOWERS);
     }
 
     public ParseFile getImage() {
