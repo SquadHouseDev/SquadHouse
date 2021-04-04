@@ -26,7 +26,7 @@
             android:name=".activities.SignUpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.ViewAClubActivity"
+            android:name=".activities.ExploreAClubActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ViewMyProfileActivity"
