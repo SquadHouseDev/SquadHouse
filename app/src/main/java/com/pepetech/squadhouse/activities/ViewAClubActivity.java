@@ -1,20 +1,19 @@
 package com.pepetech.squadhouse.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.parse.ParseUser;
-import com.pepetech.squadhouse.R;
-import com.pepetech.squadhouse.models.Club;
-
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Parcel;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class ClubActivity extends AppCompatActivity {
-    public static final String TAG = "ClubActivity";
+import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.models.Club;
+
+import org.parceler.Parcels;
+
+public class ViewAClubActivity extends AppCompatActivity {
+    public static final String TAG = "ViewAClubActivity";
     TextView tvClubName, tvClubDescription, tvInterests;
     ImageView ivClubImage;
     Club club;
@@ -26,6 +25,7 @@ public class ClubActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////
         // Initialize club page variables
         ////////////////////////////////////////////////////////////
+//        club = Parcels.unwrap("club");
 //        club = (Club) ParseUser.getCurrentUser().getList("clubs").get(0); // DEBUG
         tvClubDescription = findViewById(R.id.tvClubDescription);
         tvInterests = findViewById(R.id.tvInterests);
