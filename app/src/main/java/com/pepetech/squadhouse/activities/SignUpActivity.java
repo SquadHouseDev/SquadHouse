@@ -29,6 +29,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        
         ////////////////////////////////////////////////////////////
         // Setup view elements
         ////////////////////////////////////////////////////////////
@@ -70,6 +71,7 @@ public class SignUpActivity extends AppCompatActivity {
         user.setEmail(email);
         user.setUsername(username);
         user.setPassword(password);
+
         // configure extra ParseUser fields
         user.put(User.KEY_FIRST_NAME, etFirstName.getText().toString());
         user.put(User.KEY_LAST_NAME,  etLastName.getText().toString());
@@ -80,6 +82,7 @@ public class SignUpActivity extends AppCompatActivity {
         user.put(User.KEY_BIOGRAPHY,  "");
         user.put(User.KEY_PHONE_NUMBER,  ""); // need feature for pinging user for phone number verification
         Toast.makeText(getBaseContext(), "Starting sign up", Toast.LENGTH_SHORT);
+
         // POST request to the Parse Server
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {

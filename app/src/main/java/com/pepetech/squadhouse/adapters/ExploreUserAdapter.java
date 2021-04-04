@@ -30,13 +30,11 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
 
     private Context context;
     private List<User> allUsers;
-//    private List<Club> allClubs;
     private User currentUser;
 
     public ExploreUserAdapter(Context context, List<User> users, User currentUser) {
         this.context = context;
         this.allUsers = users;
-//        this.allClubs = clubs;
         this.currentUser = currentUser;
     }
 
