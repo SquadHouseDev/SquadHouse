@@ -185,10 +185,10 @@ public class ExploreActivity extends AppCompatActivity {
      * Query for all Users followed by the current User
      */
     void queryFollowing() {
+//        List<String> followingIds = ParseUser.getCurrentUser().getList("following");
         List<String> followingIds = (List<String>) currentUser.getFollowing();
-        if (followingIds==null){
+        if (followingIds == null)
             return;
-        }
         if (!followingIds.isEmpty()) {
             for (String id : followingIds) {
                 Log.i(TAG, id);
@@ -200,12 +200,10 @@ public class ExploreActivity extends AppCompatActivity {
     void queryUser(String id) {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("objectId", id);
-//        final ParseUser[] rv = {null};
         query.getFirstInBackground(new GetCallback<ParseUser>() {
             @Override
             public void done(ParseUser awesome, ParseException e) {
                 if (e == null) {
-//                    rv[0] = awesome;
                     User u = new User(awesome);
                     Log.i(TAG, u.getLastName() + u.getFirstName() + u.getBiography() + u.getPhoneNumber());
 //                    users.clear();
@@ -213,9 +211,7 @@ public class ExploreActivity extends AppCompatActivity {
                     Log.i(TAG, String.valueOf(users.size()));
                     Log.i(TAG, String.valueOf(users));
                     Log.i(TAG, "Proceed to populate from here or notify that adapter that the data has changed");
-//                    onAwesome(awesome, post, itemView);
                 } else {
-//                    onAwesome(null, post, itemView);
                 }
             }
         });
