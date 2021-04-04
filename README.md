@@ -207,9 +207,11 @@
       - (Update/PUT) Update user profile following
 
 ## Gifs
--Complete follow feature
+-Complete follow feature  
+
+
 <img src="/docs/demo/v1.0.0-completed-follow-feature.gif" width=200>
 
--Complete unfollow feature
+-Complete unfollow feature  
 <img src="/docs/demo/v1.0.0-completed-unfollow-feature.gif" width=200>
 
