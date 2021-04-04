@@ -19,7 +19,6 @@ import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.ViewAClubActivity;
-import com.pepetech.squadhouse.activities.ViewAUserProfileActivity;
 import com.pepetech.squadhouse.models.Club;
 import com.pepetech.squadhouse.models.User;
 

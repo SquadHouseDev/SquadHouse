@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".activities.ClubActivity">
+    tools:context=".activities.ViewAClubActivity">
 
     <TextView
         android:id="@+id/tvClubName"
