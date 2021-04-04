@@ -42,6 +42,7 @@ public class User {
     public static final String KEY_PHONE_NUMBER = "phoneNumber";
     public static final String KEY_NOMINATOR = "nominator";
     public static final String KEY_IS_SEED = "isSeed";
+    public static final String KEY_USER_NAME = "username";
 
 
     private ParseUser user;
@@ -63,9 +64,13 @@ public class User {
 
     public String getPhoneNumber() { return (String) user.get(KEY_PHONE_NUMBER); }
 
+    public String getUserName() { return (String) user.get(KEY_USER_NAME);}
+
     public boolean isSeed() { return (boolean) user.getBoolean(KEY_IS_SEED); }
 
     public ParseObject getNominator() { return (ParseObject) user.get(KEY_NOMINATOR); }
+
+
 
     public ArrayList<ParseObject> getFollowing() {
         ArrayList<ParseObject> rv;
@@ -111,6 +116,8 @@ public class User {
     private void setImage(File image) { user.put(KEY_IMAGE, new ParseFile(image)); }
 
     private void setPhoneNumber(String phoneNumber) { user.put(KEY_PHONE_NUMBER, phoneNumber); }
+
+    private void setUserName(String username) { user.put(KEY_USER_NAME, username);}
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     // Update Methods: automatically calls saveInBackground on ParseUser to effect updates
@@ -185,4 +192,10 @@ public class User {
         setPhoneNumber(phoneNumber);
         user.saveInBackground();
     }
+    public void updateUserName(String username)
+    {
+        setUserName(username);
+        user.saveInBackground();
+    }
+
 }

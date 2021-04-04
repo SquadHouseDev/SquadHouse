@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bumptech.glide.Glide;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -12,15 +11,12 @@ import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.models.User;
 
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -34,7 +30,7 @@ import java.util.List;
 /**
  * TODO:
  * ViewMyProfileActivity.java
- * - fullname edit w/ prompt for confirmation of changing name
+ * [X] fullname edit w/ prompt for confirmation of changing name
  * - image edit w/ tap on profile to upload a new photo w/ confirmation of completing activity
  * - username edit w/ tap to edit
  * - following tap to view
@@ -62,7 +58,6 @@ Home Activity ->
                                                                                 -> inflate popupwindow
                                                                                     ->user clicks the update real name button
                                                                                             ->UpdateRealNameActivity
-
  */
 public class ViewMyProfileActivity extends AppCompatActivity {
     ParseUser parseUser;
@@ -167,7 +162,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
                 t.show();
-                Log.i(TAG, "Nominator profile clicked!");
+                Log.i(TAG, "User profile clicked!");
 //                ParseObject nominator = user.getNominator()
 //                goToProfileActivity();
             }
@@ -180,7 +175,9 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                 t.show();
                 Log.i(TAG, "Username clicked!");
 //                ParseObject nominator = user.getNominator()
-//                goToProfileActivity();
+                goToUpdateUsernameActivity();
+
+
             }
         });
         // TODO
@@ -202,7 +199,8 @@ public class ViewMyProfileActivity extends AppCompatActivity {
 
                 pw.showAtLocation(v, Gravity.CENTER,0,0);
                 //INITIALIZE THE ELEMENTS OF OUR WINDOW
-                textPrompt    = popupView.findViewById(R.id.tvFirstName);buttonUpdateName = popupView.findViewById(R.id.updateNameButton);
+                textPrompt    = popupView.findViewById(R.id.tvusername);
+                buttonUpdateName = popupView.findViewById(R.id.updateNameButton);
                 createAlias = popupView.findViewById(R.id.createAliasButton);
                 cancel = popupView.findViewById(R.id.CancelButton);
                 setup_Popup_Window_On_Click_Listeners();
@@ -309,6 +307,13 @@ public class ViewMyProfileActivity extends AppCompatActivity {
     {
         Intent i = new Intent(this,UpdateFullNameActivity.class);
         startActivity(i);
+        //finish() ?
+    }
+    private void goToUpdateUsernameActivity()
+    {
+        Intent i = new Intent(this,UpdateUsernameActivity.class);
+        startActivity(i);
+        //finish() ?
     }
 
     //pop up window buttons
@@ -320,11 +325,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                 goToUpdateFullNameActivity();
             }
         });
-        /*
 
-        IMPORT TO IMPLEMENT FIRST
-
-         */
         cancel.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -335,7 +336,6 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         createAlias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });
     }

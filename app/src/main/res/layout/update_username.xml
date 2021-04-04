@@ -17,7 +17,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="518dp"
             android:orientation="vertical">
 
             <TextView
@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="10dp"
-                android:text=" Firstname"
+                android:text="Username"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -37,25 +37,8 @@
                 android:ems="10"
                 android:inputType="textPersonName" />
 
-            <TextView
-                android:id="@+id/tvLastName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:text="Lastname"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/etlastname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName" />
-
             <Button
-                android:id="@+id/bttnUpdate"
+                android:id="@+id/bttnUpdateUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Update" />
