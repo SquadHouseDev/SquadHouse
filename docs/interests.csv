@@ -1,132 +1,132 @@
-archetype,name
-Places,San Francisco
-Places,Paris
-Places,London
-Places,Los Angeles
-Places,Nigeria
-Places,India
-Places,Atlanta
-Places,New York
-World Affairs,Current Events
-World Affairs,Economics
-World Affairs,Climate
-World Affairs,US Politics
-World Affairs,Markets
-World Affairs,Social Issues
-World Affairs,Geopolitics
-Sports,Tennis
-Sports,Baseball
-Sports,Cricket
-Sports,Soccer
-Sports,Golf
-Sports,MMA Formula 1
-Sports,Cycling
-Sports,Basketball
-Sports,Football
-Languages,French
-Languages,Russian
-Languages,Hindi
-Languages,Mandarin
-Languages,Indonesian
-Languages,German
-Languages,Japanese
-Languages,German
-Languages,Japanese
-Languages,Spanish
-Languages,Portuguese
-Languages,Arabic
-Hustle,Stocks
-Hustle,Network
-Hustle,Entrepreneurship
-Hustle,Pitch Practice
-Hustle,Small Business
-Hustle,Real Estate
-Hustle,Instagram
-Hustle,Clubhouse
-Hustle,TikTok
-Knowledge,Education
-Knowledge,Psychology
-Knowledge,Covid-19
-Knowledge,Math
-Knowledge,Space
-Knowledge,Physics
-Knowledge,History
-Knowledge,Science
-Knowledge,The Future
-Knowledge,Philosophy
-Knowledge,Biology
-Wellness,Mindfulness
-Wellness,Nutrition
-Wellness,Psychedelics
-Wellness,Veganism
-Wellness,Outdoors
-Wellness,Medicine
-Wellness,Health
-Wellness,Meditation
-Wellness,Fitness
-Wellness,Weights
-Life,Parenting
-Life,Relationships
-Life,Support
-Life,Travel
-Life,Weddings
-Life,Pregnancy
-Life,Dating
-Life,Adulting
-Tech,Engineering
-Tech,AI
-Tech,VR/AR
-Tech,SaaS
-Tech,Product
-Tech,Angel Investing
-Tech,Crypto
-Tech,Startups
-Tech,Venture Capital
-Tech,Marketing
-Tech,DTC
-Entertainment,Anime & Manga
-Entertainment,Fun
-Entertainment,Podcasts
-Entertainment,Performances
-Entertainment,Comedy
-Entertainment,Trivia
-Entertainment,Karaoke
-Entertainment,Television
-Entertainment,Advice
-Entertainment,Variety
-Entertainment,Celebrities
-Entertainment,Movies
-Entertainment,Storytelling
-Entertainment,Music
-Identity,Millenials
-Identity,South Asian
-Identity,Gen X
-Identity,Gen Z
-Identity,Latino
-Identity,Baby Boomers
-Identity,East Asian
-Identity,Disabled
-Identity,BIPOC
-Identity,Black
-Identity,LGTBQ
-Identity,Women
-Identity,Indigenous
-Faith,Christianity
-Faith,Taoism
-Faith,Atheism
-Faith,Sikhism
-Faith,Judaism
-Faith,Agnosticism
-Faith,Sprituality
-Faith,Hinduism
-Faith,Islam
-Faith,Buddhism
-Arts,Design
-Arts,Theater
-Arts,Photography
-Arts,Dance
-Arts,Sci-Fi
-Arts,Writing
-Arts,Fashion
-Arts,Advertising
-Arts,Beauty
+archetype,archetypeEmoji,name
+Places,🗺️,San Francisco
+Places,🗺️,Paris
+Places,🗺️,London
+Places,🗺️,Los Angeles
+Places,🗺️,Nigeria
+Places,🗺️,India
+Places,🗺️,Atlanta
+Places,🗺️,New York
+World Affairs,🌎,Current Events
+World Affairs,🌎,Economics
+World Affairs,🌎,Climate
+World Affairs,🌎,US Politics
+World Affairs,🌎,Markets
+World Affairs,🌎,Social Issues
+World Affairs,🌎,Geopolitics
+Sports,🏆,Tennis
+Sports,🏆,Baseball
+Sports,🏆,Cricket
+Sports,🏆,Soccer
+Sports,🏆,Golf
+Sports,🏆,MMA Formula 1
+Sports,🏆,Cycling
+Sports,🏆,Basketball
+Sports,🏆,Football
+Languages,💬,French
+Languages,💬,Russian
+Languages,💬,Hindi
+Languages,💬,Mandarin
+Languages,💬,Indonesian
+Languages,💬,German
+Languages,💬,Japanese
+Languages,💬,German
+Languages,💬,Japanese
+Languages,💬,Spanish
+Languages,💬,Portuguese
+Languages,💬,Arabic
+Hustle,🔥,Stocks
+Hustle,🔥,Network
+Hustle,🔥,Entrepreneurship
+Hustle,🔥,Pitch Practice
+Hustle,🔥,Small Business
+Hustle,🔥,Real Estate
+Hustle,🔥,Instagram
+Hustle,🔥,Clubhouse
+Hustle,🔥,TikTok
+Knowledge,💡,Education
+Knowledge,💡,Psychology
+Knowledge,💡,Covid-19
+Knowledge,💡,Math
+Knowledge,💡,Space
+Knowledge,💡,Physics
+Knowledge,💡,History
+Knowledge,💡,Science
+Knowledge,💡,The Future
+Knowledge,💡,Philosophy
+Knowledge,💡,Biology
+Wellness,🌻,Mindfulness
+Wellness,🌻,Nutrition
+Wellness,🌻,Psychedelics
+Wellness,🌻,Veganism
+Wellness,🌻,Outdoors
+Wellness,🌻,Medicine
+Wellness,🌻,Health
+Wellness,🌻,Meditation
+Wellness,🌻,Fitness
+Wellness,🌻,Weights
+Life,🤔,Parenting
+Life,🤔,Relationships
+Life,🤔,Support
+Life,🤔,Travel
+Life,🤔,Weddings
+Life,🤔,Pregnancy
+Life,🤔,Dating
+Life,🤔,Adulting
+Tech,💻,Engineering
+Tech,💻,AI
+Tech,💻,VR/AR
+Tech,💻,SaaS
+Tech,💻,Product
+Tech,💻,Angel Investing
+Tech,💻,Crypto
+Tech,💻,Startups
+Tech,💻,Venture Capital
+Tech,💻,Marketing
+Tech,💻,DTC
+Entertainment,🥳,Anime & Manga
+Entertainment,🥳,Fun
+Entertainment,🥳,Podcasts
+Entertainment,🥳,Performances
+Entertainment,🥳,Comedy
+Entertainment,🥳,Trivia
+Entertainment,🥳,Karaoke
+Entertainment,🥳,Television
+Entertainment,🥳,Advice
+Entertainment,🥳,Variety
+Entertainment,🥳,Celebrities
+Entertainment,🥳,Movies
+Entertainment,🥳,Storytelling
+Entertainment,🥳,Music
+Identity,📛,Millenials
+Identity,📛,South Asian
+Identity,📛,Gen X
+Identity,📛,Gen Z
+Identity,📛,Latino
+Identity,📛,Baby Boomers
+Identity,📛,East Asian
+Identity,📛,Disabled
+Identity,📛,BIPOC
+Identity,📛,Black
+Identity,📛,LGTBQ
+Identity,📛,Women
+Identity,📛,Indigenous
+Faith,🎨,Christianity
+Faith,🎨,Taoism
+Faith,🎨,Atheism
+Faith,🎨,Sikhism
+Faith,🎨,Judaism
+Faith,🎨,Agnosticism
+Faith,🎨,Sprituality
+Faith,🎨,Hinduism
+Faith,🎨,Islam
+Faith,🎨,Buddhism
+Arts,🛐,Design
+Arts,🛐,Theater
+Arts,🛐,Photography
+Arts,🛐,Dance
+Arts,🛐,Sci-Fi
+Arts,🛐,Writing
+Arts,🛐,Fashion
+Arts,🛐,Advertising
+Arts,🛐,Beauty
