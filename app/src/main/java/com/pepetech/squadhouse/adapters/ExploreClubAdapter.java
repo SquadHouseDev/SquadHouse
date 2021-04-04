@@ -2,7 +2,6 @@ package com.pepetech.squadhouse.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
 import com.pepetech.squadhouse.R;
-import com.pepetech.squadhouse.activities.ViewAClubActivity;
+import com.pepetech.squadhouse.activities.ExploreAClubActivity;
 import com.pepetech.squadhouse.models.Club;
 import com.pepetech.squadhouse.models.User;
 
@@ -96,7 +95,7 @@ public class ExploreClubAdapter extends RecyclerView.Adapter<ExploreClubAdapter.
                 public void onClick(View v) {
 //                    Log.i(TAG, clubElement.getFirstName() + " was selected!");
                     Toast.makeText(v.getContext(), "Selected " + clubElement.getName(), Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(context, ViewAClubActivity.class);
+                    Intent i = new Intent(context, ExploreAClubActivity.class);
                     i.putExtra("club", Parcels.wrap(clubElement));
                     context.startActivity(i);
                 }
