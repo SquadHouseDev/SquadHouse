@@ -1,6 +1,7 @@
 package com.pepetech.squadhouse.activities;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -21,8 +22,14 @@ import com.pepetech.squadhouse.adapters.ParticipantAdapter;
 import com.pepetech.squadhouse.models.Room;
 import com.pepetech.squadhouse.models.User;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.twilio.Twilio;
+import com.twilio.http.HttpMethod;
+import com.twilio.rest.api.v2010.account.Application;
+import com.twilio.rest.api.v2010.account.Call;
 import com.twilio.twiml.voice.Conference;
 import com.twilio.twiml.voice.Dial;
 import com.twilio.twiml.VoiceResponse;
@@ -31,21 +38,26 @@ import com.twilio.twiml.TwiMLException;
 public class RoomActivity extends AppCompatActivity {
 
     public static final String TAG = "RoomActivity";
+    private static final String ACCOUNT_SID = "AC42b3906f339474bdd83fbbea18d2ac40";
+    public static final String AUTH_TOKEN = "21b3bb29d6bf2f85aff433a645f01b02";
 
     User user;
+    Room newRoom;
 
     Button invite_button;
     Button end_button;
     RecyclerView rvParticipants;
     ParticipantAdapter adapter;
-
     Button display_button;
 
     //make room model/class push to back4app
     List<ParseObject> allUsers;
     //create room here, instantiate participant list, in inviteactivity, make calls to back4app
     //to update room.participantList
-    Room newRoom;
+
+    Conference conference;
+    Dial dial;
+    //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,22 +80,53 @@ public class RoomActivity extends AppCompatActivity {
         setUpRoom();
         queryUsers();
         setOnClickListeners();
-        
         setUpConference();
+        connectToConference();
+    }
+
+    private void connectToConference() {
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        /*
+        Application application = Application.creator()
+                .setVoiceMethod(HttpMethod.GET)
+                .setVoiceUrl(URI.create("http://demo.twilio.com/docs/voice.xml"))
+                .setFriendlyName("Phone Me")
+                .create();
+
+        System.out.println(application.getSid());
+
+        Call call = Call.creator(
+                new com.twilio.type.PhoneNumber("user.phoneNumber"),
+                new com.twilio.type.PhoneNumber("designated phone number to link to twimlbin as well??"),
+                URI.create("twimlbin??"))
+                .create();
+        */
         
     }
 
     private void setUpConference() {
         Log.i(TAG, "setting up conference call");
 
-        Conference conference = new Conference.Builder("Room 1234").build();
-        Dial dial = new Dial.Builder().conference(conference).build();
+        conference = new Conference.Builder("Room 1234").build();
+        dial = new Dial.Builder().conference(conference).build();
         VoiceResponse response = new VoiceResponse.Builder().dial(dial).build();
         try {
-            System.out.println(response.toXml());
+            Log.i(TAG, response.toString());
+            //Log.i(TAG, response.toXml());
         } catch (TwiMLException e) {
             e.printStackTrace();
         }
+
+        //the above code creates this xml
+        /*
+        <?xml version="1.0" encoding="UTF-8"?>
+            <Response>
+              <Dial>
+                <Conference>My conference Example</Conference>
+              </Dial>
+            </Response>
+         */
+
         Log.i(TAG, "finished setting up conference call");
     }
 
@@ -95,7 +138,6 @@ public class RoomActivity extends AppCompatActivity {
         //set the host equal to the current user, getParseUser  returns a ParseUser which
         //will reflect in back4app.com as a pointer to a specific user.
         newRoom.setHost(user.getParseUser());
-
 
         newRoom.saveInBackground();
         Log.i(TAG, "finished initiating room");
