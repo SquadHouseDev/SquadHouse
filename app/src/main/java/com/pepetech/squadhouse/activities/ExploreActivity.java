@@ -78,6 +78,7 @@ public class ExploreActivity extends AppCompatActivity {
         allUsers = new ArrayList<>();
         allClubs = new ArrayList<>();
         rvElementsFound = findViewById(R.id.rvElementsFound);
+        // 2 adapters to toggle between with the toggle switch
         exploreClubAdapter = new ExploreClubAdapter(this, allClubs, currentUser);
         exploreUserAdapter = new ExploreUserAdapter(this, allUsers, currentUser);
 
@@ -140,6 +141,7 @@ public class ExploreActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "Search button clicked!", Toast.LENGTH_SHORT).show();
+                // check state of toggle switch for selecting which adapter to use to populate with
                 if (switchUserClub.isChecked()) {
                     queryClubsByKeyword(etSearch.getText().toString());
                     rvElementsFound.setAdapter(exploreClubAdapter);
