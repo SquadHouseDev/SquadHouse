@@ -48,7 +48,6 @@ public class ExploreActivity extends AppCompatActivity {
     ExploreUserAdapter exploreUserAdapter;
     ExploreClubAdapter exploreClubAdapter;
     ExploreInterestAdapter exploreInterestAdapter;
-    ExploreInterestAdapter exploreInterestAdapter;
     List<User> users;
     List<Interest> allInterests;
     private List<InterestGroup> interestsGrouped;
