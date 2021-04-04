@@ -28,10 +28,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         if (ParseUser.getCurrentUser() != null) {
-            goToMainActivity();
+            goToHomeActivity();
         }
 
-        etUsername = findViewById(R.id.etUsername);
+        etUsername = findViewById(R.id.etUserName);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +43,15 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser(username, password);
             }
         });
+        btnSignup = findViewById(R.id.btnSignup);
+        btnSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "onClick login button");
+                goToSignUpActivity();
+            }
+        });
+
     }
 
     private void loginUser(String username, String password) {
@@ -56,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.e(TAG, "Issue with login", e);
                     return;
                 }
-                goToMainActivity();
+                goToHomeActivity();
                 Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT);
             }
         });
@@ -67,14 +76,17 @@ public class LoginActivity extends AppCompatActivity {
         ParseUser currentUser = ParseUser.getCurrentUser(); // this will now be null
     }
 
-    private void signupUser() {
+    private void goToSignUpActivity() {
         Log.i(TAG, "Attempting to sign up user");
-
+        Intent i = new Intent(this, SignUpActivity.class);
+        startActivity(i);
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
 
-    private void goToMainActivity() {
+    private void goToHomeActivity() {
         Intent i = new Intent(this, HomeActivity.class);
         startActivity(i);
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
         finish(); // disable user ability to renavigate after a successful login
     }
 }
