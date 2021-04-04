@@ -1,17 +1,16 @@
 package com.pepetech.squadhouse.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bumptech.glide.Glide;
 import com.parse.ParseException;
@@ -26,7 +25,16 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * This is the Activity that allows for navigation to another User's profile for viewing.
+ * An example of using this class is as follows:
+ * <br>
+ * <blockquote>
+ * Intent i = new Intent(context, ViewAUserProfileActivity.class);<br>
+ * i.putExtra("user", Parcels.wrap(userElement));<br>
+ * context.startActivity(i);<br>
+ * </blockquote>
+ */
 public class ViewAUserProfileActivity extends AppCompatActivity {
     ParseUser parseUser;
     User currentUser, userSelected;
@@ -83,7 +91,7 @@ public class ViewAUserProfileActivity extends AppCompatActivity {
                 Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
                 t.show();
                 Log.i(TAG, "Nominator profile clicked!");
-                if (nominator!=null){
+                if (nominator != null) {
                     Intent i = new Intent(v.getContext(), ViewAUserProfileActivity.class);
                     User toPass = new User(nominator);
                     i.putExtra("user", Parcels.wrap(toPass));
