@@ -34,7 +34,7 @@ public class ViewAClubActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_club_profile);
+        setContentView(R.layout.activity_explore_club_profile);
 
         ////////////////////////////////////////////////////////////
         // Initialize club page variables

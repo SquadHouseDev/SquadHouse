@@ -50,7 +50,7 @@ public class ViewAUserProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_a_user_profile);
+        setContentView(R.layout.activity_explore_user_profile);
 
         ////////////////////////////////////////////////////////////
         // Setup view elements
