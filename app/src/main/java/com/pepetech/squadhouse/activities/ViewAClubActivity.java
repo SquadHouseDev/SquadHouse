@@ -1,19 +1,25 @@
 package com.pepetech.squadhouse.activities;
 
 import android.os.Bundle;
-import android.os.Parcel;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.bumptech.glide.Glide;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.models.Club;
+import com.pepetech.squadhouse.models.Interest;
 import com.pepetech.squadhouse.models.User;
 
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ViewAClubActivity extends AppCompatActivity {
     public static final String TAG = "ViewAClubActivity";
@@ -23,6 +29,7 @@ public class ViewAClubActivity extends AppCompatActivity {
     Club club;
     private ParseUser parseUser;
     User currentUser;
+    List<Interest> interests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +53,32 @@ public class ViewAClubActivity extends AppCompatActivity {
         club = Parcels.unwrap(getIntent().getParcelableExtra("club"));
         parseUser = ParseUser.getCurrentUser();
         currentUser = new User(parseUser);
-        
-        queryClubProfile();
-        populateClubProfileElements();
+        interests = new ArrayList<>();
+        queryAndPopulate();
     }
 
     // TODO complete club profile element populating
-    private void populateClubProfileElements() {
+    private void queryAndPopulate() {
+        try {
+            interests = club.fetchIfNeeded().getList(Club.KEY_INTERESTS);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String interestStr = "";
+        for (int i = 0; i < interests.size(); i++) {
+            interestStr += interests.get(i).getArchetypeEmoji() + interests.get(i).getName();
+            if (i < interests.size() - 1)
+                interestStr += "·";
+        }
+        tvInterests.setText(interestStr);
+        tvClubDescription.setText(club.getDescription());
+        tvClubName.setText(club.getName());
+        ParseFile image = club.getImage();
+        if (image != null)
+            Glide.with(this)
+                    .load(image.getUrl())
+                    .circleCrop()
+                    .into(ivClubImage);
     }
 
-    // TODO complete club profile data querying
-    private void queryClubProfile() {
-    }
 }
