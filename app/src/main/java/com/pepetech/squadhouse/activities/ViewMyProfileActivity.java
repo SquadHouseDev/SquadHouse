@@ -191,7 +191,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         tvFollowingCount.setText(String.valueOf(following.size()));
         // load nominator's profile picture
 //        boolean isSeed = user.isSeed();
-        if (!user.isSeed()){
+        if (!user.isSeed() && nominator != null){
             loadNominatorProfileImage();
             tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
         }
@@ -245,6 +245,8 @@ public class ViewMyProfileActivity extends AppCompatActivity {
 
     private void loadNominatorProfileImage(){
         ParseFile image = null;
+        if (nominator == null)
+                return;
         try {
             image = nominator.fetchIfNeeded().getParseFile("image");
         } catch (ParseException e) {
