@@ -340,7 +340,7 @@ public class ExploreActivity extends AppCompatActivity {
 
         // create querying by description
         ParseQuery<Club> queryByDescription = new ParseQuery<Club>(Club.class);
-        queryByName.whereContains("description", keyword);
+        queryByDescription.whereContains("description", keyword);
 
         // create the collection of queries
         List<ParseQuery<Club>> queries = new ArrayList<ParseQuery<Club>>();
