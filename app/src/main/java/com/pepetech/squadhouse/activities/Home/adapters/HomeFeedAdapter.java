@@ -46,7 +46,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
         return rooms.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+   public class ViewHolder extends RecyclerView.ViewHolder {
         // view elements
         private TextView tvClubName;
         private TextView tvRoomName;
@@ -76,7 +76,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
      * @param unicode
      * @return U+x1F4AC => 0x1F4AC
      */
-    public String getEmojiByUnicode(int unicode) {
+    public  String getEmojiByUnicode(int unicode) {
         return new String(Character.toChars(unicode));
     }
 
