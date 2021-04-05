@@ -90,7 +90,7 @@ public class ExploreActivity extends AppCompatActivity {
         rvInterests.setLayoutManager(new GridLayoutManager(this, 2));
         exploreInterestAdapter = new ExploreInterestAdapter(this, interestsGrouped);
         rvInterests.setAdapter(exploreInterestAdapter);
-        
+
         // query data for populating with adapters
         queryFollowing();
         queryAndGroupInterestsByArchetype();
@@ -107,18 +107,25 @@ public class ExploreActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean isValidKeyword = false;
                 Toast.makeText(v.getContext(), "Search button clicked!", Toast.LENGTH_SHORT).show();
                 // qualify if there exists a keyword search entry
                 if (etSearch.getText().toString().length() > 1) {
                     // check state of toggle switch for selecting which adapter to use when populating
                     if (switchUserClub.isChecked()) {
-                        queryClubsByKeyword(etSearch.getText().toString());
+                        queryClubsByKeyword(etSearch.getText().toString(), isValidKeyword);
                         rvElementsFound.setAdapter(exploreClubAdapter);
                     } else {
-                        queryUsersByKeyword(etSearch.getText().toString());
+                        queryUsersByKeyword(etSearch.getText().toString(), isValidKeyword);
                         rvElementsFound.setAdapter(exploreUserAdapter);
                     }
                 }
+//                else {
+//                    allClubs = new ArrayList<>();
+//                    allUsers = new ArrayList<>();
+//                    exploreClubAdapter.notifyDataSetChanged();
+//                    exploreUserAdapter.notifyDataSetChanged();
+//                }
             }
         });
         // DEBUG
@@ -260,9 +267,11 @@ public class ExploreActivity extends AppCompatActivity {
      *
      * @param keyword substring to search in the User fields
      */
-    void queryUsersByKeyword(String keyword) {
+    void queryUsersByKeyword(String keyword, boolean isValidKeyword) {
         // reset list of Users found
         allUsers.clear();
+        if (!isValidKeyword)
+            exploreUserAdapter.notifyDataSetChanged();
 
         // substring querying
         // create querying by username
@@ -330,9 +339,12 @@ public class ExploreActivity extends AppCompatActivity {
      *
      * @param keyword substring to search in the Club fields
      */
-    void queryClubsByKeyword(String keyword) {
+    void queryClubsByKeyword(String keyword, boolean isValidKeyword) {
         // reset list of Clubs found
         allClubs.clear();
+        if (!isValidKeyword)
+            exploreClubAdapter.notifyDataSetChanged();
+
         // substring query creation
         // create querying by name
         ParseQuery<Club> queryByName = new ParseQuery<Club>(Club.class);
