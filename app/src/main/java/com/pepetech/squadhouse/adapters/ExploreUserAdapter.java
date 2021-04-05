@@ -101,7 +101,7 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
         /**
          * Main method for configuring the follow button
          *
-         * @param userElement
+         * @param userElement: User that is followed by the currently logged in User
          */
         private void setupFollowButton(User userElement) {
             String userElementId = userElement.getParseUser().getObjectId();
