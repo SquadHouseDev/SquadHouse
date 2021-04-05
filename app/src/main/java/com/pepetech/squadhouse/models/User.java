@@ -191,6 +191,19 @@ public class User {
             e.printStackTrace();
         }
         if (rv == null)
+            return new ArrayList<ParseObject>();
+        return rv;
+    }
+
+    public List<? extends Object> getFollowers() {
+        List<Object> rv = null;
+        try {
+            rv = user.fetchIfNeeded().getList(KEY_FOLLOWERS);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (rv == null)
             return new ArrayList<ParseUser>();
         return rv;
     }
@@ -250,25 +263,29 @@ public class User {
     /////////////////////////////////////////////////////////////////////////////////////////////
     // Update Methods: automatically calls saveInBackground on ParseUser to effect updates
     /////////////////////////////////////////////////////////////////////////////////////////////
-    public boolean addFollowing(String userId) {
-        List<String> followings = new ArrayList<String>();
-        followings.add(userId);
-        user.addAllUnique("following", followings);
-        user.saveInBackground();
+    public boolean addFollowing(ParseObject objectToFollow) {
+        ArrayList<ParseObject> followings = (ArrayList<ParseObject>) getFollowing();
+        if (followings.contains(objectToFollow)) {
+            return false;
+        }
+        followings.add(objectToFollow);
+        user.put(KEY_FOLLOWING, followings);
+        saveInBackground();
         return true;
     }
 
-    public boolean removeFollowing(String userId) {
+    public boolean removeFollowing(ParseObject objectToUnfollow) {
         ArrayList<ParseObject> followings = (ArrayList<ParseObject>) getFollowing();
-        if (!followings.contains(userId)) {
+        if (!followings.contains(objectToUnfollow)) {
             return false;
         }
-        ArrayList<String> toRemove = new ArrayList<>();
-        toRemove.add(userId);
+        ArrayList<ParseObject> toRemove = new ArrayList<>();
+        toRemove.add(objectToUnfollow);
         user.removeAll(KEY_FOLLOWING, toRemove);
         user.saveInBackground();
         return true;
     }
+
 
     // TODO: testing needed
     public boolean addInterest(ParseObject interest) {

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.ViewAUserProfileActivity;
 import com.pepetech.squadhouse.models.User;
@@ -108,19 +109,19 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
             if (currentUser.getFollowing().contains(userElementId)) {
                 Log.i(TAG, userElement.getFirstName() + " is currently followed by " + currentUser.getFirstName());
                 btnFollow.setText("Following");
-                setupCurrentlyFollowingButton(userElementId);
-            } else {
-                setupDefaultFollowButton(userElementId);
+                setupCurrentlyFollowingButton(userElement.getParseUser());
+            }
+            else {
+                setupDefaultFollowButton(userElement.getParseUser());
             }
         }
 
         /**
          * Current User is not following the User in the row therefore configure
          * buttons to reflect the default case of encouraging the User to follow.
-         *
-         * @param userElementId
+         * @param userElement
          */
-        private void setupDefaultFollowButton(String userElementId) {
+        private void setupDefaultFollowButton(ParseObject userElement){
             btnFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -131,12 +132,13 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
                         wasFollowed = false;
                         btnFollow.setText("Follow");
                         // apply unfollow
-                        currentUser.removeFollowing(userElementId);
+                        currentUser.removeFollowing(userElement);
+
                     } else {
                         wasFollowed = true;
                         btnFollow.setText("Following");
                         // apply follow
-                        currentUser.addFollowing(userElementId);
+                        currentUser.addFollowing(userElement);
                     }
                 }
             });
@@ -145,10 +147,9 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
         /**
          * Configuration of follow button when current user is already following
          * a User
-         *
-         * @param userElementId
+         * @param userElement
          */
-        private void setupCurrentlyFollowingButton(String userElementId) {
+        private void setupCurrentlyFollowingButton(ParseObject userElement){
             btnFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -159,12 +160,12 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
                         wasFollowed = false;
                         btnFollow.setText("Following");
                         // apply follow
-                        currentUser.addFollowing(userElementId);
+                        currentUser.addFollowing(userElement);
                     } else {
                         wasFollowed = true;
                         btnFollow.setText("Follow");
                         // apply unfollow
-                        currentUser.removeFollowing(userElementId);
+                        currentUser.removeFollowing(userElement);
                     }
                 }
             });
