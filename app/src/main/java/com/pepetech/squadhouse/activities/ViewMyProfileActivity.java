@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bumptech.glide.Glide;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -24,47 +25,17 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * TODO:
- * ViewMyProfileActivity.java
- * [X] fullname edit w/ prompt for confirmation of changing name
- * - image edit w/ tap on profile to upload a new photo w/ confirmation of completing activity
- * - username edit w/ tap to edit
- * - following tap to view
- * - followers tap to view
- * - biography tap to edit
- * - nominator tap profile image to view
- * - add nominators join date (TBD) -- need further consideration for backend design
- * - club tap on profile image to view
- * - add button for linking twitter
- * - add button for linking instagram
- * - add button and functionality for sharing
- * - add biography MAX String length checking when user is editting
- * activity_view_my_profile.XML
- * - add button for sharing
- * - fix biography TextView to show proper start and end margins
- */
-/*
-
-Roadmap of my thought process:
-
-Home Activity ->
-                clicks ViewMyProfileActivity ->
-                                                clicks pepegachu ->
-                                                                    displayPopupWindow
-                                                                                -> inflate popupwindow
-                                                                                    ->user clicks the update real name button
-                                                                                            ->UpdateRealNameActivity
- */
 public class ViewMyProfileActivity extends AppCompatActivity {
     ParseUser parseUser;
     User user;
     public static final String TAG = "ProfileActivity";
     AppCompatImageView ivProfile, ivProfileNominator;
-    TextView tvFullName, tvUsername, tvFollowersCount, tvFollowingCount, tvBiography, tvUserJoinDate, tvNominatorName,tvTitleText;
+    TextView tvFullName, tvUsername, tvFollowersCount, tvFollowingCount, tvBiography, tvUserJoinDate, tvNominatorName, tvTitleText;
     Button btnLogout;
     ImageButton btnSettings;
     ParseObject nominator;
@@ -147,10 +118,12 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                 Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
                 t.show();
                 Log.i(TAG, "Nominator profile clicked!");
-                if(nominator != null)
-                {
-                    Intent i = new Intent(v.getContext(),ViewAUserProfileActivity.class);
-//                    User toPass = new User(nominator);
+                if (nominator != null) {
+
+                    User toPass = new User((ParseUser) nominator);
+                    Intent i = new Intent(v.getContext(), ViewAUserProfileActivity.class);
+                    i.putExtra("user", Parcels.wrap(toPass));
+                    startActivity(i);
                 }
 //                ParseObject nominator = user.getNominator()
 //                goToProfileActivity();
@@ -188,18 +161,17 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                 t.show();
                 //inflate the layout
                 LayoutInflater inflater = (LayoutInflater) v.getContext().getSystemService(v.getContext().LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.activity_popup_window,null);
+                View popupView = inflater.inflate(R.layout.activity_popup_window, null);
                 //intialize the size of our layout
                 int width = LinearLayout.LayoutParams.MATCH_PARENT;
                 int height = LinearLayout.LayoutParams.MATCH_PARENT;
 
                 boolean focusable = true;
-                //place all features into PopupWindow
-                 pw = new PopupWindow(popupView,width,height,focusable);
+                pw = new PopupWindow(popupView, width, height, focusable);
 
-                pw.showAtLocation(v, Gravity.CENTER,0,0);
+                pw.showAtLocation(v, Gravity.CENTER, 0, 0);
                 //INITIALIZE THE ELEMENTS OF OUR WINDOW
-                textPrompt    = popupView.findViewById(R.id.tvusername);
+                textPrompt = popupView.findViewById(R.id.tvFirstName);
                 buttonUpdateName = popupView.findViewById(R.id.updateNameButton);
                 createAlias = popupView.findViewById(R.id.createAliasButton);
                 cancel = popupView.findViewById(R.id.CancelButton);
@@ -210,14 +182,10 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
 
-                        //Close the window when clicked
-                        //use later for cancel button
                         pw.dismiss();
                         return true;
                     }
                 });
-
-
 
 
             }
@@ -226,19 +194,16 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         tvBiography.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(ProfileActivity.this, "Biography clicked!", Toast.LENGTH_SHORT).show();
-//                Toast.makeText(getConte, "Biography clicked!", Toast.LENGTH_SHORT).show();
+
                 Toast.makeText(v.getContext(), "Biography clicked!", Toast.LENGTH_SHORT).show();
-//                t.show();
+
                 Log.i(TAG, "Biography clicked!");
-//                ParseObject nominator = user.getNominator()
-//                goToProfileActivity();
+
 
 
             }
         });
     }
-
 
 
     private void populateProfileElements() {
@@ -258,8 +223,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         tvFollowersCount.setText(String.valueOf(followers.size()));
         tvFollowingCount.setText(String.valueOf(following.size()));
         // load nominator's profile picture
-//        boolean isSeed = user.isSeed();
-        if (!user.isSeed() && nominator != null){
+        if (!user.isSeed() && nominator != null) {
             loadNominatorProfileImage();
             tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
         }
@@ -303,15 +267,15 @@ public class ViewMyProfileActivity extends AppCompatActivity {
 //        overridePendingTransition(R.anim.slide_to_top, R.anim.slide_to_left);
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
-    private void goToUpdateFullNameActivity()
-    {
-        Intent i = new Intent(this,UpdateFullNameActivity.class);
+
+    private void goToUpdateFullNameActivity() {
+        Intent i = new Intent(this, UpdateFullNameActivity.class);
         startActivity(i);
         //finish() ?
     }
-    private void goToUpdateUsernameActivity()
-    {
-        Intent i = new Intent(this,UpdateUsernameActivity.class);
+
+    private void goToUpdateUsernameActivity() {
+        Intent i = new Intent(this, UpdateUsernameActivity.class);
         startActivity(i);
         //finish() ?
     }
@@ -321,7 +285,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         buttonUpdateName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG,"UPDATE BUTTON CLICKED");
+                Log.i(TAG, "UPDATE BUTTON CLICKED");
                 goToUpdateFullNameActivity();
             }
         });
@@ -338,10 +302,12 @@ public class ViewMyProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
             }
         });
-    private void loadNominatorProfileImage(){
+    }
+
+    private void loadNominatorProfileImage() {
         ParseFile image = null;
         if (nominator == null)
-                return;
+            return;
         try {
             image = nominator.fetchIfNeeded().getParseFile("image");
         } catch (ParseException e) {

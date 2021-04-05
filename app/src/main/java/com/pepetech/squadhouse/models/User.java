@@ -136,10 +136,10 @@ public class User {
             e.printStackTrace();
         }
         return rv;
+    }
+//    public String getUserName() { return (String) user.get(KEY_USER_NAME);}
 
-    public String getUserName() { return (String) user.get(KEY_USER_NAME);}
-
-    public boolean isSeed() { return (boolean) user.getBoolean(KEY_IS_SEED); }
+//    public boolean isSeed() { return (boolean) user.getBoolean(KEY_IS_SEED); }
 
     public String getPhoneNumber() {
         String rv = null;

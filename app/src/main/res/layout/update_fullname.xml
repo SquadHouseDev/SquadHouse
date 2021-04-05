@@ -21,7 +21,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvusername"
+                android:id="@+id/tvFirstName"
                 android:layout_width="384dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -31,7 +31,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/etUsername"
+                android:id="@+id/etfirstname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"

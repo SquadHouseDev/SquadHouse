@@ -26,12 +26,6 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-
-Use when clicking on the profile image of the nominator
-
-*/
-
 
 public class ViewAUserProfileActivity extends AppCompatActivity {
     ParseUser parseUser;

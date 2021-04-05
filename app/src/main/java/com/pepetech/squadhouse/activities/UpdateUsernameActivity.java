@@ -37,7 +37,7 @@ public class UpdateUsernameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG,"UPDATE BUTTON CLICKED!");
-                etusername = (EditText)findViewById(R.id.etUsername);
+                etusername = (EditText)findViewById(R.id.etfirstname);
                 String username = etusername.getText().toString();
                 System.out.println(username);
                 user.updateUserName(username);

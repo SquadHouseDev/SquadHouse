@@ -20,38 +20,37 @@ public class UpdateFullNameActivity extends AppCompatActivity {
     ParseUser parseuser;
     User user;
 
-    TextView tvfirstName,tvlastName;
+    TextView tvfirstName, tvlastName;
     Button update;
-    EditText etfirstname,etlastname;
+    EditText etfirstname, etlastname;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_fullname);
         //SETUP VIEW ELEMENTS
+
         //text views
         tvfirstName = findViewById(R.id.tvFirstName);
         tvlastName = findViewById(R.id.tvLastName);
+
         //buttons
         update = findViewById(R.id.bttnUpdate);
-        //edit text
-        parseuser = ParseUser.getCurrentUser();
-        user = new User(parseuser);
 
-        //get our edit text values
-
-
+        //user
+        user = new User(ParseUser.getCurrentUser());
 
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG,"UPDATE BUTTON CLICKED!");
-                etfirstname = (EditText)findViewById(R.id.etfirstname);
+                Log.i(TAG, "UPDATE BUTTON CLICKED!");
+                etfirstname = (EditText) findViewById(R.id.etfirstname);
                 etlastname = (EditText) findViewById(R.id.etlastname);
                 String firstname = etfirstname.getText().toString();
                 String lastname = etlastname.getText().toString();
                 System.out.println(user.getFirstName() + user.getLastName());
-                Log.i(TAG,firstname);
-                Log.i(TAG,lastname);
+                Log.i(TAG, firstname);
+                Log.i(TAG, lastname);
                 user.updateFirstName(firstname);
                 user.updateLastName(lastname);
                 Toast t = Toast.makeText(v.getContext(), "Update Complete!", Toast.LENGTH_SHORT);
