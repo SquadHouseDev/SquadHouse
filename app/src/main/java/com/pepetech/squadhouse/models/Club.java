@@ -125,6 +125,40 @@ public class Club extends ParseObject {
         return true;
     }
 
+    /**
+     * Add a ParseObject to the Array of ParseObject
+     *
+     * @param follower a ParseObject that defines the origin of the follow relation
+     * @return
+     */
+    public boolean addFollower(ParseObject follower) {
+        ArrayList<ParseObject> followers = (ArrayList<ParseObject>) getFollowers();
+        if (followers.contains(follower)) {
+            return false;
+        }
+        followers.add(follower);
+        put("followers", followers);
+        saveInBackground();
+        return true;
+    }
+
+    /**
+     * Remove a ParseObject to the Array of ParseObject
+     *
+     * @param follower a ParseObject that defines the origin of the follow relation
+     * @return
+     */
+    public boolean removeFollower(ParseObject follower) {
+        ArrayList<ParseObject> followers = (ArrayList<ParseObject>) getFollowers();
+        if (followers.contains(follower)) {
+            followers.remove(follower);
+            put("followers", followers);
+            saveInBackground();
+            return true;
+        } else
+            return false;
+    }
+
     public boolean addMember(ParseObject member) {
         List<ParseObject> members = getMembers();
         if (members.contains(member)) {
