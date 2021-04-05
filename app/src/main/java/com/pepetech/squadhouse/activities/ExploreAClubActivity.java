@@ -97,13 +97,17 @@ public class ExploreAClubActivity extends AppCompatActivity {
                 if (wasFollowed) {
                     wasFollowed = false;
                     btnClubFollow.setText("Follow");
-                    // apply unfollow
+                    // apply unfollow from the user by removing the club to the user
                     currentUser.removeFollowing(clubElementId);
+                    // reflect the unfollow from the user by removing user from the club
+                    club.removeFollower(currentUser.getParseUser());
                 } else {
                     wasFollowed = true;
                     btnClubFollow.setText("Following");
-                    // apply follow
+                    // apply follow from the user by adding the club to the user
                     currentUser.addFollowing(clubElementId);
+                    // reflect the new follower by adding the user to the club
+                    club.addFollower(currentUser.getParseUser());
                 }
             }
         });
@@ -125,13 +129,17 @@ public class ExploreAClubActivity extends AppCompatActivity {
                 if (wasFollowed) {
                     wasFollowed = false;
                     btnClubFollow.setText("Following");
-                    // apply follow
+                    // apply follow from the user by adding the club to the user
                     currentUser.addFollowing(clubElementId);
+                    // reflect the new follower by adding the user to the club
+                    club.addFollower(currentUser.getParseUser());
                 } else {
                     wasFollowed = true;
                     btnClubFollow.setText("Follow");
-                    // apply unfollow
+                    // apply unfollow from the user by removing the club to the user
                     currentUser.removeFollowing(clubElementId);
+                    // reflect the unfollow from the user by removing user from the club
+                    club.removeFollower(currentUser.getParseUser());
                 }
             }
         });
@@ -147,7 +155,7 @@ public class ExploreAClubActivity extends AppCompatActivity {
         for (int i = 0; i < interests.size(); i++) {
             interestStr += interests.get(i).getArchetypeEmoji() + interests.get(i).getName();
             if (i < interests.size() - 1)
-                interestStr += "·";
+                interestStr += " · ";
         }
         tvInterests.setText(interestStr);
         // populate description text
