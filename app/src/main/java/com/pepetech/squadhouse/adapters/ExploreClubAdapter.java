@@ -82,7 +82,7 @@ public class ExploreClubAdapter extends RecyclerView.Adapter<ExploreClubAdapter.
             int memberCount = clubElement.getMembers().size();
             int followerCount = clubElement.getFollowers().size();
 
-            String description = String.valueOf(memberCount) + " Members · " + String.valueOf(followerCount) + " Follows";
+            String description = String.valueOf(memberCount) + " Members · " + String.valueOf(followerCount) + " Followers";
             tvDescription.setText(description);
             ParseFile image = clubElement.getImage();
             if (image != null)
@@ -137,6 +137,7 @@ public class ExploreClubAdapter extends RecyclerView.Adapter<ExploreClubAdapter.
                         // apply removal of a following on the user object
                         currentUser.removeFollowing(clubElement.getObjectId());
                         // TODO: apply removal of a follower on the club object
+                        clubElement.removeFollower(currentUser.getParseUser());
 
                     } else {
                         wasFollowed = true;
@@ -144,6 +145,7 @@ public class ExploreClubAdapter extends RecyclerView.Adapter<ExploreClubAdapter.
                         // apply addition of a following on the user object
                         currentUser.addFollowing(clubElement.getObjectId());
                         // TODO: apply addition of a follower on the club object
+                        clubElement.addFollower(currentUser.getParseUser());
                     }
                 }
             });
@@ -168,12 +170,14 @@ public class ExploreClubAdapter extends RecyclerView.Adapter<ExploreClubAdapter.
                         // apply addition of a following on the user object
                         currentUser.addFollowing(clubElement.getObjectId());
                         // TODO: apply addition of a follower on the club object
+                        clubElement.addFollower(currentUser.getParseUser());
                     } else {
                         wasFollowed = true;
                         btnFollow.setText("Follow");
                         // apply removal of a following on the user object
                         currentUser.removeFollowing(clubElement.getObjectId());
                         // TODO: apply removal of a follower on the club object
+                        clubElement.removeFollower(currentUser.getParseUser());
                     }
                 }
             });
