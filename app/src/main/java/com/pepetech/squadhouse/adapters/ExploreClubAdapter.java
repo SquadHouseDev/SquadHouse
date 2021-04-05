@@ -81,7 +81,7 @@ public class ExploreClubAdapter extends RecyclerView.Adapter<ExploreClubAdapter.
             int memberCount = clubElement.getMembers().size();
             int followerCount = clubElement.getFollowers().size();
 
-            String description = String.valueOf(memberCount) + " Members·" + String.valueOf(followerCount) + " Follows";
+            String description = String.valueOf(memberCount) + " Members · " + String.valueOf(followerCount) + " Follows";
             tvDescription.setText(description);
             ParseFile image = clubElement.getImage();
             if (image != null)
