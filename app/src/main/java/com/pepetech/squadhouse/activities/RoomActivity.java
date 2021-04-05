@@ -38,8 +38,8 @@ import com.twilio.twiml.TwiMLException;
 public class RoomActivity extends AppCompatActivity {
 
     public static final String TAG = "RoomActivity";
-    private static final String ACCOUNT_SID = "AC42b3906f339474bdd83fbbea18d2ac40";
-    public static final String AUTH_TOKEN = "21b3bb29d6bf2f85aff433a645f01b02";
+    private static final String ACCOUNT_SID = String.valueOf(R.string.ACCOUNT_SID);
+    public static final String AUTH_TOKEN = String.valueOf(R.string.AUTH_TOKEN);
 
     User user;
     Room newRoom;
