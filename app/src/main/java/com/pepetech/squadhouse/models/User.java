@@ -1,6 +1,5 @@
 package com.pepetech.squadhouse.models;
 
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;

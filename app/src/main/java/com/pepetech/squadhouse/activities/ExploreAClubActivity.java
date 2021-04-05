@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
