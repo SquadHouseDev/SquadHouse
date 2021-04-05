@@ -2,6 +2,7 @@ package com.pepetech.squadhouse.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,72 +109,74 @@ public class ExploreClubAdapter extends RecyclerView.Adapter<ExploreClubAdapter.
          * @param clubElement
          */
         private void setupFollowButton(Club clubElement) {
-//            String userElementId = clubElement.getParseUser().getObjectId();
-//            if (currentUser.getFollowing().contains(userElementId)) {
-//                Log.i(TAG, clubElement.getFirstName() + " is currently followed by " + currentUser.getFirstName());
-//                btnFollow.setText("Following");
-//                setupCurrentlyFollowingButton(userElementId);
-//            } else {
-//                setupDefaultFollowButton(userElementId);
-//            }
+            if (currentUser.getFollowing().contains(clubElement)) {
+                Log.i(TAG, clubElement.getName() + " is currently followed by " + currentUser.getFirstName());
+                btnFollow.setText("Following");
+                setupCurrentlyFollowingButton(clubElement);
+            } else {
+                setupDefaultFollowButton(clubElement);
+            }
         }
 
         /**
          * Current Club is not following the Club in the row therefore configure
          * buttons to reflect the default case of encouraging the Club to follow.
          *
-         * @param userElementId
+         * @param clubElement
          */
-        private void setupDefaultFollowButton(String userElementId) {
-//            btnFollow.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Toast.makeText(context, "Follow button clicked!", Toast.LENGTH_SHORT).show();
-//                    Log.i(TAG, "Follow button clicked!");
-//                    // toggle button follow
-//                    if (wasFollowed) {
-//                        wasFollowed = false;
-//                        btnFollow.setText("Follow");
-//                        // apply unfollow
-//                        currentUser.removeFollowing(userElementId);
-//                    } else {
-//                        wasFollowed = true;
-//                        btnFollow.setText("Following");
-//                        // apply follow
-//                        currentUser.addFollowing(userElementId);
-//                    }
-//                }
-//            });
+        private void setupDefaultFollowButton(Club clubElement) {
+            btnFollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "Follow button clicked!", Toast.LENGTH_SHORT).show();
+                    Log.i(TAG, "Follow button clicked!");
+                    // toggle button follow
+                    if (wasFollowed) {
+                        wasFollowed = false;
+                        btnFollow.setText("Follow");
+                        // apply removal of a following on the user object
+                        currentUser.removeFollowing(clubElement.getObjectId());
+                        // TODO: apply removal of a follower on the club object
+
+                    } else {
+                        wasFollowed = true;
+                        btnFollow.setText("Following");
+                        // apply addition of a following on the user object
+                        currentUser.addFollowing(clubElement.getObjectId());
+                        // TODO: apply addition of a follower on the club object
+                    }
+                }
+            });
         }
 
         /**
          * Configuration of follow button when current Club is already following
          * a Club
          *
-         * @param userElementId
+         * @param clubElement
          */
-        private void setupCurrentlyFollowingButton(String userElementId) {
-//            btnFollow.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Toast.makeText(context, "Follow button clicked!", Toast.LENGTH_SHORT).show();
-//                    Log.i(TAG, "Follow button clicked!");
-//                    // toggle button follow
-//                    if (wasFollowed) {
-//                        wasFollowed = false;
-//                        btnFollow.setText("Following");
-//                        // apply follow
-//                        currentUser.addFollowing(userElementId);
-//                    } else {
-//                        wasFollowed = true;
-//                        btnFollow.setText("Follow");
-//                        // apply unfollow
-//                        currentUser.removeFollowing(userElementId);
-//                    }
-//                }
-//            });
+        private void setupCurrentlyFollowingButton(Club clubElement) {
+            btnFollow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "Follow button clicked!", Toast.LENGTH_SHORT).show();
+                    Log.i(TAG, "Follow button clicked!");
+                    // toggle button follow
+                    if (wasFollowed) {
+                        wasFollowed = false;
+                        btnFollow.setText("Following");
+                        // apply addition of a following on the user object
+                        currentUser.addFollowing(clubElement.getObjectId());
+                        // TODO: apply addition of a follower on the club object
+                    } else {
+                        wasFollowed = true;
+                        btnFollow.setText("Follow");
+                        // apply removal of a following on the user object
+                        currentUser.removeFollowing(clubElement.getObjectId());
+                        // TODO: apply removal of a follower on the club object
+                    }
+                }
+            });
         }
     }
-
-
 }
