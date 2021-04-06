@@ -138,6 +138,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                 Log.i(TAG, "User profile clicked!");
 //                ParseObject nominator = user.getNominator()
 //                goToProfileActivity();
+                goToUpdateProfileImageActivity();
             }
         });
         // TODO
@@ -201,6 +202,31 @@ public class ViewMyProfileActivity extends AppCompatActivity {
 
 
 
+            }
+        });
+    }
+
+
+    //pop up window buttons
+    public void setup_Popup_Window_On_Click_Listeners() {
+        buttonUpdateName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "UPDATE BUTTON CLICKED");
+                goToUpdateFullNameActivity();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                pw.dismiss();
+            }
+        });
+        createAlias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
             }
         });
     }
@@ -279,30 +305,13 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         startActivity(i);
         //finish() ?
     }
-
-    //pop up window buttons
-    public void setup_Popup_Window_On_Click_Listeners() {
-        buttonUpdateName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "UPDATE BUTTON CLICKED");
-                goToUpdateFullNameActivity();
-            }
-        });
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                pw.dismiss();
-            }
-        });
-        createAlias.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+    private void goToUpdateProfileImageActivity()
+    {
+        Intent i = new Intent(this, UpdateProfileImageActivity.class);
+        startActivity(i);
     }
+
+
 
     private void loadNominatorProfileImage() {
         ParseFile image = null;

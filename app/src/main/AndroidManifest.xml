@@ -35,6 +35,7 @@
         <activity android:name=".activities.WelcomeActivity" />
         <activity android:name=".activities.UpdateFullNameActivity"/>"
         <activity android:name = ".activities.UpdateUsernameActivity"/>"
+        <activity android:name = ".activities.UpdateProfileImageActivity"/>
     </application>
 
 </manifest>
