@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.models.Club;
@@ -24,10 +26,12 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExploreAClubActivity extends AppCompatActivity {
-    public static final String TAG = ExploreAClubActivity.class.getName();
+public class ExploreClubActivity extends AppCompatActivity {
+    //    public static final String TAG = ExploreAClubActivity.class.getName();
+    public static final String TAG = "ExploreAClubActivity";
     ConstraintLayout clFollowers, clFollowing;
     TextView tvClubName, tvClubDescription, tvInterests, tvMembers;
+    LinearLayout llExploreClub;
     Button btnClubFollow;
     ImageView ivClubImage;
     Club club;
@@ -47,6 +51,7 @@ public class ExploreAClubActivity extends AppCompatActivity {
         tvClubDescription = findViewById(R.id.tvClubDescription);
         tvInterests = findViewById(R.id.tvInterests);
         tvClubName = findViewById(R.id.tvClubName);
+        llExploreClub = findViewById(R.id.llExploreClub);
         tvMembers = findViewById(R.id.tvMembers);
         btnClubFollow = findViewById(R.id.btnClubFollow);
         ivClubImage = findViewById(R.id.ivClubImage);
@@ -70,23 +75,42 @@ public class ExploreAClubActivity extends AppCompatActivity {
      * Main method for handling button setup
      */
     private void setupOnClickListeners() {
-        String clubElementId = club.getObjectId();
-        if (currentUser.getFollowing().contains(clubElementId)) {
-//            Log.i(TAG, clubElementId.getFirstName() + " is currently followed by " + currentUser.getFirstName());
+        if (isClubFollowedByUser(currentUser.getParseUser(), club)) {
+            Log.i(TAG, club.getName() + " is currently followed by " + (new User(parseUser)).getFirstName());
             btnClubFollow.setText("Following");
-            setupCurrentlyFollowingButton(clubElementId);
+            setupCurrentlyFollowingButton(club);
         } else {
-            setupDefaultFollowButton(clubElementId);
+            Log.i(TAG, club.getName() + " is not currently followed by " + (new User(parseUser)).getFirstName());
+            setupDefaultFollowButton(club);
         }
+    }
+
+    /**
+     * Method for validating if the input Club is currently followed by input User
+     *
+     * @param user
+     * @param club
+     * @return
+     */
+    boolean isClubFollowedByUser(ParseUser user, Club club) {
+        boolean rv = false;
+        for (ParseObject u : club.getFollowers()) {
+            Log.i(TAG, "User: " + user.getObjectId() + "FollowerId: " + u.getObjectId());
+            if (user.getObjectId().equals(u.getObjectId())) {
+//                Log.i(TAG, "User: " + user.getObjectId() + "FollowerId: " + u.getObjectId());
+                rv = true;
+            }
+        }
+        return rv;
     }
 
     /**
      * Current User is not following the Club therefore configure
      * buttons to reflect the default case of encouraging the User to follow.
      *
-     * @param clubElementId
+     * @param clubElement
      */
-    private void setupDefaultFollowButton(String clubElementId) {
+    private void setupDefaultFollowButton(Club clubElement) {
         btnClubFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,16 +121,21 @@ public class ExploreAClubActivity extends AppCompatActivity {
                     wasFollowed = false;
                     btnClubFollow.setText("Follow");
                     // apply unfollow from the user by removing the club to the user
-                    currentUser.removeFollowing(clubElementId);
+                    currentUser.unfollow(clubElement);
+                    currentUser.getParseUser().saveInBackground();
                     // reflect the unfollow from the user by removing user from the club
                     club.removeFollower(currentUser.getParseUser());
+                    club.saveInBackground();
                 } else {
                     wasFollowed = true;
                     btnClubFollow.setText("Following");
                     // apply follow from the user by adding the club to the user
-                    currentUser.addFollowing(clubElementId);
+                    currentUser.follow(clubElement);
+                    currentUser.getParseUser().saveInBackground();
                     // reflect the new follower by adding the user to the club
                     club.addFollower(currentUser.getParseUser());
+                    club.saveInBackground();
+
                 }
             }
         });
@@ -116,9 +145,9 @@ public class ExploreAClubActivity extends AppCompatActivity {
      * Configuration of follow button when current user is already following
      * the Club
      *
-     * @param clubElementId
+     * @param clubElement
      */
-    private void setupCurrentlyFollowingButton(String clubElementId) {
+    private void setupCurrentlyFollowingButton(Club clubElement) {
         btnClubFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,16 +158,22 @@ public class ExploreAClubActivity extends AppCompatActivity {
                     wasFollowed = false;
                     btnClubFollow.setText("Following");
                     // apply follow from the user by adding the club to the user
-                    currentUser.addFollowing(clubElementId);
+                    currentUser.follow(clubElement);
+                    currentUser.getParseUser().saveInBackground();
                     // reflect the new follower by adding the user to the club
                     club.addFollower(currentUser.getParseUser());
-                } else {
+                    club.saveInBackground();
+                }
+                // toggle button to unfollow
+                else {
                     wasFollowed = true;
                     btnClubFollow.setText("Follow");
                     // apply unfollow from the user by removing the club to the user
-                    currentUser.removeFollowing(clubElementId);
+                    currentUser.unfollow(clubElement);
+                    currentUser.getParseUser().saveInBackground();
                     // reflect the unfollow from the user by removing user from the club
                     club.removeFollower(currentUser.getParseUser());
+                    club.saveInBackground();
                 }
             }
         });
@@ -148,6 +183,7 @@ public class ExploreAClubActivity extends AppCompatActivity {
      *
      */
     private void queryAndPopulate() {
+        Log.i(TAG, "queryAndPopulate call");
         // query and populate interests text
         interests = (List<Interest>) club.getInterests();
         String interestStr = "";
@@ -176,5 +212,17 @@ public class ExploreAClubActivity extends AppCompatActivity {
         } else {
             tvMembers.setText(String.valueOf(memberCount) + " Member");
         }
+
+        List<ParseUser> members = club.getMembers();
+        Log.i(TAG, "members: " + members.size());
+        for (ParseUser m : members) {
+            User u = new User(m);
+            Log.i(TAG, u.getBiography());
+            Log.i(TAG, u.getFirstName());
+            Log.i(TAG, u.getLastName());
+//            Log.i(TAG, (String) m.getString("username"));
+        }
     }
+
+
 }

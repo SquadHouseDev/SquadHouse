@@ -17,7 +17,7 @@
         android:theme="@style/Theme.SquadHouse"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".activities.ViewAUserProfileActivity"
+            android:name=".activities.ExploreUserActivity"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activities.ExploreActivity"
@@ -26,7 +26,7 @@
             android:name=".activities.SignUpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.ExploreAClubActivity"
+            android:name=".activities.ExploreClubActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ViewMyProfileActivity"

@@ -20,7 +20,7 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
-import com.pepetech.squadhouse.activities.ExploreAClubActivity;
+import com.pepetech.squadhouse.activities.ExploreClubActivity;
 import com.pepetech.squadhouse.models.Club;
 import com.pepetech.squadhouse.models.User;
 
@@ -98,7 +98,7 @@ public class ExploreClubAdapter extends RecyclerView.Adapter<ExploreClubAdapter.
                 public void onClick(View v) {
 //                    Log.i(TAG, clubElement.getFirstName() + " was selected!");
                     Toast.makeText(v.getContext(), "Selected " + clubElement.getName(), Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(context, ExploreAClubActivity.class);
+                    Intent i = new Intent(context, ExploreClubActivity.class);
                     i.putExtra("club", Parcels.wrap(clubElement));
                     context.startActivity(i);
                 }

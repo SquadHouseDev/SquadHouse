@@ -23,7 +23,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
-import com.pepetech.squadhouse.activities.ViewAUserProfileActivity;
+import com.pepetech.squadhouse.activities.ExploreUserActivity;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.User;
 
@@ -107,7 +107,7 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
                 public void onClick(View v) {
                     Log.i(TAG, userElement.getFirstName() + " was selected!");
                     Toast.makeText(v.getContext(), "Selected " + userElement.getFirstName(), Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(context, ViewAUserProfileActivity.class);
+                    Intent i = new Intent(context, ExploreUserActivity.class);
                     i.putExtra("user", Parcels.wrap(userElement));
                     context.startActivity(i);
                 }

@@ -35,7 +35,7 @@ import java.util.List;
  * context.startActivity(i);<br>
  * </blockquote>
  */
-public class ViewAUserProfileActivity extends AppCompatActivity {
+public class ExploreUserActivity extends AppCompatActivity {
     ParseUser parseUser;
     User currentUser, userSelected;
     public static final String TAG = "ViewAUserActivity";
@@ -91,7 +91,7 @@ public class ViewAUserProfileActivity extends AppCompatActivity {
                 t.show();
                 Log.i(TAG, "Nominator profile clicked!");
                 if (nominator != null) {
-                    Intent i = new Intent(v.getContext(), ViewAUserProfileActivity.class);
+                    Intent i = new Intent(v.getContext(), ExploreUserActivity.class);
                     User toPass = new User(nominator);
                     i.putExtra("user", Parcels.wrap(toPass));
                     startActivity(i);
