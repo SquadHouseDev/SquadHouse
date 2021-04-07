@@ -46,7 +46,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
         return rooms.size();
     }
 
-   public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         // view elements
         private TextView tvClubName;
         private TextView tvRoomName;

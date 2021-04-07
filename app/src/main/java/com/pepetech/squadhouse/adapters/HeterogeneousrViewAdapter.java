@@ -17,7 +17,7 @@ import com.pepetech.squadhouse.models.User;
 
 import java.util.List;
 
-public class heterogeneousRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HeterogeneousrViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final String TAG = "heterogeneousAdapter";
     private Context context;
@@ -25,7 +25,7 @@ public class heterogeneousRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
     private final int ACTIVE = 0, FUTURE = 1;
 
-    public heterogeneousRecyclerViewAdapter(List<Room> rooms, Context context){
+    public HeterogeneousrViewAdapter(Context context, List<Room> rooms ){
         this.rooms = rooms;
         this.context = context;
     }
@@ -55,7 +55,7 @@ public class heterogeneousRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         return viewHolder;
     }
 
-    public class ViewHolder1 extends RecyclerView.ViewHolder {
+     class ViewHolder1 extends RecyclerView.ViewHolder {
         // Cell Room Active
         // view elements
 
@@ -92,12 +92,12 @@ public class heterogeneousRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         return new String(Character.toChars(unicode));
     }
 
-    public class ViewHolder2 extends RecyclerView.ViewHolder {
+    class ViewHolder2 extends RecyclerView.ViewHolder {
         // Cell Room Future
         // view elements
         
-       TextView tvClubName;
-       TextView tvFutureRoomName;
+      private TextView tvClubName;
+      private TextView tvFutureRoomName;
 
         public ViewHolder2(View itemView ) {
             super(itemView);
@@ -133,6 +133,7 @@ public class heterogeneousRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
                 break;
         }
     }
+
 
     @Override
     public int getItemCount() {
