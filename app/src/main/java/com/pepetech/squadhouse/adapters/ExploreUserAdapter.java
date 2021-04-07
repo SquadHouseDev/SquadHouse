@@ -167,6 +167,5 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
                 }
             });
         }
-
-
+    } // end of inner ViewHolder class
 }
