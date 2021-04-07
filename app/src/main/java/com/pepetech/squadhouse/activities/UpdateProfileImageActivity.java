@@ -34,6 +34,7 @@ public class UpdateProfileImageActivity extends AppCompatActivity {
         tvChangeImage = findViewById(R.id.tvChangeImage);
         done = findViewById(R.id.bttnDone);
         parseUser = ParseUser.getCurrentUser();
+        user = new User(parseUser);
         populateProfileElements();
         setupOnClickListeners();
     }
@@ -70,7 +71,8 @@ public class UpdateProfileImageActivity extends AppCompatActivity {
                         Toast t = Toast.makeText(v.getContext(), "Profile image clicked!", Toast.LENGTH_SHORT);
                         t.show();
                         Log.i(TAG,"Profile Image clicked!");
-
+                        BottomSheetDialogActivity bottomSheet = new BottomSheetDialogActivity();
+                        bottomSheet.show(getSupportFragmentManager(),"ModalBottomSheet");
                     }
                 });
 
