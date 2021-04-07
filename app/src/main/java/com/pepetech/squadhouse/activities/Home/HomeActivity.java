@@ -82,12 +82,8 @@ public class HomeActivity extends AppCompatActivity {
         allRooms = new ArrayList<>();
         rvRooms = findViewById(R.id.rvHomeFeed);
 
-
-//        adapter = new HomeFeedAdapter(this, allRooms);
-//        rvRooms.setAdapter(adapter);
-
-            viewAdapter = new HeterogeneousrViewAdapter(this, allRooms);
-            rvRooms.setAdapter(viewAdapter);
+        viewAdapter = new HeterogeneousrViewAdapter(this, allRooms);
+        rvRooms.setAdapter(viewAdapter);
 
         rvRooms.setLayoutManager(new LinearLayoutManager(this));
         ////////////////////////////////////////////////////////////
@@ -150,8 +146,8 @@ public class HomeActivity extends AppCompatActivity {
 //                    Log.i(TAG, "Room: " + p.getDescription() + ", username: " + p.getUser().getUsername());
 //                }
                 allRooms.addAll(rooms);
-//                viewAdapter.notifyDataSetChanged();
-                adapter.notifyDataSetChanged();
+                viewAdapter.notifyDataSetChanged();
+
             }
         });
     }
