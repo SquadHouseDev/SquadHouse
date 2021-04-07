@@ -2,8 +2,6 @@ package com.pepetech.squadhouse.adapters;
 
 //import androidx.recyclerview.widget.RecyclerView;
 
-import com.pepetech.squadhouse.R;
-
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.models.Room;
 
 import java.util.List;

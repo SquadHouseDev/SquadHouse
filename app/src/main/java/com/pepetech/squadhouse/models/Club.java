@@ -42,19 +42,6 @@ public class Club extends ParseObject {
         return getString(KEY_DESCRIPTION);
     }
 
-    public List<? extends Object> getFollowers() {
-        List<Object> rv = null;
-        try {
-            rv = fetchIfNeeded().getList(KEY_FOLLOWERS);
-            return rv;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if (rv == null)
-            return new ArrayList<ParseUser>();
-        return rv;
-    }
-
     public ParseFile getImage() {
         ParseFile rv = null;
         try {
@@ -66,8 +53,21 @@ public class Club extends ParseObject {
         return rv;
     }
 
-    public List<ParseObject> getMembers() {
-        List<ParseObject> rv = null;
+    public List<ParseUser> getFollowers() {
+        List<ParseUser> rv = null;
+        try {
+            rv = fetchIfNeeded().getList(KEY_FOLLOWERS);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (rv == null)
+            return new ArrayList<ParseUser>();
+        return rv;
+    }
+
+    public List<ParseUser> getMembers() {
+        List<ParseUser> rv = null;
         try {
             rv = fetchIfNeeded().getList(KEY_MEMBERS);
             return rv;
@@ -75,7 +75,7 @@ public class Club extends ParseObject {
             e.printStackTrace();
         }
         if (rv == null)
-            return new ArrayList<ParseObject>();
+            return new ArrayList<ParseUser>();
         return rv;
     }
 
@@ -114,36 +114,53 @@ public class Club extends ParseObject {
     ////////////////////////////////////////////////////////////////////////////////////////////
     // Update Methods: automatically calls saveInBackground on ParseUser to effect updates
     ////////////////////////////////////////////////////////////////////////////////////////////
-    public boolean addInterest(ParseObject interest) {
-        ArrayList<ParseObject> interests = (ArrayList<ParseObject>) getInterests();
-        if (interests.contains(interest)) {
-            return false;
-        }
-        interests.add(interest);
-        put("interests", interests);
+    public boolean addInterest(Interest interest) {
+        addUnique(KEY_INTERESTS, interest);
         saveInBackground();
         return true;
     }
 
-    public boolean addMember(ParseObject member) {
-        List<ParseObject> members = getMembers();
-        if (members.contains(member)) {
-            return false;
-        }
-        members.add(member);
-        put("interests", members);
+    /**
+     * Add the objectId of the follower to the club follower list
+     *
+     * @param follower
+     * @return
+     */
+    public boolean addFollower(ParseUser follower) {
+        addUnique(KEY_FOLLOWERS, follower);
         saveInBackground();
         return true;
     }
 
-    public boolean removeMember(ParseObject member) {
-        List<ParseObject> members = getMembers();
+    /**
+     * Add the objectId of the follower to the club follower list
+     *
+     * @param follower
+     * @return
+     */
+    public boolean removeFollower(ParseUser follower) {
+        List<ParseUser> followers = getFollowers();
+        ArrayList<ParseUser> toRemove = new ArrayList<>();
+        toRemove.add(follower);
+        removeAll(KEY_FOLLOWERS, toRemove);
+        saveInBackground();
+        return true;
+    }
+
+    public boolean addMember(ParseUser member) {
+        addUnique(KEY_FOLLOWERS, member);
+        saveInBackground();
+        return true;
+    }
+
+    public boolean removeMember(ParseUser member) {
+        List<ParseUser> members = getFollowers();
         if (!members.contains(member)) {
             return false;
-        } else {
-            members.remove(member);
         }
-        put("interests", members);
+        ArrayList<ParseUser> toRemove = new ArrayList<>();
+        toRemove.add(member);
+        removeAll(KEY_MEMBERS, toRemove);
         saveInBackground();
         return true;
     }

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clExploreFound"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -19,6 +20,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -45,12 +47,12 @@
             android:layout_height="0dp"
             android:layout_below="@+id/tvFoundName"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! NYESSS!!! "
-            android:textSize="12sp"
+            android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/clProfile"
             app:layout_constraintStart_toEndOf="@id/ivFoundProfileImage"
@@ -66,8 +68,8 @@
         android:layout_marginEnd="15dp"
         android:text="Follow"
         android:textSize="10sp"
-        app:layout_constraintStart_toEndOf="@id/clProfile"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/clProfile"
         app:layout_constraintTop_toTopOf="parent" />
 
 

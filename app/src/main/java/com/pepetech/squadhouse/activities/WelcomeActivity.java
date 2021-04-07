@@ -1,8 +1,10 @@
 package com.pepetech.squadhouse.activities;
-import com.pepetech.squadhouse.R;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.pepetech.squadhouse.R;
 
 public class WelcomeActivity extends AppCompatActivity {
 
