@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>4</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>180</x>
+      <y>844</y>
+      <w>236</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>Settings
+bg=yellow
+--
+- active: boolean
+- interests: HashMap&lt;String, List&lt;String&gt; &gt;
+# could be a url to the github wiki or w/e publicly available page maintained for app updates
+- releaseNotesUrl: String
+# link to github hosted FAQ
+- faqContactUsUrl: String
+- communityGuidelinesUrl: String
+- termsOfServiceUrl: String
+- privacyPolicyUrl: String
+- interests: List&lt;Interest&gt;
+- objectId: String
+- updatedAt: Datetime
+- createdAt: Datetime</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>468</x>
+      <y>672</y>
+      <w>96</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>ParseUser: ParseObject
+bg=green
+--
+*Core*
+- objectId: String
+- updatedAt: Datetime
+- createdAt: Datetime
+- emailVerified: boolean
+
+
+- biography: String
+- image: File
+- userName: String
+- firstName: String
+- lastName: String
+- password: String
+- phoneNumber: String
+- email: String
+- following: List&lt;User&gt;
+- followers: List&lt;User&gt;
+- clubs: List&lt;Club&gt;
+
+*Stretch 1*
+- nomination: Activity
+- invites: Int
+- isSeed: Boolean
+- followerCount: Int
+- followingCount: Int
+
+
+- twitterUrl: String
+- instagramUrl: String
+
+- settings: Settings
+- incomingActivities: List&lt;Activity&gt;
+- outgoingActivities: List&lt;Activity&gt;
+- calendar: Calendar
+
+
+Stretch 2
+
+
+
+Stretch 3-</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>244</x>
+      <y>1048</y>
+      <w>392</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>Calendar
+bg=yellow
+--
+- objectId: String
+- updatedAt: Datetime
+- createdAt: Datetime
+--
+# How is a calendar generated for a user?
+# The calendar appears to be a list of events recommended to a user given their interests1
+# Likely to be some algo that finds all events that exist in their user's set of interests sorted by macgnitude of event's interests intersecting the user's interest
+# from which an algo that is biased towards recommending trending events would recommend the event on:
+# Event's group size, group followers, group followers velocity,
+# This feature technically requires backend engineering to implement b/c computation is likely to be extremley costly ie no good to run locally on a phone
+ </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>640</x>
+      <y>108</y>
+      <w>172</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>Room
+bg=green
+--
+*Core*
+- objectId: String
+- updatedAt: Datetime
+- createdAt: Datetime
+
+
+- title: String
+- clubName: String
+- participants: List&lt;User&gt;
+- host: User
+- isActive: bool...?
+- cohosts: List&lt;User&gt;
+- startedAt: Datetime
+- endedAt: Datetime 
+
+*Stretch 1*
+- isScheduled: bool...?
+
+- exclusivityStatus: String or an enum (1: open, 2: social,3: closed)
+- allowHandRaise: Boolean
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>760</x>
+      <y>324</y>
+      <w>168</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>Club: ParseObject
+bg=green
+--
+*Core*
+- objectId: String
+- updatedAt: Datetime
+- createdAt: Datetime
+
+- image: File
+- members: List&lt;User&gt;
+- memberCount: Int
+- followers: List&lt;User&gt;
+- name: String
+# clubhouse supports emojis... what sort of encoding is needed
+# for displaying?
+- description: String 
+
+- followerCount: Int
+*Stretch 1*
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>260</x>
+      <y>408</y>
+      <w>196</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>Interest: ParseObject
+bg=green
+--
+- name: String
+- icon: Image
+
+- objectId: String
+- updatedAt: Datetime
+- createdAt: Datetime
+--
+*Why implement?*
+&gt;&gt; Storage of User and Object meta data...?
+&gt;&gt; Allows for analysis of Users and Room usage
+&gt;&gt; Allows for a targetted / curated list of recommendations
+such as Rooms or Clubs
+
+# users can add and delete from their list of interests
+# clubs can add and delete from their list of interests
+# the database of interests for the most part is static, only sys admin 
+# are allowed to create new interest labels</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>232</x>
+      <y>840</y>
+      <w>12</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>300</x>
+      <y>584</y>
+      <w>176</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=1..n</panel_attributes>
+    <additional_attributes>420.0;270.0;10.0;270.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>712</x>
+      <y>1040</y>
+      <w>84</w>
+      <h>76</h>
+    </coordinates>
+    <panel_attributes>*Priority Legend*
+--
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>684</x>
+      <y>64</y>
+      <w>40</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>Event
+bg=yellow
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>700</x>
+      <y>88</y>
+      <w>12</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>716</x>
+      <y>1072</y>
+      <w>40</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>Stretch
+bg=yellow</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>716</x>
+      <y>1056</y>
+      <w>40</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>Core
+bg=green</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>616</x>
+      <y>676</y>
+      <w>236</w>
+      <h>312</h>
+    </coordinates>
+    <panel_attributes>Follow: ParseObject
+bg=green
+--
++ from: ParseObject pointer
++ to: ParseObject pointer
+--
+*Reference: *
+https://docs.parseplatform.org/ios/guide/
+
+--
+*Problem*
+Inability to write/update on a User that is not the
+one currently logged in.
+
+The issue it solves involves updating a User's
+followers. Code cannot be used to apply
+changes to a User A while the if User A is not 
+the current User logged in.
+--
+*How this solves the issue*
+The database architecture allows for
+read/write access to a User's followers/following
+entries without the need to store directly inside
+the User class. This is necessary because of the security
+implementations on the User class.
+--
+*How it works*
+Given:
+- a logged in User u
+
+Perform:
+1. searching for followers
+Query from the table of Follow for entries in which
+the field "to" matches with the User u.objectID
+
+2. searching for following
+Query from the table of Follow for entries in which
+the field from matches with the User u.objectID
+--
+*Application Functionality*
+
+*Create/Update/Delete*
+1. A User should be a able to follow and unfollow another User
+Update is simply a deletion of the Follow instance, alternatives...?
+*Read*
+2. For a given User u, we should be able to read 
+all of their followers/following for display
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>560</x>
+      <y>708</y>
+      <w>64</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+FK</panel_attributes>
+    <additional_attributes>140.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>772</x>
+      <y>572</y>
+      <w>12</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;260.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>300</x>
+      <y>820</y>
+      <w>176</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+</panel_attributes>
+    <additional_attributes>420.0;20.0;10.0;20.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>476</x>
+      <y>920</y>
+      <w>12</w>
+      <h>136</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;320.0;10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>496</x>
+      <y>404</y>
+      <w>164</w>
+      <h>232</h>
+    </coordinates>
+    <panel_attributes>Activity: ParseObject
+bg=yellow
+--
+- from: ParseObject
+- to: ParseObject
+- description: String
+- type: String
+- objectId: String
+- updatedAt: Datetime
+- createdAt: Datetime
+--
+Why implement?
+&gt;&gt; Storage of User and Object meta data...?
+&gt;&gt; Allows for analysis of Users and Room usage
+How do we properly use this table?
+To what extent is this necessary?</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>648</x>
+      <y>632</y>
+      <w>12</w>
+      <h>52</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>680</x>
+      <y>408</y>
+      <w>40</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>Create</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>568</x>
+      <y>360</y>
+      <w>40</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>Add</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>484</x>
+      <y>360</y>
+      <w>44</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>Remove</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>656</x>
+      <y>408</y>
+      <w>32</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>580</x>
+      <y>368</y>
+      <w>12</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>500</x>
+      <y>368</y>
+      <w>12</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>716</x>
+      <y>408</y>
+      <w>52</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;110.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>604</x>
+      <y>360</y>
+      <w>164</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;390.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>596</x>
+      <y>284</y>
+      <w>52</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;190.0;10.0;10.0;110.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>516</x>
+      <y>632</y>
+      <w>12</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>404</x>
+      <y>360</y>
+      <w>88</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>200.0;10.0;10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>484</x>
+      <y>368</y>
+      <w>12</w>
+      <h>312</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;760.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>504</x>
+      <y>148</y>
+      <w>144</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;530.0;10.0;10.0;340.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>864</x>
+      <y>676</y>
+      <w>160</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Follow
+--
+to: UserB
+from: UserA</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>864</x>
+      <y>736</y>
+      <w>40</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>UserA</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>972</x>
+      <y>736</y>
+      <w>40</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>UserB</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>868</x>
+      <y>712</y>
+      <w>12</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>988</x>
+      <y>712</y>
+      <w>12</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>900</x>
+      <y>732</y>
+      <w>80</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+UserA follows UserB</panel_attributes>
+    <additional_attributes>180.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>376</x>
+      <y>52</y>
+      <w>616</w>
+      <h>376</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>20.0;890.0;10.0;10.0;1520.0;10.0;1520.0;920.0;1380.0;920.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>848</x>
+      <y>104</y>
+      <w>124</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>Participant
+--
+- room: ParseObject Pointer
+- user: ParseObject Pointer</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>808</x>
+      <y>136</y>
+      <w>48</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1012</x>
+      <y>324</y>
+      <w>124</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>ClubMember
+bg=green
+--
+- club: ParseObject Pointer
+- user: ParseObject Pointer
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>864</x>
+      <y>768</y>
+      <w>160</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Follow
+--
+to: ClubB
+from: UserA</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>864</x>
+      <y>828</y>
+      <w>40</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>UserA</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>972</x>
+      <y>828</y>
+      <w>40</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>ClubB</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>868</x>
+      <y>804</y>
+      <w>12</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>988</x>
+      <y>804</y>
+      <w>12</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>900</x>
+      <y>824</y>
+      <w>80</w>
+      <h>16</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.
+UserA follows ClubB</panel_attributes>
+    <additional_attributes>180.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>208</x>
+      <y>0</y>
+      <w>700</w>
+      <h>772</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>1730.0;260.0;1730.0;10.0;20.0;10.0;10.0;1910.0;650.0;1910.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>548</x>
+      <y>304</y>
+      <w>152</w>
+      <h>376</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1..n
+</panel_attributes>
+    <additional_attributes>350.0;10.0;350.0;870.0;10.0;870.0;10.0;920.0</additional_attributes>
+  </element>
+</diagram>
