@@ -197,7 +197,8 @@ public class ExploreActivity extends AppCompatActivity {
     }
 
     /**
-     * Create and run a ParseQuery for searching for Users based on the union of the following fields:
+     * Create and run a keyword-field indifferent matching ParseQuery
+     * for searching Users based on the union of the following fields:
      * <ul>
      *     <li>username</li>
      *     <li>firstname</li>
@@ -281,7 +282,8 @@ public class ExploreActivity extends AppCompatActivity {
     }
 
     /**
-     * Create and run a ParseQuery for searching for Clubs based on the union of the following fields:
+     * Create and run a keyword-field indifferent matching ParseQuery
+     * for searching Clubs based on the union of the following fields:
      * <ul>
      *     <li>name</li>
      *     <li>description</li>
