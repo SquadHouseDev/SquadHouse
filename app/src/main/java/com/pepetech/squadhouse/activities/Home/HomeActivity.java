@@ -32,19 +32,6 @@ import com.pepetech.squadhouse.models.User;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Refer to feature-home-activity branch for development
- * TODO: add cell_search to the recycler view
- * TODO: add cell_room_future to the recycler view
- * Recycler view should start with:
- * 1. cell_search
- * 2. cell_room_future
- * 3. cell_room_active
- * 4. cell_room_active
- * .
- * .
- * N
- */
 public class HomeActivity extends AppCompatActivity {
     public static final String TAG = "HomeActivity";
 
@@ -59,10 +46,10 @@ public class HomeActivity extends AppCompatActivity {
     Toolbar tbHome;
     RecyclerView rvRooms;
     HomeFeedAdapter adapter;
-    HeterogeneousrViewAdapter viewAdapter;
+    HomeMultiViewAdapter viewAdapter;
 
 
-    List<Room> allRooms;
+    List<Object> allRooms;
 
     SwipeRefreshLayout swipeContainer;
 
@@ -82,7 +69,7 @@ public class HomeActivity extends AppCompatActivity {
         allRooms = new ArrayList<>();
         rvRooms = findViewById(R.id.rvHomeFeed);
 
-        viewAdapter = new HeterogeneousrViewAdapter(this, allRooms);
+        viewAdapter = new HomeMultiViewAdapter(this, allRooms);
         rvRooms.setAdapter(viewAdapter);
 
         rvRooms.setLayoutManager(new LinearLayoutManager(this));
@@ -145,6 +132,10 @@ public class HomeActivity extends AppCompatActivity {
 //                for (Room p : posts) {
 //                    Log.i(TAG, "Room: " + p.getDescription() + ", username: " + p.getUser().getUsername());
 //                }
+                // add an image to be displayed
+                allRooms.add(1);
+                // should add event objects TBD
+                allRooms.add("future");
                 allRooms.addAll(rooms);
                 viewAdapter.notifyDataSetChanged();
 

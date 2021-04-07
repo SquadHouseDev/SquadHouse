@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:padding="8dp"
+        android:text="EXPLORE NEW ROOMS!!!!"
         tools:text="Pepe Tech" />
 
     <TextView
@@ -21,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:padding="8dp"
-
+        android:text="DANK MEMES PAWG"
         tools:text="Dank Memes Pawg" />
 
     <TextView
@@ -30,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:padding="8dp"
-
+        android:text="HOSTED BY FILTHY FRANK"
         tools:text="Filthy Frank (Joji)" />
 
 </LinearLayout>
