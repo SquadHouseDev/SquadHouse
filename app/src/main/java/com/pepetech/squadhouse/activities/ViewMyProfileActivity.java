@@ -130,7 +130,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                 if (nominator != null) {
 
                     User toPass = new User((ParseUser) nominator);
-                    Intent i = new Intent(v.getContext(), ViewAUserProfileActivity.class);
+                    Intent i = new Intent(v.getContext(), ExploreUserActivity.class);
                     i.putExtra("user", Parcels.wrap(toPass));
                     startActivity(i);
                 }
