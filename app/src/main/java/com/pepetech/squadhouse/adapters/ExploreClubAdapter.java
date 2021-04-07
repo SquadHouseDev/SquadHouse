@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.ExploreAClubActivity;
 import com.pepetech.squadhouse.models.Club;
@@ -109,7 +111,7 @@ public class ExploreClubAdapter extends RecyclerView.Adapter<ExploreClubAdapter.
          * @param clubElement
          */
         private void setupFollowButton(Club clubElement) {
-            if (currentUser.getFollowing().contains(clubElement)) {
+            if (isClubFollowedByUser(currentUser.getParseUser(), clubElement)) {
                 Log.i(TAG, clubElement.getName() + " is currently followed by " + currentUser.getFirstName());
                 btnFollow.setText("Following");
                 setupCurrentlyFollowingButton(clubElement);
@@ -135,7 +137,7 @@ public class ExploreClubAdapter extends RecyclerView.Adapter<ExploreClubAdapter.
                         wasFollowed = false;
                         btnFollow.setText("Follow");
                         // apply removal of a following on the user object
-                        currentUser.removeFollowing(clubElement.getObjectId());
+                        currentUser.unfollow(clubElement);
                         // TODO: apply removal of a follower on the club object
                         clubElement.removeFollower(currentUser.getParseUser());
 
@@ -143,7 +145,7 @@ public class ExploreClubAdapter extends RecyclerView.Adapter<ExploreClubAdapter.
                         wasFollowed = true;
                         btnFollow.setText("Following");
                         // apply addition of a following on the user object
-                        currentUser.addFollowing(clubElement.getObjectId());
+                        currentUser.follow(clubElement);
                         // TODO: apply addition of a follower on the club object
                         clubElement.addFollower(currentUser.getParseUser());
                     }
@@ -168,19 +170,48 @@ public class ExploreClubAdapter extends RecyclerView.Adapter<ExploreClubAdapter.
                         wasFollowed = false;
                         btnFollow.setText("Following");
                         // apply addition of a following on the user object
-                        currentUser.addFollowing(clubElement.getObjectId());
+//                        currentUser.addFollowing(clubElement.getObjectId());
+                        currentUser.follow(clubElement);
+//                        currentUser.getParseUser().addUnique(User.KEY_FOLLOWING, clubElement);
+                        currentUser.getParseUser().saveInBackground();
                         // TODO: apply addition of a follower on the club object
-                        clubElement.addFollower(currentUser.getParseUser());
+//                        clubElement.addFollower(currentUser.getParseUser());
+//                        clubElement.addUnique(Club.KEY_FOLLOWERS, currentUser.getParseUser());
+                        clubElement.saveInBackground();
                     } else {
                         wasFollowed = true;
                         btnFollow.setText("Follow");
                         // apply removal of a following on the user object
-                        currentUser.removeFollowing(clubElement.getObjectId());
+//                        currentUser.removeFollowing(clubElement.getObjectId());
+                        currentUser.unfollow(clubElement);
+                        currentUser.getParseUser().saveInBackground();
                         // TODO: apply removal of a follower on the club object
                         clubElement.removeFollower(currentUser.getParseUser());
+                        clubElement.saveInBackground();
+
                     }
                 }
             });
         }
     }
+
+    /**
+     * Method for validating if the input Club is currently followed by input User
+     *
+     * @param user
+     * @param club
+     * @return
+     */
+    boolean isClubFollowedByUser(ParseUser user, Club club) {
+        boolean rv = false;
+        for (ParseObject u : club.getFollowers()) {
+            Log.i(TAG, "User: " + user.getObjectId() + "FollowerId: " + u.getObjectId());
+            if (user.getObjectId().equals(u.getObjectId())) {
+//                Log.i(TAG, "User: " + user.getObjectId() + "FollowerId: " + u.getObjectId());
+                rv = true;
+            }
+        }
+        return rv;
+    }
+
 }
