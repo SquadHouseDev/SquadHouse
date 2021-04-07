@@ -128,18 +128,18 @@ public class ExploreActivity extends AppCompatActivity {
                     // check state of toggle switch for selecting which adapter to use when populating
                     if (switchUserClub.isChecked()) {
                         queryClubsByKeyword(etSearch.getText().toString(), isValidKeyword);
-                        queryFollowings();
+//                        queryFollowings();
                         rvElementsFound.setAdapter(exploreClubAdapter);
                         exploreClubAdapter.notifyDataSetChanged();
 
                     } else {
                         queryUsersByKeyword(etSearch.getText().toString(), isValidKeyword);
-                        queryFollowings();
+//                        queryFollowings();
                         rvElementsFound.setAdapter(exploreUserAdapter);
                         exploreClubAdapter.notifyDataSetChanged();
                     }
                 } else {
-                    // enter stuff here for handling invalid keyword entry cases
+                    // TODO: enter stuff here for handling invalid keyword entry cases
                 }
             }
         });
@@ -149,27 +149,6 @@ public class ExploreActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getBaseContext(), "Search for Clubs", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    /**
-     * Testing method for querying all existing Interest instances
-     */
-    private void queryInterests() {
-        ParseQuery<Interest> query = ParseQuery.getQuery(Interest.class);
-        query.setLimit(200);
-        query.findInBackground(new FindCallback<Interest>() {
-            @Override
-            public void done(List<Interest> interests, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting posts", e);
-                    return;
-                }
-                // TODO: needs refactor to incorporate all interest names to be under one archetype
-                allInterests.addAll(interests);
-                Log.i(TAG, "Length of all interests: " + String.valueOf(allInterests.size()));
-                exploreInterestAdapter.notifyDataSetChanged();
-            }
-        });
     }
 
     /**
@@ -217,90 +196,6 @@ public class ExploreActivity extends AppCompatActivity {
         });
     }
 
-
-    /**
-     * Test function for loading all users available to be followed
-     */
-    void queryAllUsers() {
-        ParseQuery<ParseUser> query = ParseUser.getQuery();
-        query.findInBackground(new FindCallback<ParseUser>() {
-            @Override
-            public void done(List<ParseUser> users, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting posts", e);
-                    return;
-                }
-                for (ParseUser u : users) {
-                    User converted = new User(u);
-                    allUsers.add(converted);
-                }
-                exploreUserAdapter.notifyDataSetChanged();
-            }
-        });
-    }
-
-    /**
-     * TODO: need to refactor to be applied during the keyword search
-     * Query for all ParseObjects followed by the current User
-     */
-    void queryFollowings() {
-        Log.i(TAG, "queryFollowings");
-//        allFollowings.clear();
-        ParseQuery<Follow> mainQuery = new ParseQuery<Follow>(Follow.class);
-        mainQuery.whereEqualTo(Follow.KEY_FROM, currentUser.getParseUser().getObjectId());
-        mainQuery.findInBackground(new FindCallback<Follow>() {
-            @Override
-            public void done(List<Follow> objects, ParseException e) {
-                Log.i(TAG, String.valueOf(objects.size()) + " followings");
-                if (e == null) {
-                    // iterate over all Users found from search
-                    for (User u : allUsers) {
-                        // iterate over all Follow entries
-                        for (Follow c : objects) {
-                            // compare
-                            Log.i(TAG, String.format("Current: %s From: %s To: %s",
-                                    u.getParseUser().getObjectId(),
-                                    c.getFollowFrom().getObjectId(),
-                                    c.getFollowTo().getObjectId()));
-                            if (u.getParseUser().getObjectId().equals(c.getFollowTo().getObjectId())) {
-                                u.isFollowed = true;
-                                exploreUserAdapter.notifyDataSetChanged();
-                            }
-                            Log.i(TAG, c.getFollowTo().getObjectId());
-                        }
-                    }
-                } else {
-                }
-                exploreUserAdapter.notifyDataSetChanged();
-            }
-
-        });
-    }
-
-    /**
-     * Test method for querying for a User using an objectId
-     *
-     * @param id
-     */
-    void queryUser(String id) {
-        ParseQuery<ParseUser> query = ParseUser.getQuery();
-        query.whereEqualTo("objectId", id);
-        query.getFirstInBackground(new GetCallback<ParseUser>() {
-            @Override
-            public void done(ParseUser awesome, ParseException e) {
-                if (e == null) {
-                    User u = new User(awesome);
-                    Log.i(TAG, u.getLastName() + u.getFirstName() + u.getBiography() + u.getPhoneNumber());
-                    following.add(u.getParseUser());
-                    Log.i(TAG, String.valueOf(following.size()));
-                    Log.i(TAG, String.valueOf(following));
-                    Log.i(TAG, "Proceed to populate from here or notify that adapter that the data has changed");
-                } else {
-                }
-            }
-        });
-    }
-
     /**
      * Create and run a ParseQuery for searching for Users based on the union of the following fields:
      * <ul>
@@ -327,7 +222,7 @@ public class ExploreActivity extends AppCompatActivity {
         // substring querying
         // create querying by username
         ParseQuery<ParseUser> queryByUsername = ParseUser.getQuery();
-        queryByUsername.whereContains("username", keyword);
+        queryByUsername.whereMatches("username", keyword, "i");
         // exclude the user's self
         queryByUsername.whereNotEqualTo("objectId",
                 currentUser.getParseUser().getObjectId());
@@ -337,19 +232,19 @@ public class ExploreActivity extends AppCompatActivity {
         // exclude the user's self
         queryByFirstName.whereNotEqualTo("objectId",
                 currentUser.getParseUser().getObjectId());
-        queryByFirstName.whereContains("firstName", keyword);
+        queryByFirstName.whereMatches("firstName", keyword, "i");
 
         // create querying by lastname
         ParseQuery<ParseUser> queryByLastName = ParseUser.getQuery();
         // exclude the user's self
         queryByLastName.whereNotEqualTo("objectId", currentUser.getParseUser().getObjectId());
-        queryByLastName.whereContains("lastName", keyword);
+        queryByLastName.whereMatches("lastName", keyword, "i");
 
         // create querying by biography
         ParseQuery<ParseUser> queryByBiography = ParseUser.getQuery();
         // exclude the user's self
         queryByBiography.whereNotEqualTo("objectId", currentUser.getParseUser().getObjectId());
-        queryByBiography.whereContains("biography", keyword);
+        queryByBiography.whereMatches("biography", keyword, "i");
 
         // create the collection of queries
         List<ParseQuery<ParseUser>> queries = new ArrayList<ParseQuery<ParseUser>>();
@@ -403,11 +298,12 @@ public class ExploreActivity extends AppCompatActivity {
         // substring query creation
         // create querying by name
         ParseQuery<Club> queryByName = new ParseQuery<Club>(Club.class);
-        queryByName.whereContains("name", keyword);
+        // modifier i makes the search matching ignorant of uppercase/lowercase matching in characters
+        queryByName.whereMatches("name", keyword, "i");
 
         // create querying by description
         ParseQuery<Club> queryByDescription = new ParseQuery<Club>(Club.class);
-        queryByDescription.whereContains("description", keyword);
+        queryByDescription.whereMatches("description", keyword, "i");
 
         // create the collection of queries
         List<ParseQuery<Club>> queries = new ArrayList<ParseQuery<Club>>();
@@ -428,6 +324,110 @@ public class ExploreActivity extends AppCompatActivity {
                 } else {
                 }
                 exploreClubAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    /**
+     * Test function for loading all users available to be followed
+     */
+    void queryAllUsers() {
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> users, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+                for (ParseUser u : users) {
+                    User converted = new User(u);
+                    allUsers.add(converted);
+                }
+                exploreUserAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    /**
+     * Testing method for querying all existing Interest instances
+     */
+    private void queryInterests() {
+        ParseQuery<Interest> query = ParseQuery.getQuery(Interest.class);
+        query.setLimit(200);
+        query.findInBackground(new FindCallback<Interest>() {
+            @Override
+            public void done(List<Interest> interests, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+                // TODO: needs refactor to incorporate all interest names to be under one archetype
+                allInterests.addAll(interests);
+                Log.i(TAG, "Length of all interests: " + String.valueOf(allInterests.size()));
+                exploreInterestAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    /**
+     * TODO: need to refactor to be applied during the keyword search
+     * Code for usage in the view User profile
+     * Query for all ParseObjects followed by the current User
+     */
+    void queryFollowings() {
+        Log.i(TAG, "queryFollowings");
+//        allFollowings.clear();
+        ParseQuery<Follow> mainQuery = new ParseQuery<Follow>(Follow.class);
+        mainQuery.whereEqualTo(Follow.KEY_FROM, currentUser.getParseUser().getObjectId());
+        mainQuery.findInBackground(new FindCallback<Follow>() {
+            @Override
+            public void done(List<Follow> objects, ParseException e) {
+                Log.i(TAG, String.valueOf(objects.size()) + " followings");
+                if (e == null) {
+                    // iterate over all Users found from search
+                    for (User u : allUsers) {
+                        // iterate over all Follow entries
+                        for (Follow c : objects) {
+                            // compare
+                            Log.i(TAG, String.format("Current: %s From: %s To: %s",
+                                    u.getParseUser().getObjectId(),
+                                    c.getFollowFrom().getObjectId(),
+                                    c.getFollowTo().getObjectId()));
+                            if (u.getParseUser().getObjectId().equals(c.getFollowTo().getObjectId())) {
+                                u.isFollowed = true;
+                                exploreUserAdapter.notifyDataSetChanged();
+                            }
+                            Log.i(TAG, c.getFollowTo().getObjectId());
+                        }
+                    }
+                } else {
+                }
+                exploreUserAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    /**
+     * Test method for querying for a User using an objectId
+     *
+     * @param id
+     */
+    void queryUser(String id) {
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereEqualTo("objectId", id);
+        query.getFirstInBackground(new GetCallback<ParseUser>() {
+            @Override
+            public void done(ParseUser awesome, ParseException e) {
+                if (e == null) {
+                    User u = new User(awesome);
+                    Log.i(TAG, u.getLastName() + u.getFirstName() + u.getBiography() + u.getPhoneNumber());
+                    following.add(u.getParseUser());
+                    Log.i(TAG, String.valueOf(following.size()));
+                    Log.i(TAG, String.valueOf(following));
+                    Log.i(TAG, "Proceed to populate from here or notify that adapter that the data has changed");
+                } else {
+                }
             }
         });
     }
