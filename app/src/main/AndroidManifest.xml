@@ -16,12 +16,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SquadHouse"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.ViewAUserProfileActivity"></activity>
-        <activity android:name=".activities.ExploreActivity" />
-        <activity android:name=".activities.SignUpActivity" />
-        <activity android:name=".activities.ClubActivity" />
-        <activity android:name=".activities.ViewMyProfileActivity" />
-        <activity android:name=".activities.SettingsActivity" />
+        <activity
+            android:name=".activities.ExploreUserActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activities.ExploreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.SignUpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ExploreClubActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ViewMyProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".activities.LoginActivity">
 
             <!-- Set default startup screen -->

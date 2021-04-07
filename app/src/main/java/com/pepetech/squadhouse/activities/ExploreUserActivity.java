@@ -1,17 +1,16 @@
 package com.pepetech.squadhouse.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bumptech.glide.Glide;
 import com.parse.ParseException;
@@ -26,8 +25,17 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class ViewAUserProfileActivity extends AppCompatActivity {
+/**
+ * This is the Activity that allows for navigation to another User's profile for viewing.
+ * An example of using this class is as follows:
+ * <br>
+ * <blockquote>
+ * Intent i = new Intent(context, ViewAUserProfileActivity.class);<br>
+ * i.putExtra("user", Parcels.wrap(userElement));<br>
+ * context.startActivity(i);<br>
+ * </blockquote>
+ */
+public class ExploreUserActivity extends AppCompatActivity {
     ParseUser parseUser;
     User currentUser, userSelected;
     public static final String TAG = "ViewAUserActivity";
@@ -42,7 +50,8 @@ public class ViewAUserProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_a_user_profile);
+        setContentView(R.layout.activity_explore_user_profile);
+
         ////////////////////////////////////////////////////////////
         // Setup view elements
         ////////////////////////////////////////////////////////////
@@ -57,11 +66,10 @@ public class ViewAUserProfileActivity extends AppCompatActivity {
         tvBiography = findViewById(R.id.tvBiography);
         tvUserJoinDate = findViewById(R.id.tvUserJoinDate);
         tvNominatorName = findViewById(R.id.tvNominatorName);
-        ////////////////////////////////////////////////////////////
-        // Setup buttons
-        ////////////////////////////////////////////////////////////
+        // buttons
         btnFollow = findViewById(R.id.btnFollow);
         setupOnClickListeners();
+
         ////////////////////////////////////////////////////////////
         // Setting up selected User's profile
         ////////////////////////////////////////////////////////////
@@ -69,11 +77,10 @@ public class ViewAUserProfileActivity extends AppCompatActivity {
         userSelected = Parcels.unwrap(getIntent().getParcelableExtra("user"));
         parseUser = ParseUser.getCurrentUser();
         currentUser = new User(parseUser);
-        // 1. query profile data
+        // query profile data
         queryUserProfile();
-        // 2. populate profile with queried profile data
+        // populate profile with queried profile data
         populateProfileElements();
-
     }
 
     private void setupOnClickListeners() {
@@ -83,15 +90,15 @@ public class ViewAUserProfileActivity extends AppCompatActivity {
                 Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
                 t.show();
                 Log.i(TAG, "Nominator profile clicked!");
-                if (nominator!=null){
-                    Intent i = new Intent(v.getContext(), ViewAUserProfileActivity.class);
+                if (nominator != null) {
+                    Intent i = new Intent(v.getContext(), ExploreUserActivity.class);
                     User toPass = new User(nominator);
                     i.putExtra("user", Parcels.wrap(toPass));
                     startActivity(i);
                 }
             }
         });
-        // TODO
+        // TODO navigate to an activity for viewing a larger image
         ivProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +110,7 @@ public class ViewAUserProfileActivity extends AppCompatActivity {
             }
         });
         // TODO
-        tvUsername.setOnClickListener(new View.OnClickListener() {
+        tvFollowersCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast t = Toast.makeText(v.getContext(), "Username clicked!", Toast.LENGTH_SHORT);

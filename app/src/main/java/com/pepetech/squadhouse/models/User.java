@@ -1,6 +1,7 @@
 package com.pepetech.squadhouse.models;
 
-import com.parse.Parse;
+import android.util.Log;
+
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -10,6 +11,7 @@ import org.parceler.Parcel;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -37,52 +39,52 @@ public class User {
     ////////////////////////////////////////////////////////////
     // Attributes
     ////////////////////////////////////////////////////////////
-    private String firstName, lastName, biography, phoneNumber;
-    private boolean isSeed;
-    private ParseUser nominator;
-    private List<String> following, followers;
     private ParseUser user;
+    public boolean isFollowed;
 
     ////////////////////////////////////////////////////////////
     // Constructors
     ////////////////////////////////////////////////////////////
     public User() {
-        this(null, "", "", null, false, new ArrayList<>(), new ArrayList<>());
+        isFollowed = false;
+//        this(null, "", "", null, false, new ArrayList<>(), new ArrayList<>());
     }
 
     public User(ParseUser user) {
-        this(user, "", "", null, false, new ArrayList<>(), new ArrayList<>());
-    }
-
-    public User(ParseUser user, String firstName, String lastName) {
         this.user = user;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        nominator = null;
-        isSeed = false;
-        following = new ArrayList<>();
-        followers = new ArrayList<>();
+        isFollowed = false;
+//        this(user, "", "", null, false, new ArrayList<>(), new ArrayList<>());
     }
 
-    public User(ParseUser user, String firstName, String lastName, ParseUser nominator, boolean isSeed, List<String> following, List<String> followers) {
-        this.user = user;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.nominator = nominator;
-        this.isSeed = isSeed;
-        this.followers = followers;
-        this.following = following;
-    }
+//    public User(ParseUser user, String firstName, String lastName) {
+//        this.user = user;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        nominator = null;
+//        isSeed = false;
+//        following = new ArrayList<>();
+//        followers = new ArrayList<>();
+//    }
+//
+//    public User(ParseUser user, String firstName, String lastName, ParseUser nominator, boolean isSeed, List<String> following, List<String> followers) {
+//        this.user = user;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.nominator = nominator;
+//        this.isSeed = isSeed;
+//        this.followers = followers;
+//        this.following = following;
+//    }
 
-    public void saveInBackground() {
-        user.put(KEY_FIRST_NAME, firstName);
-        user.put(KEY_LAST_NAME, lastName);
-//        user.put(KEY_NOMINATOR, nominator);
-        user.put(KEY_IS_SEED, isSeed);
-        user.put(KEY_FOLLOWING, following);
-        user.put(KEY_FOLLOWERS, followers);
-        user.saveInBackground();
-    }
+//    public void saveInBackground() {
+//        user.put(KEY_FIRST_NAME, firstName);
+//        user.put(KEY_LAST_NAME, lastName);
+////        user.put(KEY_NOMINATOR, nominator);
+//        user.put(KEY_IS_SEED, isSeed);
+//        user.put(KEY_FOLLOWING, following);
+//        user.put(KEY_FOLLOWERS, followers);
+//        user.saveInBackground();
+//    }
 
     ////////////////////////////////////////////////////////////
     // Getter Methods
@@ -185,10 +187,23 @@ public class User {
 //        return rv;
 //    }
 
-    public List<? extends Object> getFollowing() {
-        List<Object> rv = null;
+    public List<ParseObject> getFollowing() {
+        List<ParseObject> rv = null;
         try {
             rv = user.fetchIfNeeded().getList(KEY_FOLLOWING);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (rv == null)
+            return new ArrayList<ParseObject>();
+        return rv;
+    }
+
+    public List<ParseUser> getFollowers() {
+        List<ParseUser> rv = null;
+        try {
+            rv = user.fetchIfNeeded().getList(KEY_FOLLOWERS);
             return rv;
         } catch (ParseException e) {
             e.printStackTrace();
@@ -198,8 +213,8 @@ public class User {
         return rv;
     }
 
-    public List<? extends Object> getClubs() {
-        List<Object> rv = null;
+    public List<Club> getClubs() {
+        List<Club> rv = null;
         try {
             rv = user.fetchIfNeeded().getList(KEY_CLUBS);
             return rv;
@@ -207,15 +222,19 @@ public class User {
             e.printStackTrace();
         }
         if (rv == null)
-            return new ArrayList<ParseObject>();
+            return new ArrayList<Club>();
         return rv;
     }
 
-    public ArrayList<ParseObject> getInterests() {
-        ArrayList<ParseObject> rv;
-        rv = (ArrayList<ParseObject>) user.get(KEY_INTERESTS);
+    public ArrayList<Interest> getInterests() {
+        ArrayList<Interest> rv = null;
+        try {
+            rv = (ArrayList<Interest>) user.fetchIfNeeded().get(KEY_INTERESTS);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (rv == null)
-            return new ArrayList<ParseObject>();
+            return new ArrayList<Interest>();
         return rv;
     }
 
@@ -255,47 +274,67 @@ public class User {
     /////////////////////////////////////////////////////////////////////////////////////////////
     // Update Methods: automatically calls saveInBackground on ParseUser to effect updates
     /////////////////////////////////////////////////////////////////////////////////////////////
-    public boolean addFollowing(String userId) {
-        List<String> followings = new ArrayList<String>();
-        followings.add(userId);
-        user.addAllUnique("following", followings);
+    public boolean follow(ParseObject objectToFollow) {
+        user.addUnique(KEY_FOLLOWING, objectToFollow);
         user.saveInBackground();
         return true;
     }
 
-    public boolean removeFollowing(String userId) {
-        ArrayList<ParseObject> followings = (ArrayList<ParseObject>) getFollowing();
-        if (!followings.contains(userId)) {
-            return false;
-        }
-        ArrayList<String> toRemove = new ArrayList<>();
-        toRemove.add(userId);
+    public boolean unfollow(ParseObject objectToUnfollow) {
+        ArrayList<ParseObject> toRemove = new ArrayList<>();
+        toRemove.add(objectToUnfollow);
         user.removeAll(KEY_FOLLOWING, toRemove);
         user.saveInBackground();
         return true;
     }
 
+    /**
+     * TODO: broken
+     * Add the objectId of the follower to the club follower list
+     *
+     * @param follower
+     * @return
+     */
+    public boolean addFollower(ParseObject follower) {
+
+        user.add(KEY_FOLLOWERS, follower);
+        user.saveInBackground();
+        return true;
+    }
+
+    /**
+     * TODO: broken
+     * Remove the objectId of the follower to the club follower list
+     *
+     * @param follower
+     * @return
+     */
+    public boolean removeFollower(ParseObject follower) {
+        ArrayList<ParseObject> toRemove = new ArrayList<>();
+        toRemove.add(follower);
+        for (ParseObject u: toRemove)
+            Log.i(this.getClass().getName(), (String) u.get(User.KEY_FIRST_NAME));
+        user.removeAll(KEY_FOLLOWERS, toRemove);
+        user.saveInBackground();
+        return true;
+    }
+
     // TODO: testing needed
-    public boolean addInterest(ParseObject interest) {
-        ArrayList<ParseObject> interests = getInterests();
-        if (interests.contains(interest)) {
-            return false;
-        }
-        interests.add(interest);
-        user.put("interests", interests);
+    public boolean addInterest(Interest interest) {
+        user.addUnique(KEY_INTERESTS, interest);
         user.saveInBackground();
         return true;
     }
 
     // TODO: testing needed
     public boolean removeInterest(Interest interest) {
-        ArrayList<ParseObject> interests = getInterests();
+        ArrayList<Interest> interests = getInterests();
         if (!interests.contains(interest)) {
             return false;
         } else {
             interests.remove(interest);
         }
-        user.put("interests", interests);
+        user.put(KEY_INTERESTS, interests);
         user.saveInBackground();
         return true;
     }
