@@ -20,9 +20,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.adapters.HomeFeedAdapter;
+import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.Room;
+import com.pepetech.squadhouse.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +97,8 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         queryRooms();
+        // needed to refresh for any app user 
+        refreshMyFollowerCount();
     }
 
     /**
@@ -204,5 +209,27 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    private void refreshMyFollowerCount(){
+        Log.i(TAG, "refreshMyFollowerCount");
+        Log.i(TAG, "Target: " + ParseUser.getCurrentUser().getObjectId());
+        List<Follow> collection = new ArrayList<>();
+        ParseQuery<Follow> mainQuery = new ParseQuery<Follow>(Follow.class);
+        // fina all Users following targetUser
+        mainQuery.whereEqualTo(Follow.KEY_TO, ParseUser.getCurrentUser());
+//        mainQuery.whereNotEqualTo(Follow.KEY_FROM, targetUser.getParseUser());
+        mainQuery.findInBackground(new FindCallback<Follow>() {
+            @Override
+            public void done(List<Follow> follows, ParseException e) {
+                Log.i(TAG, String.valueOf(follows.size()) + " followings");
+                if (e == null) {
+                    // for each follower check if the follower is followed by the current user
+                    collection.addAll(follows);
+                    ParseUser.getCurrentUser().put(User.KEY_FOLLOWER_COUNT, collection.size());
+                    ParseUser.getCurrentUser().saveInBackground();
+                } else {
+                }
+            }
+        });
+    }
 
 }
