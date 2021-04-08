@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.adapters;
+package com.pepetech.squadhouse.activities.Home.adapters;
 
 //import androidx.recyclerview.widget.RecyclerView;
 

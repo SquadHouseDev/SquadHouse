@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities;
+package com.pepetech.squadhouse.activities.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.activities.Home.HomeActivity;
 import com.pepetech.squadhouse.models.User;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("SIGN UP");
         setContentView(R.layout.activity_sign_up);
         
         ////////////////////////////////////////////////////////////

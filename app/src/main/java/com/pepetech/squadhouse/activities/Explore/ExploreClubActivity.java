@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities;
+package com.pepetech.squadhouse.activities.Explore;
 
 import android.os.Bundle;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities;
+package com.pepetech.squadhouse.activities.MyProfile;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

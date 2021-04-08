@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.adapters;
+package com.pepetech.squadhouse.activities.Explore.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities;
+package com.pepetech.squadhouse.activities.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.activities.Home.HomeActivity;
 
 public class LoginActivity extends AppCompatActivity {
     public static final String TAG = "LoginActivity";
@@ -26,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setTitle("LOGIN");
         // Navigate to home feed given cached credentials
         if (ParseUser.getCurrentUser() != null) {
             goToHomeActivity();

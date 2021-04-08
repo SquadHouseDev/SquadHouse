@@ -16,25 +16,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SquadHouse"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activities.Explore.FollowersActivity"></activity>
         <activity
-            android:name=".activities.ExploreUserActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".activities.ExploreActivity"
+            android:name=".activities.Explore.ExploreUserActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.SignUpActivity"
+            android:name=".activities.Explore.ExploreActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.ExploreClubActivity"
+            android:name=".activities.Login.SignUpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.ViewMyProfileActivity"
+            android:name=".activities.Explore.ExploreClubActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name=".activities.MyProfile.ViewMyProfileActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.LoginActivity">
+        <activity
+            android:name=".activities.MyProfile.SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.Login.LoginActivity">
 
             <!-- Set default startup screen -->
             <intent-filter>
@@ -43,12 +44,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.HomeActivity" />
-        <activity android:name=".activities.WelcomeActivity" />
-        <activity android:name=".activities.UpdateFullNameActivity"/>"
-        <activity android:name = ".activities.UpdateUsernameActivity"/>"
-        <activity android:name = ".activities.UpdateProfileImageActivity"/>
-        <activity android:name = ".activities.BottomSheetDialogActivity"/>
+        <activity android:name=".activities.Home.HomeActivity" />
+        <activity android:name=".activities.Login.WelcomeActivity" />
+        <activity android:name=".activities.MyProfile.UpdateFullNameActivity" />
+        <activity android:name=".activities.MyProfile.UpdateUsernameActivity" />
+        <activity android:name=".activities.MyProfile.UpdateProfileImageActivity" />
     </application>
-    
+
 </manifest>

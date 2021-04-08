@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities;
+package com.pepetech.squadhouse.activities.MyProfile;
 
 import android.os.Bundle;
 
@@ -44,8 +44,8 @@ public class SettingsActivity extends AppCompatActivity {
         btnInterests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), SettingsInterestActivity.class);
-                startActivity(i);
+//                Intent i = new Intent(v.getContext(), SettingsInterestActivity.class);
+//                startActivity(i);
             }
         });
     }
