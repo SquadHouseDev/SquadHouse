@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SquadHouse"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.ViewFollowersActivity"></activity>
+        <activity android:name=".activities.FollowersActivity"></activity>
         <activity
             android:name=".activities.ExploreUserActivity"
             android:screenOrientation="portrait" />
