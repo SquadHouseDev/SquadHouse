@@ -16,9 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SquadHouse"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activities.ViewFollowersActivity"></activity>
         <activity
             android:name=".activities.ExploreUserActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ExploreActivity"
             android:screenOrientation="portrait" />
@@ -45,10 +46,10 @@
         </activity>
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.WelcomeActivity" />
-        <activity android:name=".activities.UpdateFullNameActivity"/>"
-        <activity android:name = ".activities.UpdateUsernameActivity"/>"
-        <activity android:name = ".activities.UpdateProfileImageActivity"/>
-        <activity android:name = ".activities.BottomSheetDialogActivity"/>
+        <activity android:name=".activities.UpdateFullNameActivity" />
+        <activity android:name=".activities.UpdateUsernameActivity" />
+        <activity android:name=".activities.UpdateProfileImageActivity" />
+        <activity android:name=".activities.BottomSheetDialogActivity" />
     </application>
-    
+
 </manifest>
