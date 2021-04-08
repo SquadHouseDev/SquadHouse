@@ -76,7 +76,7 @@ public class ExploreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explore);
-
+        setTitle("EXPLORE");
         ////////////////////////////////////////////////////////////
         // Setup view elements
         ////////////////////////////////////////////////////////////
@@ -105,7 +105,8 @@ public class ExploreActivity extends AppCompatActivity {
 
         // 2 adapters to toggle between with the toggle switch
         exploreClubAdapter = new ExploreClubAdapter(this, allClubs, currentUser);
-        exploreUserAdapter = new ExploreUserAdapter(this, allUsers, currentUser);
+        exploreUserAdapter = new ExploreUserAdapter(this, allUsers);
+//                , currentUser);
 
         // configure layout managers
         rvElementsFound.setLayoutManager(new LinearLayoutManager(this));
