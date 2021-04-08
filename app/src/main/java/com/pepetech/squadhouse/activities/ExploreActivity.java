@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -32,6 +33,7 @@ import com.pepetech.squadhouse.models.InterestGroup;
 import com.pepetech.squadhouse.models.User;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -43,6 +45,13 @@ import java.util.List;
  * configuration button applies a switch between the ClubAdapter and
  * the UserAdapter as well as the method of querying for data
  * -- both used in populating the RecyclerView.
+ * <p>
+ * ExploreActivity
+ * ==> ExploreClub
+ * ==> ExploreUser
+ * =================> clFollowers ==> FollowersActivity <== FollowerAdapter
+ * =================> clFollowing
+ * =================>
  */
 public class ExploreActivity extends AppCompatActivity {
     public static final String TAG = "ExploreActivity";
@@ -403,9 +412,42 @@ public class ExploreActivity extends AppCompatActivity {
                             Log.i(TAG, c.getFollowTo().getObjectId());
                         }
                     }
+
                 } else {
                 }
                 exploreUserAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    /**
+     * Code for usage in the view User profile
+     * Query for all ParseObjects that are followers of the input current User
+     * Usage of this function requires central collection variable
+     *
+     * @param targetUser User of interest when querying for followers
+     * @param adapter    Adapter to be notified of data collection changes
+     */
+    void queryFollowers(User targetUser, BaseAdapter adapter, Collection<ParseUser> collection) {
+        Log.i(TAG, "queryFollowers");
+        collection.clear();
+        ParseQuery<Follow> mainQuery = new ParseQuery<Follow>(Follow.class);
+        mainQuery.whereEqualTo(Follow.KEY_TO, targetUser.getParseUser().getObjectId());
+        mainQuery.findInBackground(new FindCallback<Follow>() {
+            @Override
+            public void done(List<Follow> objects, ParseException e) {
+                Log.i(TAG, String.valueOf(objects.size()) + " followings");
+                if (e == null) {
+                    // iterate over all Follow entries
+                    for (Follow c : objects) {
+                        // compare
+                        Log.i(TAG, c.getFollowTo().getObjectId());
+                        collection.add((ParseUser) c.getFollowFrom());
+                    }
+                } else {
+                }
+                // modify adapter to be used in
+                adapter.notifyDataSetChanged();
             }
         });
     }
