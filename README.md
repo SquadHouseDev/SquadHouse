@@ -39,13 +39,15 @@
 * [ ] User can see currently open audio rooms of people they follow.
 * [ ] User can see audio rooms of other topics they might possibly be interested in.
 * [ ] User can see other people currently in the audio room they are with
-* [x] User can see their own profile 
-* [x] User can see other people's profiles (from search bar) 
+* [x] User can see their own profile
+* [x] User can see other people's profiles (from search bar)
 * [ ] User can edit their own interests
 
 **Optional Nice-to-have Stories**
 * [ ] User can connect their account to other social medias: Twitter, Instagram, etc.
-* [ ] User can search up topics/interests.
+* [x] User can search up clubs
+* [x] User can search up users
+* [ ] User can explore active rooms categorized by interest labels
 * [ ] User can endorse/verify new users.
 * [ ] User can deactivate their account.
 * [ ] User can create a new event/schedule it
@@ -214,4 +216,3 @@
 
 -Complete unfollow feature  
 <img src="/docs/demo/v1.0.0-completed-unfollow-feature.gif" width=200>
-
