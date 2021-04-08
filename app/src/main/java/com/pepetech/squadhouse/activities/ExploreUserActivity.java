@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.parse.FindCallback;
@@ -51,7 +52,7 @@ public class ExploreUserActivity extends AppCompatActivity {
     ImageButton btnSettings;
     ParseUser nominator;
     List<ParseObject> following;
-    List<ParseObject> followers;
+    List<User> followers;
     ConstraintLayout clFollowing, clFollowers;
 
     @Override
@@ -84,6 +85,7 @@ public class ExploreUserActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////
         // Setting up selected User's profile
         ////////////////////////////////////////////////////////////
+        followers = new ArrayList<>();
         // unwrap passed User
         userSelected = Parcels.unwrap(getIntent().getParcelableExtra("user"));
         parseUser = ParseUser.getCurrentUser();
@@ -117,11 +119,12 @@ public class ExploreUserActivity extends AppCompatActivity {
                 Toast t = Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT);
                 t.show();
                 Log.i(TAG, "Followers clicked!");
-//                queryFollowers(currentUser, );
-//                Intent i = new Intent(v.getContext(), ExploreUserActivity.class);
-//                User toPass = new User(nominator);
-//                i.putExtra("user", Parcels.wrap(toPass));
-//                startActivity(i);
+                // setup for routing to the next activity
+                Intent i = new Intent(v.getContext(), FollowersActivity.class);
+                // wrap and pass the user that was selected
+                User toPass = userSelected;
+                i.putExtra("user", Parcels.wrap(toPass));
+                startActivity(i);
             }
         });
         // TODO navigate to an activity for viewing people followed by the user
@@ -175,6 +178,7 @@ public class ExploreUserActivity extends AppCompatActivity {
     }
 
     private void populateProfileElements() {
+        userSelected = Parcels.unwrap(getIntent().getParcelableExtra("user"));
         Log.i(TAG, "Populating profile elements");
         // load user's profile picture
         ParseFile image = userSelected.getParseUser().getParseFile(User.KEY_IMAGE);
@@ -190,7 +194,7 @@ public class ExploreUserActivity extends AppCompatActivity {
         // load following and followers count
 //        tvFollowersCount.setText(String.valueOf(followers.size()));
 //        tvFollowersCount.setText(String.valueOf(followers.size()));
-        tvFollowersCount.setText(String.valueOf(6996)); // DEBUG
+        tvFollowersCount.setText(userSelected.getFollowerCount()); // DEBUG
         tvFollowingCount.setText(String.valueOf(6996)); // DEBUG
         // load nominator's profile picture
 //        boolean isSeed = user.isSeed();
@@ -240,7 +244,7 @@ public class ExploreUserActivity extends AppCompatActivity {
      * @param targetUser User of interest when querying for followers
      * @param adapter    Adapter to be notified of data collection changes
      */
-    void queryFollowers(User targetUser, BaseAdapter adapter, Collection<ParseUser> collection) {
+    void queryFollowers(User targetUser, RecyclerView.Adapter adapter, List<ParseUser> collection) {
         Log.i(TAG, "queryFollowers");
         collection.clear();
         ParseQuery<Follow> mainQuery = new ParseQuery<Follow>(Follow.class);
