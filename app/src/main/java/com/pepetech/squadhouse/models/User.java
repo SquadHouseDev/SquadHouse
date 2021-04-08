@@ -97,6 +97,17 @@ public class User {
         return user;
     }
 
+    public int getFollowerCount() {
+        int rv = 0;
+        try {
+            rv = user.fetchIfNeeded().getInt(KEY_FOLLOWER_COUNT);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return rv;
+    }
+
     public ParseFile getImage() {
         ParseFile rv = null;
         try {
