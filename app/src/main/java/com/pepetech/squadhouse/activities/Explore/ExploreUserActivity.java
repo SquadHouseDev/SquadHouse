@@ -1,10 +1,9 @@
-package com.pepetech.squadhouse.activities;
+package com.pepetech.squadhouse.activities.Explore;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -29,7 +28,6 @@ import com.pepetech.squadhouse.models.User;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**

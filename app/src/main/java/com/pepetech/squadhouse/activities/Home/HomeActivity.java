@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities;
+package com.pepetech.squadhouse.activities.Home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +22,9 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
-import com.pepetech.squadhouse.adapters.HomeFeedAdapter;
+import com.pepetech.squadhouse.activities.Explore.ExploreActivity;
+import com.pepetech.squadhouse.activities.Home.adapters.HomeFeedAdapter;
+import com.pepetech.squadhouse.activities.MyProfile.ViewMyProfileActivity;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.Room;
 import com.pepetech.squadhouse.models.User;

@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities;
+package com.pepetech.squadhouse.activities.Login;
 
 import android.os.Bundle;
 

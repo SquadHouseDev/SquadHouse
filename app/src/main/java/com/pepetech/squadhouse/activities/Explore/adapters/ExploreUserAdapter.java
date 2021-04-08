@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.adapters;
+package com.pepetech.squadhouse.activities.Explore.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +20,7 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
-import com.pepetech.squadhouse.activities.ExploreUserActivity;
+import com.pepetech.squadhouse.activities.Explore.ExploreUserActivity;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.User;
 

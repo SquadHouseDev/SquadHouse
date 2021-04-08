@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities;
+package com.pepetech.squadhouse.activities.MyProfile;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +25,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.activities.Explore.ExploreUserActivity;
+import com.pepetech.squadhouse.activities.Login.LoginActivity;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.User;
 

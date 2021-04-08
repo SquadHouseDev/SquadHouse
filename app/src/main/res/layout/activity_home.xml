@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/eggshell"
-    tools:context=".activities.HomeActivity">
+    tools:context=".activities.Home.HomeActivity">
 
     <Button
         android:id="@+id/btnCreateRoom"
