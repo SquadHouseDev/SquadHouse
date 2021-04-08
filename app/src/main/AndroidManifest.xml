@@ -49,7 +49,6 @@
         <activity android:name=".activities.MyProfile.UpdateFullNameActivity" />
         <activity android:name=".activities.MyProfile.UpdateUsernameActivity" />
         <activity android:name=".activities.MyProfile.UpdateProfileImageActivity" />
-        <activity android:name=".activities.MyProfile.BottomSheetDialogActivity" />
     </application>
 
 </manifest>
