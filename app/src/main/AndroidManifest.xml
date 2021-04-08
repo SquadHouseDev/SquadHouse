@@ -50,5 +50,4 @@
         <activity android:name = ".activities.UpdateProfileImageActivity"/>
         <activity android:name = ".activities.BottomSheetDialogActivity"/>
     </application>
-
 </manifest>
