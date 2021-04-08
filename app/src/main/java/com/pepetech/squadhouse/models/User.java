@@ -34,6 +34,7 @@ public class User {
     public static final String KEY_PHONE_NUMBER = "phoneNumber";
     public static final String KEY_NOMINATOR = "nominator";
     public static final String KEY_IS_SEED = "isSeed";
+    public static final String KEY_USER_NAME = "username";
 
     ////////////////////////////////////////////////////////////
     // Attributes
@@ -137,8 +138,10 @@ public class User {
             e.printStackTrace();
         }
         return rv;
-
     }
+//    public String getUserName() { return (String) user.get(KEY_USER_NAME);}
+
+//    public boolean isSeed() { return (boolean) user.getBoolean(KEY_IS_SEED); }
 
     public String getPhoneNumber() {
         String rv = null;
@@ -266,6 +269,8 @@ public class User {
         user.put(KEY_PHONE_NUMBER, phoneNumber);
     }
 
+    private void setUserName(String username) { user.put(KEY_USER_NAME, username);}
+
     /////////////////////////////////////////////////////////////////////////////////////////////
     // Update Methods: automatically calls saveInBackground on ParseUser to effect updates
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -363,8 +368,9 @@ public class User {
         setPhoneNumber(phoneNumber);
         user.saveInBackground();
     }
-
-    public void saveInBackground() {
+    public void updateUserName(String username)
+    {
+        setUserName(username);
         user.saveInBackground();
     }
 
