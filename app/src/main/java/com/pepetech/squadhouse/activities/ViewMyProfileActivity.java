@@ -18,11 +18,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.bumptech.glide.Glide;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.User;
 
 import org.parceler.Parcels;
@@ -55,6 +58,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("PROFILE");
         setContentView(R.layout.activity_view_my_profile);
         ////////////////////////////////////////////////////////////
         // Setup view elements
@@ -80,6 +84,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////
         // setting up user profile
         ////////////////////////////////////////////////////////////
+        refreshMyFollowerCount();
         parseUser = ParseUser.getCurrentUser();
         user = new User(parseUser);
         // 1. query profile data
@@ -273,6 +278,29 @@ public class ViewMyProfileActivity extends AppCompatActivity {
             Log.i(TAG, "Followers: " + followers.size());
         }
         nominator = user.getNominator();
+    }
+
+    private void refreshMyFollowerCount(){
+        Log.i(TAG, "refreshMyFollowerCount");
+        Log.i(TAG, "Target: " + ParseUser.getCurrentUser().getObjectId());
+        List<Follow> collection = new ArrayList<>();
+        ParseQuery<Follow> mainQuery = new ParseQuery<Follow>(Follow.class);
+        // fina all Users following targetUser
+        mainQuery.whereEqualTo(Follow.KEY_TO, ParseUser.getCurrentUser());
+//        mainQuery.whereNotEqualTo(Follow.KEY_FROM, targetUser.getParseUser());
+        mainQuery.findInBackground(new FindCallback<Follow>() {
+            @Override
+            public void done(List<Follow> follows, ParseException e) {
+                Log.i(TAG, String.valueOf(follows.size()) + " followings");
+                if (e == null) {
+                    // for each follower check if the follower is followed by the current user
+                    collection.addAll(follows);
+                    ParseUser.getCurrentUser().put(User.KEY_FOLLOWER_COUNT, collection.size());
+                    ParseUser.getCurrentUser().saveInBackground();
+                } else {
+                }
+            }
+        });
     }
 
     private void signoutUser() {
