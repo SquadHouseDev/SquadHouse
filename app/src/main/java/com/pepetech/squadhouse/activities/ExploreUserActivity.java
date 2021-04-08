@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -11,18 +12,23 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.User;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -46,6 +52,7 @@ public class ExploreUserActivity extends AppCompatActivity {
     ParseUser nominator;
     List<ParseObject> following;
     List<ParseObject> followers;
+    ConstraintLayout clFollowing, clFollowers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +73,10 @@ public class ExploreUserActivity extends AppCompatActivity {
         tvBiography = findViewById(R.id.tvBiography);
         tvUserJoinDate = findViewById(R.id.tvUserJoinDate);
         tvNominatorName = findViewById(R.id.tvNominatorName);
+        // constraint layouts
+        clFollowers = findViewById(R.id.clFollowers);
+        clFollowing = findViewById(R.id.clFollowing);
+
         // buttons
         btnFollow = findViewById(R.id.btnFollow);
         setupOnClickListeners();
@@ -98,6 +109,34 @@ public class ExploreUserActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // TODO navigate to an activity for viewing list of followers
+        clFollowers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT);
+                t.show();
+                Log.i(TAG, "Followers clicked!");
+//                queryFollowers(currentUser, );
+//                Intent i = new Intent(v.getContext(), ExploreUserActivity.class);
+//                User toPass = new User(nominator);
+//                i.putExtra("user", Parcels.wrap(toPass));
+//                startActivity(i);
+            }
+        });
+        // TODO navigate to an activity for viewing people followed by the user
+        clFollowing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT);
+                t.show();
+                Log.i(TAG, "Following clicked!");
+//                Intent i = new Intent(v.getContext(), ExploreUserActivity.class);
+//                User toPass = new User(nominator);
+//                i.putExtra("user", Parcels.wrap(toPass));
+//                startActivity(i);
+            }
+        });
         // TODO navigate to an activity for viewing a larger image
         ivProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,17 +144,6 @@ public class ExploreUserActivity extends AppCompatActivity {
                 Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
                 t.show();
                 Log.i(TAG, "User profile clicked!");
-//                ParseObject nominator = user.getNominator()
-//                goToProfileActivity();
-            }
-        });
-        // TODO
-        tvFollowersCount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Username clicked!", Toast.LENGTH_SHORT);
-                t.show();
-                Log.i(TAG, "Username clicked!");
 //                ParseObject nominator = user.getNominator()
 //                goToProfileActivity();
             }
@@ -160,8 +188,10 @@ public class ExploreUserActivity extends AppCompatActivity {
         tvBiography.setText(userSelected.getParseUser().getString(User.KEY_BIOGRAPHY));
         tvUsername.setText("@" + userSelected.getParseUser().getUsername());
         // load following and followers count
-        tvFollowersCount.setText(String.valueOf(followers.size()));
-        tvFollowingCount.setText(String.valueOf(following.size()));
+//        tvFollowersCount.setText(String.valueOf(followers.size()));
+//        tvFollowersCount.setText(String.valueOf(followers.size()));
+        tvFollowersCount.setText(String.valueOf(6996)); // DEBUG
+        tvFollowingCount.setText(String.valueOf(6996)); // DEBUG
         // load nominator's profile picture
 //        boolean isSeed = user.isSeed();
         if (!userSelected.isSeed()) {
@@ -175,17 +205,15 @@ public class ExploreUserActivity extends AppCompatActivity {
         parseUser = ParseUser.getCurrentUser();
         Log.i(TAG, "User object_id: " + userSelected.getParseUser().getObjectId());
         following = userSelected.getParseUser().getList(User.KEY_FOLLOWING);
-        followers = userSelected.getParseUser().getList(User.KEY_FOLLOWERS);
+//        followers = userSelected.getParseUser().getList(User.KEY_FOLLOWERS);
+        // TODO: refactor to use a followerCount
+        // TODO: navigate to a new activity that utilizes a recycler view for
+
         // empty case
         if (following == null) {
             following = new ArrayList<>();
         } else {
             Log.i(TAG, "Following size: " + following.size());
-        }
-        if (followers == null) {
-            followers = new ArrayList<>();
-        } else {
-            Log.i(TAG, "Followers: " + followers.size());
         }
         nominator = userSelected.getParseUser().getParseUser("nominator");
     }
@@ -202,6 +230,38 @@ public class ExploreUserActivity extends AppCompatActivity {
                     .load(image.getUrl())
                     .circleCrop()
                     .into(ivProfileNominator);
+    }
+
+    /**
+     * Code for usage in the view User profile
+     * Query for all ParseObjects that are followers of the input current User
+     * Usage of this function requires central collection variable
+     *
+     * @param targetUser User of interest when querying for followers
+     * @param adapter    Adapter to be notified of data collection changes
+     */
+    void queryFollowers(User targetUser, BaseAdapter adapter, Collection<ParseUser> collection) {
+        Log.i(TAG, "queryFollowers");
+        collection.clear();
+        ParseQuery<Follow> mainQuery = new ParseQuery<Follow>(Follow.class);
+        mainQuery.whereEqualTo(Follow.KEY_TO, targetUser.getParseUser().getObjectId());
+        mainQuery.findInBackground(new FindCallback<Follow>() {
+            @Override
+            public void done(List<Follow> objects, ParseException e) {
+                Log.i(TAG, String.valueOf(objects.size()) + " followings");
+                if (e == null) {
+                    // iterate over all Follow entries
+                    for (Follow c : objects) {
+                        // compare
+                        Log.i(TAG, c.getFollowTo().getObjectId());
+                        collection.add((ParseUser) c.getFollowFrom());
+                    }
+                } else {
+                }
+                // modify adapter to be used in
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
 
