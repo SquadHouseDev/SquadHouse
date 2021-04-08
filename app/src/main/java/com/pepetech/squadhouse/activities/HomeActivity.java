@@ -97,7 +97,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
         queryRooms();
-        // needed to refresh for any app user 
+        // needed to refresh for any app user
         refreshMyFollowerCount();
     }
 
@@ -209,7 +209,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private void refreshMyFollowerCount(){
+    private void refreshMyFollowerCount() {
         Log.i(TAG, "refreshMyFollowerCount");
         Log.i(TAG, "Target: " + ParseUser.getCurrentUser().getObjectId());
         List<Follow> collection = new ArrayList<>();
