@@ -16,7 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SquadHouse"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.Explore.FollowersActivity"></activity>
+        <activity
+            android:name=".activities.Settings.InterestActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activities.Explore.FollowersActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.Explore.ExploreUserActivity"
             android:screenOrientation="portrait" />
@@ -33,7 +38,7 @@
             android:name=".activities.MyProfile.ViewMyProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.MyProfile.SettingsActivity"
+            android:name=".activities.Settings.SettingsActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activities.Login.LoginActivity">
 
@@ -44,11 +49,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.Home.HomeActivity" />
-        <activity android:name=".activities.Login.WelcomeActivity" />
-        <activity android:name=".activities.MyProfile.UpdateFullNameActivity" />
-        <activity android:name=".activities.MyProfile.UpdateUsernameActivity" />
-        <activity android:name=".activities.MyProfile.UpdateProfileImageActivity" />
+        <activity
+            android:name=".activities.Home.HomeActivity"
+            android:screenOrientation="portrait" />
+        />
+        <activity
+            android:name=".activities.Login.WelcomeActivity"
+            android:screenOrientation="portrait" />
+        />
+        <activity
+            android:name=".activities.MyProfile.UpdateFullNameActivity"
+            android:screenOrientation="portrait" />
+        />
+        <activity
+            android:name=".activities.MyProfile.UpdateUsernameActivity"
+            android:screenOrientation="portrait" />
+        />
+        <activity
+            android:name=".activities.MyProfile.UpdateProfileImageActivity"
+            android:screenOrientation="portrait" />
+        />
     </application>
 
 </manifest>

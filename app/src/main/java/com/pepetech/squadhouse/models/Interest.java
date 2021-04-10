@@ -75,7 +75,7 @@ public class Interest extends ParseObject {
      *
      * @return the Interest archetypeEmoji
      */
-    private String getEmoji() {
+    public String getEmoji() {
         try {
             String rv = fetchIfNeeded().getString(KEY_EMOJI);
             return rv;

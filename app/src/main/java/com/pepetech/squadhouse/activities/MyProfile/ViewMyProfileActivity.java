@@ -27,6 +27,7 @@ import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.Explore.ExploreUserActivity;
 import com.pepetech.squadhouse.activities.Login.LoginActivity;
+import com.pepetech.squadhouse.activities.Settings.SettingsActivity;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.User;
 
