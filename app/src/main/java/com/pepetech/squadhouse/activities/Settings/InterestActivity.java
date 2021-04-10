@@ -21,6 +21,14 @@ import java.util.List;
 import java.util.Map;
 
 
+/**
+ * This is the page routed to upon selection of Interest button
+ * on the Settings page. This activity utilizes 2 RecyclerViews to
+ * implement the one page scrollable User interface. The outer adapter is used
+ * for handling the rows of interests grouped by their archetype displayed
+ * in a vertical linear layout. The inner adapter uses a grid layout with
+ * rows dynamically configured.
+ */
 public class InterestActivity extends AppCompatActivity {
     public static final String TAG = "InterestActivity";
     OuterInterestAdapter outerAdapter;
