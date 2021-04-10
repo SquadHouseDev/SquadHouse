@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/eggshell"
-    tools:context=".activities.ExploreClubActivity">
+    tools:context=".activities.Explore.ExploreClubActivity">
 
     <LinearLayout
         android:id="@+id/llExploreClub"
