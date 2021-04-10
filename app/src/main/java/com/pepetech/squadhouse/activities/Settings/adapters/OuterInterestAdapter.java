@@ -18,6 +18,12 @@ import com.pepetech.squadhouse.models.Interest;
 
 import java.util.List;
 
+/**
+ * The Outer Interest Adapter takes in an input 2D List for displaying interests.
+ * It handles binding of the Inner Interest Adapter to the associated List of Interest.
+ * The cell_inner_rv_interest is used as the container for inner elements forming the Interest
+ * archetype.
+ */
 public class OuterInterestAdapter extends RecyclerView.Adapter<OuterInterestAdapter.ViewHolder> {
     public static final String TAG = "OuterInterestAdapter";
     private Context context;
@@ -43,7 +49,6 @@ public class OuterInterestAdapter extends RecyclerView.Adapter<OuterInterestAdap
         holder.bind(interestsByArchetype);
         // Init inner adapter
         InnerInterestAdapter innerInterestAdapter = new InnerInterestAdapter(context, interestsByArchetype);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         int ROWS = 0;
         Log.i(TAG, interestsByArchetype.get(0).getArchetype() + " " + String.valueOf((interestsByArchetype.size() / 5)));
         if (interestsByArchetype.size() / 3 > 3) {
@@ -56,7 +61,6 @@ public class OuterInterestAdapter extends RecyclerView.Adapter<OuterInterestAdap
         // Init inner adapter layout
         GridLayoutManager layoutManager = new GridLayoutManager(
                 context, ROWS, GridLayoutManager.HORIZONTAL, false);
-//        layoutManager.setB
         // Assign inner recycler layout
         holder.rvInnerInterest.setLayoutManager(layoutManager);
         // Assian inner recycler adapater
@@ -74,15 +78,12 @@ public class OuterInterestAdapter extends RecyclerView.Adapter<OuterInterestAdap
         private TextView tvInterestArchetype;
         private RecyclerView rvInnerInterest;
 
-        //        private TextView tvDescription;
         // TODO: add swipe right on cell to reveal a button to hide the recommended active room
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvInterestArchetype = itemView.findViewById(R.id.tvInterestArchetype);
             rvInnerInterest = itemView.findViewById(R.id.rvInnerInterest);
-//            rvInnerInterest.setLayoutManager(new GridLayoutManager(itemView.getContext(), 2) );
-            rvInnerInterest.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
-//            tvParticipants = itemView.findViewById(R.id.tvParticipants);
+//            rvInnerInterest.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
         }
 
         public void bind(List<Interest> interestsByArchetype) {
