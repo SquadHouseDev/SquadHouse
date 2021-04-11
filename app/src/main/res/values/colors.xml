@@ -10,6 +10,7 @@
     <color name="grey">#808080</color>
     <color name="cream">#FFFDD0</color>
     <color name="eggshell">#F0EAD6</color>
+    <color name="darker_eggshell">#ebe3c8 </color>
     <color name="bone">#E3DAC9</color>
     <color name="antique_white">#FAEBD7</color>
     <color name="parchment">#F1E9D2</color>
