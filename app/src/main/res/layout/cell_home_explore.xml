@@ -4,34 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/room_border"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:background="@color/eggshell"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/tvCallToAction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginStart="5dp"
+        android:gravity="center"
+        android:maxLines="2"
         android:padding="8dp"
-        android:text="EXPLORE NEW ROOMS!!!!"
-        tools:text="Pepe Tech" />
+        android:text="SquadHouse is full of interesting people!\nTry following at least 25."
+        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tvRoomName"
+    <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:padding="8dp"
-        android:text="DANK MEMES PAWG"
-        tools:text="Dank Memes Pawg" />
+        android:layout_height="wrap_content">
+
+    </ImageView>
+
 
     <TextView
         android:id="@+id/tvSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginStart="5dp"
         android:padding="8dp"
-        android:text="HOSTED BY FILTHY FRANK"
-        tools:text="Filthy Frank (Joji)" />
+        android:text="Find more people to follow" />
 
 </LinearLayout>

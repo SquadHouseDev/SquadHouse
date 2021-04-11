@@ -7,9 +7,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pepetech.squadhouse.R;
@@ -51,14 +53,16 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
         private TextView tvClubName;
         private TextView tvRoomName;
         private TextView tvParticipants;
+        private LinearLayout llActiveRoom;
 
-//        private TextView tvDescription;
+        //        private TextView tvDescription;
         // TODO: add swipe right on cell to reveal a button to hide the recommended active room
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvClubName = itemView.findViewById(R.id.tvClubName);
             tvRoomName = itemView.findViewById(R.id.tvRoomName);
             tvParticipants = itemView.findViewById(R.id.tvParticipants);
+            llActiveRoom = itemView.findViewById(R.id.llActiveRoom);
         }
 
         public void bind(Room room) {
@@ -69,6 +73,13 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
             String newText = tvParticipants.getText() + " " + getEmojiByUnicode(0x1F4AC);
             tvParticipants.setText(newText); // DEBUG with emoji in unicode format
             Log.i(TAG, newText);
+            llActiveRoom.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i(TAG, "Room: " + tvClubName.getText() + " " + tvRoomName.getText() + " clicked!");
+                    // TODO: add routing of room data here for joining the conference
+                }
+            });
         }
     }
 
@@ -76,7 +87,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
      * @param unicode
      * @return U+x1F4AC => 0x1F4AC
      */
-    public  String getEmojiByUnicode(int unicode) {
+    public String getEmojiByUnicode(int unicode) {
         return new String(Character.toChars(unicode));
     }
 

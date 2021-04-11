@@ -17,7 +17,7 @@ import java.util.List;
 
 public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public static final String TAG = "heterogeneousAdapter";
+    public static final String TAG = "HomeMultiViewAdapter";
     private Context context;
     private List<Object> rooms;
 
