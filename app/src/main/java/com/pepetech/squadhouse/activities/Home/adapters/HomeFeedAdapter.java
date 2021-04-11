@@ -1,7 +1,5 @@
 package com.pepetech.squadhouse.activities.Home.adapters;
 
-//import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pepetech.squadhouse.R;
@@ -19,6 +17,9 @@ import com.pepetech.squadhouse.models.Room;
 
 import java.util.List;
 
+/**
+ * Deprecated adapter class refer to HomeMultiViewAdapter
+ */
 public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHolder> {
     public static final String TAG = "HomeFeedAdapter";
 
@@ -70,6 +71,7 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
             tvClubName.setText(room.getClubName());
             tvRoomName.setText(room.getTitle());
             String emojiStr = getEmojiByUnicode(0x1F4AC);
+
             String newText = tvParticipants.getText() + " " + getEmojiByUnicode(0x1F4AC);
             tvParticipants.setText(newText); // DEBUG with emoji in unicode format
             Log.i(TAG, newText);
@@ -78,6 +80,8 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
                 public void onClick(View v) {
                     Log.i(TAG, "Room: " + tvClubName.getText() + " " + tvRoomName.getText() + " clicked!");
                     // TODO: add routing of room data here for joining the conference
+                    Toast.makeText(context, "Room: " + tvClubName.getText() + " " + tvRoomName.getText() + " clicked!",
+                            Toast.LENGTH_SHORT).show();
                 }
             });
         }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,32 +20,55 @@ import com.pepetech.squadhouse.models.Room;
 
 import java.util.List;
 
+/**
+ * Adapter for handling different types of views existing in one recycler view.
+ * Addition of new views types requiring adding to the following methods:
+ * <ul>
+ *     <li>onCreateViewHolder</li>
+ *     <li>onBindViewHolder</li>
+ *     <li>getItemViewType</li>
+ * </ul>
+ * <p>
+ * Declaration and definition of a new View Holder Class and View Holder Configuration
+ * method is necessary to extend.
+ */
 public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
     public static final String TAG = "HomeMultiViewAdapter";
     private Context context;
-    private List<Object> rooms;
+    private List<Object> objectList;
 
+    // View Holder Item Type Mapping
     private final int ACTIVE = 0, FUTURE = 1, SEARCH = 2;
 
-    public HomeMultiViewAdapter(Context context, List<Object> rooms) {
-        this.rooms = rooms;
+    /**
+     * @param context
+     * @param objectList collection of items ordered by view usage
+     */
+    public HomeMultiViewAdapter(Context context, List<Object> objectList) {
+        this.objectList = objectList;
         this.context = context;
     }
 
     //Returns the view type of the item at position for the purposes of view recycling.
     @Override
     public int getItemViewType(int position) {
-        if (rooms.get(position) instanceof String) {
+        if (objectList.get(position) instanceof String) {
             return FUTURE;
-        } else if (rooms.get(position) instanceof Room) {
+        } else if (objectList.get(position) instanceof Room) {
             return ACTIVE;
-        } else if (rooms.get(position) instanceof Integer) {
+        } else if (objectList.get(position) instanceof Integer) {
             return SEARCH;
         }
         return -1;
     }
 
+    /**
+     * Method for mapping different view holders and inflating the associated layout
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -81,19 +105,18 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
     class ViewHolderActive extends RecyclerView.ViewHolder {
         // Cell Room Active
         // view elements
-
         private TextView tvClubName;
         private TextView tvRoomName;
         private TextView tvParticipants;
+        private LinearLayout llActiveRoom;
 
-        //        private TextView tvDescription;
         // TODO: add swipe right on cell to reveal a button to hide the recommended active room
-
         public ViewHolderActive(@NonNull View itemView) {
             super(itemView);
             tvClubName = itemView.findViewById(R.id.tvClubName);
             tvRoomName = itemView.findViewById(R.id.tvRoomName);
             tvParticipants = itemView.findViewById(R.id.tvParticipants);
+            llActiveRoom = itemView.findViewById(R.id.llActiveRoom);
         }
 
         public void bind(Room room) {
@@ -104,6 +127,17 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
             String newText = tvParticipants.getText() + " " + getEmojiByUnicode(0x1F4AC);
             tvParticipants.setText(newText); // DEBUG with emoji in unicode format
             Log.i(TAG, newText);
+
+            // On click for the active room and routing to new activities
+            llActiveRoom.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i(TAG, "Room: " + tvClubName.getText() + " " + tvRoomName.getText() + " clicked!");
+                    // TODO: add routing of room data here for joining the conference
+                    Toast.makeText(context, "Room: " + tvClubName.getText() + " " + tvRoomName.getText() + " clicked!",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
@@ -139,10 +173,10 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
     class ViewHolderExplore extends RecyclerView.ViewHolder {
         // Cell Room Future
         // view elements
-
         private TextView tvClubName;
         private TextView tvFutureRoomName;
         private LinearLayout llExploreAction;
+
         public ViewHolderExplore(View itemView) {
             super(itemView);
             // TODO: configure home's search cell elements
@@ -162,6 +196,8 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
                 @Override
                 public void onClick(View v) {
                     Log.i(TAG, "Explore cell tapped... routing to Explore Activity");
+                    Toast.makeText(context, "Explore cell tapped... routing to Explore Activity",
+                            Toast.LENGTH_SHORT).show();
                     Activity activity = (Activity) v.getContext();
                     Intent i;
                     i = new Intent(v.getContext(), ExploreActivity.class);
@@ -174,6 +210,13 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
+    /**
+     * Master binding method that calls slave configuration methods. Configuration
+     * utilizes a switch operating on the view holder item type.
+     *
+     * @param viewHolder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
 
@@ -199,51 +242,52 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemCount() {
-        return this.rooms.size();
+        return this.objectList.size();
     }
 
     private void configureDefaultViewHolder(HomeFeedAdapter.ViewHolder vh, int position) {
-        Room room = (Room) rooms.get(position);
+        Room room = (Room) objectList.get(position);
         if (room != null) {
             vh.bind(room);
         }
     }
 
     /**
-     * Active
+     * Method for binding object data to the Active Cell View Holder
      *
-     * @param vh1
+     * @param viewHolderActive
      * @param position
      */
-    private void configureViewHolderActiveCell(ViewHolderActive vh1, int position) {
-        Room room = (Room) rooms.get(position);
+    private void configureViewHolderActiveCell(ViewHolderActive viewHolderActive, int position) {
+        Room room = (Room) objectList.get(position);
         if (room != null) {
-            vh1.bind(room);
+            viewHolderActive.bind(room);
         }
     }
 
     /**
-     * Future
+     * Method for binding object data to the Future Cell View Holder
      *
-     * @param vh2
+     * @param viewHolderFuture
      * @param position
      */
-    private void configureViewHolderFutureCell(ViewHolderFuture vh2, int position) {
-        String futureStr = (String) rooms.get(position);
+    private void configureViewHolderFutureCell(ViewHolderFuture viewHolderFuture, int position) {
+        String futureStr = (String) objectList.get(position);
         if (futureStr != null) {
-            vh2.bind(futureStr);
+            viewHolderFuture.bind(futureStr);
         }
     }
 
     /**
-     * Explore
-     * @param vh3
+     * Method for binding object instance to the Explore Cell View Holder
+     *
+     * @param viewHolderExplore
      * @param position
      */
-    private void configureViewHolderExploreCell(ViewHolderExplore vh3, int position) {
-        int room = (int) rooms.get(position);
-        if (room == 1){
-            vh3.bind(room);
+    private void configureViewHolderExploreCell(ViewHolderExplore viewHolderExplore, int position) {
+        int room = (int) objectList.get(position);
+        if (room == 1) {
+            viewHolderExplore.bind(room);
         }
     }
 

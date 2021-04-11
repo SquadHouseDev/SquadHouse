@@ -49,7 +49,6 @@ public class HomeActivity extends AppCompatActivity {
     HomeFeedAdapter adapter;
     HomeMultiViewAdapter viewAdapter;
 
-
     List<Object> allRooms;
 
     SwipeRefreshLayout swipeContainer;
