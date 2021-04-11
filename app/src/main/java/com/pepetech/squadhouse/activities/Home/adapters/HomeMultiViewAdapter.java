@@ -1,16 +1,20 @@
 package com.pepetech.squadhouse.activities.Home.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.activities.Explore.ExploreActivity;
 import com.pepetech.squadhouse.models.Room;
 
 import java.util.List;
@@ -138,11 +142,12 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         private TextView tvClubName;
         private TextView tvFutureRoomName;
-
+        private LinearLayout llExploreAction;
         public ViewHolderExplore(View itemView) {
             super(itemView);
             // TODO: configure home's search cell elements
 //            tvClubName = itemView.findViewById(R.id.tvClubName);
+            llExploreAction = itemView.findViewById(R.id.llExploreAction);
 //            tvFutureRoomName = itemView.findViewById(R.id.tvFutureRoomName);
         }
 
@@ -151,8 +156,22 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
             // TODO: show a default image
             // on the app this cell changes based upon a User's search history
             // a feature that is not important to MVP
-        }
 
+            // When explore cell is tapped, route to Explore Activity
+            llExploreAction.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i(TAG, "Explore cell tapped... routing to Explore Activity");
+                    Activity activity = (Activity) v.getContext();
+                    Intent i;
+                    i = new Intent(v.getContext(), ExploreActivity.class);
+                    activity.startActivity(i);
+                    // arg_1: page to navigate to slides from the right
+                    // arg_2: page navigating from slides to the left
+                    activity.overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+                }
+            });
+        }
     }
 
     @Override
