@@ -24,6 +24,7 @@ import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.Explore.ExploreActivity;
 import com.pepetech.squadhouse.activities.Home.adapters.HomeFeedAdapter;
+import com.pepetech.squadhouse.activities.Home.adapters.HomeMultiViewAdapter;
 import com.pepetech.squadhouse.activities.MyProfile.ViewMyProfileActivity;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.Room;
