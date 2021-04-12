@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities.MyProfile;
+package com.pepetech.squadhouse.activities.MyProfile.helpers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.activities.MyProfile.MyProfileActivity;
 import com.pepetech.squadhouse.models.User;
 
 public class UpdateUsernameActivity extends AppCompatActivity {

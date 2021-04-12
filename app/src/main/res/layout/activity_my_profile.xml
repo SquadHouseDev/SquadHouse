@@ -71,48 +71,79 @@
             android:layout_marginBottom="5dp"
             android:text="\@johndoe" />
 
-        <TextView
-            android:id="@+id/tvFollowersLabel"
-            android:layout_width="68dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="186dp"
-            android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@+id/tvFollowersCount"
-            android:text="followers" />
-
-        <TextView
-            android:id="@+id/tvFollowersCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="15dp"
-            android:layout_marginBottom="5dp"
-            android:text="69696969"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvFollowingCount"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clFollowersAndFollowing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="-150dp"
-            android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@+id/tvFollowersLabel"
-            android:text="69696969"
-            android:textStyle="bold" />
+            android:layout_marginBottom="5dp">
 
-        <TextView
-            android:id="@+id/tvFollowingLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@+id/tvFollowingCount"
-            android:text="following" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clFollowers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvFollowersLabel"
+                    android:layout_width="68dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="186dp"
+                    android:text="followers"
+                    app:layout_constraintStart_toEndOf="@+id/tvFollowersCount"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvFollowersCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="69696969"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clFollowing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/clFollowers"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvFollowingCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="-150dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="69696969"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvFollowingLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toEndOf="@+id/tvFollowingCount"
+                    android:text="following"
+                    app:layout_constraintStart_toEndOf="@id/tvFollowingCount"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>
 
