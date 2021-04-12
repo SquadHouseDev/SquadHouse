@@ -70,6 +70,7 @@ public class UpdateProfileImageActivity extends AppCompatActivity {
                 Toast t = Toast.makeText(v.getContext(), "Profile image clicked!", Toast.LENGTH_SHORT);
                 t.show();
                 Log.i(TAG, "Profile Image clicked!");
+                // TODO: fix broken navigation to previous activity
                 BottomSheetDialogActivity bottomSheet = new BottomSheetDialogActivity();
                 bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
             }
