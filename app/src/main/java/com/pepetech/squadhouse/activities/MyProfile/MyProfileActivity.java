@@ -36,7 +36,7 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewMyProfileActivity extends AppCompatActivity {
+public class MyProfileActivity extends AppCompatActivity {
     ParseUser parseUser;
     User user;
     public static final String TAG = "ProfileActivity";

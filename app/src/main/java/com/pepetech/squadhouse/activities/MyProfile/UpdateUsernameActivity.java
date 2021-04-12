@@ -49,7 +49,7 @@ public class UpdateUsernameActivity extends AppCompatActivity {
     }
     private void goToViewMyProfileActivity()
     {
-        Intent i = new Intent(this,ViewMyProfileActivity.class);
+        Intent i = new Intent(this, MyProfileActivity.class);
         startActivity(i);
     }
 }

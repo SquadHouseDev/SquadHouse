@@ -25,7 +25,7 @@ import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.Explore.ExploreActivity;
 import com.pepetech.squadhouse.activities.Home.adapters.HomeFeedAdapter;
 import com.pepetech.squadhouse.activities.Home.adapters.HomeMultiViewAdapter;
-import com.pepetech.squadhouse.activities.MyProfile.ViewMyProfileActivity;
+import com.pepetech.squadhouse.activities.MyProfile.MyProfileActivity;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.Room;
 import com.pepetech.squadhouse.models.User;
@@ -188,7 +188,7 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.action_profile:
                 Toast.makeText(this, "Profile clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Profile clicked!");
-                i = new Intent(this, ViewMyProfileActivity.class);
+                i = new Intent(this, MyProfileActivity.class);
                 this.startActivity(i);
                 // arg_1: page to navigate to slides from the right
                 // arg_2: page navigating from slides to the left
