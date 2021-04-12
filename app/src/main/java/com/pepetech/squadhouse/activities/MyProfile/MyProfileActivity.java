@@ -2,6 +2,7 @@ package com.pepetech.squadhouse.activities.MyProfile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,8 +18,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -29,10 +34,12 @@ import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.Explore.ExploreUserActivity;
 import com.pepetech.squadhouse.activities.FollowersActivity;
 import com.pepetech.squadhouse.activities.Login.LoginActivity;
+import com.pepetech.squadhouse.activities.MyProfile.helpers.BiographyBottomSheetDialog;
 import com.pepetech.squadhouse.activities.MyProfile.helpers.UpdateFullNameActivity;
 import com.pepetech.squadhouse.activities.MyProfile.helpers.UpdateProfileImageActivity;
 import com.pepetech.squadhouse.activities.MyProfile.helpers.UpdateUsernameActivity;
 import com.pepetech.squadhouse.activities.Settings.SettingsActivity;
+import com.pepetech.squadhouse.models.Club;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.User;
 
@@ -54,6 +61,7 @@ public class MyProfileActivity extends AppCompatActivity {
     List<ParseObject> following;
     List<ParseObject> followers;
     ConstraintLayout clFollowing, clFollowers;
+    RecyclerView rvClubIcons;
 
     Button buttonUpdateName;
     Button createAlias;
@@ -87,6 +95,7 @@ public class MyProfileActivity extends AppCompatActivity {
         tvBiography = findViewById(R.id.tvBiography);
         tvUserJoinDate = findViewById(R.id.tvUserJoinDate);
         tvNominatorName = findViewById(R.id.tvNominatorName);
+        rvClubIcons = findViewById(R.id.rvClubIcons);
         ////////////////////////////////////////////////////////////
         // Setup buttons
         ////////////////////////////////////////////////////////////
@@ -104,6 +113,7 @@ public class MyProfileActivity extends AppCompatActivity {
         queryUserProfile();
         // 2. populate profile with queried profile data
         populateProfileElements();
+
     }
 
     /**
@@ -242,8 +252,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 Toast.makeText(v.getContext(), "Biography clicked!", Toast.LENGTH_SHORT).show();
 
                 Log.i(TAG, "Biography clicked!");
-
-
+                goToUpdateBiographyActivity();
             }
         });
 
@@ -287,8 +296,8 @@ public class MyProfileActivity extends AppCompatActivity {
                     .into(ivProfile);
 
         // load profile text information
-        tvFullName.setText(parseUser.getString(User.KEY_FIRST_NAME) + " " + parseUser.getString(User.KEY_LAST_NAME));
-        tvBiography.setText(parseUser.getString(User.KEY_BIOGRAPHY));
+        tvFullName.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
+        tvBiography.setText(currentUser.getBiography());
         tvUsername.setText("@" + parseUser.getUsername());
 
         // load following and followers count
@@ -308,6 +317,17 @@ public class MyProfileActivity extends AppCompatActivity {
             loadNominatorProfileImage();
             tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
         }
+
+        // load clubs
+        List<Club> clubs = currentUser.getClubs();
+        if (!clubs.contains(null)) {
+            clubs.add(null);
+        }
+        MyClubsAdapter clubsAdapter = new MyClubsAdapter(this, clubs);
+        GridLayoutManager layoutManager = new GridLayoutManager(
+                this, 1, GridLayoutManager.HORIZONTAL, false);
+        rvClubIcons.setAdapter(clubsAdapter);
+        rvClubIcons.setLayoutManager(layoutManager);
     }
 
     private void queryUserProfile() {
@@ -363,12 +383,19 @@ public class MyProfileActivity extends AppCompatActivity {
         finish(); // disable user ability to renavigate after a successful login
     }
 
-    // TODO: refactor to use a bottom sheet
     private void goToSettingsActivity() {
         Intent i = new Intent(this, SettingsActivity.class);
         startActivity(i);
 //        overridePendingTransition(R.anim.slide_to_top, R.anim.slide_to_left);
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+    }
+
+    // TODO: broken, doesn't properly reflect changes after an update from the bottom sheet
+    private void goToUpdateBiographyActivity() {
+//        BottomSheetDialog updateBio
+        BiographyBottomSheetDialog bottomSheet = new BiographyBottomSheetDialog();
+        bottomSheet.show(getSupportFragmentManager(),
+                "ModalBottomSheet");
     }
 
     private void goToUpdateFullNameActivity() {
