@@ -20,7 +20,7 @@
             android:name=".activities.Settings.InterestActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activities.Explore.FollowersActivity"
+            android:name=".activities.FollowersActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.Explore.ExploreUserActivity"
@@ -58,15 +58,15 @@
             android:screenOrientation="portrait" />
         />
         <activity
-            android:name=".activities.MyProfile.UpdateFullNameActivity"
+            android:name=".activities.MyProfile.helpers.UpdateFullNameActivity"
             android:screenOrientation="portrait" />
         />
         <activity
-            android:name=".activities.MyProfile.UpdateUsernameActivity"
+            android:name=".activities.MyProfile.helpers.UpdateUsernameActivity"
             android:screenOrientation="portrait" />
         />
         <activity
-            android:name=".activities.MyProfile.UpdateProfileImageActivity"
+            android:name=".activities.MyProfile.helpers.UpdateProfileImageActivity"
             android:screenOrientation="portrait" />
         />
     </application>
