@@ -23,7 +23,6 @@ public class BottomSheetDialogActivity extends BottomSheetDialogFragment {
     ParseUser parseUser;
     User user;
 
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         parseUser = ParseUser.getCurrentUser();
         user = new User(parseUser);
@@ -36,50 +35,44 @@ public class BottomSheetDialogActivity extends BottomSheetDialogFragment {
                 galleryIntent();
                 Toast.makeText(getActivity(), "Accessing Media Files", Toast.LENGTH_SHORT).show();
 
-
             }
         });
         return v;
     }
+
     //Allows user to select image from Gallery
-   private void galleryIntent()
-   {
-       Intent intent = new Intent();
-       intent.setType("image/*");
+    private void galleryIntent() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
 //       intent.setType("image/*");
-       intent.setAction(Intent.ACTION_GET_CONTENT);
-       startActivityForResult(Intent.createChooser(intent,"Select File"),REQUEST_CODE);
-   }
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select File"), REQUEST_CODE);
+    }
 
-   @SuppressLint("LongLogTag")
-   public void onActivityResult(int requestCode, int resultCode, Intent data)
-   {
-       if((data != null) && requestCode == REQUEST_CODE)
-       {
-           System.out.println("PHOTO:" + data);
+    @SuppressLint("LongLogTag")
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if ((data != null) && requestCode == REQUEST_CODE) {
+            System.out.println("PHOTO:" + data);
 //           String filepath = data.getData().getPath();
-           Uri photoURI = data.getData();
+            Uri photoURI = data.getData();
 
-           String thePath = "no-path-found";
-           String[] filePathColumn = {MediaStore.Images.Media.DISPLAY_NAME};
-           Cursor cursor = getContext().getContentResolver().query(photoURI, filePathColumn, null, null, null);
-           if(cursor.moveToFirst()){
-               int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-               thePath = cursor.getString(columnIndex);
-               System.out.println("USER:" + user.getImage().toString());
+            String thePath = "no-path-found";
+            String[] filePathColumn = {MediaStore.Images.Media.DISPLAY_NAME};
+            Cursor cursor = getContext().getContentResolver().query(photoURI, filePathColumn, null, null, null);
+            if (cursor.moveToFirst()) {
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                thePath = cursor.getString(columnIndex);
+                System.out.println("USER:" + user.getImage().toString());
 //            File f = new File(new File(thePath).getAbsolutePath());
-
-
-           }
-           cursor.close();
+            }
+            cursor.close();
 //           String path = photoURI.getPath();
 
+        }
 
-      }
 
-
-       }
-   }
+    }
+}
 //   private String getRealPathFromURI(Uri contentUri)
 //   {
 //
@@ -87,7 +80,7 @@ public class BottomSheetDialogActivity extends BottomSheetDialogFragment {
 //
 
 
-    // And to convert the image URI to the direct file system path of the image file
+// And to convert the image URI to the direct file system path of the image file
 
 
 
