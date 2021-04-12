@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SquadHouse"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.ClubActivity"></activity>
+        <activity android:name=".activities.FollowingActivity"></activity>
+        <activity android:name=".activities.ClubActivity" />
         <activity
             android:name=".activities.Settings.InterestActivity"
             android:screenOrientation="portrait" />
