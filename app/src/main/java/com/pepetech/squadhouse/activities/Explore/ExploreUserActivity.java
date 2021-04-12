@@ -201,6 +201,13 @@ public class ExploreUserActivity extends AppCompatActivity {
             loadNominatorProfileImage();
             tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
         }
+        else {
+            Glide.with(this)
+                    .load(R.drawable.ic_sprout)
+                    .fitCenter()
+                    .circleCrop()
+                    .into(ivProfileNominator);
+        }
     }
 
     private void queryUserProfile() {
