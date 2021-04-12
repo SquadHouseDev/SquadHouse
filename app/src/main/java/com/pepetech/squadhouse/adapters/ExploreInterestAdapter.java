@@ -16,13 +16,12 @@ import java.util.List;
 
 public class ExploreInterestAdapter extends RecyclerView.Adapter<ExploreInterestAdapter.ViewHolder> {
     public static final String TAG = "InterestAdapter";
-
     private Context context;
     private List<InterestGroup> interestsGrouped;
 
     public ExploreInterestAdapter(Context context, List<InterestGroup> interests) {
         this.context = context;
-        this.interestsGrouped =interests;
+        this.interestsGrouped = interests;
     }
 
     @NonNull
@@ -34,7 +33,6 @@ public class ExploreInterestAdapter extends RecyclerView.Adapter<ExploreInterest
 
     @Override
     public void onBindViewHolder(@NonNull ExploreInterestAdapter.ViewHolder holder, int position) {
-//        InterestGroup interest = (InterestGroup) interestsGrouped.get(position);
         InterestGroup interests = (InterestGroup) interestsGrouped.get(position);
         holder.bind(interests);
     }
@@ -58,7 +56,7 @@ public class ExploreInterestAdapter extends RecyclerView.Adapter<ExploreInterest
         }
 
         public void bind(InterestGroup interests) {
-            // Bind data of post to the view element
+            // Bind data of post to the view elements
             tvArchetype.setText(interests.archetype);
             tvArchetypeEmoji.setText(interests.archetypeEmoji);
             tvInterests.setText(interests.names); // DEBUG with emoji in unicode format

@@ -18,26 +18,31 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
 import com.pepetech.squadhouse.R;
-import com.pepetech.squadhouse.activities.ViewAUserProfileActivity;
+import com.pepetech.squadhouse.activities.ExploreUserActivity;
+import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.User;
 
 import org.parceler.Parcels;
 
 import java.util.List;
 
+/**
+ * The UserAdapter takes in a List of users found from keyword search
+ * performed in the ExploreActivity to bind to each cell in the ReyclerView.
+ */
 public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.ViewHolder> {
     public static final String TAG = "ExploreUserAdapter";
 
     private Context context;
     private List<User> allUsers;
-//    private List<Club> allClubs;
     private User currentUser;
+    private List<Boolean> allFollowings;
 
     public ExploreUserAdapter(Context context, List<User> users, User currentUser) {
         this.context = context;
         this.allUsers = users;
-//        this.allClubs = clubs;
         this.currentUser = currentUser;
+//        queryFollowings();
     }
 
     @NonNull
@@ -65,6 +70,7 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
         private ImageView ivFoundProfileImage;
         private ConstraintLayout clProfile;
         private Button btnFollow;
+        private Follow follow;
         boolean wasFollowed;
 
         public ViewHolder(@NonNull View itemView) {
@@ -75,6 +81,7 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
             btnFollow = itemView.findViewById(R.id.btnFollow);
             clProfile = itemView.findViewById(R.id.clProfile);
             wasFollowed = false;
+            follow = null;
         }
 
         public void bind(User userElement) {
@@ -87,13 +94,15 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
                         .load(image.getUrl())
                         .circleCrop()
                         .into(ivFoundProfileImage);
+//            wasFollowed = isInFollowingList(currentUser, userElement);
             setupFollowButton(userElement);
+            // Navigate to Viewing a User's Profile
             clProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.i(TAG, userElement.getFirstName() + " was selected!");
                     Toast.makeText(v.getContext(), "Selected " + userElement.getFirstName(), Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(context, ViewAUserProfileActivity.class);
+                    Intent i = new Intent(context, ExploreUserActivity.class);
                     i.putExtra("user", Parcels.wrap(userElement));
                     context.startActivity(i);
                 }
@@ -101,77 +110,62 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
         }
 
         /**
-         * Main method for configuring the follow button
+         * Main method for configuring the display of the follow button when the current User
+         * toggles between following and unfollowing a User element in the cell.
          *
-         * @param userElement
+         * @param userElement: User to be followed or unfollowed
          */
         private void setupFollowButton(User userElement) {
-            String userElementId = userElement.getParseUser().getObjectId();
-            if (currentUser.getFollowing().contains(userElementId)) {
+            // if the user was in a previous state of being followed by the current user
+            if (userElement.isFollowed) {
                 Log.i(TAG, userElement.getFirstName() + " is currently followed by " + currentUser.getFirstName());
+                // show state of followed
                 btnFollow.setText("Following");
-                setupCurrentlyFollowingButton(userElementId);
-            } else {
-                setupDefaultFollowButton(userElementId);
+                handleOnFollowButton(userElement);
+            }
+            // if the user was in a previous state of being not followed by the current user
+            else {
+                btnFollow.setText("Follow");
+                handleOnFollowButton(userElement);
             }
         }
 
         /**
-         * Current User is not following the User in the row therefore configure
-         * buttons to reflect the default case of encouraging the User to follow.
+         * Helper function for processing user input given a User element pertaining to the cell
          *
-         * @param userElementId
+         * @param userElement User to be followed or unfollowed
          */
-        private void setupDefaultFollowButton(String userElementId) {
+        private void handleOnFollowButton(User userElement) {
             btnFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context, "Follow button clicked!", Toast.LENGTH_SHORT).show();
                     Log.i(TAG, "Follow button clicked!");
-                    // toggle button follow
-                    if (wasFollowed) {
-                        wasFollowed = false;
-                        btnFollow.setText("Follow");
-                        // apply unfollow
-                        currentUser.removeFollowing(userElementId);
-                    } else {
-                        wasFollowed = true;
+                    // on button click and not followed --> action to follow
+                    if (!userElement.isFollowed) {
                         btnFollow.setText("Following");
-                        // apply follow
-                        currentUser.addFollowing(userElementId);
+                        // apply addition of a following on the user object
+                        currentUser.follow(userElement.getParseUser());
+                        // create the follow object for accessing followers
+                        follow = new Follow();
+                        follow.put(Follow.KEY_TO, userElement.getParseUser());
+                        follow.put(Follow.KEY_FROM, currentUser.getParseUser());
+                        follow.saveInBackground();
+                        userElement.isFollowed = true;
+                        notifyDataSetChanged();
+                    }
+                    // on button click and is followed --> action to unfollow
+                    else {
+                        btnFollow.setText("Follow");
+                        //  this is potentially mobile data intensive
+                        if (follow != null)
+                            follow.deleteInBackground();
+                        currentUser.unfollow(userElement.getParseUser());
+                        userElement.isFollowed = false;
+                        notifyDataSetChanged();
                     }
                 }
             });
         }
-
-        /**
-         * Configuration of follow button when current user is already following
-         * a User
-         *
-         * @param userElementId
-         */
-        private void setupCurrentlyFollowingButton(String userElementId) {
-            btnFollow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "Follow button clicked!", Toast.LENGTH_SHORT).show();
-                    Log.i(TAG, "Follow button clicked!");
-                    // toggle button follow
-                    if (wasFollowed) {
-                        wasFollowed = false;
-                        btnFollow.setText("Following");
-                        // apply follow
-                        currentUser.addFollowing(userElementId);
-                    } else {
-                        wasFollowed = true;
-                        btnFollow.setText("Follow");
-                        // apply unfollow
-                        currentUser.removeFollowing(userElementId);
-                    }
-                }
-            });
-        }
-    }
-
-
+    } // end of inner ViewHolder class
 }

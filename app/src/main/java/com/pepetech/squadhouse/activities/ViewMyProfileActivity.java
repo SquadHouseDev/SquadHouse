@@ -1,5 +1,14 @@
 package com.pepetech.squadhouse.activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
@@ -14,46 +23,42 @@ import com.pepetech.squadhouse.models.User;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * TODO:
- * ViewMyProfileActivity.java
- * - fullname edit w/ prompt for confirmation of changing name
- * - image edit w/ tap on profile to upload a new photo w/ confirmation of completing activity
- * - username edit w/ tap to edit
- * - following tap to view
- * - followers tap to view
- * - biography tap to edit
- * - nominator tap profile image to view
- * - add nominators join date (TBD) -- need further consideration for backend design
- * - club tap on profile image to view
- * - add button for linking twitter
- * - add button for linking instagram
- * - add button and functionality for sharing
- * - add biography MAX String length checking when user is editting
- * activity_view_my_profile.XML
- * - add button for sharing
- * - fix biography TextView to show proper start and end margins
- */
 public class ViewMyProfileActivity extends AppCompatActivity {
     ParseUser parseUser;
     User user;
     public static final String TAG = "ProfileActivity";
     AppCompatImageView ivProfile, ivProfileNominator;
-    TextView tvFullName, tvUsername, tvFollowersCount, tvFollowingCount, tvBiography, tvUserJoinDate, tvNominatorName;
+    TextView tvFullName, tvUsername, tvFollowersCount, tvFollowingCount, tvBiography, tvUserJoinDate, tvNominatorName, tvTitleText;
     Button btnLogout;
     ImageButton btnSettings;
     ParseObject nominator;
     List<ParseObject> following;
     List<ParseObject> followers;
+
+    Button buttonUpdateName;
+    Button createAlias;
+    Button cancel;
+    //text views
+    TextView textPrompt;
+    PopupWindow pw = null;
+
+
 //    ScrollView svProfile;
 
     @Override
@@ -79,6 +84,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////
         btnLogout = findViewById(R.id.btnLogout);
         btnSettings = findViewById(R.id.btnSettings);
+//        msgBttn = findViewById(R.id.msgBttn);
         setupOnClickListeners();
         ////////////////////////////////////////////////////////////
         // setting up user profile
@@ -121,6 +127,13 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                 Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
                 t.show();
                 Log.i(TAG, "Nominator profile clicked!");
+                if (nominator != null) {
+
+                    User toPass = new User((ParseUser) nominator);
+                    Intent i = new Intent(v.getContext(), ExploreUserActivity.class);
+                    i.putExtra("user", Parcels.wrap(toPass));
+                    startActivity(i);
+                }
 //                ParseObject nominator = user.getNominator()
 //                goToProfileActivity();
             }
@@ -131,9 +144,10 @@ public class ViewMyProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
                 t.show();
-                Log.i(TAG, "Nominator profile clicked!");
+                Log.i(TAG, "User profile clicked!");
 //                ParseObject nominator = user.getNominator()
 //                goToProfileActivity();
+                goToUpdateProfileImageActivity();
             }
         });
         // TODO
@@ -144,7 +158,9 @@ public class ViewMyProfileActivity extends AppCompatActivity {
                 t.show();
                 Log.i(TAG, "Username clicked!");
 //                ParseObject nominator = user.getNominator()
-//                goToProfileActivity();
+                goToUpdateUsernameActivity();
+
+
             }
         });
         // TODO
@@ -153,25 +169,77 @@ public class ViewMyProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast t = Toast.makeText(v.getContext(), "Fullname clicked!", Toast.LENGTH_SHORT);
                 t.show();
-                Log.i(TAG, "Fullname clicked!");
-//                ParseObject nominator = user.getNominator()
-//                goToProfileActivity();
+                //inflate the layout
+                LayoutInflater inflater = (LayoutInflater) v.getContext().getSystemService(v.getContext().LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.activity_popup_window, null);
+                //intialize the size of our layout
+                int width = LinearLayout.LayoutParams.MATCH_PARENT;
+                int height = LinearLayout.LayoutParams.MATCH_PARENT;
+
+                boolean focusable = true;
+                pw = new PopupWindow(popupView, width, height, focusable);
+
+                pw.showAtLocation(v, Gravity.CENTER, 0, 0);
+                //INITIALIZE THE ELEMENTS OF OUR WINDOW
+                textPrompt = popupView.findViewById(R.id.tvFirstName);
+                buttonUpdateName = popupView.findViewById(R.id.updateNameButton);
+                createAlias = popupView.findViewById(R.id.createAliasButton);
+                cancel = popupView.findViewById(R.id.CancelButton);
+                setup_Popup_Window_On_Click_Listeners();
+
+                //if tapped outside, dismiss popup window
+                popupView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+
+                        pw.dismiss();
+                        return true;
+                    }
+                });
+
+
             }
         });
         // TODO
         tvBiography.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(ProfileActivity.this, "Biography clicked!", Toast.LENGTH_SHORT).show();
-//                Toast.makeText(getConte, "Biography clicked!", Toast.LENGTH_SHORT).show();
+
                 Toast.makeText(v.getContext(), "Biography clicked!", Toast.LENGTH_SHORT).show();
-//                t.show();
+
                 Log.i(TAG, "Biography clicked!");
-//                ParseObject nominator = user.getNominator()
-//                goToProfileActivity();
+
+
+
             }
         });
     }
+
+
+    //pop up window buttons
+    public void setup_Popup_Window_On_Click_Listeners() {
+        buttonUpdateName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "UPDATE BUTTON CLICKED");
+                goToUpdateFullNameActivity();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                pw.dismiss();
+            }
+        });
+        createAlias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+    }
+
 
     private void populateProfileElements() {
         Log.i(TAG, "Populating profile elements");
@@ -190,8 +258,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         tvFollowersCount.setText(String.valueOf(followers.size()));
         tvFollowingCount.setText(String.valueOf(following.size()));
         // load nominator's profile picture
-//        boolean isSeed = user.isSeed();
-        if (!user.isSeed() && nominator != null){
+        if (!user.isSeed() && nominator != null) {
             loadNominatorProfileImage();
             tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
         }
@@ -236,17 +303,29 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
 
-    private void goToViewAProfileActivity() {
-//        Intent i = new Intent(this, SettingsActivity.class);
-//        startActivity(i);
-//        overridePendingTransition(R.anim.slide_to_top, R.anim.slide_to_left);
-        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+    private void goToUpdateFullNameActivity() {
+        Intent i = new Intent(this, UpdateFullNameActivity.class);
+        startActivity(i);
+        //finish() ?
     }
 
-    private void loadNominatorProfileImage(){
+    private void goToUpdateUsernameActivity() {
+        Intent i = new Intent(this, UpdateUsernameActivity.class);
+        startActivity(i);
+        //finish() ?
+    }
+    private void goToUpdateProfileImageActivity()
+    {
+        Intent i = new Intent(this, UpdateProfileImageActivity.class);
+        startActivity(i);
+    }
+
+
+
+    private void loadNominatorProfileImage() {
         ParseFile image = null;
         if (nominator == null)
-                return;
+            return;
         try {
             image = nominator.fetchIfNeeded().getParseFile("image");
         } catch (ParseException e) {

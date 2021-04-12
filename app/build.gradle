@@ -29,6 +29,7 @@ android {
 }
 
 dependencies {
+    implementation "androidx.cardview:cardview:1.0.0"
 
 //    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -55,4 +56,7 @@ dependencies {
     // The Voice SDK resides on jCenter
     implementation 'com.twilio:voice-android:3.1.2'
 
+    implementation 'com.google.android.material:material:1.2.0-alpha02'
+
+    implementation 'com.droidninja:filepicker:2.2.5'
 }
