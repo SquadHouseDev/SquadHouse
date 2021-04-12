@@ -22,22 +22,22 @@ public class UpdateProfileImageActivity extends AppCompatActivity {
     ParseUser parseUser;
     User user;
     TextView tvChangeImage;
-    Button done;
-    AppCompatImageView ivProfile;
+    Button btnDone;
+    AppCompatImageView ivUpdateProfile;
 
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.update_profileimage);
+        setContentView(R.layout.update_profile_image);
 
-        ivProfile = findViewById(R.id.ivprofile);
+        ivUpdateProfile = findViewById(R.id.ivUpdateProfile);
         tvChangeImage = findViewById(R.id.tvChangeImage);
-        done = findViewById(R.id.bttnDone);
+        btnDone = findViewById(R.id.btnDone);
         parseUser = ParseUser.getCurrentUser();
         user = new User(parseUser);
         populateProfileElements();
         setupOnClickListeners();
     }
+
     @SuppressLint("LongLogTag")
     private void populateProfileElements() {
         Log.i(TAG, "Populating profile elements");
@@ -47,7 +47,7 @@ public class UpdateProfileImageActivity extends AppCompatActivity {
             Glide.with(this)
                     .load(image.getUrl())
                     .circleCrop()
-                    .into(ivProfile);
+                    .into(ivUpdateProfile);
         // load profile text information
 //        tvFullName.setText(parseUser.getString(User.KEY_FIRST_NAME) + " " + parseUser.getString(User.KEY_LAST_NAME));
 //        tvBiography.setText(parseUser.getString(User.KEY_BIOGRAPHY));
@@ -59,22 +59,29 @@ public class UpdateProfileImageActivity extends AppCompatActivity {
 //        if (!user.isSeed() && nominator != null) {
 //            loadNominatorProfileImage();
 //            tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
-        }
-
-
-            private void setupOnClickListeners()
-            {
-                ivProfile.setOnClickListener(new View.OnClickListener() {
-                    @SuppressLint("LongLogTag")
-                    @Override
-                    public void onClick(View v) {
-                        Toast t = Toast.makeText(v.getContext(), "Profile image clicked!", Toast.LENGTH_SHORT);
-                        t.show();
-                        Log.i(TAG,"Profile Image clicked!");
-                        BottomSheetDialogActivity bottomSheet = new BottomSheetDialogActivity();
-                        bottomSheet.show(getSupportFragmentManager(),"ModalBottomSheet");
-                    }
-                });
-
-            }
     }
+
+
+    private void setupOnClickListeners() {
+        ivUpdateProfile.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(v.getContext(), "Profile image clicked!", Toast.LENGTH_SHORT);
+                t.show();
+                Log.i(TAG, "Profile Image clicked!");
+                BottomSheetDialogActivity bottomSheet = new BottomSheetDialogActivity();
+                bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
+            }
+        });
+
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(v.getContext(), "Done clicked!", Toast.LENGTH_SHORT);
+                finish();
+            }
+        });
+
+    }
+}
