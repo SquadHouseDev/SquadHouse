@@ -194,7 +194,7 @@ public class ExploreUserActivity extends AppCompatActivity {
 //        tvFollowersCount.setText(String.valueOf(followers.size()));
 //        tvFollowersCount.setText(String.valueOf(followers.size()));
         tvFollowersCount.setText(String.valueOf(userSelected.getFollowerCount())); // DEBUG
-        tvFollowingCount.setText(String.valueOf(6996)); // DEBUG
+        tvFollowingCount.setText(String.valueOf(userSelected.getFollowing().size())); // DEBUG
         // load nominator's profile picture
 //        boolean isSeed = user.isSeed();
         if (!userSelected.isSeed()) {
