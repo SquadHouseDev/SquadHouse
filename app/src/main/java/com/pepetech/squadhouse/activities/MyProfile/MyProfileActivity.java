@@ -129,6 +129,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 Log.i(TAG, "Followers clicked!");
                 // Navigate to FollowersActivity
                 goToFollowersActivity(currentUser);
+                currentUser = new User(ParseUser.getCurrentUser());
             }
         });
 
@@ -443,4 +444,7 @@ public class MyProfileActivity extends AppCompatActivity {
                     .into(ivProfileNominator);
     }
 
+    public void updateBiographyText(String biography){
+        tvBiography.setText(biography);
+    }
 }
