@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities.Explore;
+package com.pepetech.squadhouse.activities;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +22,11 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Activity class dedicated to viewing any User's list of followers.
+ * Usage requires using Parcels to wrap a User instance to be passed
+ * to this activity.
+ */
 public class FollowersActivity extends AppCompatActivity {
     public static final String TAG = "FollowersActivity";
     RecyclerView rvFollowers;
@@ -77,12 +81,12 @@ public class FollowersActivity extends AppCompatActivity {
                         // get the User following the target
                         User u = new User((ParseUser) c.getFollowFrom());
                         Log.i(TAG, "FROM: " + u.getFirstName() + " " + u.getLastName());
-                        Log.i(TAG, "FROM: " + u.getParseUser().getObjectId() );
+                        Log.i(TAG, "FROM: " + u.getParseUser().getObjectId());
                         // checking if the followers of the target Users are followed by the target user
                         // User ==> target && User <== target
 
                         // exclude the current user self
-                        if (u.getParseUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
+                        if (u.getParseUser().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
                             Log.i(TAG, "skipping");
                             continue;
                         }
