@@ -1,13 +1,11 @@
 package com.pepetech.squadhouse.activities.MyProfile;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,11 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
-import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.activities.Explore.ExploreClubActivity;
 import com.pepetech.squadhouse.models.Club;
-import com.pepetech.squadhouse.models.Room;
-import com.pepetech.squadhouse.models.User;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -77,6 +75,9 @@ public class MyClubsAdapter extends RecyclerView.Adapter<MyClubsAdapter.ViewHold
                         // TODO: add routing to club profile here
                         Toast.makeText(context, club.getName() + " clicked!",
                                 Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(v.getContext(), ExploreClubActivity.class);
+                        i.putExtra("club", Parcels.wrap(club));
+                        v.getContext().startActivity(i);
                     }
                 });
             } else {
@@ -88,8 +89,6 @@ public class MyClubsAdapter extends RecyclerView.Adapter<MyClubsAdapter.ViewHold
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
             }
         }
     }
