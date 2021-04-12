@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.pepetech.squadhouse.activities.MyProfile.MyProfileActivity;
 import com.pepetech.squadhouse.models.User;
 
 /**
@@ -49,7 +50,8 @@ public class BiographyBottomSheetDialog extends BottomSheetDialogFragment {
                 // TODO: call method or definition body to apply changes to the user's profile here
                 String biography = etBiography.getText().toString();
                 currentUser.updateBiography(biography);
-
+                MyProfileActivity myProfileActivity = (MyProfileActivity) getActivity();
+                myProfileActivity.updateBiographyText(biography);
                 dismiss();
             }
         });
@@ -65,7 +67,6 @@ public class BiographyBottomSheetDialog extends BottomSheetDialogFragment {
     public boolean isCancelable() {
         return super.isCancelable();
     }
-
 
     @Override
     public void onCancel(@NonNull DialogInterface dialog) {
