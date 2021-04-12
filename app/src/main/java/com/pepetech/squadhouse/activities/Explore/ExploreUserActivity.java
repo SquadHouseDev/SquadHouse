@@ -22,6 +22,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.activities.FollowersActivity;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.User;
 
