@@ -30,15 +30,13 @@ public class UpdateFullNameActivity extends AppCompatActivity {
         //SETUP VIEW ELEMENTS
 
         //text views
-        tvfirstName = findViewById(R.id.tvFirstName);
+        tvfirstName = findViewById(R.id.tvPrompt);
         tvlastName = findViewById(R.id.tvLastName);
 
         //buttons
         update = findViewById(R.id.bttnUpdate);
-
         //user
         user = new User(ParseUser.getCurrentUser());
-
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override
