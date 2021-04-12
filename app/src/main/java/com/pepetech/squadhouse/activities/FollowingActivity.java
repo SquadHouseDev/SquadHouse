@@ -6,7 +6,11 @@ import android.os.Bundle;
 
 import com.pepetech.squadhouse.R;
 
-
+/**
+ * Activity that routes using a Hetero Recycler View.
+ * Items should be displayed in the order of club followed by
+ * Users that  
+ */
 public class FollowingActivity extends AppCompatActivity {
 
     @Override
