@@ -1,7 +1,6 @@
 package com.pepetech.squadhouse.activities.Settings.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pepetech.squadhouse.R;
-import com.pepetech.squadhouse.activities.Settings.InterestActivity;
 import com.pepetech.squadhouse.models.Interest;
 
 import java.util.List;
@@ -71,11 +69,11 @@ public class InnerInterestAdapter extends RecyclerView.Adapter<InnerInterestAdap
         // view elements
         TextView tvInterest;
         RelativeLayout rlInterestItem;
-        boolean clicked;
+        boolean isNotSelected;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            clicked = true;
+            isNotSelected = true;
             tvInterest = itemView.findViewById(R.id.tvInterest);
             rlInterestItem = itemView.findViewById(R.id.rlInterestItem);
         }
@@ -86,11 +84,11 @@ public class InnerInterestAdapter extends RecyclerView.Adapter<InnerInterestAdap
             rlInterestItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (clicked) {
-                        clicked = false;
+                    if (isNotSelected) {
+                        isNotSelected = false;
                         rlInterestItem.setBackground(ContextCompat.getDrawable(v.getContext(), R.drawable.cell_interest_selected_background));
                     } else {
-                        clicked = true;
+                        isNotSelected = true;
                         rlInterestItem.setBackground(ContextCompat.getDrawable(v.getContext(), R.drawable.cell_white_background));
                     }
                     // TODO: update view to show colors indicating selection
