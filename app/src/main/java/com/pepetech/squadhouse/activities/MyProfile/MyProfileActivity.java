@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.parse.FindCallback;
@@ -43,14 +44,16 @@ import java.util.List;
 public class MyProfileActivity extends AppCompatActivity {
     ParseUser parseUser;
     User currentUser;
-    public static final String TAG = "ProfileActivity";
+    public static final String TAG = "MyProfileActivity";
     AppCompatImageView ivProfile, ivProfileNominator;
-    TextView tvFullName, tvUsername, tvFollowersCount, tvFollowingCount, tvBiography, tvUserJoinDate, tvNominatorName, tvTitleText;
+    TextView tvFullName, tvUsername, tvFollowersCount, tvFollowingCount,
+            tvBiography, tvUserJoinDate, tvNominatorName, tvTitleText, tvFollowersLabel, tvFollowingLabel;
     Button btnLogout;
     ImageButton btnSettings;
     ParseObject nominator;
     List<ParseObject> following;
     List<ParseObject> followers;
+    ConstraintLayout clFollowing, clFollowers;
 
     Button buttonUpdateName;
     Button createAlias;
@@ -75,6 +78,10 @@ public class MyProfileActivity extends AppCompatActivity {
         // text views
         tvFullName = findViewById(R.id.tvFullName);
         tvUsername = findViewById(R.id.tvUsername);
+        clFollowing = findViewById(R.id.clFollowing);
+        tvFollowersLabel = findViewById(R.id.tvFollowersLabel);
+        tvFollowingLabel = findViewById(R.id.tvFollowingLabel);
+        clFollowers = findViewById(R.id.clFollowers);
         tvFollowersCount = findViewById(R.id.tvFollowersCount);
         tvFollowingCount = findViewById(R.id.tvFollowingCount);
         tvBiography = findViewById(R.id.tvBiography);
@@ -97,10 +104,35 @@ public class MyProfileActivity extends AppCompatActivity {
         queryUserProfile();
         // 2. populate profile with queried profile data
         populateProfileElements();
-
     }
 
+    /**
+     * Main method used for setting up elements in need of on-click listeners.
+     */
     private void setupOnClickListeners() {
+
+        clFollowers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT);
+                t.show();
+                Log.i(TAG, "Followers clicked!");
+                // Navigate to FollowersActivity
+                goToFollowersActivity(currentUser);
+            }
+        });
+
+        clFollowing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(v.getContext(), "Following clicked!", Toast.LENGTH_SHORT);
+                t.show();
+                Log.i(TAG, "Following clicked!");
+                // Navigate to FollowingActivity
+
+            }
+        });
+
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,11 +215,11 @@ public class MyProfileActivity extends AppCompatActivity {
 
                 pw.showAtLocation(v, Gravity.CENTER, 0, 0);
                 //INITIALIZE THE ELEMENTS OF OUR WINDOW
-                textPrompt = popupView.findViewById(R.id.tvFirstName);
+                textPrompt = popupView.findViewById(R.id.tvPrompt);
                 buttonUpdateName = popupView.findViewById(R.id.updateNameButton);
                 createAlias = popupView.findViewById(R.id.createAliasButton);
                 cancel = popupView.findViewById(R.id.CancelButton);
-                setup_Popup_Window_On_Click_Listeners();
+                setupPopupWindowOnClickListeners();
 
                 //if tapped outside, dismiss popup window
                 popupView.setOnTouchListener(new View.OnTouchListener() {
@@ -214,10 +246,12 @@ public class MyProfileActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 
     //pop up window buttons
-    public void setup_Popup_Window_On_Click_Listeners() {
+    public void setupPopupWindowOnClickListeners() {
         buttonUpdateName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,7 +261,6 @@ public class MyProfileActivity extends AppCompatActivity {
         });
 
         cancel.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 pw.dismiss();
@@ -241,7 +274,7 @@ public class MyProfileActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Main method called when populating all elements in MyProfileActivity
      */
     private void populateProfileElements() {
         Log.i(TAG, "Populating profile elements");
@@ -252,13 +285,24 @@ public class MyProfileActivity extends AppCompatActivity {
                     .load(image.getUrl())
                     .circleCrop()
                     .into(ivProfile);
+
         // load profile text information
         tvFullName.setText(parseUser.getString(User.KEY_FIRST_NAME) + " " + parseUser.getString(User.KEY_LAST_NAME));
         tvBiography.setText(parseUser.getString(User.KEY_BIOGRAPHY));
         tvUsername.setText("@" + parseUser.getUsername());
+
         // load following and followers count
-        tvFollowersCount.setText(String.valueOf(followers.size()));
-        tvFollowingCount.setText(String.valueOf(following.size()));
+        int followingCount, followerCount;
+        followerCount = currentUser.getFollowerCount();
+        followingCount = currentUser.getFollowing().size();
+        if (followerCount > 1) {
+            tvFollowersLabel.setText("follower");
+        } else {
+            tvFollowersLabel.setText("followers");
+        }
+        tvFollowersCount.setText(String.valueOf(followerCount));
+        tvFollowingCount.setText(String.valueOf(followingCount));
+
         // load nominator's profile picture
         if (!currentUser.isSeed() && nominator != null) {
             loadNominatorProfileImage();
@@ -271,7 +315,6 @@ public class MyProfileActivity extends AppCompatActivity {
         parseUser = ParseUser.getCurrentUser();
         Log.i(TAG, "User object_id: " + parseUser.getObjectId());
         following = parseUser.getList(User.KEY_FOLLOWING);
-        followers = parseUser.getList(User.KEY_FOLLOWERS);
         // empty case
         if (following == null) {
             following = new ArrayList<>();
@@ -345,10 +388,15 @@ public class MyProfileActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private void goToFollowersActivity() {
+    /**
+     * Helper function for navigating to the
+     *
+     * @param userToPass User to be Parcels wrapped and passed
+     */
+    private void goToFollowersActivity(User userToPass) {
         Intent i = new Intent(this, FollowersActivity.class);
-        User toPass = currentUser;
-        i.putExtra("user", Parcels.wrap(toPass));
+//        toPass = currentUser;
+        i.putExtra("user", Parcels.wrap(userToPass));
         startActivity(i);
     }
 
