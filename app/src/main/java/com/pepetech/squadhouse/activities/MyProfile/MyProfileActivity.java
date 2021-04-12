@@ -26,7 +26,11 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.Explore.ExploreUserActivity;
+import com.pepetech.squadhouse.activities.FollowersActivity;
 import com.pepetech.squadhouse.activities.Login.LoginActivity;
+import com.pepetech.squadhouse.activities.MyProfile.helpers.UpdateFullNameActivity;
+import com.pepetech.squadhouse.activities.MyProfile.helpers.UpdateProfileImageActivity;
+import com.pepetech.squadhouse.activities.MyProfile.helpers.UpdateUsernameActivity;
 import com.pepetech.squadhouse.activities.Settings.SettingsActivity;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.User;
@@ -38,7 +42,7 @@ import java.util.List;
 
 public class MyProfileActivity extends AppCompatActivity {
     ParseUser parseUser;
-    User user;
+    User currentUser;
     public static final String TAG = "ProfileActivity";
     AppCompatImageView ivProfile, ivProfileNominator;
     TextView tvFullName, tvUsername, tvFollowersCount, tvFollowingCount, tvBiography, tvUserJoinDate, tvNominatorName, tvTitleText;
@@ -55,14 +59,13 @@ public class MyProfileActivity extends AppCompatActivity {
     TextView textPrompt;
     PopupWindow pw = null;
 
-
 //    ScrollView svProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("PROFILE");
-        setContentView(R.layout.activity_view_my_profile);
+        setContentView(R.layout.activity_my_profile);
         ////////////////////////////////////////////////////////////
         // Setup view elements
         ////////////////////////////////////////////////////////////
@@ -89,7 +92,7 @@ public class MyProfileActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////
         refreshMyFollowerCount();
         parseUser = ParseUser.getCurrentUser();
-        user = new User(parseUser);
+        currentUser = new User(parseUser);
         // 1. query profile data
         queryUserProfile();
         // 2. populate profile with queried profile data
@@ -209,11 +212,9 @@ public class MyProfileActivity extends AppCompatActivity {
                 Log.i(TAG, "Biography clicked!");
 
 
-
             }
         });
     }
-
 
     //pop up window buttons
     public void setup_Popup_Window_On_Click_Listeners() {
@@ -239,7 +240,9 @@ public class MyProfileActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     *
+     */
     private void populateProfileElements() {
         Log.i(TAG, "Populating profile elements");
         // load user's profile picture
@@ -257,7 +260,7 @@ public class MyProfileActivity extends AppCompatActivity {
         tvFollowersCount.setText(String.valueOf(followers.size()));
         tvFollowingCount.setText(String.valueOf(following.size()));
         // load nominator's profile picture
-        if (!user.isSeed() && nominator != null) {
+        if (!currentUser.isSeed() && nominator != null) {
             loadNominatorProfileImage();
             tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
         }
@@ -280,10 +283,10 @@ public class MyProfileActivity extends AppCompatActivity {
         } else {
             Log.i(TAG, "Followers: " + followers.size());
         }
-        nominator = user.getNominator();
+        nominator = currentUser.getNominator();
     }
 
-    private void refreshMyFollowerCount(){
+    private void refreshMyFollowerCount() {
         Log.i(TAG, "refreshMyFollowerCount");
         Log.i(TAG, "Target: " + ParseUser.getCurrentUser().getObjectId());
         List<Follow> collection = new ArrayList<>();
@@ -336,13 +339,18 @@ public class MyProfileActivity extends AppCompatActivity {
         startActivity(i);
         //finish() ?
     }
-    private void goToUpdateProfileImageActivity()
-    {
+
+    private void goToUpdateProfileImageActivity() {
         Intent i = new Intent(this, UpdateProfileImageActivity.class);
         startActivity(i);
     }
 
-
+    private void goToFollowersActivity() {
+        Intent i = new Intent(this, FollowersActivity.class);
+        User toPass = currentUser;
+        i.putExtra("user", Parcels.wrap(toPass));
+        startActivity(i);
+    }
 
     private void loadNominatorProfileImage() {
         ParseFile image = null;
