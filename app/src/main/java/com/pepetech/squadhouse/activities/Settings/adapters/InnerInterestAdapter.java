@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pepetech.squadhouse.R;
@@ -70,9 +71,11 @@ public class InnerInterestAdapter extends RecyclerView.Adapter<InnerInterestAdap
         // view elements
         TextView tvInterest;
         RelativeLayout rlInterestItem;
+        boolean clicked;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            clicked = true;
             tvInterest = itemView.findViewById(R.id.tvInterest);
             rlInterestItem = itemView.findViewById(R.id.rlInterestItem);
         }
@@ -83,6 +86,13 @@ public class InnerInterestAdapter extends RecyclerView.Adapter<InnerInterestAdap
             rlInterestItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (clicked) {
+                        clicked = false;
+                        rlInterestItem.setBackground(ContextCompat.getDrawable(v.getContext(), R.drawable.cell_interest_selected_background));
+                    } else {
+                        clicked = true;
+                        rlInterestItem.setBackground(ContextCompat.getDrawable(v.getContext(), R.drawable.cell_white_background));
+                    }
                     // TODO: update view to show colors indicating selection
                     // change background color
                     // change text color
