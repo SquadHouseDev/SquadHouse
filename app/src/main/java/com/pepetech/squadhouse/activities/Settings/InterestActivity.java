@@ -1,11 +1,11 @@
 package com.pepetech.squadhouse.activities.Settings;
 
+import android.os.Bundle;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.util.Log;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -13,13 +13,11 @@ import com.parse.ParseQuery;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.Settings.adapters.OuterInterestAdapter;
 import com.pepetech.squadhouse.models.Interest;
-import com.pepetech.squadhouse.models.InterestGroup;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 
 /**
  * This is the page routed to upon selection of Interest button
@@ -60,6 +58,7 @@ public class InterestActivity extends AppCompatActivity {
      * Function for querying for all Interests to create the 2D List.
      * A linked hashmap is used to provide keyword access grouping by archetype
      * as well as maintenance of order insertion.
+     *
      * @param inputAdapter
      * @param inputInterests
      */

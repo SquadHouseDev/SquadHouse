@@ -31,26 +31,12 @@ import com.pepetech.squadhouse.activities.Settings.SettingsActivity;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.User;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewMyProfileActivity extends AppCompatActivity {
+public class MyProfileActivity extends AppCompatActivity {
     ParseUser parseUser;
     User user;
     public static final String TAG = "ProfileActivity";
