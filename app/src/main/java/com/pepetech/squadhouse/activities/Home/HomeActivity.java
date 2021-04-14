@@ -130,22 +130,54 @@ public class HomeActivity extends AppCompatActivity {
      */
     private void queryRooms() {
         ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
-//        if (!allRooms.isEmpty()){
-//            query.whereLessThan(Room.KEY_CREATED_AT, ((Room)allRooms.get(allRooms.size()-1)).getCreatedAt());
-//        }
-        query.whereEqualTo(Room.KEY_IS_ACTIVE, true);
-        query.addAscendingOrder(Room.KEY_CREATED_AT);
-        query.findInBackground(new FindCallback<Room>() {
-            @Override
-            public void done(List<Room> rooms, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting posts", e);
-                    return;
+        // case in which there exists rooms
+        if (allRooms.size() > 2){
+            Log.i(TAG, String.valueOf(((Room)allRooms.get(allRooms.size()-1)).getCreatedAt()));
+            query.whereGreaterThan(Room.KEY_CREATED_AT, ((Room)allRooms.get(2)).getCreatedAt());
+            query.whereEqualTo(Room.KEY_IS_ACTIVE, true);
+            query.orderByDescending(Room.KEY_CREATED_AT);
+            query.findInBackground(new FindCallback<Room>() {
+                @Override
+                public void done(List<Room> rooms, ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "Issue with getting posts", e);
+                        return;
+                    }
+                    // refresh should show... most recent at the top to oldest at the bottom
+                    // because the recycler uses a collection of Objects that is prepopulated
+                    // for denoting cell elems, the point of insertion is after index 1
+                    // 0 --> explore cell
+                    // 1 --> future cell
+                    // 2 --> active of the previously most recent room
+//                    allRooms.addAll(rooms);
+                    allRooms.addAll(2,rooms);
+                    viewAdapter.notifyDataSetChanged();
                 }
-                allRooms.addAll(rooms);
-                viewAdapter.notifyDataSetChanged();
-            }
-        });
+            });
+        }
+        // case where there does not exist any rooms
+        else {
+            query.whereEqualTo(Room.KEY_IS_ACTIVE, true);
+            query.orderByDescending(Room.KEY_CREATED_AT);
+            query.findInBackground(new FindCallback<Room>() {
+                @Override
+                public void done(List<Room> rooms, ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "Issue with getting posts", e);
+                        return;
+                    }
+                    // refresh should show... most recent at the top to oldest at the bottom
+                    // because the recycler uses a collection of Objects that is prepopulated
+                    // for denoting cell elems, the point of insertion is after index 1
+                    // 0 --> explore cell
+                    // 1 --> future cell
+                    // 2 --> active of the previously most recent room
+                    allRooms.addAll(rooms);
+                    viewAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+
     }
 
     // Menu icons are inflated just as they were with actionbar
