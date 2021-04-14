@@ -67,8 +67,7 @@ public class InterestActivity extends AppCompatActivity {
      * @param inputInterests
      */
     private void queryAndGroupInterestsByArchetype(RecyclerView.Adapter inputAdapter, List<List<Interest>> inputInterests) {
-        // toggle for debug logging
-        boolean DEBUG = false;
+//        lhmInterests.clear();
         inputInterests.clear();
         Log.i(TAG, "queryAndGroupInterestsByArchetype call");
         ParseQuery<Interest> query = ParseQuery.getQuery(Interest.class);
@@ -87,87 +86,78 @@ public class InterestActivity extends AppCompatActivity {
                 for (Interest i : userInterests) {
                     Log.i(TAG, i.getObjectId() + " : " + i.getName());
                 }
+
                 // map archetype to list of interests
                 for (Interest i : interestsQueried) {
                     if (!lhmInterests.keySet().contains(i.getArchetype())) {
                         // create new empty list
                         lhmInterests.put(i.getArchetype(), new ArrayList<>());
                         // check if interest is in User's interest list
-                        if (DEBUG) {
-                            Log.i(TAG, "IF start loop objectId: " + i.getName());
-                            Log.i(TAG, "Interest Checked: " + i.getName());
-                        }
+                        Log.i(TAG, "IF start loop objectId: " + i.getName());
+                        Log.i(TAG, "Interest Checked: " + i.getName());
                         for (Interest _ : userInterests) {
-                            if (DEBUG) {
-                                Log.i(TAG, "Interest List size: " + userInterests.size());
-                            }
+                            Log.i(TAG, "Interest List size: " + userInterests.size());
                             if (_.getObjectId().equals(i.getObjectId())) {
-                                if (DEBUG) {
-                                    Log.i(TAG, "Create new list " + i.getName() + " is in User's list");
-                                }
+                                Log.i(TAG, "Create new list " + i.getName() + " is in User's list");
                                 i.isSelected = true;
                                 break;
                             } else {
-                                if (DEBUG) {
-                                    Log.i(TAG, "Create new list " + i.getName() + " is not in User's list");
-                                }
+                                Log.i(TAG, "Create new list " + i.getName() + " is not in User's list");
                                 i.isSelected = false;
                             }
                         }
-                        if (DEBUG) {
-                            Log.i(TAG, "IF end loop objectId: " + i.getName());
-                        }
+                        Log.i(TAG, "IF end loop objectId: " + i.getName());
                         // add to newly created list
                         lhmInterests.get(i.getArchetype()).add(i);
-                        if (DEBUG) {
-                            Log.i(TAG, "Not in hashmap keys: " + i.getArchetype() + " ==> " + i.toString());    // DEBUG}
-                        } else {
+                        Log.i(TAG, "Not in hashmap keys: " + i.getArchetype() + " ==> " + i.toString());    // DEBUG
+                    } else {
 
-                            // check if interest is in User's interest list
-                            if (DEBUG) {
-                                Log.i(TAG, "ELSE start loop objectId: " + i.getName());
-                                Log.i(TAG, "Key exists adding: " + i.toString());   // DEBUG
-                                Log.i(TAG, "Interest Checked: " + i.getName());
-                                Log.i(TAG, "Interest List size: " + userInterests.size());
+                        // check if interest is in User's interest list
+                        Log.i(TAG, "ELSE start loop objectId: " + i.getName());
+                        Log.i(TAG, "Key exists adding: " + i.toString());   // DEBUG
+                        Log.i(TAG, "Interest Checked: " + i.getName());
+                        Log.i(TAG, "Interest List size: " + userInterests.size());
+                        for (Interest _ : userInterests) {
+                            if (_.getObjectId().equals(i.getObjectId())) {
+                                Log.i(TAG, "Add to existing list " + i.getName() + " is in User's list");
+                                i.isSelected = true;
+                                break;
+                            } else {
+                                Log.i(TAG, "Add to existing list " + i.getName() + " is not in User's list");
+                                i.isSelected = false;
                             }
-                            for (Interest _ : userInterests) {
-                                if (_.getObjectId().equals(i.getObjectId())) {
-                                    if (DEBUG) {
-                                        Log.i(TAG, "Add to existing list " + i.getName() + " is in User's list");
-                                    }
-                                    i.isSelected = true;
-                                    break;
-                                } else {
-                                    if (DEBUG) {
-                                        Log.i(TAG, "Add to existing list " + i.getName() + " is not in User's list");
-                                    }
-                                    i.isSelected = false;
-                                }
-                            }
-                            Log.i(TAG, "ELSE end loop objectId: " + i.getName());
-                            // add to existing list
-                            lhmInterests.get(i.getArchetype()).add(i);
                         }
+                        Log.i(TAG, "ELSE end loop objectId: " + i.getName());
+                        // add to existing list
+                        lhmInterests.get(i.getArchetype()).add(i);
                     }
-                    // add to 2d list
-                    for (Map.Entry<String, List<Interest>> entry : lhmInterests.entrySet()) {
-                        inputInterests.add((List<Interest>) entry.getValue());
-                        Log.i(TAG, "inputInterests size: " + String.valueOf(inputInterests.size()));
-                        Log.i(TAG, inputInterests.get(0).get(0).getArchetype());
-                    }
-                    // DEBUG
-                    if (DEBUG) {
-                        for (List<Interest> i : inputInterests) {
-                            for (Interest j : i) {
-                                if (j.isSelected) {
-                                    Log.i(TAG, j.toString() + " is selected");
-                                }
-                            }
+                }
+                // add to 2d list
+                for (Map.Entry<String, List<Interest>> entry : lhmInterests.entrySet()) {
+                    inputInterests.add((List<Interest>) entry.getValue());
+                    Log.i(TAG, "inputInterests size: " + String.valueOf(inputInterests.size()));
+                    Log.i(TAG, inputInterests.get(0).get(0).getArchetype());
+                }
+                // DEBUG
+                for (List<Interest> i : inputInterests) {
+                    for (Interest j : i) {
+                        if (j.isSelected) {
+                            Log.i(TAG, j.toString() + " is selected");
                         }
                     }
                 }
+                // TODO: fix bug where only one interest in the User's list is being marked as selected despite there existing more than one interest
+                // TODO: all interests in a User's list should be marked as selected
+
                 inputAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        User u = new User(ParseUser.getCurrentUser());
+
     }
 }
