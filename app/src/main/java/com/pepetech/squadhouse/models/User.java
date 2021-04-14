@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 /**
+ * TODO: add method of querying and updating followerCount
  * Wrapper class for interacting with the ParseUser class using an adapter pattern to avoid issues associated with
  * subclassing the ParseUser class.
  */
@@ -35,6 +37,8 @@ public class User {
     public static final String KEY_NOMINATOR = "nominator";
     public static final String KEY_IS_SEED = "isSeed";
     public static final String KEY_USER_NAME = "username";
+    public static final String KEY_FOLLOWER_COUNT = "followerCount";
+
 
     ////////////////////////////////////////////////////////////
     // Attributes
@@ -91,6 +95,17 @@ public class User {
     ////////////////////////////////////////////////////////////
     public ParseUser getParseUser() {
         return user;
+    }
+
+    public int getFollowerCount() {
+        int rv = 0;
+        try {
+            rv = user.fetchIfNeeded().getInt(KEY_FOLLOWER_COUNT);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return rv;
     }
 
     public ParseFile getImage() {
@@ -269,7 +284,9 @@ public class User {
         user.put(KEY_PHONE_NUMBER, phoneNumber);
     }
 
-    private void setUserName(String username) { user.put(KEY_USER_NAME, username);}
+    private void setUserName(String username) {
+        user.put(KEY_USER_NAME, username);
+    }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     // Update Methods: automatically calls saveInBackground on ParseUser to effect updates
@@ -312,7 +329,7 @@ public class User {
     public boolean removeFollower(ParseObject follower) {
         ArrayList<ParseObject> toRemove = new ArrayList<>();
         toRemove.add(follower);
-        for (ParseObject u: toRemove)
+        for (ParseObject u : toRemove)
             Log.i(this.getClass().getName(), (String) u.get(User.KEY_FIRST_NAME));
         user.removeAll(KEY_FOLLOWERS, toRemove);
         user.saveInBackground();
@@ -368,8 +385,8 @@ public class User {
         setPhoneNumber(phoneNumber);
         user.saveInBackground();
     }
-    public void updateUserName(String username)
-    {
+
+    public void updateUserName(String username) {
         setUserName(username);
         user.saveInBackground();
     }
