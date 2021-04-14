@@ -49,7 +49,6 @@ public class InnerInterestAdapter extends RecyclerView.Adapter<InnerInterestAdap
     @Override
     public void onBindViewHolder(@NonNull InnerInterestAdapter.ViewHolder holder, int position) {
         Interest interest = interests.get(position);
-        // Set the group name
         holder.bind(interest);
     }
 
@@ -70,9 +69,9 @@ public class InnerInterestAdapter extends RecyclerView.Adapter<InnerInterestAdap
         }
 
         public void bind(Interest interest) {
-            // Bind data of post to the view element
+            // Bind Interest to the view element
             tvInterest.setText(interest.getEmoji() + " " + interest.getName());
-            // apply similar approach to that of follower
+            // Apply method configuring buttons to reflect state of existing/non-existing Interests in a User's Interest List
             configureInterestSelection(interest);
         }
 
