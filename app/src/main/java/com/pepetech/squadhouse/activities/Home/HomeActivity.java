@@ -124,9 +124,9 @@ public class HomeActivity extends AppCompatActivity {
      */
     private void queryRooms() {
         ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
-        if (!allRooms.isEmpty()){
-            query.whereLessThan(Room.KEY_CREATED_AT, ((Room)allRooms.get(allRooms.size()-1)).getCreatedAt());
-        }
+//        if (!allRooms.isEmpty()){
+//            query.whereLessThan(Room.KEY_CREATED_AT, ((Room)allRooms.get(allRooms.size()-1)).getCreatedAt());
+//        }
         query.whereEqualTo(Room.KEY_IS_ACTIVE, true);
         query.addAscendingOrder(Room.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Room>() {
