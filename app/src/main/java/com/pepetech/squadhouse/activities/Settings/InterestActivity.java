@@ -35,7 +35,6 @@ public class InterestActivity extends AppCompatActivity {
     public static final String TAG = "InterestActivity";
     OuterInterestAdapter outerAdapter;
     List<List<Interest>> interests;
-    //    LinkedHashMap<String, List<Interest>> lhmInterests;
     RecyclerView rvOuterInterest;
 
     @Override
@@ -48,13 +47,9 @@ public class InterestActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////
         rvOuterInterest = findViewById(R.id.rvOuterInterest);
         interests = new ArrayList<>();
-        outerAdapter = new OuterInterestAdapter(this,
-                interests, new User(ParseUser.getCurrentUser())
-//                lhmInterests
-        );
+        outerAdapter = new OuterInterestAdapter(this, interests);
         rvOuterInterest.setAdapter(outerAdapter);
         rvOuterInterest.setLayoutManager(new LinearLayoutManager(this));
-//        lhmInterests = new LinkedHashMap<>();
         queryAndGroupInterestsByArchetype(outerAdapter, interests);
     }
 
@@ -146,18 +141,8 @@ public class InterestActivity extends AppCompatActivity {
                         }
                     }
                 }
-                // TODO: fix bug where only one interest in the User's list is being marked as selected despite there existing more than one interest
-                // TODO: all interests in a User's list should be marked as selected
-
                 inputAdapter.notifyDataSetChanged();
             }
         });
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-//        User u = new User(ParseUser.getCurrentUser());
-
     }
 }
