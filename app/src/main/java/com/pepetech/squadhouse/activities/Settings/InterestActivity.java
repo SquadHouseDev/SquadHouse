@@ -63,7 +63,8 @@ public class InterestActivity extends AppCompatActivity {
      * @param inputInterests
      */
     private void queryAndGroupInterestsByArchetype(RecyclerView.Adapter inputAdapter, List<List<Interest>> inputInterests) {
-//        lhmInterests.clear();
+        // toggle for debug logging
+        boolean DEBUG = false;
         inputInterests.clear();
         Log.i(TAG, "queryAndGroupInterestsByArchetype call");
         ParseQuery<Interest> query = ParseQuery.getQuery(Interest.class);
