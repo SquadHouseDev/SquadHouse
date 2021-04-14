@@ -10,10 +10,11 @@ import android.util.Log;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.Settings.adapters.OuterInterestAdapter;
 import com.pepetech.squadhouse.models.Interest;
-import com.pepetech.squadhouse.models.InterestGroup;
+import com.pepetech.squadhouse.models.User;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -77,16 +78,62 @@ public class InterestActivity extends AppCompatActivity {
                     return;
                 }
                 LinkedHashMap<String, List<Interest>> lhmInterests = new LinkedHashMap<>();
+                User u = new User(ParseUser.getCurrentUser());
+                // map archetype to list of interests
                 for (Interest i : interestsQueried) {
                     if (!lhmInterests.keySet().contains(i.getArchetype())) {
+                        // create new empty list
                         lhmInterests.put(i.getArchetype(), new ArrayList<>());
+                        // check if interest is in User's interest list
+                        // TODO: why does contains not work?
+//                        Log.i(TAG, "contains: " + i.getName());
+//                        if (u.getInterests().contains(i)) {
+//                            Log.i(TAG, i.getName() + " is in User's list");
+//                            i.isSelected = true;
+//                        } else {
+//                            Log.i(TAG, i.getName() + " is not in User's list");
+//                            i.isSelected = false;
+//                        }
+                        Log.i(TAG, "loop objectId: " + i.getName());
+                        for (Interest _ : u.getInterests()) {
+                            if (_.getObjectId().equals(i.getObjectId())) {
+                                Log.i(TAG, i.getName() + " is in User's list");
+                                i.isSelected = true;
+                            } else {
+                                Log.i(TAG, i.getName() + " is not in User's list");
+                                i.isSelected = false;
+                            }
+                        }
+                        // add to newly created list
                         lhmInterests.get(i.getArchetype()).add(i);
                         Log.i(TAG, "Not in hashmap keys: " + i.getArchetype() + " ==> " + i.toString());    // DEBUG
                     } else {
                         Log.i(TAG, "Key exists adding: " + i.toString());   // DEBUG
+                        // check if interest is in User's interest list
+                        // TODO: why does contains not work?
+//                        Log.i(TAG, "contains: " + i.getName());
+//                        if (u.getInterests().contains(i)) {
+//                            Log.i(TAG, i.getName() + " is in User's list");
+//                            i.isSelected = true;
+//                        } else {
+//                            Log.i(TAG, i.getName() + " is not in User's list");
+//                            i.isSelected = false;
+//                        }
+                        Log.i(TAG, "loop objectId: " + i.getName());
+                        for (Interest _ : u.getInterests()) {
+                            if (_.getObjectId().equals(i.getObjectId())) {
+                                Log.i(TAG, i.getName() + " is in User's list");
+                                i.isSelected = true;
+                            } else {
+                                Log.i(TAG, i.getName() + " is not in User's list");
+                                i.isSelected = false;
+                            }
+                        }
+                        // add to existing list
                         lhmInterests.get(i.getArchetype()).add(i);
                     }
                 }
+                // add to 2d list
                 for (Map.Entry<String, List<Interest>> entry : lhmInterests.entrySet()) {
                     inputInterests.add((List<Interest>) entry.getValue());
                     Log.i(TAG, "inputInterests size: " + String.valueOf(inputInterests.size()));
