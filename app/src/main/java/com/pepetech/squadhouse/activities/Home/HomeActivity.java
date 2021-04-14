@@ -30,6 +30,7 @@ import com.pepetech.squadhouse.models.Room;
 import com.pepetech.squadhouse.models.User;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -130,7 +131,11 @@ public class HomeActivity extends AppCompatActivity {
      */
     private void queryRooms() {
         ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
-        query.include(Room.KEY_IS_ACTIVE);
+//        if (!allRooms.isEmpty()) {
+//            query.whereLessThan(Room.KEY_CREATED_AT, ((Room) allRooms.get(allRooms.size() - 1)).getCreatedAt());
+//        }
+        query.whereEqualTo(Room.KEY_IS_ACTIVE, true);
+        query.addAscendingOrder(Room.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Room>() {
             @Override
             public void done(List<Room> rooms, ParseException e) {
