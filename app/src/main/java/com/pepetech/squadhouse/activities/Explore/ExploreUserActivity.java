@@ -191,12 +191,9 @@ public class ExploreUserActivity extends AppCompatActivity {
         tvBiography.setText(userSelected.getParseUser().getString(User.KEY_BIOGRAPHY));
         tvUsername.setText("@" + userSelected.getParseUser().getUsername());
         // load following and followers count
-//        tvFollowersCount.setText(String.valueOf(followers.size()));
-//        tvFollowersCount.setText(String.valueOf(followers.size()));
         tvFollowersCount.setText(String.valueOf(userSelected.getFollowerCount())); // DEBUG
         tvFollowingCount.setText(String.valueOf(userSelected.getFollowing().size())); // DEBUG
         // load nominator's profile picture
-//        boolean isSeed = user.isSeed();
         if (!userSelected.isSeed()) {
             loadNominatorProfileImage();
             tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
@@ -268,7 +265,6 @@ public class ExploreUserActivity extends AppCompatActivity {
                     }
                 } else {
                 }
-                // modify adapter to be used in
                 adapter.notifyDataSetChanged();
             }
         });
