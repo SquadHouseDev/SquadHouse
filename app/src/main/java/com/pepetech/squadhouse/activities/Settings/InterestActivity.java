@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -47,7 +48,7 @@ public class InterestActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////
         rvOuterInterest = findViewById(R.id.rvOuterInterest);
         interests = new ArrayList<>();
-        outerAdapter = new OuterInterestAdapter(this, interests);
+        outerAdapter = new OuterInterestAdapter(this, interests, new User(ParseUser.getCurrentUser()));
         rvOuterInterest.setAdapter(outerAdapter);
         rvOuterInterest.setLayoutManager(new LinearLayoutManager(this));
         queryAndGroupInterestsByArchetype(outerAdapter, interests);
