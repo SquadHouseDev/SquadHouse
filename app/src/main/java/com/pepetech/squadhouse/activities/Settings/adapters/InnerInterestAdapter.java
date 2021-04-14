@@ -13,8 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.models.Interest;
+import com.pepetech.squadhouse.models.User;
 
 import java.util.List;
 
@@ -27,8 +29,11 @@ public class InnerInterestAdapter extends RecyclerView.Adapter<InnerInterestAdap
     public static final String TAG = "InnerInterestAdapter";
     private Context context;
     private List<Interest> interests;
+    User currentUser;
 
-    public InnerInterestAdapter(Context context, List<Interest> interests) {
+
+    public InnerInterestAdapter(Context context, List<Interest> interests, User currentUser) {
+        this.currentUser = currentUser;
         this.context = context;
         this.interests = interests;
         Log.i(TAG, "interests size: " + String.valueOf(interests.size()));
@@ -44,19 +49,7 @@ public class InnerInterestAdapter extends RecyclerView.Adapter<InnerInterestAdap
     @Override
     public void onBindViewHolder(@NonNull InnerInterestAdapter.ViewHolder holder, int position) {
         Interest interest = interests.get(position);
-        // Set the group name
         holder.bind(interest);
-//        holder.rlInterestItem.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // TODO: update view to show colors indicating selection
-//                // change background color
-//                // change text color
-//                // TODO: add func call to update interest list
-//                // add/remove from interest list
-//                Toast.makeText(context, holder.tvInterest.getText() + " selected!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     @Override
@@ -65,39 +58,59 @@ public class InnerInterestAdapter extends RecyclerView.Adapter<InnerInterestAdap
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
         // view elements
         TextView tvInterest;
         RelativeLayout rlInterestItem;
-        boolean isNotSelected;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            isNotSelected = true;
             tvInterest = itemView.findViewById(R.id.tvInterest);
             rlInterestItem = itemView.findViewById(R.id.rlInterestItem);
         }
 
         public void bind(Interest interest) {
-            // Bind data of post to the view element
+            // Bind Interest to the view element
             tvInterest.setText(interest.getEmoji() + " " + interest.getName());
+            // Apply method configuring buttons to reflect state of existing/non-existing Interests in a User's Interest List
+            configureInterestSelection(interest);
+        }
+
+        private void configureInterestSelection(Interest interestElement) {
+            Log.i(TAG, "Configuring interest for " + interestElement.getName() + " such that selection: " + interestElement.isSelected);
+            if (interestElement.isSelected) {
+                // apply background to show pre-existing selection
+                rlInterestItem.setBackground(ContextCompat.getDrawable(this.itemView.getContext(), R.drawable.cell_interest_selected_background));
+                handleInterestToggle(interestElement);
+
+            } else {
+                // apply background to show no existing selection
+                rlInterestItem.setBackground(ContextCompat.getDrawable(this.itemView.getContext(), R.drawable.cell_white_background));
+                handleInterestToggle(interestElement);
+            }
+        }
+
+        private void handleInterestToggle(Interest interestElement) {
             rlInterestItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isNotSelected) {
-                        isNotSelected = false;
+                    // on interest toggle and current not select --> user has toggled to add the interest to list
+                    if (!interestElement.isSelected) {
+                        // safety check for interest existing
+                        currentUser.addInterest(interestElement);
+                        // update interest state to be selected
+                        interestElement.isSelected = true;
+                        // update GUI to show selection
                         rlInterestItem.setBackground(ContextCompat.getDrawable(v.getContext(), R.drawable.cell_interest_selected_background));
-                    } else {
-                        isNotSelected = true;
-                        rlInterestItem.setBackground(ContextCompat.getDrawable(v.getContext(), R.drawable.cell_white_background));
+                        Log.i(TAG, interestElement.getName() + " was added to " + currentUser.getFirstName() + "'s Interest list");
                     }
-                    // TODO: update view to show colors indicating selection
-                    // change background color
-                    // change text color
-                    // TODO: add func call to update interest list
-                    // add/remove from interest list
-                    Toast.makeText(context, tvInterest.getText() + " selected!", Toast.LENGTH_SHORT).show();
-                    Log.i(TAG, tvInterest.getText() + " selected!");
+                    // on interest toggle and currently selected --> user has toggled to remove the interest to list
+                    else {
+                        interestElement.isSelected = false;
+                        currentUser.removeInterest(interestElement);
+                        rlInterestItem.setBackground(ContextCompat.getDrawable(v.getContext(), R.drawable.cell_white_background));
+                        Log.i(TAG, interestElement.getName() + " was removed to " + currentUser.getFirstName() + "'s Interest list");
+                    }
+                    notifyDataSetChanged();
                 }
             });
         }
