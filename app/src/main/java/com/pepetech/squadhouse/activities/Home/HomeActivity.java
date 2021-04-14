@@ -107,6 +107,12 @@ public class HomeActivity extends AppCompatActivity {
                 Toast t = Toast.makeText(getBaseContext(), "Create room clicked!", Toast.LENGTH_SHORT);
                 Log.i(TAG, "Create room clicked!");
                 // TODO: Call a bottom sheet here
+
+                Room r = new Room();
+                r.setTitle("Hello world!");
+                r.setActiveState(true);
+                r.saveInBackground();
+                Toast.makeText(HomeActivity.this, "Created a new room!", Toast.LENGTH_SHORT).show();
             }
         });
 
