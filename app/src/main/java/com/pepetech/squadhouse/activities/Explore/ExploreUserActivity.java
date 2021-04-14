@@ -22,6 +22,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.activities.FollowersActivity;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.User;
 
@@ -190,15 +191,19 @@ public class ExploreUserActivity extends AppCompatActivity {
         tvBiography.setText(userSelected.getParseUser().getString(User.KEY_BIOGRAPHY));
         tvUsername.setText("@" + userSelected.getParseUser().getUsername());
         // load following and followers count
-//        tvFollowersCount.setText(String.valueOf(followers.size()));
-//        tvFollowersCount.setText(String.valueOf(followers.size()));
         tvFollowersCount.setText(String.valueOf(userSelected.getFollowerCount())); // DEBUG
-        tvFollowingCount.setText(String.valueOf(6996)); // DEBUG
+        tvFollowingCount.setText(String.valueOf(userSelected.getFollowing().size())); // DEBUG
         // load nominator's profile picture
-//        boolean isSeed = user.isSeed();
         if (!userSelected.isSeed()) {
             loadNominatorProfileImage();
             tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
+        }
+        else {
+            Glide.with(this)
+                    .load(R.drawable.ic_sprout)
+                    .fitCenter()
+                    .circleCrop()
+                    .into(ivProfileNominator);
         }
     }
 
@@ -260,7 +265,6 @@ public class ExploreUserActivity extends AppCompatActivity {
                     }
                 } else {
                 }
-                // modify adapter to be used in
                 adapter.notifyDataSetChanged();
             }
         });

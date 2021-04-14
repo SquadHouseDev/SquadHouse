@@ -336,22 +336,16 @@ public class User {
         return true;
     }
 
-    // TODO: testing needed
     public boolean addInterest(Interest interest) {
         user.addUnique(KEY_INTERESTS, interest);
         user.saveInBackground();
         return true;
     }
 
-    // TODO: testing needed
     public boolean removeInterest(Interest interest) {
-        ArrayList<Interest> interests = getInterests();
-        if (!interests.contains(interest)) {
-            return false;
-        } else {
-            interests.remove(interest);
-        }
-        user.put(KEY_INTERESTS, interests);
+        ArrayList<ParseObject> toRemove = new ArrayList<>();
+        toRemove.add(interest);
+        user.removeAll(KEY_INTERESTS, toRemove);
         user.saveInBackground();
         return true;
     }

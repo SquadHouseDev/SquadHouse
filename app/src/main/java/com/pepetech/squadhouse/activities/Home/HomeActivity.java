@@ -25,7 +25,7 @@ import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.Explore.ExploreActivity;
 import com.pepetech.squadhouse.activities.Home.adapters.HomeFeedAdapter;
 import com.pepetech.squadhouse.activities.Home.adapters.HomeMultiViewAdapter;
-import com.pepetech.squadhouse.activities.MyProfile.ViewMyProfileActivity;
+import com.pepetech.squadhouse.activities.MyProfile.MyProfileActivity;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.Room;
 import com.pepetech.squadhouse.models.User;
@@ -67,6 +67,9 @@ public class HomeActivity extends AppCompatActivity {
         // Setup recycler view
         ////////////////////////////////////////////////////////////
         allRooms = new ArrayList<>();
+        // configure hetero recycler using dummy values
+        allRooms.add(1);    // any integer value denotes the explore cell
+        allRooms.add("future"); // any future string denotes the cell of personalized future events for the user
         rvRooms = findViewById(R.id.rvHomeFeed);
 
         viewAdapter = new HomeMultiViewAdapter(this, allRooms);
@@ -121,7 +124,11 @@ public class HomeActivity extends AppCompatActivity {
      */
     private void queryRooms() {
         ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
-        query.include(Room.KEY_IS_ACTIVE);
+//        if (!allRooms.isEmpty()){
+//            query.whereLessThan(Room.KEY_CREATED_AT, ((Room)allRooms.get(allRooms.size()-1)).getCreatedAt());
+//        }
+        query.whereEqualTo(Room.KEY_IS_ACTIVE, true);
+        query.addAscendingOrder(Room.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<Room>() {
             @Override
             public void done(List<Room> rooms, ParseException e) {
@@ -129,16 +136,8 @@ public class HomeActivity extends AppCompatActivity {
                     Log.e(TAG, "Issue with getting posts", e);
                     return;
                 }
-//                for (Room p : posts) {
-//                    Log.i(TAG, "Room: " + p.getDescription() + ", username: " + p.getUser().getUsername());
-//                }
-                // add an image to be displayed
-                allRooms.add(1);
-                // should add event objects TBD
-                allRooms.add("future");
                 allRooms.addAll(rooms);
                 viewAdapter.notifyDataSetChanged();
-
             }
         });
     }
@@ -188,7 +187,7 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.action_profile:
                 Toast.makeText(this, "Profile clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Profile clicked!");
-                i = new Intent(this, ViewMyProfileActivity.class);
+                i = new Intent(this, MyProfileActivity.class);
                 this.startActivity(i);
                 // arg_1: page to navigate to slides from the right
                 // arg_2: page navigating from slides to the left
