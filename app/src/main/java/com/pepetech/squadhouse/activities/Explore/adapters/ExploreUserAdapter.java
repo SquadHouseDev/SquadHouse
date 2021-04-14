@@ -31,6 +31,8 @@ import java.util.List;
 /**
  * The UserAdapter takes in a List of users found from keyword search
  * performed in the ExploreActivity to bind to each cell in the ReyclerView.
+ * This class maintains the state of a User's activity of following/unfollowing
+ * another User.
  */
 public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.ViewHolder> {
     public static final String TAG = "ExploreUserAdapter";
