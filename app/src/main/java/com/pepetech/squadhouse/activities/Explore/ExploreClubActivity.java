@@ -26,6 +26,16 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is the Activity that allows for navigation to a Club's profile for viewing.
+ * An example of using this class is as follows:
+ * <br>
+ * <blockquote>
+ * Intent i = new Intent(context, ExploreClubActivity.class);<br>
+ * i.putExtra("club", Parcels.wrap(clubElement));<br>
+ * context.startActivity(i);<br>
+ * </blockquote>
+ */
 public class ExploreClubActivity extends AppCompatActivity {
     //    public static final String TAG = ExploreAClubActivity.class.getName();
     public static final String TAG = "ExploreAClubActivity";

@@ -21,7 +21,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvFirstName"
+                android:id="@+id/tvPrompt"
                 android:layout_width="384dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

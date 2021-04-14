@@ -121,8 +121,8 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         public void bind(Room room) {
             // Bind data of post to the view element
-            tvClubName.setText("ACTIVE");
-            tvRoomName.setText("ACTIVE");
+            tvClubName.setText(room.getClubName());
+            tvRoomName.setText(room.getTitle());
             String emojiStr = getEmojiByUnicode(0x1F4AC);
             String newText = tvParticipants.getText() + " " + getEmojiByUnicode(0x1F4AC);
             tvParticipants.setText(newText); // DEBUG with emoji in unicode format

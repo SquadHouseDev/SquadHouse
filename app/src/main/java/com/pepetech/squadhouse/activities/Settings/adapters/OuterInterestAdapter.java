@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.models.Interest;
+import com.pepetech.squadhouse.models.User;
 
 import java.util.List;
 
@@ -28,8 +29,11 @@ public class OuterInterestAdapter extends RecyclerView.Adapter<OuterInterestAdap
     public static final String TAG = "OuterInterestAdapter";
     private Context context;
     private List<List<Interest>> interests;
+    GridLayoutManager layoutManager;
+    User currentUser;
 
-    public OuterInterestAdapter(Context context, List<List<Interest>> interests) {
+    public OuterInterestAdapter(Context context, List<List<Interest>> interests, User currentUser) {
+        this.currentUser = currentUser;
         this.context = context;
         this.interests = interests;
         Log.i(TAG, "interests size: " + String.valueOf(interests.size()));
@@ -48,7 +52,7 @@ public class OuterInterestAdapter extends RecyclerView.Adapter<OuterInterestAdap
         // Set the group name
         holder.bind(interestsByArchetype);
         // Init inner adapter
-        InnerInterestAdapter innerInterestAdapter = new InnerInterestAdapter(context, interestsByArchetype);
+        InnerInterestAdapter innerInterestAdapter = new InnerInterestAdapter(context, interestsByArchetype, currentUser);
         int ROWS = 0;
         Log.i(TAG, interestsByArchetype.get(0).getArchetype() + " " + String.valueOf((interestsByArchetype.size() / 5)));
         if (interestsByArchetype.size() / 3 > 3) {
@@ -59,7 +63,7 @@ public class OuterInterestAdapter extends RecyclerView.Adapter<OuterInterestAdap
             ROWS = 1;
         }
         // Init inner adapter layout
-        GridLayoutManager layoutManager = new GridLayoutManager(
+        layoutManager = new GridLayoutManager(
                 context, ROWS, GridLayoutManager.HORIZONTAL, false);
         // Assign inner recycler layout
         holder.rvInnerInterest.setLayoutManager(layoutManager);
@@ -73,23 +77,22 @@ public class OuterInterestAdapter extends RecyclerView.Adapter<OuterInterestAdap
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
         // view elements
         private TextView tvInterestArchetype;
         private RecyclerView rvInnerInterest;
 
-        // TODO: add swipe right on cell to reveal a button to hide the recommended active room
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvInterestArchetype = itemView.findViewById(R.id.tvInterestArchetype);
             rvInnerInterest = itemView.findViewById(R.id.rvInnerInterest);
-//            rvInnerInterest.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
         }
 
         public void bind(List<Interest> interestsByArchetype) {
             // Bind data of post to the view element
-            tvInterestArchetype.setText(interestsByArchetype.get(0).getArchetypeEmoji() +
-                    " " + interestsByArchetype.get(0).getArchetype());
+            tvInterestArchetype.setText(
+                    interestsByArchetype.get(0).getArchetypeEmoji() +
+                    " " + interestsByArchetype.get(0).getArchetype()
+            );
             Log.i(TAG, interestsByArchetype.get(0).getArchetype());
         }
     }
