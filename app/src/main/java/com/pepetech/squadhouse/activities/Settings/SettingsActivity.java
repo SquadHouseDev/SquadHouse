@@ -12,6 +12,7 @@ import com.pepetech.squadhouse.R;
 public class SettingsActivity extends AppCompatActivity {
 
     Button btnAccount, btnInterests, btnWhatsNew, btnFAQ, btnGuidelines, btnTOS, btnPrivacyPolicy;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +34,7 @@ public class SettingsActivity extends AppCompatActivity {
         setupOnClickListeners();
     }
 
-    private void setupOnClickListeners(){
+    private void setupOnClickListeners() {
         btnInterests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,6 +43,4 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }
