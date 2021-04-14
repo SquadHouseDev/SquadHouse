@@ -6,9 +6,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.HomeActivity"
     android:background="@color/eggshell"
-    >
+    tools:context=".activities.Home.HomeActivity">
 
     <Button
         android:id="@+id/btnCreateRoom"
@@ -32,6 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_baseline_group_add_24"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="25.5dp"
             app:layout_anchor="@id/rvHomeFeed"
             app:layout_anchorGravity="bottom|right|end">
 

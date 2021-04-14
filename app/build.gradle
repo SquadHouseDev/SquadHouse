@@ -29,18 +29,20 @@ android {
 }
 
 dependencies {
+    implementation "androidx.cardview:cardview:1.0.0"
 
 //    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
 
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation 'com.github.parse-community.Parse-SDK-Android:parse:1.25.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1' // for logging API calls to LogCat
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
     implementation 'org.parceler:parceler-api:1.1.12'
@@ -54,4 +56,7 @@ dependencies {
     // The Voice SDK resides on jCenter
     implementation 'com.twilio:voice-android:3.1.2'
 
+    implementation 'com.google.android.material:material:1.2.0-alpha02'
+
+    implementation 'com.droidninja:filepicker:2.2.5'
 }
