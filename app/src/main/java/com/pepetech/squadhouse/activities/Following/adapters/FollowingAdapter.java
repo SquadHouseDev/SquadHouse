@@ -1,22 +1,32 @@
 package com.pepetech.squadhouse.activities.Following.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
-import com.pepetech.squadhouse.activities.Home.adapters.HomeFeedAdapter;
+import com.pepetech.squadhouse.activities.Explore.ExploreClubActivity;
+import com.pepetech.squadhouse.activities.Explore.ExploreUserActivity;
 import com.pepetech.squadhouse.models.Club;
-import com.pepetech.squadhouse.models.Room;
+import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.User;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -36,6 +46,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public static final String TAG = "FollowingAdapter";
     private Context context;
     private List<Object> objectList;
+    User currentUser;
 
     // View Holder Item Type Mapping
     private final int CLUB = 0, USER = 1;
@@ -53,8 +64,10 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public int getItemViewType(int position) {
         if (objectList.get(position) instanceof Club) {
+            Log.i(TAG, "getItemViewType: " + ((Club) objectList.get(position)).getName());
             return CLUB;
         } else if (objectList.get(position) instanceof User) {
+            Log.i(TAG, "getItemViewType: " + ((User) objectList.get(position)).getFirstName());
             return USER;
         }
         return -1;
@@ -75,17 +88,17 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         switch (viewType) {
             case CLUB:
-                Log.i(TAG, String.valueOf(viewType));
+                Log.i(TAG, "onCreateViewHolder: " + String.valueOf(viewType));
                 View v1 = inflater.inflate(R.layout.cell_following_club, parent, false);
                 viewHolder = new ViewHolderClub(v1);
                 break;
             case USER:
-                Log.i(TAG, String.valueOf(viewType));
+                Log.i(TAG, "onCreateViewHolder: " + String.valueOf(viewType));
                 View v2 = inflater.inflate(R.layout.cell_explore_found, parent, false);
                 viewHolder = new ViewHolderUser(v2);
                 break;
             default:
-                Log.i(TAG, String.valueOf(viewType));
+                Log.i(TAG, "onCreateViewHolder: " + String.valueOf(viewType));
                 View v = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
                 //TODO: Need to Update to proper ViewHolder Object
 //                viewHolder = new RecyclerViewSimpleTextViewHolder(v);
@@ -96,36 +109,93 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
 
-    class ViewHolderClub extends RecyclerView.ViewHolder {
+    class ViewHolderClub extends DefaultViewHolder {
         // Cell Room Active
         // view elements
-        private TextView tvClubName;
+        private TextView tvFoundName;
+        private ImageView ivFoundProfileImage;
+        private ConstraintLayout clProfile;
 
         // TODO: add swipe right on cell to reveal a button to hide the recommended active room
         public ViewHolderClub(@NonNull View itemView) {
             super(itemView);
-            tvClubName = itemView.findViewById(R.id.tvClubName);
+            tvFoundName = itemView.findViewById(R.id.tvFoundName);
+            ivFoundProfileImage = itemView.findViewById(R.id.ivFoundProfileImage);
+            clProfile = itemView.findViewById(R.id.clProfile);
         }
 
         public void bind(Club club) {
             // Bind data of post to the view element
-
+            tvFoundName.setText(club.getName());
+            ParseFile image = club.getImage();
+            if (image != null)
+                Glide.with(context)
+                        .load(image.getUrl())
+                        .circleCrop()
+                        .into(ivFoundProfileImage);
             // On click for the active room and routing to new activities
+            clProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    Log.i(TAG, clubElement.getFirstName() + " was selected!");
+                    Toast.makeText(v.getContext(), "Selected " + club.getName(), Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(context, ExploreClubActivity.class);
+                    i.putExtra("club", Parcels.wrap(club));
+                    context.startActivity(i);
+                }
+            });
         }
     }
 
-    class ViewHolderUser extends RecyclerView.ViewHolder {
+    class ViewHolderUser extends DefaultViewHolder {
         // Cell Room Future
         // view elements
+        private TextView tvFoundName;
+        private TextView tvDescription;
+        private ImageView ivFoundProfileImage;
+        private ConstraintLayout clProfile;
+        private Button btnFollow;
+        private Follow follow;
+        boolean wasFollowed;
 
         public ViewHolderUser(View itemView) {
             super(itemView);
+            tvFoundName = itemView.findViewById(R.id.tvFoundName);
+            tvDescription = itemView.findViewById(R.id.tvDescription);
+            ivFoundProfileImage = itemView.findViewById(R.id.ivFoundProfileImage);
+            btnFollow = itemView.findViewById(R.id.btnFollow);
+            clProfile = itemView.findViewById(R.id.clProfile);
+            wasFollowed = false;
+            currentUser = new User(ParseUser.getCurrentUser());
+            follow = null;
         }
 
-        public void bind(User user) {
+        public void bind(User userElement) {
             // Bind data of post to the view element
+            // Bind data of post to the view element
+            tvFoundName.setText(userElement.getFirstName() + " " + userElement.getLastName());
+            tvDescription.setText(userElement.getBiography());
+            ParseFile image = userElement.getImage();
+            if (image != null)
+                Glide.with(context)
+                        .load(image.getUrl())
+                        .circleCrop()
+                        .into(ivFoundProfileImage);
+//            wasFollowed = isInFollowingList(currentUser, userElement);
+//            setupFollowButton(userElement);
+            // Navigate to Viewing a User's Profile
+            clProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i(TAG, userElement.getFirstName() + " was selected!");
+                    Toast.makeText(v.getContext(), "Selected " + userElement.getFirstName(), Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(context, ExploreUserActivity.class);
+                    i.putExtra("user", Parcels.wrap(userElement));
+                    context.startActivity(i);
+                }
+            });
+            // TODO: Apply similar button state reflected in ExploreUserActivity
         }
-
     }
 
     @Override
@@ -133,12 +203,6 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return this.objectList.size();
     }
 
-    private void configureDefaultViewHolder(FollowingAdapter.ViewHolder vh, int position) {
-        Club club = (Club) objectList.get(position);
-        if (club != null) {
-            vh.bind(club);
-        }
-    }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
@@ -152,7 +216,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 configureViewHolderUserCell(vh2, position);
                 break;
             default:
-                FollowingAdapter.ViewHolder vh = (FollowingAdapter.ViewHolder) viewHolder;
+                DefaultViewHolder vh = (DefaultViewHolder) viewHolder;
                 configureDefaultViewHolder(vh, position);
                 break;
         }
@@ -184,19 +248,27 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+
+    private void configureDefaultViewHolder(DefaultViewHolder vh, int position) {
+        Object o = objectList.get(position);
+        if (o != null) {
+            vh.bind(o);
+        }
+    }
+
+    static class DefaultViewHolder extends RecyclerView.ViewHolder {
         // view elements
         private TextView tvClubName;
         private TextView tvRoomName;
         private TextView tvParticipants;
         private LinearLayout llActiveRoom;
 
-        public ViewHolder(@NonNull View itemView) {
+        public DefaultViewHolder(@NonNull View itemView) {
             super(itemView);
 //            tvClubName = itemView.findViewById(R.id.tvClubName);
         }
 
-        public void bind(Club club) {
+        public void bind(Object o) {
         }
     }
 
