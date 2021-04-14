@@ -142,9 +142,6 @@ public class InterestActivity extends AppCompatActivity {
                         }
                     }
                 }
-                // TODO: fix bug where only one interest in the User's list is being marked as selected despite there existing more than one interest
-                // TODO: all interests in a User's list should be marked as selected
-
                 inputAdapter.notifyDataSetChanged();
             }
         });
