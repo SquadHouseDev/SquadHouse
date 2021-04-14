@@ -37,20 +37,10 @@ public class HomeActivity extends AppCompatActivity {
     public static final String TAG = "HomeActivity";
 
     Button btnCreateRoom;
-    ImageButton btnSearch;
     FloatingActionButton fabCreateRoomWithFollowers;
-    ImageButton btnProfile;
-    ImageButton btnActivityHistory;
-    ImageButton btnCalendar;
-    ImageButton btnInvite;
-
-    Toolbar tbHome;
     RecyclerView rvRooms;
-    HomeFeedAdapter adapter;
     HomeMultiViewAdapter viewAdapter;
-
     List<Object> allRooms;
-
     SwipeRefreshLayout swipeContainer;
 
     @Override
@@ -106,8 +96,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast t = Toast.makeText(getBaseContext(), "Create room clicked!", Toast.LENGTH_SHORT);
                 Log.i(TAG, "Create room clicked!");
-                // TODO: Call a bottom sheet here
-
+                // TODO: replace test code here with navigation to another activity
                 Room r = new Room();
                 r.setTitle("Hello world!");
                 r.setActiveState(true);
@@ -145,13 +134,13 @@ public class HomeActivity extends AppCompatActivity {
                     }
                     // refresh should show... most recent at the top to oldest at the bottom
                     // because the recycler uses a collection of Objects that is prepopulated
-                    // for denoting cell elems, the point of insertion is after index 1
+                    // for denoting cell elems, the point of insertion is after index 1 ie index 2
                     // 0 --> explore cell
                     // 1 --> future cell
                     // 2 --> active of the previously most recent room
-//                    allRooms.addAll(rooms);
                     allRooms.addAll(2,rooms);
                     viewAdapter.notifyDataSetChanged();
+                    swipeContainer.setRefreshing(false);
                 }
             });
         }
@@ -166,12 +155,6 @@ public class HomeActivity extends AppCompatActivity {
                         Log.e(TAG, "Issue with getting posts", e);
                         return;
                     }
-                    // refresh should show... most recent at the top to oldest at the bottom
-                    // because the recycler uses a collection of Objects that is prepopulated
-                    // for denoting cell elems, the point of insertion is after index 1
-                    // 0 --> explore cell
-                    // 1 --> future cell
-                    // 2 --> active of the previously most recent room
                     allRooms.addAll(rooms);
                     viewAdapter.notifyDataSetChanged();
                 }
@@ -251,7 +234,6 @@ public class HomeActivity extends AppCompatActivity {
         ParseQuery<Follow> mainQuery = new ParseQuery<Follow>(Follow.class);
         // fina all Users following targetUser
         mainQuery.whereEqualTo(Follow.KEY_TO, ParseUser.getCurrentUser());
-//        mainQuery.whereNotEqualTo(Follow.KEY_FROM, targetUser.getParseUser());
         mainQuery.findInBackground(new FindCallback<Follow>() {
             @Override
             public void done(List<Follow> follows, ParseException e) {
