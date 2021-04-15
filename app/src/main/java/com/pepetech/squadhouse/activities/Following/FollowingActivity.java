@@ -14,13 +14,21 @@ import com.pepetech.squadhouse.activities.Following.adapters.FollowingAdapter;
 import com.pepetech.squadhouse.models.Club;
 import com.pepetech.squadhouse.models.User;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Activity that routes using a Hetero Recycler View.
- * Items should be displayed in the order of Clubs being first followed by
- * Users.
+ * Activity that accepts a wrapped Parser of the target User.
+ * The target User's following is displayed using a Hetero Recycler View
+ * in the order of Clubs being first followed by Users.
+ * Dependencies:
+ * <ul>
+ *     <li>
+ * User user
+ *     </li>
+ * </ul>
  */
 public class FollowingActivity extends AppCompatActivity {
     private static final String TAG = "FollowingActivity";
@@ -37,32 +45,26 @@ public class FollowingActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////
         // Setup recycler view
         ////////////////////////////////////////////////////////////
-        user = new User(ParseUser.getCurrentUser());
+        user = Parcels.unwrap(getIntent().getParcelableExtra("user"));
         clubsAndUsers = new ArrayList<>();
-//        setupCollection(this.clubsAndUsers);
         // configure hetero recycler using dummy values
         rvClubsAndUsers = findViewById(R.id.rvClubsAndUsers);
         viewAdapter = new FollowingAdapter(this, clubsAndUsers);
         rvClubsAndUsers.setAdapter(viewAdapter);
         rvClubsAndUsers.setLayoutManager(new LinearLayoutManager(this));
+        setupCollection(this.clubsAndUsers, user);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        setupCollection(this.clubsAndUsers);
-    }
-
-    private void setupCollection(List<Object> clubsAndUsers) {
+    private void setupCollection(List<Object> clubsAndUsers, User user) {
         clubsAndUsers.clear();
         List<Object> usersFollowed = new ArrayList<>();
         for (ParseObject o : user.getFollowing()) {
             if (o instanceof Club) {
                 clubsAndUsers.add(o);
-                Log.i(TAG, ((Club) o).getName());
-            }
-            else {
+                Log.i(TAG, "Added: " + ((Club) o).getName());
+            } else {
                 User toAdd = new User((ParseUser) o);
+                Log.i(TAG, "Added: " + toAdd.getFirstName());
                 toAdd.isFollowed = true;
                 usersFollowed.add(toAdd);
             }
