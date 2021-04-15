@@ -8,11 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -24,7 +22,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.Explore.ExploreActivity;
-import com.pepetech.squadhouse.activities.Home.adapters.HomeFeedAdapter;
 import com.pepetech.squadhouse.activities.Home.adapters.HomeMultiViewAdapter;
 import com.pepetech.squadhouse.activities.MyProfile.MyProfileActivity;
 import com.pepetech.squadhouse.models.Follow;
@@ -39,18 +36,9 @@ public class HomeActivity extends AppCompatActivity {
     public static final String TAG = "HomeActivity";
 
     Button btnCreateRoom;
-    ImageButton btnSearch;
     FloatingActionButton fabCreateRoomWithFollowers;
-    ImageButton btnProfile;
-    ImageButton btnActivityHistory;
-    ImageButton btnCalendar;
-    ImageButton btnInvite;
-
-    Toolbar tbHome;
     RecyclerView rvRooms;
-    HomeFeedAdapter adapter;
     HomeMultiViewAdapter viewAdapter;
-
     List<Object> allRooms;
     List<RoomRoute> availableRoutes;
     SwipeRefreshLayout swipeContainer;
@@ -59,12 +47,14 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         ////////////////////////////////////////////////////////////
         // Setup buttons
         ////////////////////////////////////////////////////////////
         fabCreateRoomWithFollowers = findViewById(R.id.fabCreateRoomWithFollowers);
         btnCreateRoom = findViewById(R.id.btnCreateRoom);
         setupOnClickListeners();
+
         ////////////////////////////////////////////////////////////
         // Setup recycler view
         ////////////////////////////////////////////////////////////
@@ -76,8 +66,8 @@ public class HomeActivity extends AppCompatActivity {
         availableRoutes = new ArrayList<>();
         viewAdapter = new HomeMultiViewAdapter(this, allRooms);
         rvRooms.setAdapter(viewAdapter);
-
         rvRooms.setLayoutManager(new LinearLayoutManager(this));
+
         ////////////////////////////////////////////////////////////
         // Setup swipe to refresh feature
         ////////////////////////////////////////////////////////////
@@ -121,35 +111,63 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "Create room with follower(s) clicked!", Toast.LENGTH_SHORT).show();
-
             }
         });
     }
 
     /**
-     *
+     * Function for querying rooms handling for both empty and non-empty cases for
+     * populating the MultiViewAdapter. This function is called when the User
+     * performs a pull-to-refresh to show the newest active rooms.
      */
     private void queryRooms() {
         ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
-//        if (!allRooms.isEmpty()){
-//            query.whereLessThan(Room.KEY_CREATED_AT, ((Room)allRooms.get(allRooms.size()-1)).getCreatedAt());
-//        }
-        query.whereEqualTo(Room.KEY_IS_ACTIVE, true);
-        query.addAscendingOrder(Room.KEY_CREATED_AT);
-        query.findInBackground(new FindCallback<Room>() {
-            @Override
-            public void done(List<Room> rooms, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting posts", e);
-                    return;
+        // case in which there exists rooms
+        if (allRooms.size() > 2) {
+            Log.i(TAG, String.valueOf(((Room) allRooms.get(allRooms.size() - 1)).getCreatedAt()));
+            query.whereGreaterThan(Room.KEY_CREATED_AT, ((Room) allRooms.get(2)).getCreatedAt());
+            query.whereEqualTo(Room.KEY_IS_ACTIVE, true);
+            query.orderByDescending(Room.KEY_CREATED_AT);
+            query.findInBackground(new FindCallback<Room>() {
+                @Override
+                public void done(List<Room> rooms, ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "Issue with getting posts", e);
+                        return;
+                    }
+                    // refresh should show... most recent at the top to oldest at the bottom
+                    // because the recycler uses a collection of Objects that is prepopulated
+                    // for denoting cell elems, the point of insertion is after index 1 ie index 2
+                    // 0 --> explore cell
+                    // 1 --> future cell
+                    // 2 --> active of the previously most recent room
+                    allRooms.addAll(2, rooms);
+                    viewAdapter.notifyDataSetChanged();
+                    swipeContainer.setRefreshing(false);
                 }
-                allRooms.addAll(rooms);
-                viewAdapter.notifyDataSetChanged();
-            }
-        });
+            });
+        }
+        // case where there does not exist any rooms
+        else {
+            query.whereEqualTo(Room.KEY_IS_ACTIVE, true);
+            query.orderByDescending(Room.KEY_CREATED_AT);
+            query.findInBackground(new FindCallback<Room>() {
+                @Override
+                public void done(List<Room> rooms, ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "Issue with getting posts", e);
+                        return;
+                    }
+                    allRooms.addAll(rooms);
+                    viewAdapter.notifyDataSetChanged();
+                }
+            });
+        }
     }
 
-    // Menu icons are inflated just as they were with actionbar
+    /**
+     * Menu icons are inflated just as they were with actionbar
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -213,6 +231,15 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        refreshMyFollowerCount();
+    }
+
+    /**
+     * Function called when a User navigates to the HomeFeed
+     */
     private void refreshMyFollowerCount() {
         Log.i(TAG, "refreshMyFollowerCount");
         Log.i(TAG, "Target: " + ParseUser.getCurrentUser().getObjectId());
@@ -220,7 +247,6 @@ public class HomeActivity extends AppCompatActivity {
         ParseQuery<Follow> mainQuery = new ParseQuery<Follow>(Follow.class);
         // fina all Users following targetUser
         mainQuery.whereEqualTo(Follow.KEY_TO, ParseUser.getCurrentUser());
-//        mainQuery.whereNotEqualTo(Follow.KEY_FROM, targetUser.getParseUser());
         mainQuery.findInBackground(new FindCallback<Follow>() {
             @Override
             public void done(List<Follow> follows, ParseException e) {
