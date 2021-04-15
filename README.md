@@ -1,4 +1,3 @@
-
 # SquadHouse/KekHouse/PepeHouse ??
 
 ## Table of Contents
