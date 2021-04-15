@@ -251,8 +251,6 @@ public class ExploreUserActivity extends AppCompatActivity {
         Log.i(TAG, "User object_id: " + userSelected.getParseUser().getObjectId());
         following = userSelected.getParseUser().getList(User.KEY_FOLLOWING);
 //        followers = userSelected.getParseUser().getList(User.KEY_FOLLOWERS);
-        // TODO: refactor to use a followerCount
-        // TODO: navigate to a new activity that utilizes a recycler view for
 
         // empty case
         if (following == null) {
