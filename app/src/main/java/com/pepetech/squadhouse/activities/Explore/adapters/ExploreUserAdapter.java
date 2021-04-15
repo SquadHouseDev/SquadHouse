@@ -100,7 +100,7 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
                         .circleCrop()
                         .into(ivFoundProfileImage);
 //            wasFollowed = isInFollowingList(currentUser, userElement);
-            setupFollowButton(userElement);
+            configureUserSelection(userElement);
             // Navigate to Viewing a User's Profile
             clProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -120,7 +120,7 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
          *
          * @param userElement: User to be followed or unfollowed
          */
-        private void setupFollowButton(User userElement) {
+        private void configureUserSelection(User userElement) {
             // if the user was in a previous state of being followed by the current user
             if (userElement.isFollowed) {
                 // comment out the following line when debugging FollowersActivity
@@ -128,12 +128,12 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
 
                 // show state of followed
                 btnFollow.setText("Following");
-                handleOnFollowButton(userElement);
+                handleFollowToggle(userElement);
             }
             // if the user was in a previous state of being not followed by the current user
             else {
                 btnFollow.setText("Follow");
-                handleOnFollowButton(userElement);
+                handleFollowToggle(userElement);
             }
         }
 
@@ -142,7 +142,7 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
          *
          * @param userElement User to be followed or unfollowed
          */
-        private void handleOnFollowButton(User userElement) {
+        private void handleFollowToggle(User userElement) {
             btnFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -62,7 +62,9 @@ public class FollowingActivity extends AppCompatActivity {
                 Log.i(TAG, ((Club) o).getName());
             }
             else {
-                usersFollowed.add(new User((ParseUser) o));
+                User toAdd = new User((ParseUser) o);
+                toAdd.isFollowed = true;
+                usersFollowed.add(toAdd);
             }
         }
         clubsAndUsers.addAll(usersFollowed);

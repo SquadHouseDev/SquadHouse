@@ -1,21 +1,18 @@
-package com.pepetech.squadhouse.activities.Settings;
+package com.pepetech.squadhouse.activities.Interest;
 
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
-import com.pepetech.squadhouse.activities.Settings.adapters.OuterInterestAdapter;
+import com.pepetech.squadhouse.activities.Interest.adapters.OuterInterestAdapter;
 import com.pepetech.squadhouse.models.Interest;
 import com.pepetech.squadhouse.models.User;
 
