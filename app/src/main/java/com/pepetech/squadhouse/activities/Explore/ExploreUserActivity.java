@@ -90,8 +90,8 @@ public class ExploreUserActivity extends AppCompatActivity {
         userSelected = Parcels.unwrap(getIntent().getParcelableExtra("user"));
         parseUser = ParseUser.getCurrentUser();
         currentUser = new User(parseUser);
-        for (ParseObject o: currentUser.getFollowing()){
-            if (o.getObjectId().equals(userSelected.getParseUser().getObjectId())){
+        for (ParseObject o : currentUser.getFollowing()) {
+            if (o.getObjectId().equals(userSelected.getParseUser().getObjectId())) {
                 userSelected.isFollowed = true;
                 break;
             }
@@ -131,13 +131,14 @@ public class ExploreUserActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
         clFollowing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT).show();;
+                Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Following clicked!");
                 Intent i = new Intent(v.getContext(), FollowingActivity.class);
-                User toPass = new User(nominator);
+                User toPass = userSelected;
                 i.putExtra("user", Parcels.wrap(toPass));
                 startActivity(i);
             }
