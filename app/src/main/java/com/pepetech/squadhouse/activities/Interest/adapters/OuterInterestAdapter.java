@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities.Settings.adapters;
+package com.pepetech.squadhouse.activities.Interest.adapters;
 //import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pepetech.squadhouse.R;
