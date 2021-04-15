@@ -27,7 +27,7 @@ public class BottomSheetDialogActivity extends BottomSheetDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         parseUser = ParseUser.getCurrentUser();
         user = new User(parseUser);
-        View v = inflater.inflate(R.layout.fragment_photo_upload_dialog, container, false);
+        View v = inflater.inflate(R.layout.bottom_sheet_layout, container, false);
         Button photo_button = v.findViewById(R.id.photoBttn);
         photo_button.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("LongLogTag")

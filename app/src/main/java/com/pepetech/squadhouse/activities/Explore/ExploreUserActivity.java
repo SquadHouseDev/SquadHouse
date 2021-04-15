@@ -23,6 +23,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.FollowersActivity;
+import com.pepetech.squadhouse.activities.Following.FollowingActivity;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.User;
 
@@ -133,10 +134,10 @@ public class ExploreUserActivity extends AppCompatActivity {
                 Toast t = Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT);
                 t.show();
                 Log.i(TAG, "Following clicked!");
-//                Intent i = new Intent(v.getContext(), ExploreUserActivity.class);
-//                User toPass = new User(nominator);
-//                i.putExtra("user", Parcels.wrap(toPass));
-//                startActivity(i);
+                Intent i = new Intent(v.getContext(), FollowingActivity.class);
+                User toPass = new User(nominator);
+                i.putExtra("user", Parcels.wrap(toPass));
+                startActivity(i);
             }
         });
         // TODO navigate to an activity for viewing a larger image

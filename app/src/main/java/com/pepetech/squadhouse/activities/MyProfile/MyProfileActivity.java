@@ -33,6 +33,7 @@ import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.Explore.ExploreUserActivity;
 import com.pepetech.squadhouse.activities.FollowersActivity;
+import com.pepetech.squadhouse.activities.Following.FollowingActivity;
 import com.pepetech.squadhouse.activities.Login.LoginActivity;
 import com.pepetech.squadhouse.activities.MyProfile.helpers.BiographyBottomSheetDialog;
 import com.pepetech.squadhouse.activities.MyProfile.helpers.UpdateFullNameActivity;
@@ -60,6 +61,7 @@ public class MyProfileActivity extends AppCompatActivity {
     ParseObject nominator;
     List<ParseObject> following;
     List<ParseObject> followers;
+    List<Club> clubs;
     ConstraintLayout clFollowing, clFollowers;
     RecyclerView rvClubIcons;
 
@@ -113,6 +115,12 @@ public class MyProfileActivity extends AppCompatActivity {
         queryUserProfile();
         // 2. populate profile with queried profile data
         populateProfileElements();
+        clubs = new ArrayList<>();
+        MyClubsAdapter clubsAdapter = new MyClubsAdapter(this, clubs);
+        GridLayoutManager layoutManager = new GridLayoutManager(
+                this, 1, GridLayoutManager.HORIZONTAL, false);
+        rvClubIcons.setAdapter(clubsAdapter);
+        rvClubIcons.setLayoutManager(layoutManager);
 
     }
 
@@ -140,7 +148,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 t.show();
                 Log.i(TAG, "Following clicked!");
                 // Navigate to FollowingActivity
-
+                goToFollowingActivity(currentUser);
             }
         });
 
@@ -249,15 +257,16 @@ public class MyProfileActivity extends AppCompatActivity {
         tvBiography.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Toast.makeText(v.getContext(), "Biography clicked!", Toast.LENGTH_SHORT).show();
-
                 Log.i(TAG, "Biography clicked!");
                 goToUpdateBiographyActivity();
             }
         });
 
-
+    private void goToFollowingActivity(User userToPass) {
+        Intent i = new Intent(this, FollowingActivity.class);
+        i.putExtra("user", Parcels.wrap(userToPass));
+        startActivity(i);
     }
 
     //pop up window buttons
@@ -320,15 +329,10 @@ public class MyProfileActivity extends AppCompatActivity {
         }
 
         // load clubs
-        List<Club> clubs = currentUser.getClubs();
+        this.clubs = currentUser.getClubs();
         if (!clubs.contains(null)) {
             clubs.add(null);
         }
-        MyClubsAdapter clubsAdapter = new MyClubsAdapter(this, clubs);
-        GridLayoutManager layoutManager = new GridLayoutManager(
-                this, 1, GridLayoutManager.HORIZONTAL, false);
-        rvClubIcons.setAdapter(clubsAdapter);
-        rvClubIcons.setLayoutManager(layoutManager);
     }
 
     private void queryUserProfile() {
