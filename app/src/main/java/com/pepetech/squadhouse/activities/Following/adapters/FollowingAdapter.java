@@ -114,14 +114,14 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         // view elements
         private TextView tvFoundName;
         private ImageView ivFoundProfileImage;
-        private ConstraintLayout clProfile;
+        private ConstraintLayout clClubFollowing;
 
         // TODO: add swipe right on cell to reveal a button to hide the recommended active room
         public ViewHolderClub(@NonNull View itemView) {
             super(itemView);
             tvFoundName = itemView.findViewById(R.id.tvFoundName);
             ivFoundProfileImage = itemView.findViewById(R.id.ivFoundProfileImage);
-            clProfile = itemView.findViewById(R.id.clProfile);
+            clClubFollowing = itemView.findViewById(R.id.clClubFollowing);
         }
 
         public void bind(Club club) {
@@ -134,7 +134,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         .circleCrop()
                         .into(ivFoundProfileImage);
             // On click for the active room and routing to new activities
-            clProfile.setOnClickListener(new View.OnClickListener() {
+            clClubFollowing.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 //                    Log.i(TAG, clubElement.getFirstName() + " was selected!");
@@ -153,7 +153,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private TextView tvFoundName;
         private TextView tvDescription;
         private ImageView ivFoundProfileImage;
-        private ConstraintLayout clProfile;
+        private ConstraintLayout clExploreFound;
         private Button btnFollow;
         private Follow follow;
         boolean wasFollowed;
@@ -164,7 +164,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             tvDescription = itemView.findViewById(R.id.tvDescription);
             ivFoundProfileImage = itemView.findViewById(R.id.ivFoundProfileImage);
             btnFollow = itemView.findViewById(R.id.btnFollow);
-            clProfile = itemView.findViewById(R.id.clProfile);
+            clExploreFound = itemView.findViewById(R.id.clExploreFound);
             wasFollowed = false;
             currentUser = new User(ParseUser.getCurrentUser());
             follow = null;
@@ -184,7 +184,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 //            wasFollowed = isInFollowingList(currentUser, userElement);
 //            setupFollowButton(userElement);
             // Navigate to Viewing a User's Profile
-            clProfile.setOnClickListener(new View.OnClickListener() {
+            clExploreFound.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.i(TAG, userElement.getFirstName() + " was selected!");
