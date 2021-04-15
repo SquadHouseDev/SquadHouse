@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities.Settings;
+package com.pepetech.squadhouse.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.activities.Interest.MyInterestActivity;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -38,7 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
         btnInterests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), InterestActivity.class);
+                Intent i = new Intent(v.getContext(), MyInterestActivity.class);
                 startActivity(i);
             }
         });
