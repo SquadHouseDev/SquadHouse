@@ -109,11 +109,13 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
         private TextView tvRoomName;
         private TextView tvParticipants;
         private LinearLayout llActiveRoom;
+        TextView tvDateCreated;
 
         // TODO: add swipe right on cell to reveal a button to hide the recommended active room
         public ViewHolderActive(@NonNull View itemView) {
             super(itemView);
             tvClubName = itemView.findViewById(R.id.tvClubName);
+            tvDateCreated = itemView.findViewById(R.id.tvDateCreated);
             tvRoomName = itemView.findViewById(R.id.tvRoomName);
             tvParticipants = itemView.findViewById(R.id.tvParticipants);
             llActiveRoom = itemView.findViewById(R.id.llActiveRoom);
@@ -122,6 +124,7 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
         public void bind(Room room) {
             // Bind data of post to the view element
             tvClubName.setText(room.getClubName());
+            tvDateCreated.setText(room.getCreatedAt().toString());
             tvRoomName.setText(room.getTitle());
             String emojiStr = getEmojiByUnicode(0x1F4AC);
             String newText = tvParticipants.getText() + " " + getEmojiByUnicode(0x1F4AC);
