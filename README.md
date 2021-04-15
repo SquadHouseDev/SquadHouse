@@ -34,7 +34,7 @@
 * [ ] User can sign up via phone number.
 * [x] User can logout of their account
 * [x] Users can search up other users.
-* [ ] User can create a new audio room with designated participants/groups of people.
+* [ ] User can create a new audio room with designated participants/clubs of people.
 * [ ] User can see currently open audio rooms of people they follow.
 * [ ] User can see audio rooms of other topics they might possibly be interested in.
 * [ ] User can see other people currently in the audio room they are with
@@ -50,7 +50,7 @@
 * [ ] User can endorse/verify new users.
 * [ ] User can deactivate their account.
 * [ ] User can create a new event/schedule it
-* [ ] User can create a group
+* [ ] User can create a club
 * [ ] User can invite people.
 
 ### 2. Screen Archetypes
@@ -58,7 +58,7 @@
 * [x] Login Screen
    * User can sign up via phone number.
 * [x] Home Screen
-   * User can create a new audio room with designated participants/groups of people.
+   * User can create a new audio room with designated participants/clubs of people.
    * User can see currently open audio rooms of people they follow.
    * User can see audio rooms of other topics they might possibly be interested in.
 * [ ] New Event Screen/Page
@@ -81,7 +81,7 @@
 **Tab Navigation** (Tab to Screen)
 
 * Home Feed/Page
-* Explore User/Interests/Groups
+* Explore User/Interests/clubs
 * Invite Tab
 * Event Tab
 * Activity Tab
