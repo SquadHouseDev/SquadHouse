@@ -100,7 +100,7 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
                         .circleCrop()
                         .into(ivFoundProfileImage);
 //            wasFollowed = isInFollowingList(currentUser, userElement);
-            configureUserSelection(userElement);
+            setupFollowButton(userElement);
             // Navigate to Viewing a User's Profile
             clProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -120,7 +120,7 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
          *
          * @param userElement: User to be followed or unfollowed
          */
-        private void configureUserSelection(User userElement) {
+        private void setupFollowButton(User userElement) {
             // if the user was in a previous state of being followed by the current user
             if (userElement.isFollowed) {
                 // comment out the following line when debugging FollowersActivity
