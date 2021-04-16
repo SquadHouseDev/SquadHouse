@@ -1,6 +1,5 @@
 package com.pepetech.squadhouse.models;
 
-
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -23,6 +22,8 @@ public class Interest extends ParseObject {
     public static final String KEY_NAME = "name";
     // Emoji associated with specific Label
     public static final String KEY_EMOJI = "emoji";
+    public boolean isSelected;
+
     ////////////////////////////////////////////////////////////
     // Getters
     ////////////////////////////////////////////////////////////
@@ -40,6 +41,7 @@ public class Interest extends ParseObject {
         }
         return getString(KEY_NAME);
     }
+
     /**
      * Accessor to the Interest archetype. The archetype denotes the category of the Interest instance.
      *
@@ -54,6 +56,7 @@ public class Interest extends ParseObject {
         }
         return getString(KEY_ARCHETYPE);
     }
+
     /**
      * Accessor to the Interest archetypeEmoji. The archetypeEmoji is the visual representation of the Interest archetype.
      *
@@ -75,7 +78,7 @@ public class Interest extends ParseObject {
      *
      * @return the Interest archetypeEmoji
      */
-    private String getEmoji() {
+    public String getEmoji() {
         try {
             String rv = fetchIfNeeded().getString(KEY_EMOJI);
             return rv;
@@ -84,6 +87,7 @@ public class Interest extends ParseObject {
         }
         return getString(KEY_EMOJI);
     }
+
     /**
      * String representation of the Interest object
      *

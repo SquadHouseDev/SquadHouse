@@ -9,5 +9,14 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#808080</color>
     <color name="cream">#FFFDD0</color>
-    <color name="eggshell">#f0ead6</color>
+    <color name="eggshell">#F0EAD6</color>
+    <color name="darker_eggshell">#ebe3c8 </color>
+    <color name="bone">#E3DAC9</color>
+    <color name="antique_white">#FAEBD7</color>
+    <color name="parchment">#F1E9D2</color>
+    <color name="beige">#F5F5DC</color>
+    <color name="vanilla">#F3E5AB</color>
+    <color name="flax">#EEDC82</color>
+    <color name="navajo_white">#FFDEAD</color>
+    <color name="dutch_white">#EFDFBB</color>
 </resources>
