@@ -207,7 +207,7 @@ public class RoomActivity extends AppCompatActivity {
                         }
                     });
 
-                    ParseQuery<Room> roomQuery  = new ParseQuery<Room>(Room.class);
+                    ParseQuery<Room> roomQuery = new ParseQuery<Room>(Room.class);
                     roomQuery.whereEqualTo(room.KEY_OBJECT_ID, room.getObjectId());
                     roomQuery.getFirstInBackground(new GetCallback<Room>() {
                         @Override
@@ -217,19 +217,20 @@ public class RoomActivity extends AppCompatActivity {
                                 object.setActiveState(false);
                                 object.saveInBackground();
 
-                                Intent i = new Intent(RoomActivity.this, HomeActivity.class);
-                                startActivity(i);
-                            }
-                            else{
+
+                            } else {
                                 Log.e(TAG, e.toString());
                             }
                         }
                     });
 
                 }
+                // ----------------------------------------------------
+                Intent i = new Intent(RoomActivity.this, HomeActivity.class);
+                startActivity(i);
             }
-            // ----------------------------------------------------
         });
+
     }
 
     private Call.Listener callListener() {
