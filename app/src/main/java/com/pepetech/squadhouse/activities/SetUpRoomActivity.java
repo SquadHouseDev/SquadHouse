@@ -90,6 +90,10 @@ public class SetUpRoomActivity extends AppCompatActivity {
 
                                ParseQuery<Room> roomQuery  = new ParseQuery<Room>(Room.class);
                                roomQuery.whereEqualTo(Room.KEY_TITLE, newRoom.getTitle());
+
+                               //stack queries here??
+                               
+
                                roomQuery.getFirstInBackground(new GetCallback<Room>() {
                                    @Override
                                    public void done(Room object, ParseException e) {
