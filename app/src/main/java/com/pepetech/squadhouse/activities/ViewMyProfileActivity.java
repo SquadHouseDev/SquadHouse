@@ -9,6 +9,8 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.activities.Login.LoginActivity;
+import com.pepetech.squadhouse.activities.Settings.SettingsActivity;
 import com.pepetech.squadhouse.models.User;
 
 import android.content.Intent;
@@ -59,7 +61,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_my_profile);
+        setContentView(R.layout.activity_my_profile);
         ////////////////////////////////////////////////////////////
         // Setup view elements
         ////////////////////////////////////////////////////////////
