@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.parse.GetCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -47,6 +48,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * This is the activity for handling live conference calls. Usage
+ * requires passage of a Room object from the previous activity
+ * as a Parcel to be unwrapped in the Room Activity class.
+ */
 public class RoomActivity extends AppCompatActivity {
 
     private static final int MIC_PERMISSION_REQUEST_CODE = 1;
@@ -185,44 +191,44 @@ public class RoomActivity extends AppCompatActivity {
                 Log.i(TAG, "end button clicked");
                 Toast.makeText(v.getContext(), "End Button clicked!", Toast.LENGTH_SHORT).show();
 
-                if (activeCall != null) {
+                if (activeCall != null && room.getHost().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
                     activeCall.disconnect();
                     activeCall = null;
+
+                    //query roomroute and set availability back to true.
+                    ParseQuery<RoomRoute> mainQuery = new ParseQuery<RoomRoute>(RoomRoute.class);
+                    mainQuery.whereEqualTo(RoomRoute.KEY_PHONE_NUMBER, room.getPhoneNumber());
+                    mainQuery.getFirstInBackground(new GetCallback<RoomRoute>() {
+                        @Override
+                        public void done(RoomRoute object, ParseException e) {
+                            if (e == null) {
+                                object.freeNumber();
+                            }
+                        }
+                    });
+
+                    ParseQuery<Room> roomQuery  = new ParseQuery<Room>(Room.class);
+                    roomQuery.whereEqualTo(room.KEY_OBJECT_ID, room.getObjectId());
+                    roomQuery.getFirstInBackground(new GetCallback<Room>() {
+                        @Override
+                        public void done(Room object, ParseException e) {
+                            if (e == null) {
+                                Log.i(TAG, "objectID " + room.getObjectId());
+                                object.setActiveState(false);
+                                object.saveInBackground();
+
+                                Intent i = new Intent(RoomActivity.this, HomeActivity.class);
+                                startActivity(i);
+                            }
+                            else{
+                                Log.e(TAG, e.toString());
+                            }
+                        }
+                    });
+
                 }
-
-                //query roomroute and set availability back to true.
-                ParseQuery<RoomRoute> mainQuery = new ParseQuery<RoomRoute>(RoomRoute.class);
-                mainQuery.whereEqualTo(RoomRoute.KEY_PHONE_NUMBER, room.getPhoneNumber());
-                mainQuery.getFirstInBackground(new GetCallback<RoomRoute>() {
-                    @Override
-                    public void done(RoomRoute object, ParseException e) {
-                        if (e == null) {
-                            object.freeNumber();
-                        }
-                    }
-                });
-
-                ParseQuery<Room> roomQuery  = new ParseQuery<Room>(Room.class);
-                roomQuery.whereEqualTo(room.KEY_OBJECT_ID, room.getObjectId());
-                roomQuery.getFirstInBackground(new GetCallback<Room>() {
-                    @Override
-                    public void done(Room object, ParseException e) {
-                        if (e == null) {
-                            Log.i(TAG, "objectID " + room.getObjectId());
-                            object.setActiveState(false);
-                            object.saveInBackground();
-
-                            Intent i = new Intent(RoomActivity.this, HomeActivity.class);
-                            startActivity(i);
-                        }
-                        else{
-                            Log.e(TAG, e.toString());
-                        }
-                    }
-                });
-
-
             }
+            // ----------------------------------------------------
         });
     }
 
