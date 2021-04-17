@@ -92,7 +92,7 @@ public class SetUpRoomActivity extends AppCompatActivity {
                                roomQuery.whereEqualTo(Room.KEY_TITLE, newRoom.getTitle());
 
                                //stack queries here??
-                               
+
 
                                roomQuery.getFirstInBackground(new GetCallback<Room>() {
                                    @Override
