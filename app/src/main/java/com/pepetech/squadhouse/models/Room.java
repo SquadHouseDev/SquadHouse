@@ -1,6 +1,7 @@
 package com.pepetech.squadhouse.models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -24,6 +25,7 @@ public class Room extends ParseObject {
     public static final String KEY_STARTED_AT = "startedAt";
     public static final String KEY_ENDED_AT = "endedAt";
     public static final String KEY_IS_ACTIVE = "isActive";
+    public static final String KEY_PHONE_NUMBER = "phoneNumber";
 
     public Room(){};
 
@@ -74,6 +76,18 @@ public class Room extends ParseObject {
         return (ArrayList<ParseObject>) rv;
     }
 
+    public String getPhoneNumber() {
+        String rv = null;
+        try {
+            rv = fetchIfNeeded().getString(KEY_PHONE_NUMBER);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return rv;
+    }
+
+
     ////////////////////////////////////////////////////////////
     // Setters
     ////////////////////////////////////////////////////////////
@@ -104,6 +118,8 @@ public class Room extends ParseObject {
     public void setHost(ParseUser newParseUser) {
         put(KEY_HOST, newParseUser);
     }
+
+    public void setPhoneNumber(String phoneNumber) {put(KEY_PHONE_NUMBER, phoneNumber);}
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     // Update Methods: automatically calls saveInBackground on ParseUser to effect updates

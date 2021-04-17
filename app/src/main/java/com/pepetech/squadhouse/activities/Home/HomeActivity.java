@@ -24,6 +24,7 @@ import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.Explore.ExploreActivity;
 import com.pepetech.squadhouse.activities.Home.adapters.HomeMultiViewAdapter;
 import com.pepetech.squadhouse.activities.MyProfile.MyProfileActivity;
+import com.pepetech.squadhouse.activities.SetUpRoomActivity;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.Room;
 import com.pepetech.squadhouse.models.RoomRoute;
@@ -99,7 +100,9 @@ public class HomeActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), "Create room clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Create room clicked!");
 
-                RoomRoute r = new RoomRoute();
+                Intent i = new Intent(HomeActivity.this, SetUpRoomActivity.class);
+                startActivity(i);
+                //RoomRoute r = new RoomRoute();
 //                r.put(RoomRoute.KEY_PHONE_NUMBER, "+16193045061");
 //                r.remove(RoomRoute.KEY_ROOM_ROUTED);
 //                r.saveInBackground();

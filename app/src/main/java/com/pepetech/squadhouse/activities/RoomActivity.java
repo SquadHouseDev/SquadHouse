@@ -71,7 +71,7 @@ public class RoomActivity extends AppCompatActivity {
     public static AccessToken accessToken;
 
     User user;
-    Room newRoom;
+    Room room;
 
     Button invite_button;
     Button end_button;
@@ -110,7 +110,9 @@ public class RoomActivity extends AppCompatActivity {
         display_button = findViewById(R.id.display_button);
         user = new User(ParseUser.getCurrentUser());
 
-        setUpRoom();
+        Intent i = getIntent();
+        room = i.getParcelableExtra("Room");
+
         queryUsers();
         setOnClickListeners();
 
@@ -152,7 +154,7 @@ public class RoomActivity extends AppCompatActivity {
         //fileAndMicAudioDevice = new FileAndMicAudioDevice(getApplicationContext());
         //Voice.setAudioDevice(fileAndMicAudioDevice);
 
-        params.put("to", "+16093045061");
+        params.put("to", room.getPhoneNumber());
 
         ConnectOptions connectOptions = new ConnectOptions.Builder(accessToken.toJwt())
                 .params(params)
@@ -172,18 +174,7 @@ public class RoomActivity extends AppCompatActivity {
         //use usableList[0] for new room creation
     }
 
-    private void setUpRoom() {
-        Log.i(TAG, "initiating room");
-        newRoom = new Room();
-        newRoom.setTitle("newROom from blah");
 
-        //set the host equal to the current user, getParseUser  returns a ParseUser which
-        //will reflect in back4app.com as a pointer to a specific user.
-        newRoom.setHost(user.getParseUser());
-
-        newRoom.saveInBackground();
-        Log.i(TAG, "finished initiating room");
-    }
 
     private void queryUsers() {
 
@@ -212,6 +203,8 @@ public class RoomActivity extends AppCompatActivity {
                     activeCall.disconnect();
                     activeCall = null;
                 }
+
+                //query roomroute and set availability back to true.
             }
         });
 
