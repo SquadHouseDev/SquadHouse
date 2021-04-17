@@ -163,6 +163,7 @@ public class HomeActivity extends AppCompatActivity {
                     }
                     allRooms.addAll(rooms);
                     viewAdapter.notifyDataSetChanged();
+                    swipeContainer.setRefreshing(false);
                 }
             });
         }
