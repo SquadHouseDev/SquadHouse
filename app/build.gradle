@@ -22,8 +22,6 @@ plugins {
     id 'com.google.secrets_gradle_plugin' version '0.4'
 }
 
-
-
 android {
     def localProperties = new Properties()
     localProperties.load(new FileInputStream(rootProject.file("local.properties")))
