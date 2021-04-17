@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -67,8 +68,9 @@ public class SetUpRoomActivity extends AppCompatActivity {
                                toDisplay += r.getPhoneNumber();
                                toDisplay += "\n";
                            }
-                           Toast.makeText(getBaseContext(), toDisplay, Toast.LENGTH_SHORT).show();
+                           //Toast.makeText(getBaseContext(), toDisplay, Toast.LENGTH_SHORT).show();
 
+                           Log.i(TAG, String.valueOf(allRoutes.isEmpty()));
                            //pasted stuff
                            if(!allRoutes.isEmpty()){
                                Intent i = new Intent(SetUpRoomActivity.this, RoomActivity.class);
@@ -77,19 +79,34 @@ public class SetUpRoomActivity extends AppCompatActivity {
                                newRoom = new Room();
                                newRoom.setTitle(String.valueOf(roomTitleEt.getText()));
                                newRoom.setDescription(String.valueOf(roomDescriptionEt.getText()));
-
                                //set the host equal to the current user, getParseUser  returns a ParseUser which
                                //will reflect in back4app.com as a pointer to a specific user.
                                newRoom.setHost(ParseUser.getCurrentUser());
                                newRoom.setPhoneNumber(allRoutes.get(0).getPhoneNumber());
                                Log.i(TAG, allRoutes.get(0).getPhoneNumber());
+                               newRoom.setActiveState(true);
+                               newRoom.setAPSID(allRoutes.get(0).getAPSID());
                                newRoom.saveInBackground();
 
-                               //set room availability to false
-                               allRoutes.get(0).lockNumber();
+                               ParseQuery<Room> roomQuery  = new ParseQuery<Room>(Room.class);
+                               roomQuery.whereEqualTo(Room.KEY_TITLE, newRoom.getTitle());
+                               roomQuery.getFirstInBackground(new GetCallback<Room>() {
+                                   @Override
+                                   public void done(Room object, ParseException e) {
+                                       if (e == null) {
+                                           Log.i(TAG, object.getObjectId());
+                                           newRoom = object;
+                                           newRoom.saveInBackground();
 
-                               i.putExtra("Room", newRoom);
-                               startActivity(i);
+                                           //set room availability to false
+                                           allRoutes.get(0).lockNumber();
+
+                                           i.putExtra("Room", newRoom);
+                                           //i.putExtra("AP_SID", allRoutes.get(0).getAPSID());
+                                           startActivity(i);
+                                       }
+                                   }
+                               });
                            }
                            else{
                                Toast.makeText(getBaseContext(), "Error creating room", Toast.LENGTH_SHORT).show();
@@ -101,39 +118,6 @@ public class SetUpRoomActivity extends AppCompatActivity {
                     }
                 });
                 //Log.i(TAG, String.valueOf(allRoutes.isEmpty()));
-            }
-        });
-    }
-
-    public void queryAvailableRoutes(List<RoomRoute> allRoutes) {
-        allRoutes.clear();
-        ParseQuery<RoomRoute> mainQuery = new ParseQuery<RoomRoute>(RoomRoute.class);
-        mainQuery.whereEqualTo(RoomRoute.KEY_IS_AVAILABLE, true);
-        mainQuery.findInBackground(new FindCallback<RoomRoute>() {
-            @Override
-            public void done(List<RoomRoute> routesFound, ParseException e) {
-                if (e == null) {
-                    allRoutes.addAll(routesFound);
-                    Log.i(TAG, String.valueOf(allRoutes.size()) + " routes found");
-                    String toDisplay = "";
-                    for (RoomRoute r : routesFound) {
-                        Log.i(TAG, r.getPhoneNumber());
-                        toDisplay += r.getPhoneNumber();
-                        toDisplay += "\n";
-                    }
-                    Toast.makeText(getBaseContext(), toDisplay, Toast.LENGTH_SHORT).show();
-                    // add handling for no-routes found case
-
-                    // assignment should be done immediately... on the first resource found?
-
-                    // create room here and navigate accordingly away
-
-                    // current implementation opens itself up to race conditions tho unlikely
-
-                } else {
-                    // add handling if there are issues with querying
-                    Log.i(TAG, "Error querying routes");
-                }
             }
         });
     }

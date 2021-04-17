@@ -26,6 +26,8 @@ public class Room extends ParseObject {
     public static final String KEY_ENDED_AT = "endedAt";
     public static final String KEY_IS_ACTIVE = "isActive";
     public static final String KEY_PHONE_NUMBER = "phoneNumber";
+    public static final String KEY_AP_SID = "AP_SID";
+    public static final String KEY_OBJECT_ID = "objectId";
 
     public Room(){};
 
@@ -87,6 +89,18 @@ public class Room extends ParseObject {
         return rv;
     }
 
+    public String getAPSID() {
+        String rv = null;
+        try {
+            rv = fetchIfNeeded().getString(KEY_AP_SID);
+            return rv;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return rv;
+    }
+
 
     ////////////////////////////////////////////////////////////
     // Setters
@@ -120,6 +134,8 @@ public class Room extends ParseObject {
     }
 
     public void setPhoneNumber(String phoneNumber) {put(KEY_PHONE_NUMBER, phoneNumber);}
+
+    public void setAPSID(String AP_SID) {put(KEY_AP_SID, AP_SID);}
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     // Update Methods: automatically calls saveInBackground on ParseUser to effect updates

@@ -30,6 +30,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.BuildConfig;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.activities.Home.HomeActivity;
 import com.pepetech.squadhouse.adapters.ParticipantAdapter;
 import com.pepetech.squadhouse.models.Room;
 import com.pepetech.squadhouse.models.RoomRoute;
@@ -98,6 +99,7 @@ public class RoomActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         room = i.getParcelableExtra("Room");
+        Log.i(TAG, "objectID " + room.getObjectId());
 
         queryUsers();
         setOnClickListeners();
@@ -122,7 +124,7 @@ public class RoomActivity extends AppCompatActivity {
         // Create Video grant
         //VideoGrant grant = new VideoGrant().setRoom("cool room");
         VoiceGrant grant = new VoiceGrant();
-        grant.setOutgoingApplicationSid("APc5ffd0db699ae8e29761294af4f20744");
+        grant.setOutgoingApplicationSid(room.getAPSID());
 
         // Create access token
         accessToken = new AccessToken.Builder(
@@ -199,9 +201,29 @@ public class RoomActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+                ParseQuery<Room> roomQuery  = new ParseQuery<Room>(Room.class);
+                roomQuery.whereEqualTo(room.KEY_OBJECT_ID, room.getObjectId());
+                roomQuery.getFirstInBackground(new GetCallback<Room>() {
+                    @Override
+                    public void done(Room object, ParseException e) {
+                        if (e == null) {
+                            Log.i(TAG, "objectID " + room.getObjectId());
+                            object.setActiveState(false);
+                            object.saveInBackground();
+
+                            Intent i = new Intent(RoomActivity.this, HomeActivity.class);
+                            startActivity(i);
+                        }
+                        else{
+                            Log.e(TAG, e.toString());
+                        }
+                    }
+                });
+
+
             }
         });
-
     }
 
     private Call.Listener callListener() {
