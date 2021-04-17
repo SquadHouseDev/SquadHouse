@@ -129,7 +129,6 @@ public class RoomActivity extends AppCompatActivity {
             requestPermissionForMicrophone();
         }
 
-
         Log.i(TAG, "ACCOUNT_SID +" + ACCOUNT_SID);
         // copy
         String identity = "user";
