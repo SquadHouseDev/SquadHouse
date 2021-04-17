@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.Explore.ExploreActivity;
+import com.pepetech.squadhouse.activities.RoomActivity;
 import com.pepetech.squadhouse.models.Room;
 
 import java.util.List;
@@ -139,6 +140,9 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
                     // TODO: add routing of room data here for joining the conference
                     Toast.makeText(context, "Room: " + tvClubName.getText() + " " + tvRoomName.getText() + " clicked!",
                             Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(v.getContext(), RoomActivity.class);
+                    i.putExtra("Room", room);
+                    v.getContext().startActivity(i);
                 }
             });
         }
