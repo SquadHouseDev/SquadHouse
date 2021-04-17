@@ -6,10 +6,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.AudioAttributes;
 import android.media.AudioFocusRequest;
-import android.nfc.Tag;
+import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,43 +21,30 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.BuildConfig;
 import com.pepetech.squadhouse.R;
-import com.pepetech.squadhouse.activities.Home.adapters.HomeFeedAdapter;
-import com.pepetech.squadhouse.activities.InviteActivity;
 import com.pepetech.squadhouse.adapters.ParticipantAdapter;
 import com.pepetech.squadhouse.models.Room;
+import com.pepetech.squadhouse.models.RoomRoute;
 import com.pepetech.squadhouse.models.User;
-
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-
-import com.twilio.Twilio;
-import com.twilio.http.HttpMethod;
 import com.twilio.jwt.accesstoken.AccessToken;
 import com.twilio.jwt.accesstoken.VoiceGrant;
-import com.twilio.rest.api.v2010.account.Application;
-import com.twilio.twiml.VoiceResponse;
-import com.twilio.twiml.TwiMLException;
 import com.twilio.voice.Call;
 import com.twilio.voice.CallException;
 import com.twilio.voice.ConnectOptions;
 import com.twilio.voice.Voice;
 
-import android.media.AudioManager;
-
-import static com.pepetech.squadhouse.BuildConfig.*;
-
-import android.media.AudioManager;
-import static com.pepetech.squadhouse.BuildConfig.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 public class RoomActivity extends AppCompatActivity {
 
@@ -146,7 +132,7 @@ public class RoomActivity extends AppCompatActivity {
         ).identity(identity).grant(grant).build();
 
         //Log.i(TAG, accessToken.toString());
-        Log.i(TAG,accessToken.toJwt());
+        Log.i(TAG, accessToken.toJwt());
 
         //Consider looking into this after MVP
         //something about custom audio device handling in FileAndMicAudioDevice.java
@@ -174,14 +160,13 @@ public class RoomActivity extends AppCompatActivity {
     }
 
 
-
     private void queryUsers() {
 
         //based on room.participantList, display ppl with adapter??
     }
 
     private void setOnClickListeners() {
-        invite_button.setOnClickListener(new View.OnClickListener(){
+        invite_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "invite button clicked");
@@ -192,18 +177,28 @@ public class RoomActivity extends AppCompatActivity {
             }
         });
 
-        end_button.setOnClickListener(new View.OnClickListener(){
+        end_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "end button clicked");
                 Toast.makeText(v.getContext(), "End Button clicked!", Toast.LENGTH_SHORT).show();
 
-                if(activeCall!=null){
+                if (activeCall != null) {
                     activeCall.disconnect();
                     activeCall = null;
                 }
 
                 //query roomroute and set availability back to true.
+                ParseQuery<RoomRoute> mainQuery = new ParseQuery<RoomRoute>(RoomRoute.class);
+                mainQuery.whereEqualTo(RoomRoute.KEY_PHONE_NUMBER, room.getPhoneNumber());
+                mainQuery.getFirstInBackground(new GetCallback<RoomRoute>() {
+                    @Override
+                    public void done(RoomRoute object, ParseException e) {
+                        if (e == null) {
+                            object.freeNumber();
+                        }
+                    }
+                });
             }
         });
 
