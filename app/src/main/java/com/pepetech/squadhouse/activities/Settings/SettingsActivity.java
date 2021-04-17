@@ -8,6 +8,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.activities.Interest.InterestActivity;
 
 public class SettingsActivity extends AppCompatActivity {
 

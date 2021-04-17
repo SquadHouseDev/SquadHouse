@@ -82,10 +82,3 @@ public class BottomSheetDialogActivity extends BottomSheetDialogFragment {
 
 
 // And to convert the image URI to the direct file system path of the image file
-
-
-
-
-
-
-
