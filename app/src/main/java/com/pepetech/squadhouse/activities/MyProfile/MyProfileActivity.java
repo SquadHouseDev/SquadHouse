@@ -46,6 +46,7 @@ import com.pepetech.squadhouse.models.User;
 
 import org.parceler.Parcels;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -451,5 +452,9 @@ public class MyProfileActivity extends AppCompatActivity {
 
     public void updateBiographyText(String biography){
         tvBiography.setText(biography);
+    }
+
+    public void updateProfileImage(File image){
+
     }
 }
