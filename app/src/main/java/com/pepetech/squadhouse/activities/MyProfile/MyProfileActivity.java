@@ -262,6 +262,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 goToUpdateBiographyActivity();
             }
         });
+    }
 
     private void goToFollowingActivity(User userToPass) {
         Intent i = new Intent(this, FollowingActivity.class);
