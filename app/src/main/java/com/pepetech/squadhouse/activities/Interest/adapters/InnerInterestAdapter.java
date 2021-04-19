@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities.Settings.adapters;
+package com.pepetech.squadhouse.activities.Interest.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -7,13 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.models.Interest;
 import com.pepetech.squadhouse.models.User;

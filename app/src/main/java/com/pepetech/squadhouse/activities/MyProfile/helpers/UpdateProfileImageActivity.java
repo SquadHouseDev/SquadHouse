@@ -71,7 +71,7 @@ public class UpdateProfileImageActivity extends AppCompatActivity {
                 t.show();
                 Log.i(TAG, "Profile Image clicked!");
                 // TODO: fix broken navigation to previous activity
-                BottomSheetDialogActivity bottomSheet = new BottomSheetDialogActivity();
+                PhotoUploadBottomSheetDialogActivity bottomSheet = new PhotoUploadBottomSheetDialogActivity();
                 bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
             }
         });
