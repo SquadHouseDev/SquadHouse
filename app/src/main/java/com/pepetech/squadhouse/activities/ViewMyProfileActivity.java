@@ -10,7 +10,7 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.Login.LoginActivity;
-import com.pepetech.squadhouse.activities.Settings.SettingsActivity;
+import com.pepetech.squadhouse.activities.SettingsActivity;
 import com.pepetech.squadhouse.models.User;
 
 import android.content.Intent;
