@@ -1,6 +1,7 @@
 package com.pepetech.squadhouse.activities.Home;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -25,6 +26,7 @@ import com.pepetech.squadhouse.activities.Home.adapters.HomeMultiViewAdapter;
 import com.pepetech.squadhouse.activities.MyProfile.MyProfileActivity;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.Room;
+import com.pepetech.squadhouse.models.RoomRoute;
 import com.pepetech.squadhouse.models.User;
 
 import java.util.ArrayList;
@@ -38,6 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     RecyclerView rvRooms;
     HomeMultiViewAdapter viewAdapter;
     List<Object> allRooms;
+    List<RoomRoute> availableRoutes;
     SwipeRefreshLayout swipeContainer;
 
     @Override
@@ -60,6 +63,7 @@ public class HomeActivity extends AppCompatActivity {
         allRooms.add(1);    // any integer value denotes the explore cell
         allRooms.add("future"); // any future string denotes the cell of personalized future events for the user
         rvRooms = findViewById(R.id.rvHomeFeed);
+        availableRoutes = new ArrayList<>();
         viewAdapter = new HomeMultiViewAdapter(this, allRooms);
         rvRooms.setAdapter(viewAdapter);
         rvRooms.setLayoutManager(new LinearLayoutManager(this));
@@ -94,12 +98,12 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast t = Toast.makeText(getBaseContext(), "Create room clicked!", Toast.LENGTH_SHORT);
                 Log.i(TAG, "Create room clicked!");
-                // TODO: replace test code here with navigation to another activity
-                Room r = new Room();
-                r.setTitle("Hello world!");
-                r.setActiveState(true);
-                r.saveInBackground();
-                Toast.makeText(HomeActivity.this, "Created a new room!", Toast.LENGTH_SHORT).show();
+                queryAvailableRoutes(availableRoutes);
+                RoomRoute r = new RoomRoute();
+//                r.put(RoomRoute.KEY_PHONE_NUMBER, "+16193045061");
+//                r.remove(RoomRoute.KEY_ROOM_ROUTED);
+//                r.saveInBackground();
+                // TODO: Call a bottom sheet here
             }
         });
 
@@ -257,5 +261,38 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+public void queryAvailableRoutes(List<RoomRoute> allRoutes) {
+    allRoutes.clear();
+    ParseQuery<RoomRoute> mainQuery = new ParseQuery<RoomRoute>(RoomRoute.class);
+    mainQuery.whereEqualTo(RoomRoute.KEY_IS_AVAILABLE, true);
+    mainQuery.findInBackground(new FindCallback<RoomRoute>() {
+        @Override
+        public void done(List<RoomRoute> routesFound, ParseException e) {
+            if (e == null) {
+                allRoutes.addAll(routesFound);
+                Log.i(TAG, String.valueOf(allRoutes.size()) + " routes found");
+                String toDisplay = "";
+                for (RoomRoute r : routesFound) {
+                    Log.i(TAG, r.getPhoneNumber());
+                    toDisplay += r.getPhoneNumber();
+                    toDisplay += "\n";
+                }
+                Toast.makeText(getBaseContext(), toDisplay, Toast.LENGTH_SHORT).show();
+                // add handling for no-routes found case
+
+                // assignment should be done immediately... on the first resource found?
+
+                // create room here and navigate accordingly away
+
+                // current implementation opens itself up to race conditions tho unlikely
+
+            } else {
+                // add handling if there are issues with querying
+                Log.i(TAG, "Error querying routes");
+            }
+        }
+    });
+}
 
 }
