@@ -29,6 +29,7 @@ public class RoomRoute extends ParseObject {
     public static final String TAG = "RoomRoute";
     public static final String KEY_IS_AVAILABLE = "isAvailable";
     public static final String KEY_PHONE_NUMBER = "phoneNumber";
+    public static final String KEY_AP_SID = "AP_SID";
 
     ////////////////////////////////////////////////////////////
     // Getters
@@ -37,6 +38,18 @@ public class RoomRoute extends ParseObject {
         String rv = null;
         try {
             rv = fetchIfNeeded().getString(KEY_PHONE_NUMBER);
+            return rv;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return rv;
+    }
+
+    public String getAPSID() {
+        String rv = null;
+        try {
+            rv = fetchIfNeeded().getString(KEY_AP_SID);
             return rv;
 
         } catch (ParseException e) {
