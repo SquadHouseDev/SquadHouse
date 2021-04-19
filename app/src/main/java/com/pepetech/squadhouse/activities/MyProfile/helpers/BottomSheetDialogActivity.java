@@ -18,7 +18,7 @@ import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.models.User;
 
 // TODO: broken, doesn't navigate to previous activity or refocuses on the previous activity
-public class PhotoUploadBottomSheetDialogActivity extends BottomSheetDialogFragment {
+public class BottomSheetDialogActivity extends BottomSheetDialogFragment {
     public static final String TAG = "BottomSheetDialogActivity";
     private static final int REQUEST_CODE = 1;
     ParseUser parseUser;
@@ -27,7 +27,7 @@ public class PhotoUploadBottomSheetDialogActivity extends BottomSheetDialogFragm
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         parseUser = ParseUser.getCurrentUser();
         user = new User(parseUser);
-        View v = inflater.inflate(R.layout.fragment_photo_upload_dialog, container, false);
+        View v = inflater.inflate(R.layout.bottom_sheet_layout, container, false);
         Button photo_button = v.findViewById(R.id.photoBttn);
         photo_button.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("LongLogTag")
@@ -82,3 +82,10 @@ public class PhotoUploadBottomSheetDialogActivity extends BottomSheetDialogFragm
 
 
 // And to convert the image URI to the direct file system path of the image file
+
+
+
+
+
+
+

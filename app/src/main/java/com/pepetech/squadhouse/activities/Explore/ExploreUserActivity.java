@@ -51,7 +51,6 @@ public class ExploreUserActivity extends AppCompatActivity {
     Button btnFollow;
     ImageButton btnSettings;
     ParseUser nominator;
-    Follow follow;
     List<ParseObject> following;
     List<User> followers;
     ConstraintLayout clFollowing, clFollowers;
@@ -78,36 +77,31 @@ public class ExploreUserActivity extends AppCompatActivity {
         // constraint layouts
         clFollowers = findViewById(R.id.clFollowers);
         clFollowing = findViewById(R.id.clFollowing);
+
         // buttons
         btnFollow = findViewById(R.id.btnFollow);
+        setupOnClickListeners();
 
         ////////////////////////////////////////////////////////////
         // Setting up selected User's profile
         ////////////////////////////////////////////////////////////
-        follow = null;
         followers = new ArrayList<>();
         // unwrap passed User
         userSelected = Parcels.unwrap(getIntent().getParcelableExtra("user"));
         parseUser = ParseUser.getCurrentUser();
         currentUser = new User(parseUser);
-        for (ParseObject o : currentUser.getFollowing()) {
-            if (o.getObjectId().equals(userSelected.getParseUser().getObjectId())) {
-                userSelected.isFollowed = true;
-                break;
-            }
-        }
         // query profile data
         queryUserProfile();
         // populate profile with queried profile data
         populateProfileElements();
-        setupOnClickListeners(userSelected);
     }
 
-    private void setupOnClickListeners(User userSelected) {
+    private void setupOnClickListeners() {
         ivProfileNominator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT).show();
+                Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
+                t.show();
                 Log.i(TAG, "Nominator profile clicked!");
                 if (nominator != null) {
                     Intent i = new Intent(v.getContext(), ExploreUserActivity.class);
@@ -118,10 +112,12 @@ public class ExploreUserActivity extends AppCompatActivity {
             }
         });
 
+        // TODO navigate to an activity for viewing list of followers
         clFollowers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT).show();
+                Toast t = Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT);
+                t.show();
                 Log.i(TAG, "Followers clicked!");
                 // setup for routing to the next activity
                 Intent i = new Intent(v.getContext(), FollowersActivity.class);
@@ -131,14 +127,15 @@ public class ExploreUserActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
+        // TODO navigate to an activity for viewing people followed by the user
         clFollowing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT).show();
+                Toast t = Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT);
+                t.show();
                 Log.i(TAG, "Following clicked!");
                 Intent i = new Intent(v.getContext(), FollowingActivity.class);
-                User toPass = userSelected;
+                User toPass = new User(nominator);
                 i.putExtra("user", Parcels.wrap(toPass));
                 startActivity(i);
             }
@@ -147,71 +144,35 @@ public class ExploreUserActivity extends AppCompatActivity {
         ivProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT).show();
+                Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
+                t.show();
                 Log.i(TAG, "User profile clicked!");
 //                ParseObject nominator = user.getNominator()
 //                goToProfileActivity();
             }
         });
+        // TODO
         tvFullName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast t = Toast.makeText(v.getContext(), "Fullname clicked!", Toast.LENGTH_SHORT);
                 t.show();
                 Log.i(TAG, "Fullname clicked!");
+//                ParseObject nominator = user.getNominator()
+//                goToProfileActivity();
             }
         });
+        // TODO
         tvBiography.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Toast.makeText(ProfileActivity.this, "Biography clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getConte, "Biography clicked!", Toast.LENGTH_SHORT).show();
                 Toast.makeText(v.getContext(), "Biography clicked!", Toast.LENGTH_SHORT).show();
+//                t.show();
                 Log.i(TAG, "Biography clicked!");
-            }
-        });
-
-        configureUserSelection(userSelected);
-    }
-
-    private void configureUserSelection(User userElement) {
-        Log.i(TAG, "Configuring interest for " + userElement.getFirstName() + " such that selection: " + userElement.isFollowed);
-        if (userElement.isFollowed) {
-            // apply background to show pre-existing selection
-            btnFollow.setText("Following");
-            handleFollowToggle(userElement);
-
-        } else {
-            // apply background to show no existing selection
-            btnFollow.setText("Follow");
-            handleFollowToggle(userElement);
-        }
-    }
-
-    private void handleFollowToggle(User userElement) {
-        btnFollow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // on interest toggle and current not select --> user has toggled to add the interest to list
-                if (!userElement.isFollowed) {
-                    // safety check for interest existing
-                    currentUser.follow(userElement.getParseUser());
-                    // update interest state to be selected
-                    follow = new Follow();
-                    follow.put(Follow.KEY_TO, userElement.getParseUser());
-                    follow.put(Follow.KEY_FROM, currentUser.getParseUser());
-                    follow.saveInBackground();
-                    userElement.isFollowed = true;
-                    // update GUI to show selection
-                    btnFollow.setText("Following");
-                }
-                // on interest toggle and currently selected --> user has toggled to remove the interest to list
-                else {
-                    btnFollow.setText("Follow");
-                    if (follow != null)
-                        follow.deleteInBackground();
-                    currentUser.unfollow(userElement.getParseUser());
-                    userElement.isFollowed = false;
-                }
-//                notifyDataSetChanged();
+//                ParseObject nominator = user.getNominator()
+//                goToProfileActivity();
             }
         });
     }
@@ -237,7 +198,8 @@ public class ExploreUserActivity extends AppCompatActivity {
         if (!userSelected.isSeed()) {
             loadNominatorProfileImage();
             tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
-        } else {
+        }
+        else {
             Glide.with(this)
                     .load(R.drawable.ic_sprout)
                     .fitCenter()
@@ -252,6 +214,8 @@ public class ExploreUserActivity extends AppCompatActivity {
         Log.i(TAG, "User object_id: " + userSelected.getParseUser().getObjectId());
         following = userSelected.getParseUser().getList(User.KEY_FOLLOWING);
 //        followers = userSelected.getParseUser().getList(User.KEY_FOLLOWERS);
+        // TODO: refactor to use a followerCount
+        // TODO: navigate to a new activity that utilizes a recycler view for
 
         // empty case
         if (following == null) {
@@ -306,4 +270,6 @@ public class ExploreUserActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

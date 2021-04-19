@@ -9,7 +9,6 @@ import com.pepetech.squadhouse.models.Club;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.Interest;
 import com.pepetech.squadhouse.models.Room;
-import com.pepetech.squadhouse.models.RoomRoute;
 import com.pepetech.squadhouse.models.User;
 
 import okhttp3.OkHttpClient;
@@ -22,7 +21,6 @@ public class SquadHouseApplication extends Application {
         // Register needed modesl hosted on backend
         ParseObject.registerSubclass(Room.class);
         ParseObject.registerSubclass(Follow.class);
-        ParseObject.registerSubclass(RoomRoute.class);
         ParseObject.registerSubclass(Interest.class);
         ParseObject.registerSubclass(Club.class);
 

@@ -8,10 +8,10 @@
     android:orientation="vertical"
     tools:context=".activities.MyProfile.MyProfileActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:id="@+id/rlProfile"
-        android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_width="wrap_content"
+        android:layout_height="207dp">
 
         <Button
             android:id="@+id/btnFollow"
@@ -21,13 +21,11 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
-            android:text="Follow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="Follow" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivProfile"
-            android:layout_width="125dp"
+            android:layout_width="250dp"
             android:layout_height="125dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -35,8 +33,6 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="255dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_person_24" />
 
         <TextView
@@ -46,35 +42,30 @@
             android:layout_above="@+id/tvUsername"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="255dp"
+            android:layout_marginBottom="5dp"
             android:text="John Doe"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/ivProfile"
-            app:layout_constraintTop_toBottomOf="@id/ivProfile" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvUsername"
-            android:layout_width="wrap_content"
+            android:layout_width="127dp"
             android:layout_height="wrap_content"
             android:layout_above="@+id/clFollowersAndFollowing"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:text="\@johndoe"
-            app:layout_constraintStart_toStartOf="@id/ivProfile"
-            app:layout_constraintTop_toBottomOf="@id/tvFullName" />
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="258dp"
+            android:layout_marginBottom="5dp"
+            android:text="\@johndoe" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clFollowersAndFollowing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvUsername">
+            android:layout_marginBottom="5dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clFollowers"
@@ -144,7 +135,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
     <ScrollView
         android:id="@+id/svProfile"

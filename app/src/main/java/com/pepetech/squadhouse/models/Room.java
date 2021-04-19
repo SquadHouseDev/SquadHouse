@@ -16,7 +16,6 @@ import java.util.List;
 public class Room extends ParseObject {
 
     public static final String KEY_TITLE = "title";
-    public static final String KEY_CREATED_AT = "createdAt";
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_CLUB_NAME = "clubName";
     public static final String KEY_HOST = "host";

@@ -128,12 +128,12 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
 
                 // show state of followed
                 btnFollow.setText("Following");
-                handleFollowToggle(userElement);
+                handleOnFollowButton(userElement);
             }
             // if the user was in a previous state of being not followed by the current user
             else {
                 btnFollow.setText("Follow");
-                handleFollowToggle(userElement);
+                handleOnFollowButton(userElement);
             }
         }
 
@@ -142,7 +142,7 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
          *
          * @param userElement User to be followed or unfollowed
          */
-        private void handleFollowToggle(User userElement) {
+        private void handleOnFollowButton(User userElement) {
             btnFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

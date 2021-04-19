@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -25,7 +24,6 @@ import com.pepetech.squadhouse.activities.Explore.ExploreClubActivity;
 import com.pepetech.squadhouse.activities.Explore.ExploreUserActivity;
 import com.pepetech.squadhouse.models.Club;
 import com.pepetech.squadhouse.models.Follow;
-import com.pepetech.squadhouse.models.Interest;
 import com.pepetech.squadhouse.models.User;
 
 import org.parceler.Parcels;
@@ -112,6 +110,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
     class ViewHolderClub extends DefaultViewHolder {
+        // Cell Room Active
         // view elements
         private TextView tvFoundName;
         private ImageView ivFoundProfileImage;
@@ -149,6 +148,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     class ViewHolderUser extends DefaultViewHolder {
+        // Cell Room Future
         // view elements
         private TextView tvFoundName;
         private TextView tvDescription;
@@ -172,6 +172,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         public void bind(User userElement) {
             // Bind data of post to the view element
+            // Bind data of post to the view element
             tvFoundName.setText(userElement.getFirstName() + " " + userElement.getLastName());
             tvDescription.setText(userElement.getBiography());
             ParseFile image = userElement.getImage();
@@ -180,6 +181,8 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         .load(image.getUrl())
                         .circleCrop()
                         .into(ivFoundProfileImage);
+//            wasFollowed = isInFollowingList(currentUser, userElement);
+//            setupFollowButton(userElement);
             // Navigate to Viewing a User's Profile
             clExploreFound.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -191,52 +194,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     context.startActivity(i);
                 }
             });
-            // Apply button handling for follow/unfollow actions
-            configureUserSelection(userElement);
-        }
-        
-        private void configureUserSelection(User userElement){
-            Log.i(TAG, "Configuring interest for " + userElement.getFirstName() + " such that selection: " + userElement.isFollowed);
-            if (userElement.isFollowed) {
-                // apply background to show pre-existing selection
-                btnFollow.setText("Following");
-                handleFollowToggle(userElement);
-
-            } else {
-                // apply background to show no existing selection
-                btnFollow.setText("Follow");
-                handleFollowToggle(userElement);
-            }
-        }
-
-        private void handleFollowToggle(User userElement) {
-            btnFollow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // on interest toggle and current not select --> user has toggled to add the interest to list
-                    if (!userElement.isFollowed) {
-                        // safety check for interest existing
-                        currentUser.follow(userElement.getParseUser());
-                        // update interest state to be selected
-                        follow = new Follow();
-                        follow.put(Follow.KEY_TO, userElement.getParseUser());
-                        follow.put(Follow.KEY_FROM, currentUser.getParseUser());
-                        follow.saveInBackground();
-                        userElement.isFollowed = true;
-                        // update GUI to show selection
-                        btnFollow.setText("Following");
-                    }
-                    // on interest toggle and currently selected --> user has toggled to remove the interest to list
-                    else {
-                        btnFollow.setText("Follow");
-                        if (follow != null)
-                            follow.deleteInBackground();
-                        currentUser.unfollow(userElement.getParseUser());
-                        userElement.isFollowed = false;
-                    }
-                    notifyDataSetChanged();
-                }
-            });
+            // TODO: Apply similar button state reflected in ExploreUserActivity
         }
     }
 
@@ -244,6 +202,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public int getItemCount() {
         return this.objectList.size();
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
@@ -288,6 +247,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             viewHolder.bind(user);
         }
     }
+
 
     private void configureDefaultViewHolder(DefaultViewHolder vh, int position) {
         Object o = objectList.get(position);
