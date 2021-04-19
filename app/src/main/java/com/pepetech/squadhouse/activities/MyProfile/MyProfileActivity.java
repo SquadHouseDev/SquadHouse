@@ -2,7 +2,6 @@ package com.pepetech.squadhouse.activities.MyProfile;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,8 +21,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -39,7 +36,7 @@ import com.pepetech.squadhouse.activities.MyProfile.helpers.BiographyBottomSheet
 import com.pepetech.squadhouse.activities.MyProfile.helpers.UpdateFullNameActivity;
 import com.pepetech.squadhouse.activities.MyProfile.helpers.UpdateProfileImageActivity;
 import com.pepetech.squadhouse.activities.MyProfile.helpers.UpdateUsernameActivity;
-import com.pepetech.squadhouse.activities.Settings.SettingsActivity;
+import com.pepetech.squadhouse.activities.SettingsActivity;
 import com.pepetech.squadhouse.models.Club;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.User;
@@ -449,7 +446,7 @@ public class MyProfileActivity extends AppCompatActivity {
                     .into(ivProfileNominator);
     }
 
-    public void updateBiographyText(String biography){
+    public void updateBiographyText(String biography) {
         tvBiography.setText(biography);
     }
 }

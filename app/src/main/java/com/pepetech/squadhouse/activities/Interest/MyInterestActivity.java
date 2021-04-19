@@ -29,7 +29,7 @@ import java.util.Map;
  * in a vertical linear layout. The inner adapter uses a grid layout with
  * rows dynamically configured.
  */
-public class InterestActivity extends AppCompatActivity {
+public class MyInterestActivity extends AppCompatActivity {
     public static final String TAG = "InterestActivity";
     OuterInterestAdapter outerAdapter;
     List<List<Interest>> interests;

@@ -5,7 +5,7 @@
     android:background="@color/eggshell"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.Interest.InterestActivity">
+    tools:context=".activities.Interest.MyInterestActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvOuterInterest"
