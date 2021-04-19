@@ -29,22 +29,22 @@
 **Required Must-have Stories**
 
 * [x] User can sign up (basic basic sign up w/ username password combination email only)
-* [ ] User can verify their phone number (required to be able to start audio rooms)
-* [ ] User can sign up via phone number.
 * [x] User can logout of their account
 * [x] Users can search up other users.
-* [ ] User can create a new audio room with designated participants/clubs of people.
-* [ ] User can see currently open audio rooms of people they follow.
-* [ ] User can see audio rooms of other topics they might possibly be interested in.
-* [ ] User can see other people currently in the audio room they are with
+* [x] User can create a new audio room with designated participants/clubs of people.
 * [x] User can see their own profile
 * [x] User can see other people's profiles (from search bar)
 * [x] User can edit their own interests
-
-**Optional Nice-to-have Stories**
-* [ ] User can connect their account to other social medias: Twitter, Instagram, etc.
 * [x] User can search up clubs
 * [x] User can search up users
+
+**Optional Nice-to-have Stories**
+* [ ] User can see currently open audio rooms of people they follow.
+* [ ] User can see audio rooms of other topics they might possibly be interested in.
+* [ ] User can see other people currently in the audio room they are with
+* [ ] User can verify their phone number (required to be able to start audio rooms)
+* [ ] User can sign up via phone number.
+* [ ] User can connect their account to other social medias: Twitter, Instagram, etc.
 * [ ] User can explore active rooms categorized by interest labels
 * [ ] User can endorse/verify new users.
 * [ ] User can deactivate their account.
