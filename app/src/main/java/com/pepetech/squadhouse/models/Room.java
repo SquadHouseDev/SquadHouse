@@ -160,27 +160,18 @@ public class Room extends ParseObject {
         return true;
     }
 
-    public boolean addParticipant(ParseObject participant) {
-        ArrayList<ParseObject> participants = getParticipants();
-        if (!participants.contains(participant)){
-            participants.add(participant);
-        }
-        else
-            return false;
-        setParticipants(participants);
+    public boolean addParticipant(ParseUser participant) {
+        addUnique(KEY_PARTICIPANTS, participant);
         saveInBackground();
         return true;
     }
 
-    public boolean removeParticipant(ParseObject participant) {
-        ArrayList<ParseObject> participants = getParticipants();
-        if (participants.contains(participant)){
-            participants.remove(participant);
-        }
-        else
-            return false;
-        setParticipants(participants);
+    public boolean removeParticipant(ParseUser participant) {
+        ArrayList<ParseObject> toRemove = new ArrayList<>();
+        toRemove.add(participant);
+        removeAll(KEY_PARTICIPANTS, toRemove);
         saveInBackground();
         return true;
     }
+
 }
