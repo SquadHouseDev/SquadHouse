@@ -26,7 +26,7 @@ public class UpdateUsernameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.update_username);
+        setContentView(R.layout.activity_update_username);
         //text views
         tvusername = findViewById(R.id.tvUsername);
         //buttons

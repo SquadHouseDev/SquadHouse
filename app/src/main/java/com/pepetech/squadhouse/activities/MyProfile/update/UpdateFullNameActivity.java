@@ -26,7 +26,7 @@ public class UpdateFullNameActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.update_fullname);
+        setContentView(R.layout.activity_update_fullname);
         //SETUP VIEW ELEMENTS
 
         //text views
