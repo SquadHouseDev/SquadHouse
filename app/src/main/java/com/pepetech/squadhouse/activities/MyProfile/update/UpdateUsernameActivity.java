@@ -19,34 +19,32 @@ public class UpdateUsernameActivity extends AppCompatActivity {
     public static final String TAG = "UpdateUsernameActivity";
     ParseUser parseuser;
     User user;
-    TextView tvusername;
-    Button update;
-    EditText etusername;
+    TextView tvUsername;
+    Button btnUpdateUsername;
+    EditText etUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_username);
         //text views
-        tvusername = findViewById(R.id.tvUsername);
+        tvUsername = findViewById(R.id.tvUsername);
         //buttons
-        update = findViewById(R.id.bttnUpdateUsername);
+        btnUpdateUsername = findViewById(R.id.btnUpdateUsername);
         //unwrap parsed user
         parseuser = ParseUser.getCurrentUser();
         user = new User(parseuser);
-        update.setOnClickListener(new View.OnClickListener() {
+        btnUpdateUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "UPDATE BUTTON CLICKED!");
-                etusername = (EditText) findViewById(R.id.etfirstname);
-                String username = etusername.getText().toString();
+                etUsername = (EditText) findViewById(R.id.etfirstname);
+                String username = etUsername.getText().toString();
                 System.out.println(username);
                 user.updateUserName(username);
                 goToViewMyProfileActivity();
             }
         });
-
-
     }
 
     private void goToViewMyProfileActivity() {

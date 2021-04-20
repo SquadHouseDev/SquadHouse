@@ -30,7 +30,7 @@
 
             <TextView
                 android:gravity="center"
-                android:id="@+id/tvPrompt"
+                android:id="@+id/tvFirstNameLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="You can fix your legal name or add an optional creator alias if you are a public figure." />

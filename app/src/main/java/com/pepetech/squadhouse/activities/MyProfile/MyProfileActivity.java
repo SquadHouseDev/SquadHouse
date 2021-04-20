@@ -425,7 +425,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
                 pw.showAtLocation(v, Gravity.CENTER, 0, 0);
                 //INITIALIZE THE ELEMENTS OF OUR WINDOW
-                textPrompt = popupView.findViewById(R.id.tvPrompt);
+                textPrompt = popupView.findViewById(R.id.tvFirstNameLabel);
                 buttonUpdateName = popupView.findViewById(R.id.updateNameButton);
                 createAlias = popupView.findViewById(R.id.createAliasButton);
                 cancel = popupView.findViewById(R.id.CancelButton);
