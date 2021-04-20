@@ -17,8 +17,7 @@ import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.models.User;
 
-// TODO: broken, doesn't navigate to previous activity or refocuses on the previous activity
-public class BottomSheetDialogActivity extends BottomSheetDialogFragment {
+public class ProfileUploadBottomSheetDialog extends BottomSheetDialogFragment {
     public static final String TAG = "BottomSheetDialogActivity";
     private static final int REQUEST_CODE = 1;
     ParseUser parseUser;
