@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities.MyProfile.helpers;
+package com.pepetech.squadhouse.activities.MyProfile.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class PhotoUploadBottomSheetDialogActivity extends BottomSheetDialogFragment {
+public class PhotoUploadBottomSheetDialog extends BottomSheetDialogFragment {
     public static final String TAG = "BottomSheetDialogActivity";
     private static final int REQUEST_CODE = 1;
     ParseUser parseUser;
@@ -48,7 +48,7 @@ public class PhotoUploadBottomSheetDialogActivity extends BottomSheetDialogFragm
             @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                PhotoUploadBottomSheetDialogActivity.super.dismiss();
+                PhotoUploadBottomSheetDialog.super.dismiss();
             }
         });
         return v;

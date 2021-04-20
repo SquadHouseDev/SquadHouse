@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities.MyProfile.helpers;
+package com.pepetech.squadhouse.activities.MyProfile.update;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,9 +22,9 @@ public class UpdateUsernameActivity extends AppCompatActivity {
     TextView tvusername;
     Button update;
     EditText etusername;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.update_username);
         //text views
@@ -37,8 +37,8 @@ public class UpdateUsernameActivity extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG,"UPDATE BUTTON CLICKED!");
-                etusername = (EditText)findViewById(R.id.etfirstname);
+                Log.i(TAG, "UPDATE BUTTON CLICKED!");
+                etusername = (EditText) findViewById(R.id.etfirstname);
                 String username = etusername.getText().toString();
                 System.out.println(username);
                 user.updateUserName(username);
@@ -48,8 +48,8 @@ public class UpdateUsernameActivity extends AppCompatActivity {
 
 
     }
-    private void goToViewMyProfileActivity()
-    {
+
+    private void goToViewMyProfileActivity() {
         Intent i = new Intent(this, MyProfileActivity.class);
         startActivity(i);
     }

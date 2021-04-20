@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities.MyProfile.helpers;
+package com.pepetech.squadhouse.activities.MyProfile.update;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.activities.MyProfile.fragments.PhotoUploadBottomSheetDialog;
 import com.pepetech.squadhouse.models.User;
 
 public class UpdateProfileImageActivity extends AppCompatActivity {
@@ -71,7 +72,7 @@ public class UpdateProfileImageActivity extends AppCompatActivity {
                 t.show();
                 Log.i(TAG, "Profile Image clicked!");
                 // TODO: fix broken navigation to previous activity
-                PhotoUploadBottomSheetDialogActivity bottomSheet = new PhotoUploadBottomSheetDialogActivity();
+                PhotoUploadBottomSheetDialog bottomSheet = new PhotoUploadBottomSheetDialog();
                 bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
             }
         });

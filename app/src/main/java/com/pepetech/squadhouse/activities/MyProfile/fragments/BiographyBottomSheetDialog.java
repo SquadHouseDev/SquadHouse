@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities.MyProfile.helpers;
+package com.pepetech.squadhouse.activities.MyProfile.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;

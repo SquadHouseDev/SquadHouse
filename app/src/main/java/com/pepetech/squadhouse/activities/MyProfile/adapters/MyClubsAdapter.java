@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities.MyProfile;
+package com.pepetech.squadhouse.activities.MyProfile.adapters;
 
 import android.content.Context;
 import android.content.Intent;
