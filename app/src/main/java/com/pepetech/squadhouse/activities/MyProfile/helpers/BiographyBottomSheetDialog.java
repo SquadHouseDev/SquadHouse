@@ -3,12 +3,6 @@ package com.pepetech.squadhouse.activities.MyProfile.helpers;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.parse.Parse;
-import com.parse.ParseUser;
-import com.pepetech.squadhouse.R;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.parse.ParseUser;
+import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.MyProfile.MyProfileActivity;
 import com.pepetech.squadhouse.models.User;
 
