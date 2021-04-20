@@ -167,7 +167,6 @@ public class MyProfileActivity extends AppCompatActivity {
         tvFullName.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
         tvBiography.setText(currentUser.getBiography());
         tvUsername.setText("@" + parseUser.getUsername());
-        tvUsername.setVisibility(View.INVISIBLE);
         // load following and followers count
         int followingCount, followerCount;
         followerCount = currentUser.getFollowerCount();
