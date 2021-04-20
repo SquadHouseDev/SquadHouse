@@ -62,6 +62,7 @@ public class MyProfileActivity extends AppCompatActivity {
     List<Club> clubs;
     ConstraintLayout clFollowing, clFollowers;
     RecyclerView rvClubIcons;
+    MyClubsAdapter clubsAdapter;
 
     Button buttonUpdateName;
     Button createAlias;
@@ -101,25 +102,23 @@ public class MyProfileActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////
         btnLogout = findViewById(R.id.btnLogout);
         btnSettings = findViewById(R.id.btnSettings);
-//        msgBttn = findViewById(R.id.msgBttn);
         setupOnClickListeners();
         ////////////////////////////////////////////////////////////
-        // setting up user profile
+        // Setup user profile club recycler
         ////////////////////////////////////////////////////////////
-        refreshMyFollowerCount();
         parseUser = ParseUser.getCurrentUser();
         currentUser = new User(parseUser);
-        // 1. query profile data
-        queryUserProfile();
-        // 2. populate profile with queried profile data
-        populateProfileElements();
-        clubs = new ArrayList<>();
-        MyClubsAdapter clubsAdapter = new MyClubsAdapter(this, clubs);
+        this.clubs = currentUser.getClubs();
+        clubsAdapter = new MyClubsAdapter(this, this.clubs);
         GridLayoutManager layoutManager = new GridLayoutManager(
                 this, 1, GridLayoutManager.HORIZONTAL, false);
         rvClubIcons.setAdapter(clubsAdapter);
         rvClubIcons.setLayoutManager(layoutManager);
-
+        // 1. query profile data
+        refreshMyFollowerCount();
+        queryUserProfile();
+        // 2. populate profile with queried profile data
+        populateProfileElements();
     }
 
     /**
@@ -329,8 +328,10 @@ public class MyProfileActivity extends AppCompatActivity {
 
         // load clubs
         this.clubs = currentUser.getClubs();
+        Log.i(TAG, "Member of " + String.valueOf(clubs.size()) + " clubs");
         if (!clubs.contains(null)) {
             clubs.add(null);
+            this.clubsAdapter.notifyDataSetChanged();
         }
     }
 
