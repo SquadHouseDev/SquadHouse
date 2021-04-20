@@ -24,8 +24,6 @@ import com.pepetech.squadhouse.models.User;
  * origin activity when completed.
  */
 public class BiographyBottomSheetDialog extends BottomSheetDialogFragment {
-
-    //    BottomSheetBehavior bottomSheetBehavior;
     User currentUser;
 
     @Override
