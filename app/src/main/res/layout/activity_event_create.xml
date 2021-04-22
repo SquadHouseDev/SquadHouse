@@ -4,6 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.EventCreateActivity">
 
+    android:background="@color/eggshell"
+    android:padding="15dp"
+    tools:context=".activities.Event.EventCreateActivity">
+
+    <LinearLayout
+        android:id="@+id/llEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/etTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cell_white_background"
+            android:ems="10"
+            android:gravity="top|left"
+            android:hint="Event Name"
+            android:padding="10dp">
+
+        </EditText>
+
+        <Button
+            android:id="@+id/btnDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="showDatePickerDialog"
+            android:text="Date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etTitle"
+
+            >
+
+        </Button>
+
+        <Button
+            android:id="@+id/btnTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="showTimePickerDialog"
+            android:text="Time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnDate">
+
+        </Button>
+
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/etDescription"
+        android:layout_width="match_parent"
+        android:ems="10"
+        android:layout_height="200dp"
+        android:background="@drawable/cell_white_background"
+        android:gravity="top|left"
+        android:hint="Description"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llEvent">
+
+    </EditText>
 </androidx.constraintlayout.widget.ConstraintLayout>

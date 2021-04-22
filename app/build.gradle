@@ -100,4 +100,6 @@ dependencies {
     implementation 'com.twilio.sdk:twilio:7.0.0'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'org.eclipse.birt.runtime.3_7_1:org.apache.xerces:2.9.0'
+
+//    implementation 'androidx.lifecycle:lifecycle-*:2.3.1'
 }
