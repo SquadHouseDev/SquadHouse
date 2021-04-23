@@ -8,8 +8,9 @@
     tools:context=".activities.Event.EventActivity">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvEvents"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="170dp"
-        tools:layout_editor_absoluteY="88dp" />
+        android:padding="10dp"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

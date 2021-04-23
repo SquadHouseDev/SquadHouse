@@ -14,6 +14,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 
 import com.pepetech.squadhouse.R;
@@ -21,8 +22,8 @@ import com.pepetech.squadhouse.R;
 import java.util.Calendar;
 
 public class EventCreateActivity extends AppCompatActivity {
-
     public static final String TAG = "EventCreateActivity";
+    ConstraintLayout clDatePicker, clTimePicker;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -30,7 +31,6 @@ public class EventCreateActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_done_cancel, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -55,6 +55,8 @@ public class EventCreateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("NEW EVENT");
+        clDatePicker = findViewById(R.id.clDatePicker);
+        clTimePicker = findViewById(R.id.clTimePicker);
         setContentView(R.layout.activity_event_create);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_outline_cancel_24);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -104,15 +106,16 @@ public class EventCreateActivity extends AppCompatActivity {
             int minute = c.get(Calendar.MINUTE);
 
             // Create a new instance of TimePickerDialog and return it
-            return new TimePickerDialog(getActivity(), this, hour, minute,
+            TimePickerDialog tp = new TimePickerDialog(getActivity(), this, hour, minute,
                     DateFormat.is24HourFormat(getActivity()));
+            return tp;
         }
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            view.setIs24HourView(true);
             // Do something with the time chosen by the user
             Toast.makeText(view.getContext(), "Time set!", Toast.LENGTH_SHORT).show();
         }
+
     }
 
 

@@ -17,10 +17,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <EditText
             android:id="@+id/etTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/cell_white_background"
             android:ems="10"
             android:gravity="top|left"
@@ -29,39 +31,76 @@
 
         </EditText>
 
-        <Button
-            android:id="@+id/btnDate"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clTimePicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/cell_white_background"
+            android:clickable="true"
+            android:focusable="true"
             android:onClick="showDatePickerDialog"
-            android:text="Date"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etTitle"
+            android:padding="10dp">
 
-            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
 
-        </Button>
+            <TextView
+                android:id="@+id/tvEventDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="Today"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
 
-        <Button
-            android:id="@+id/btnTime"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clDatePicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/cell_white_background"
+            android:clickable="true"
+            android:focusable="true"
             android:onClick="showTimePickerDialog"
-            android:text="Time"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnDate">
+            android:padding="10dp">
 
-        </Button>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
 
+            <TextView
+                android:id="@+id/tvEventTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="1:00 PM"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
     <EditText
         android:id="@+id/etDescription"
         android:layout_width="match_parent"
-        android:ems="10"
         android:layout_height="200dp"
         android:background="@drawable/cell_white_background"
+        android:ems="10"
         android:gravity="top|left"
         android:hint="Description"
         android:padding="10dp"
