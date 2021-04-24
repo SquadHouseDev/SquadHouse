@@ -64,6 +64,8 @@ public class RoomActivity extends AppCompatActivity {
     public static AccessToken accessToken;
 
     User user;
+
+
     Room room;
 
     Button invite_button;

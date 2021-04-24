@@ -21,6 +21,7 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.activities.Event.EventActivity;
 import com.pepetech.squadhouse.activities.Explore.ExploreActivity;
 import com.pepetech.squadhouse.activities.Home.adapters.HomeMultiViewAdapter;
 import com.pepetech.squadhouse.activities.MyProfile.MyProfileActivity;
@@ -192,7 +193,8 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.action_calendar:
                 Toast.makeText(this, "Calendar clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Calendar clicked!");
-//                i = new Intent(this, ProfileActivity.class);
+                i = new Intent(this, EventActivity.class);
+                startActivity(i);
 //                this.startActivity(profileIntent);
                 // arg_1: page to navigate to slides from the right
                 // arg_2: page navigating from slides to the left
