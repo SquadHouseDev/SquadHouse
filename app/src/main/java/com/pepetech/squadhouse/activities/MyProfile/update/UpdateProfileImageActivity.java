@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities.MyProfile.helpers;
+package com.pepetech.squadhouse.activities.MyProfile.update;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.activities.MyProfile.fragments.PhotoUploadBottomSheetDialog;
 import com.pepetech.squadhouse.models.User;
 
 public class UpdateProfileImageActivity extends AppCompatActivity {
@@ -27,7 +28,7 @@ public class UpdateProfileImageActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.update_profile_image);
+        setContentView(R.layout.activity_update_profile_image);
 
         ivUpdateProfile = findViewById(R.id.ivUpdateProfile);
         tvChangeImage = findViewById(R.id.tvChangeImage);
@@ -48,17 +49,6 @@ public class UpdateProfileImageActivity extends AppCompatActivity {
                     .load(image.getUrl())
                     .circleCrop()
                     .into(ivUpdateProfile);
-        // load profile text information
-//        tvFullName.setText(parseUser.getString(User.KEY_FIRST_NAME) + " " + parseUser.getString(User.KEY_LAST_NAME));
-//        tvBiography.setText(parseUser.getString(User.KEY_BIOGRAPHY));
-//        tvUsername.setText("@" + parseUser.getUsername());
-//        // load following and followers count
-//        tvFollowersCount.setText(String.valueOf(followers.size()));
-//        tvFollowingCount.setText(String.valueOf(following.size()));
-//        // load nominator's profile picture
-//        if (!user.isSeed() && nominator != null) {
-//            loadNominatorProfileImage();
-//            tvNominatorName.setText(nominator.getString(User.KEY_FIRST_NAME));
     }
 
 
@@ -71,7 +61,7 @@ public class UpdateProfileImageActivity extends AppCompatActivity {
                 t.show();
                 Log.i(TAG, "Profile Image clicked!");
                 // TODO: fix broken navigation to previous activity
-                PhotoUploadBottomSheetDialogActivity bottomSheet = new PhotoUploadBottomSheetDialogActivity();
+                PhotoUploadBottomSheetDialog bottomSheet = new PhotoUploadBottomSheetDialog();
                 bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
             }
         });

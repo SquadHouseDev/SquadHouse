@@ -32,10 +32,11 @@ import com.pepetech.squadhouse.activities.Explore.ExploreUserActivity;
 import com.pepetech.squadhouse.activities.FollowersActivity;
 import com.pepetech.squadhouse.activities.Following.FollowingActivity;
 import com.pepetech.squadhouse.activities.Login.LoginActivity;
-import com.pepetech.squadhouse.activities.MyProfile.helpers.BiographyBottomSheetDialog;
-import com.pepetech.squadhouse.activities.MyProfile.helpers.UpdateFullNameActivity;
-import com.pepetech.squadhouse.activities.MyProfile.helpers.UpdateProfileImageActivity;
-import com.pepetech.squadhouse.activities.MyProfile.helpers.UpdateUsernameActivity;
+import com.pepetech.squadhouse.activities.MyProfile.adapters.MyClubsAdapter;
+import com.pepetech.squadhouse.activities.MyProfile.fragments.BiographyBottomSheetDialog;
+import com.pepetech.squadhouse.activities.MyProfile.update.UpdateFullNameActivity;
+import com.pepetech.squadhouse.activities.MyProfile.update.UpdateProfileImageActivity;
+import com.pepetech.squadhouse.activities.MyProfile.update.UpdateUsernameActivity;
 import com.pepetech.squadhouse.activities.SettingsActivity;
 import com.pepetech.squadhouse.models.Club;
 import com.pepetech.squadhouse.models.Follow;
@@ -52,7 +53,7 @@ public class MyProfileActivity extends AppCompatActivity {
     public static final String TAG = "MyProfileActivity";
     AppCompatImageView ivProfile, ivProfileNominator;
     TextView tvFullName, tvUsername, tvFollowersCount, tvFollowingCount,
-            tvBiography, tvUserJoinDate, tvNominatorName, tvTitleText, tvFollowersLabel, tvFollowingLabel;
+            tvBiography, tvUserJoinDate, tvNominatorName, tvTitleText, tvFollowersLabel, tvFollowingLabel, tvMemberOf;
     Button btnLogout;
     ImageButton btnSettings;
     ParseObject nominator;
@@ -61,6 +62,7 @@ public class MyProfileActivity extends AppCompatActivity {
     List<Club> clubs;
     ConstraintLayout clFollowing, clFollowers;
     RecyclerView rvClubIcons;
+    MyClubsAdapter clubsAdapter;
 
     Button buttonUpdateName;
     Button createAlias;
@@ -68,8 +70,6 @@ public class MyProfileActivity extends AppCompatActivity {
     //text views
     TextView textPrompt;
     PopupWindow pw = null;
-
-//    ScrollView svProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +92,7 @@ public class MyProfileActivity extends AppCompatActivity {
         tvFollowersCount = findViewById(R.id.tvFollowersCount);
         tvFollowingCount = findViewById(R.id.tvFollowingCount);
         tvBiography = findViewById(R.id.tvBiography);
+        tvMemberOf = findViewById(R.id.tvMemberOf);
         tvUserJoinDate = findViewById(R.id.tvUserJoinDate);
         tvNominatorName = findViewById(R.id.tvNominatorName);
         rvClubIcons = findViewById(R.id.rvClubIcons);
@@ -100,166 +101,25 @@ public class MyProfileActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////
         btnLogout = findViewById(R.id.btnLogout);
         btnSettings = findViewById(R.id.btnSettings);
-//        msgBttn = findViewById(R.id.msgBttn);
         setupOnClickListeners();
         ////////////////////////////////////////////////////////////
-        // setting up user profile
+        // Setup user profile club recycler
         ////////////////////////////////////////////////////////////
-        refreshMyFollowerCount();
         parseUser = ParseUser.getCurrentUser();
         currentUser = new User(parseUser);
-        // 1. query profile data
-        queryUserProfile();
-        // 2. populate profile with queried profile data
-        populateProfileElements();
-        clubs = new ArrayList<>();
-        MyClubsAdapter clubsAdapter = new MyClubsAdapter(this, clubs);
+        this.clubs = currentUser.getClubs();
+        clubsAdapter = new MyClubsAdapter(this, this.clubs);
         GridLayoutManager layoutManager = new GridLayoutManager(
                 this, 1, GridLayoutManager.HORIZONTAL, false);
         rvClubIcons.setAdapter(clubsAdapter);
         rvClubIcons.setLayoutManager(layoutManager);
-
+        // 1. query profile data
+        refreshMyFollowerCount();
+        queryUserProfile();
+        // 2. populate profile with queried profile data
+        populateProfileElements();
     }
 
-    /**
-     * Main method used for setting up elements in need of on-click listeners.
-     */
-    private void setupOnClickListeners() {
-
-        clFollowers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT);
-                t.show();
-                Log.i(TAG, "Followers clicked!");
-                // Navigate to FollowersActivity
-                goToFollowersActivity(currentUser);
-                currentUser = new User(ParseUser.getCurrentUser());
-            }
-        });
-
-        clFollowing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Following clicked!", Toast.LENGTH_SHORT);
-                t.show();
-                Log.i(TAG, "Following clicked!");
-                // Navigate to FollowingActivity
-                goToFollowingActivity(currentUser);
-            }
-        });
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Sign out button clicked!", Toast.LENGTH_SHORT);
-                t.show();
-                Log.i(TAG, "Sign out button clicked!");
-                signoutUser();
-                goToLoginActivity();
-            }
-        });
-
-        btnSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Settings button clicked!", Toast.LENGTH_SHORT);
-                t.show();
-                Log.i(TAG, "Settings button clicked!");
-                // TODO: Call a bottom sheet here
-                goToSettingsActivity();
-            }
-        });
-        // TODO
-        ivProfileNominator.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
-                t.show();
-                Log.i(TAG, "Nominator profile clicked!");
-                if (nominator != null) {
-
-                    User toPass = new User((ParseUser) nominator);
-                    Intent i = new Intent(v.getContext(), ExploreUserActivity.class);
-                    i.putExtra("user", Parcels.wrap(toPass));
-                    startActivity(i);
-                }
-//                ParseObject nominator = user.getNominator()
-//                goToProfileActivity();
-            }
-        });
-        // TODO
-        ivProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
-                t.show();
-                Log.i(TAG, "User profile clicked!");
-//                ParseObject nominator = user.getNominator()
-//                goToProfileActivity();
-                goToUpdateProfileImageActivity();
-            }
-        });
-        // TODO
-        tvUsername.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Username clicked!", Toast.LENGTH_SHORT);
-                t.show();
-                Log.i(TAG, "Username clicked!");
-//                ParseObject nominator = user.getNominator()
-                goToUpdateUsernameActivity();
-
-
-            }
-        });
-        // TODO
-        tvFullName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Fullname clicked!", Toast.LENGTH_SHORT);
-                t.show();
-                //inflate the layout
-                LayoutInflater inflater = (LayoutInflater) v.getContext().getSystemService(v.getContext().LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.activity_popup_window, null);
-                //intialize the size of our layout
-                int width = LinearLayout.LayoutParams.MATCH_PARENT;
-                int height = LinearLayout.LayoutParams.MATCH_PARENT;
-
-                boolean focusable = true;
-                pw = new PopupWindow(popupView, width, height, focusable);
-
-                pw.showAtLocation(v, Gravity.CENTER, 0, 0);
-                //INITIALIZE THE ELEMENTS OF OUR WINDOW
-                textPrompt = popupView.findViewById(R.id.tvPrompt);
-                buttonUpdateName = popupView.findViewById(R.id.updateNameButton);
-                createAlias = popupView.findViewById(R.id.createAliasButton);
-                cancel = popupView.findViewById(R.id.CancelButton);
-                setupPopupWindowOnClickListeners();
-
-                //if tapped outside, dismiss popup window
-                popupView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-
-                        pw.dismiss();
-                        return true;
-                    }
-                });
-
-
-            }
-        });
-        // TODO
-        tvBiography.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Biography clicked!", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "Biography clicked!");
-                goToUpdateBiographyActivity();
-            }
-        });
-    }
 
     private void goToFollowingActivity(User userToPass) {
         Intent i = new Intent(this, FollowingActivity.class);
@@ -307,7 +167,6 @@ public class MyProfileActivity extends AppCompatActivity {
         tvFullName.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
         tvBiography.setText(currentUser.getBiography());
         tvUsername.setText("@" + parseUser.getUsername());
-
         // load following and followers count
         int followingCount, followerCount;
         followerCount = currentUser.getFollowerCount();
@@ -328,9 +187,16 @@ public class MyProfileActivity extends AppCompatActivity {
 
         // load clubs
         this.clubs = currentUser.getClubs();
+        Log.i(TAG, "Member of " + String.valueOf(clubs.size()) + " clubs");
         if (!clubs.contains(null)) {
             clubs.add(null);
+            this.clubsAdapter.notifyDataSetChanged();
         }
+//        if (!(clubs.size() > 1)) {
+//            tvMemberOf.setVisibility(View.INVISIBLE);
+//            rvClubIcons.setVisibility(View.VISIBLE);
+//            rvClubIcons.onT
+//        }
     }
 
     private void queryUserProfile() {
@@ -448,5 +314,141 @@ public class MyProfileActivity extends AppCompatActivity {
 
     public void updateBiographyText(String biography) {
         tvBiography.setText(biography);
+    }
+
+    /**
+     * Main method used for setting up elements in need of on-click listeners.
+     */
+    private void setupOnClickListeners() {
+        clFollowers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT);
+                t.show();
+                Log.i(TAG, "Followers clicked!");
+                // Navigate to FollowersActivity
+                goToFollowersActivity(currentUser);
+                currentUser = new User(ParseUser.getCurrentUser());
+            }
+        });
+
+        clFollowing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(v.getContext(), "Following clicked!", Toast.LENGTH_SHORT);
+                t.show();
+                Log.i(TAG, "Following clicked!");
+                // Navigate to FollowingActivity
+                goToFollowingActivity(currentUser);
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(v.getContext(), "Sign out button clicked!", Toast.LENGTH_SHORT);
+                t.show();
+                Log.i(TAG, "Sign out button clicked!");
+                signoutUser();
+                goToLoginActivity();
+            }
+        });
+
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(v.getContext(), "Settings button clicked!", Toast.LENGTH_SHORT);
+                t.show();
+                Log.i(TAG, "Settings button clicked!");
+                // TODO: Call a bottom sheet here
+                goToSettingsActivity();
+            }
+        });
+        // TODO
+        ivProfileNominator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
+                t.show();
+                Log.i(TAG, "Nominator profile clicked!");
+                if (nominator != null) {
+
+                    User toPass = new User((ParseUser) nominator);
+                    Intent i = new Intent(v.getContext(), ExploreUserActivity.class);
+                    i.putExtra("user", Parcels.wrap(toPass));
+                    startActivity(i);
+                }
+//                ParseObject nominator = user.getNominator()
+//                goToProfileActivity();
+            }
+        });
+        // TODO
+        ivProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
+                t.show();
+                Log.i(TAG, "User profile clicked!");
+//                ParseObject nominator = user.getNominator()
+//                goToProfileActivity();
+                goToUpdateProfileImageActivity();
+            }
+        });
+        // TODO
+        tvUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(v.getContext(), "Username clicked!", Toast.LENGTH_SHORT);
+                t.show();
+                Log.i(TAG, "Username clicked!");
+//                ParseObject nominator = user.getNominator()
+                goToUpdateUsernameActivity();
+
+
+            }
+        });
+        // TODO
+        tvFullName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast t = Toast.makeText(v.getContext(), "Fullname clicked!", Toast.LENGTH_SHORT);
+                t.show();
+                //inflate the layout
+                LayoutInflater inflater = (LayoutInflater) v.getContext().getSystemService(v.getContext().LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.activity_popup_window, null);
+                //intialize the size of our layout
+                int width = LinearLayout.LayoutParams.MATCH_PARENT;
+                int height = LinearLayout.LayoutParams.MATCH_PARENT;
+
+                boolean focusable = true;
+                pw = new PopupWindow(popupView, width, height, focusable);
+
+                pw.showAtLocation(v, Gravity.CENTER, 0, 0);
+                //INITIALIZE THE ELEMENTS OF OUR WINDOW
+                textPrompt = popupView.findViewById(R.id.tvFirstNameLabel);
+                buttonUpdateName = popupView.findViewById(R.id.updateNameButton);
+                createAlias = popupView.findViewById(R.id.createAliasButton);
+                cancel = popupView.findViewById(R.id.CancelButton);
+                setupPopupWindowOnClickListeners();
+
+                //if tapped outside, dismiss popup window
+                popupView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        pw.dismiss();
+                        return true;
+                    }
+                });
+            }
+        });
+        // TODO
+        tvBiography.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "Biography clicked!", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "Biography clicked!");
+                goToUpdateBiographyActivity();
+            }
+        });
     }
 }

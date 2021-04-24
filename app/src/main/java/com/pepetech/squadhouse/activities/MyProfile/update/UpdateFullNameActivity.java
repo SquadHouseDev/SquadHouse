@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities.MyProfile.helpers;
+package com.pepetech.squadhouse.activities.MyProfile.update;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -16,23 +16,19 @@ import com.pepetech.squadhouse.models.User;
 
 public class UpdateFullNameActivity extends AppCompatActivity {
     public static final String TAG = "UpdateFullNameActivity";
-
     ParseUser parseuser;
     User user;
-
-    TextView tvfirstName, tvlastName;
+    TextView tvFirstNameLabel, tvLastNameLabel;
     Button update;
     EditText etfirstname, etlastname;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.update_fullname);
+        setContentView(R.layout.activity_update_fullname);
         //SETUP VIEW ELEMENTS
-
         //text views
-        tvfirstName = findViewById(R.id.tvPrompt);
-        tvlastName = findViewById(R.id.tvLastName);
-
+        tvFirstNameLabel = findViewById(R.id.tvFirstNameLabel);
+        tvLastNameLabel = findViewById(R.id.tvLastNameLabel);
         //buttons
         update = findViewById(R.id.bttnUpdate);
         //user
@@ -53,10 +49,7 @@ public class UpdateFullNameActivity extends AppCompatActivity {
                 user.updateLastName(lastname);
                 Toast t = Toast.makeText(v.getContext(), "Update Complete!", Toast.LENGTH_SHORT);
                 t.show();
-
             }
         });
     }
-
-
 }

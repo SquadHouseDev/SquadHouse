@@ -59,13 +59,13 @@
             android:name=".activities.Login.WelcomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.MyProfile.helpers.UpdateFullNameActivity"
+            android:name=".activities.MyProfile.update.UpdateFullNameActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.MyProfile.helpers.UpdateUsernameActivity"
+            android:name=".activities.MyProfile.update.UpdateUsernameActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.MyProfile.helpers.UpdateProfileImageActivity"
+            android:name=".activities.MyProfile.update.UpdateProfileImageActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.SetUpRoomActivity"
