@@ -98,7 +98,7 @@ public class HomeActivity extends AppCompatActivity {
         btnCreateRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Create room clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getBaseContext(), "Create room clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Create room clicked!");
 
                 Intent i = new Intent(HomeActivity.this, SetUpRoomActivity.class);
@@ -114,7 +114,7 @@ public class HomeActivity extends AppCompatActivity {
         fabCreateRoomWithFollowers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Create room with follower(s) clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "Create room with follower(s) clicked!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -191,7 +191,7 @@ public class HomeActivity extends AppCompatActivity {
         Intent i;
         switch (item.getItemId()) {
             case R.id.action_calendar:
-                Toast.makeText(this, "Calendar clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Calendar clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Calendar clicked!");
                 i = new Intent(this, EventActivity.class);
                 startActivity(i);
@@ -201,14 +201,14 @@ public class HomeActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 return true;
             case R.id.action_history:
-                Toast.makeText(this, "History clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "History clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "History clicked!");
                 // arg_1: page to navigate to slides from the right
                 // arg_2: page navigating from slides to the left
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 return true;
             case R.id.action_invite:
-                Toast.makeText(this, "Invite clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Invite clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Invite clicked!");
                 // arg_1: page to navigate to slides from the right
                 // arg_2: page navigating from slides to the left
@@ -216,7 +216,7 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_profile:
-                Toast.makeText(this, "Profile clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Profile clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Profile clicked!");
                 i = new Intent(this, MyProfileActivity.class);
                 this.startActivity(i);
@@ -225,7 +225,7 @@ public class HomeActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 return true;
             case R.id.action_search:
-                Toast.makeText(this, "Search clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Search clicked!", Toast.LENGTH_SHORT).show();
                 i = new Intent(this, ExploreActivity.class);
                 this.startActivity(i);
                 // arg_1: page to navigate to slides from the right
