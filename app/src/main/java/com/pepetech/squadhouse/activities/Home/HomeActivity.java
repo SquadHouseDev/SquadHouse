@@ -45,6 +45,13 @@ public class HomeActivity extends AppCompatActivity {
     List<RoomRoute> availableRoutes;
     SwipeRefreshLayout swipeContainer;
 
+    private void initRooms() {
+        allRooms = new ArrayList<>();
+        // configure hetero recycler using dummy values
+        allRooms.add(1);    // any integer value denotes the explore cell
+        allRooms.add("future"); // any future string denotes the cell of personalized future events for the user
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +67,7 @@ public class HomeActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////
         // Setup recycler view
         ////////////////////////////////////////////////////////////
-        allRooms = new ArrayList<>();
-        // configure hetero recycler using dummy values
-        allRooms.add(1);    // any integer value denotes the explore cell
-        allRooms.add("future"); // any future string denotes the cell of personalized future events for the user
+        initRooms();
         rvRooms = findViewById(R.id.rvHomeFeed);
         availableRoutes = new ArrayList<>();
         viewAdapter = new HomeMultiViewAdapter(this, allRooms);
@@ -119,12 +123,19 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        queryRooms();
+//    }
+
+
     /**
      * Function for querying rooms handling for both empty and non-empty cases for
      * populating the MultiViewAdapter. This function is called when the User
      * performs a pull-to-refresh to show the newest active rooms.
      */
-    private void queryRooms() {
+    public void queryRooms() {
         ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
         // case in which there exists rooms
         if (allRooms.size() > 2) {
@@ -145,6 +156,7 @@ public class HomeActivity extends AppCompatActivity {
                     // 0 --> explore cell
                     // 1 --> future cell
                     // 2 --> active of the previously most recent room
+
                     allRooms.addAll(2, rooms);
                     viewAdapter.notifyDataSetChanged();
                     swipeContainer.setRefreshing(false);

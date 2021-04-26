@@ -13,21 +13,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.models.Room;
 import com.pepetech.squadhouse.models.User;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
-public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.ViewHolder>  {
+public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.ViewHolder> {
 
     public static final String TAG = "ParticipantAdapter";
 
     private Context context;
-    private List<ParseUser> users;
+    private List<ParseObject> users;
 
-    public ParticipantAdapter(Context context, List<ParseUser> users) {
+    public ParticipantAdapter(Context context, List<ParseObject> users) {
+        Log.i(TAG, String.valueOf(users.size()));
         this.context = context;
         this.users = users;
     }
@@ -35,13 +39,13 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.cell_home_room_active, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.cell_room_participant, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ParticipantAdapter.ViewHolder holder, int position) {
-        ParseUser user = users.get(position);
+        ParseObject user = users.get(position);
         holder.bind(user);
     }
 
@@ -52,21 +56,26 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
 
     class ViewHolder extends RecyclerView.ViewHolder {
         // view elements
-        private ImageView userProfile;
+        private ImageView ivProfile;
+        private TextView tvFirstname;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            userProfile = itemView.findViewById(R.id.userProfileImage);
+            ivProfile = itemView.findViewById(R.id.ivProfile);
+            tvFirstname = itemView.findViewById(R.id.tvFirstname);
         }
 
-        public void bind(ParseUser user){
+        public void bind(ParseObject user) {
             // Bind data of post to the view element
-            ParseFile image = user.getParseFile(User.KEY_IMAGE);
-           if (image != null)
+            User u = new User((ParseUser) user);
+            Log.i(TAG, u.getFirstName());
+            ParseFile image = u.getImage();
+            if (image != null)
                 Glide.with(context)
-                    .load(image.getUrl())
-                    .circleCrop()
-                    .into(userProfile);
+                        .load(image.getUrl())
+                        .circleCrop()
+                        .into(ivProfile);
+            tvFirstname.setText(u.getFirstName());
         }
     }
 }

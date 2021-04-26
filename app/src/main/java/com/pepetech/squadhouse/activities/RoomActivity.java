@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -21,11 +22,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.BuildConfig;
@@ -64,8 +67,6 @@ public class RoomActivity extends AppCompatActivity {
     private final Handler handler = new Handler();
 
     User user;
-
-
     Room room;
 
     Button invite_button;
@@ -74,9 +75,9 @@ public class RoomActivity extends AppCompatActivity {
     ParticipantAdapter adapter;
     Button display_button;
 
-    RelativeLayout roomLayout;
+    LinearLayout roomLayout;
     //make room model/class push to back4app
-    List<ParseUser> allParticipants;
+    ArrayList<ParseObject> allParticipants;
     //create room here, instantiate participant list, in inviteactivity, make calls to back4app
     //to update room.participantList
 
@@ -94,13 +95,13 @@ public class RoomActivity extends AppCompatActivity {
         roomLayout = findViewById(R.id.roomLayout);
         invite_button = findViewById(R.id.invite_button);
         end_button = findViewById(R.id.end_button);
-        rvParticipants = findViewById(R.id.rvParticipants);
 
         allParticipants = new ArrayList<>();
         rvParticipants = findViewById(R.id.rvParticipants);
         adapter = new ParticipantAdapter(this, allParticipants);
         rvParticipants.setAdapter(adapter);
         rvParticipants.setLayoutManager(new GridLayoutManager(this, 3));
+//        rvParticipants.setLayoutManager(new LinearLayoutManager(this));
 
         display_button = findViewById(R.id.display_button);
         user = new User(ParseUser.getCurrentUser());
@@ -179,11 +180,26 @@ public class RoomActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                Log.i(TAG, "auto refreshed list of participants");
                 // Write code for your refresh logic
-                // get the new room
-                // clear and add all the participants
-                // notify adapter of new changes
-                Toast.makeText(RoomActivity.this, "Auto refreshed!", Toast.LENGTH_SHORT).show();
+                ParseQuery<Room> roomQuery = new ParseQuery<Room>(Room.class);
+                roomQuery.whereEqualTo(room.KEY_OBJECT_ID, room.getObjectId());
+                roomQuery.getFirstInBackground(new GetCallback<Room>() {
+                    @Override
+                    public void done(Room object, ParseException e) {
+                        if (e == null) {
+                            Log.i(TAG, "Updated participant list for " + room.getObjectId());
+                            room = object;
+                            allParticipants.clear();
+                            allParticipants.addAll(room.getParticipants());
+                            Log.i(TAG, "# of participants: " + String.valueOf(room.getParticipants().size()));
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            Log.e(TAG, e.toString());
+                        }
+                    }
+                });
+                adapter.notifyDataSetChanged();
                 doTheAutoRefresh();
             }
         }, 5000);
@@ -195,7 +211,6 @@ public class RoomActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i(TAG, "invite button clicked");
                 Toast.makeText(v.getContext(), "Invite clicked!", Toast.LENGTH_SHORT).show();
-
                 Intent i = new Intent(RoomActivity.this, InviteActivity.class);
                 startActivity(i);
             }
@@ -232,8 +247,6 @@ public class RoomActivity extends AppCompatActivity {
                                 Log.i(TAG, "objectID " + room.getObjectId());
                                 object.setActiveState(false);
                                 object.saveInBackground();
-
-
                             } else {
                                 Log.e(TAG, e.toString());
                             }
@@ -241,6 +254,9 @@ public class RoomActivity extends AppCompatActivity {
                     });
                 }
                 // ----------------------------------------------------
+                room.removeParticipant(ParseUser.getCurrentUser());
+                room.saveInBackground();
+                adapter.notifyDataSetChanged();
                 Intent i = new Intent(RoomActivity.this, HomeActivity.class);
                 startActivity(i);
             }
@@ -288,6 +304,7 @@ public class RoomActivity extends AppCompatActivity {
                 //applyFabState(inputSwitchFab, fileAndMicAudioDevice.isMusicPlaying());
                 Log.d(TAG, "Connected " + call.getSid());
                 activeCall = call;
+                doTheAutoRefresh();
             }
 
             @Override

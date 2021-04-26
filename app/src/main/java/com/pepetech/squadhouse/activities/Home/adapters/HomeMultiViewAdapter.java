@@ -14,6 +14,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.parse.Parse;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.Explore.ExploreActivity;
 import com.pepetech.squadhouse.activities.RoomActivity;
@@ -141,6 +144,19 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
                     Toast.makeText(context, "Room: " + tvClubName.getText() + " " + tvRoomName.getText() + " clicked!",
                             Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(v.getContext(), RoomActivity.class);
+
+                    // check if the user entering is in the existing list
+                    boolean found = false;
+                    for (ParseObject u : room.getParticipants()){
+                        if (u.getObjectId().equals(ParseUser.getCurrentUser())){
+                            found = true;
+                            break;
+                        }
+                    }
+                    // add user to room's participant list
+                    if (!found)
+                        room.addParticipant(ParseUser.getCurrentUser());
+
                     i.putExtra("Room", room);
                     v.getContext().startActivity(i);
                 }

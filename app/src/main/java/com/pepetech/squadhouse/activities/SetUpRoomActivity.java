@@ -27,7 +27,7 @@ import java.util.List;
 
 public class SetUpRoomActivity extends AppCompatActivity {
     public static final String TAG = "SetUpRoomActivity";
-
+    Intent i;
     EditText roomTitleEt;
     EditText roomDescriptionEt;
     Button startRoomButton;
@@ -82,6 +82,8 @@ public class SetUpRoomActivity extends AppCompatActivity {
                                 //will reflect in back4app.com as a pointer to a specific user.
                                 newRoom.setHost(ParseUser.getCurrentUser());
                                 newRoom.setPhoneNumber(allRoutes.get(0).getPhoneNumber());
+                                // add current user as a participant
+                                newRoom.addParticipant(ParseUser.getCurrentUser());
                                 Log.i(TAG, allRoutes.get(0).getPhoneNumber());
                                 newRoom.setActiveState(true);
                                 newRoom.setAPSID(allRoutes.get(0).getAPSID());
@@ -98,10 +100,9 @@ public class SetUpRoomActivity extends AppCompatActivity {
                                             Log.i(TAG, object.getObjectId());
                                             newRoom = object;
                                             newRoom.saveInBackground();
-
                                             //set room availability to false
                                             allRoutes.get(0).lockNumber();
-                                            Intent i = new Intent(SetUpRoomActivity.this, RoomActivity.class);
+                                            i = new Intent(SetUpRoomActivity.this, RoomActivity.class);
                                             i.putExtra("Room", newRoom);
                                             //i.putExtra("AP_SID", allRoutes.get(0).getAPSID());
                                             startActivity(i);
