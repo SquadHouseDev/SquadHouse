@@ -14,7 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;

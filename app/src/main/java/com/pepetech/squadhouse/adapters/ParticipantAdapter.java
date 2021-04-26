@@ -16,10 +16,7 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
-import com.pepetech.squadhouse.models.Room;
 import com.pepetech.squadhouse.models.User;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
