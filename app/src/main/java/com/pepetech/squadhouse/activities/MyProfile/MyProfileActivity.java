@@ -323,8 +323,8 @@ public class MyProfileActivity extends AppCompatActivity {
         clFollowers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT);
-                t.show();
+//                Toast t = Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT);
+//                t.show();
                 Log.i(TAG, "Followers clicked!");
                 // Navigate to FollowersActivity
                 goToFollowersActivity(currentUser);
@@ -335,8 +335,8 @@ public class MyProfileActivity extends AppCompatActivity {
         clFollowing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Following clicked!", Toast.LENGTH_SHORT);
-                t.show();
+//                Toast t = Toast.makeText(v.getContext(), "Following clicked!", Toast.LENGTH_SHORT);
+//                t.show();
                 Log.i(TAG, "Following clicked!");
                 // Navigate to FollowingActivity
                 goToFollowingActivity(currentUser);
@@ -346,8 +346,8 @@ public class MyProfileActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Sign out button clicked!", Toast.LENGTH_SHORT);
-                t.show();
+//                Toast t = Toast.makeText(v.getContext(), "Sign out button clicked!", Toast.LENGTH_SHORT);
+//                t.show();
                 Log.i(TAG, "Sign out button clicked!");
                 signoutUser();
                 goToLoginActivity();
@@ -357,8 +357,8 @@ public class MyProfileActivity extends AppCompatActivity {
         btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Settings button clicked!", Toast.LENGTH_SHORT);
-                t.show();
+//                Toast t = Toast.makeText(v.getContext(), "Settings button clicked!", Toast.LENGTH_SHORT);
+//                t.show();
                 Log.i(TAG, "Settings button clicked!");
                 // TODO: Call a bottom sheet here
                 goToSettingsActivity();
@@ -368,8 +368,8 @@ public class MyProfileActivity extends AppCompatActivity {
         ivProfileNominator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
-                t.show();
+//                Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
+//                t.show();
                 Log.i(TAG, "Nominator profile clicked!");
                 if (nominator != null) {
 
@@ -386,8 +386,8 @@ public class MyProfileActivity extends AppCompatActivity {
         ivProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
-                t.show();
+//                Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
+//                t.show();
                 Log.i(TAG, "User profile clicked!");
 //                ParseObject nominator = user.getNominator()
 //                goToProfileActivity();
@@ -398,8 +398,8 @@ public class MyProfileActivity extends AppCompatActivity {
         tvUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Username clicked!", Toast.LENGTH_SHORT);
-                t.show();
+//                Toast t = Toast.makeText(v.getContext(), "Username clicked!", Toast.LENGTH_SHORT);
+//                t.show();
                 Log.i(TAG, "Username clicked!");
 //                ParseObject nominator = user.getNominator()
                 goToUpdateUsernameActivity();
@@ -411,8 +411,8 @@ public class MyProfileActivity extends AppCompatActivity {
         tvFullName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Fullname clicked!", Toast.LENGTH_SHORT);
-                t.show();
+//                Toast t = Toast.makeText(v.getContext(), "Fullname clicked!", Toast.LENGTH_SHORT);
+//                t.show();
                 //inflate the layout
                 LayoutInflater inflater = (LayoutInflater) v.getContext().getSystemService(v.getContext().LAYOUT_INFLATER_SERVICE);
                 View popupView = inflater.inflate(R.layout.activity_popup_window, null);
@@ -445,7 +445,7 @@ public class MyProfileActivity extends AppCompatActivity {
         tvBiography.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Biography clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "Biography clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Biography clicked!");
                 goToUpdateBiographyActivity();
             }
