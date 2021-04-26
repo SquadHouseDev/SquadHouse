@@ -40,7 +40,7 @@ public class PhotoUploadBottomSheetDialog extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 galleryIntent();
-                Toast.makeText(getActivity(), "Accessing Media Files", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Accessing Media Files", Toast.LENGTH_SHORT).show();
             }
         });
 
