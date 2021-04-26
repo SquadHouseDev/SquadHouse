@@ -98,8 +98,8 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Sign out button clicked!", Toast.LENGTH_SHORT);
-                t.show();
+//                Toast t = Toast.makeText(v.getContext(), "Sign out button clicked!", Toast.LENGTH_SHORT);
+//                t.show();
                 Log.i(TAG, "Sign out button clicked!");
                 signoutUser();
                 goToLoginActivity();
@@ -109,8 +109,8 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Settings button clicked!", Toast.LENGTH_SHORT);
-                t.show();
+//                Toast t = Toast.makeText(v.getContext(), "Settings button clicked!", Toast.LENGTH_SHORT);
+//                t.show();
                 Log.i(TAG, "Settings button clicked!");
                 // TODO: Call a bottom sheet here
                 goToSettingsActivity();
@@ -120,8 +120,8 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         ivProfileNominator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
-                t.show();
+//                Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
+//                t.show();
                 Log.i(TAG, "Nominator profile clicked!");
 //                ParseObject nominator = user.getNominator()
 //                goToProfileActivity();
@@ -131,8 +131,8 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         ivProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
-                t.show();
+//                Toast t = Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT);
+//                t.show();
                 Log.i(TAG, "Nominator profile clicked!");
 //                ParseObject nominator = user.getNominator()
 //                goToProfileActivity();
@@ -142,8 +142,8 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         tvUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Username clicked!", Toast.LENGTH_SHORT);
-                t.show();
+//                Toast t = Toast.makeText(v.getContext(), "Username clicked!", Toast.LENGTH_SHORT);
+//                t.show();
                 Log.i(TAG, "Username clicked!");
 //                ParseObject nominator = user.getNominator()
 //                goToProfileActivity();
@@ -153,8 +153,8 @@ public class ViewMyProfileActivity extends AppCompatActivity {
         tvFullName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Fullname clicked!", Toast.LENGTH_SHORT);
-                t.show();
+//                Toast t = Toast.makeText(v.getContext(), "Fullname clicked!", Toast.LENGTH_SHORT);
+//                t.show();
                 Log.i(TAG, "Fullname clicked!");
 //                ParseObject nominator = user.getNominator()
 //                goToProfileActivity();
