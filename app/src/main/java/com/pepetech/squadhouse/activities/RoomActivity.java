@@ -253,6 +253,11 @@ public class RoomActivity extends AppCompatActivity {
                         }
                     });
                 }
+                // non-host end call
+                else if (activeCall != null){
+                    activeCall.disconnect();
+                    activeCall = null;
+                }
                 // ----------------------------------------------------
                 room.removeParticipant(ParseUser.getCurrentUser());
                 room.saveInBackground();
