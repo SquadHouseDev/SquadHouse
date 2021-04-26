@@ -9,6 +9,7 @@ import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,14 +20,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.parse.GetCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.BuildConfig;
@@ -62,6 +61,7 @@ public class RoomActivity extends AppCompatActivity {
     public final String API_KEY = BuildConfig.API_KEY;
     public final String API_SECRET = BuildConfig.API_SECRET;
     public static AccessToken accessToken;
+    private final Handler handler = new Handler();
 
     User user;
 
@@ -76,7 +76,7 @@ public class RoomActivity extends AppCompatActivity {
 
     RelativeLayout roomLayout;
     //make room model/class push to back4app
-    List<ParseObject> allUsers;
+    List<ParseUser> allParticipants;
     //create room here, instantiate participant list, in inviteactivity, make calls to back4app
     //to update room.participantList
 
@@ -96,11 +96,11 @@ public class RoomActivity extends AppCompatActivity {
         end_button = findViewById(R.id.end_button);
         rvParticipants = findViewById(R.id.rvParticipants);
 
-        allUsers = new ArrayList<>();
+        allParticipants = new ArrayList<>();
         rvParticipants = findViewById(R.id.rvParticipants);
-        adapter = new ParticipantAdapter(this, allUsers);
+        adapter = new ParticipantAdapter(this, allParticipants);
         rvParticipants.setAdapter(adapter);
-        rvParticipants.setLayoutManager(new LinearLayoutManager(this));
+        rvParticipants.setLayoutManager(new GridLayoutManager(this, 3));
 
         display_button = findViewById(R.id.display_button);
         user = new User(ParseUser.getCurrentUser());
@@ -155,6 +155,7 @@ public class RoomActivity extends AppCompatActivity {
                 .params(params)
                 .build();
         activeCall = Voice.connect(RoomActivity.this, connectOptions, callListener);
+        doTheAutoRefresh();
     }
 
     private void queryNumbers() {
@@ -169,10 +170,23 @@ public class RoomActivity extends AppCompatActivity {
         //use usableList[0] for new room creation
     }
 
-
     private void queryUsers() {
 
         //based on room.participantList, display ppl with adapter??
+    }
+
+    private void doTheAutoRefresh() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Write code for your refresh logic
+                // get the new room
+                // clear and add all the participants
+                // notify adapter of new changes
+                Toast.makeText(RoomActivity.this, "Auto refreshed!", Toast.LENGTH_SHORT).show();
+                doTheAutoRefresh();
+            }
+        }, 5000);
     }
 
     private void setOnClickListeners() {
@@ -225,7 +239,6 @@ public class RoomActivity extends AppCompatActivity {
                             }
                         }
                     });
-
                 }
                 // ----------------------------------------------------
                 Intent i = new Intent(RoomActivity.this, HomeActivity.class);
