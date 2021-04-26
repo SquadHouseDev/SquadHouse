@@ -166,7 +166,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                Toast.makeText(ProfileActivity.this, "Biography clicked!", Toast.LENGTH_SHORT).show();
 //                Toast.makeText(getConte, "Biography clicked!", Toast.LENGTH_SHORT).show();
-                Toast.makeText(v.getContext(), "Biography clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "Biography clicked!", Toast.LENGTH_SHORT).show();
 //                t.show();
                 Log.i(TAG, "Biography clicked!");
 //                ParseObject nominator = user.getNominator()

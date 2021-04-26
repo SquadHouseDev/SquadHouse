@@ -38,9 +38,9 @@ public class BiographyBottomSheetDialog extends BottomSheetDialogFragment {
         btnBioUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),
-                        "Updated bio!", Toast.LENGTH_SHORT)
-                        .show();
+//                Toast.makeText(getActivity(),
+//                        "Updated bio!", Toast.LENGTH_SHORT)
+//                        .show();
                 // TODO: call method or definition body to apply changes to the user's profile here
                 String biography = etBiography.getText().toString();
                 currentUser.updateBiography(biography);

@@ -83,7 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
 //        user.put(User.KEY_NOMINATOR,  );  // need feature for invite / approving sign ups
         user.put(User.KEY_BIOGRAPHY,  "");
         user.put(User.KEY_PHONE_NUMBER,  ""); // need feature for pinging user for phone number verification
-        Toast.makeText(getBaseContext(), "Starting sign up", Toast.LENGTH_SHORT);
+//        Toast.makeText(getBaseContext(), "Starting sign up", Toast.LENGTH_SHORT);
 
         // POST request to the Parse Server
         user.signUpInBackground(new SignUpCallback() {
