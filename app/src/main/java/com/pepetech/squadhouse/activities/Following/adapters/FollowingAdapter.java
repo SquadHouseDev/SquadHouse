@@ -139,7 +139,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 @Override
                 public void onClick(View v) {
 //                    Log.i(TAG, clubElement.getFirstName() + " was selected!");
-                    Toast.makeText(v.getContext(), "Selected " + club.getName(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(v.getContext(), "Selected " + club.getName(), Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(context, ExploreClubActivity.class);
                     i.putExtra("club", Parcels.wrap(club));
                     context.startActivity(i);
@@ -185,7 +185,7 @@ public class FollowingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 @Override
                 public void onClick(View v) {
                     Log.i(TAG, userElement.getFirstName() + " was selected!");
-                    Toast.makeText(v.getContext(), "Selected " + userElement.getFirstName(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(v.getContext(), "Selected " + userElement.getFirstName(), Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(context, ExploreUserActivity.class);
                     i.putExtra("user", Parcels.wrap(userElement));
                     context.startActivity(i);

@@ -97,7 +97,7 @@ public class ExploreClubAdapter extends RecyclerView.Adapter<ExploreClubAdapter.
                 @Override
                 public void onClick(View v) {
 //                    Log.i(TAG, clubElement.getFirstName() + " was selected!");
-                    Toast.makeText(v.getContext(), "Selected " + clubElement.getName(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(v.getContext(), "Selected " + clubElement.getName(), Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(context, ExploreClubActivity.class);
                     i.putExtra("club", Parcels.wrap(clubElement));
                     context.startActivity(i);
@@ -130,7 +130,7 @@ public class ExploreClubAdapter extends RecyclerView.Adapter<ExploreClubAdapter.
             btnFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Follow button clicked!", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Follow button clicked!", Toast.LENGTH_SHORT).show();
                     Log.i(TAG, "Follow button clicked!");
                     // toggle button follow
                     if (wasFollowed) {
@@ -163,7 +163,7 @@ public class ExploreClubAdapter extends RecyclerView.Adapter<ExploreClubAdapter.
             btnFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Follow button clicked!", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Follow button clicked!", Toast.LENGTH_SHORT).show();
                     Log.i(TAG, "Follow button clicked!");
                     // toggle button follow
                     if (wasFollowed) {
