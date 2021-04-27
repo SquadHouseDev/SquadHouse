@@ -90,7 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     Log.i(TAG, "Successfully created account!");
-                    Toast.makeText(getBaseContext(), "Account created!", Toast.LENGTH_SHORT);
+//                    Toast.makeText(getBaseContext(), "Account created!", Toast.LENGTH_SHORT);
                 } else {
                     // TODO add addtional cases in which a user's input is "incorrect"
                     // 1. password is insecure
@@ -99,13 +99,13 @@ public class SignUpActivity extends AppCompatActivity {
                         case ParseException.USERNAME_TAKEN:
                             // TODO reflect on GUI that username is taken, ideally inside of the edit text box
                             Log.d(TAG, "Username is taken!");
-                            Toast.makeText(getBaseContext(), "Username is taken!", Toast.LENGTH_SHORT);
+//                            Toast.makeText(getBaseContext(), "Username is taken!", Toast.LENGTH_SHORT);
                             // report error
                             break;
                         case ParseException.EMAIL_TAKEN:
                             // TODO reflect on GUI that email is taken, ideally inside of the edit text box
                             Log.d(TAG, "Email is taken!");
-                            Toast.makeText(getBaseContext(), "Email is taken!", Toast.LENGTH_SHORT);
+//                            Toast.makeText(getBaseContext(), "Email is taken!", Toast.LENGTH_SHORT);
                             // report error
                             break;
                         default: {
