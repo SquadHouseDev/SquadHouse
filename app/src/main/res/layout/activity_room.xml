@@ -1,37 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/roomLayout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
-    android:id="@+id/roomLayout">
+    android:orientation="vertical"
+    android:padding="10dp">
 
-    <Button
-        android:id="@+id/invite_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Invite" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/invite_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Invite"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <Button
+            android:id="@+id/end_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/invite_button"
+            android:text="End Call"
+            app:layout_constraintStart_toEndOf="@id/invite_button"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/display_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/end_button"
+            android:text="Display #"
+            app:layout_constraintStart_toEndOf="@id/end_button"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvParticipants"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/invite_button"/>
-
-    <Button
-        android:id="@+id/end_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
-        android:layout_toEndOf="@+id/invite_button"
-        android:text="End Call" />
-
-    <Button
-        android:id="@+id/display_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Display #"
-        android:layout_toEndOf="@+id/end_button"
-        android:layout_marginStart="10dp"/>
-
-</RelativeLayout>
+        android:layout_height="wrap_content" />
+</LinearLayout>
