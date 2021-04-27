@@ -80,8 +80,8 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
                 public void onClick(View v) {
                     Log.i(TAG, "Room: " + tvClubName.getText() + " " + tvRoomName.getText() + " clicked!");
                     // TODO: add routing of room data here for joining the conference
-                    Toast.makeText(context, "Room: " + tvClubName.getText() + " " + tvRoomName.getText() + " clicked!",
-                            Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Room: " + tvClubName.getText() + " " + tvRoomName.getText() + " clicked!",
+//                            Toast.LENGTH_SHORT).show();
                 }
             });
         }

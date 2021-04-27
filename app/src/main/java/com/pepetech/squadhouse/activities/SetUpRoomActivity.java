@@ -109,7 +109,7 @@ public class SetUpRoomActivity extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                Toast.makeText(getBaseContext(), "Error creating room", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getBaseContext(), "Error creating room", Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             // add handling if there are issues with querying

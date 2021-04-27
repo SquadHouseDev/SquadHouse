@@ -38,12 +38,12 @@ public class EventCreateActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // overriden to be the cancel button
             case android.R.id.home:
-                Toast.makeText(this, "Cancel..!!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Cancel..!!", Toast.LENGTH_SHORT).show();
                 finish();
                 return true;
 
             case R.id.action_done:
-                Toast.makeText(this, "Done..!!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Done..!!", Toast.LENGTH_SHORT).show();
 
                 return true;
             default:
@@ -90,7 +90,7 @@ public class EventCreateActivity extends AppCompatActivity {
 
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-            Toast.makeText(view.getContext(), "Date set!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(view.getContext(), "Date set!", Toast.LENGTH_SHORT).show();
 
         }
     }
@@ -113,7 +113,7 @@ public class EventCreateActivity extends AppCompatActivity {
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             // Do something with the time chosen by the user
-            Toast.makeText(view.getContext(), "Time set!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(view.getContext(), "Time set!", Toast.LENGTH_SHORT).show();
         }
 
     }

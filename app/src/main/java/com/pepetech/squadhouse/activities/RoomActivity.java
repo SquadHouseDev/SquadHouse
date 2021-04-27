@@ -180,7 +180,7 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "invite button clicked");
-                Toast.makeText(v.getContext(), "Invite clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "Invite clicked!", Toast.LENGTH_SHORT).show();
 
                 Intent i = new Intent(RoomActivity.this, InviteActivity.class);
                 startActivity(i);
@@ -191,7 +191,7 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "end button clicked");
-                Toast.makeText(v.getContext(), "End Button clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "End Button clicked!", Toast.LENGTH_SHORT).show();
 
                 if (activeCall != null && room.getHost().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
                     activeCall.disconnect();
