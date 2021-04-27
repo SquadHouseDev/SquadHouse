@@ -18,6 +18,9 @@ public class Club extends ParseObject {
     public static final String KEY_IMAGE = "image";
     public static final String KEY_MEMBERS = "members";
     public static final String KEY_INTERESTS = "interests";
+    public static final String KEY_MEMBERS_VISIBLE = "membersVisible";
+    public static final String KEY_IS_FOLLOWABLE = "isFollowable";
+    public static final String KEY_MEMBERS_CAN_CREATE_ROOMS = "membersCanCreateRooms";
 
     ////////////////////////////////////////////////////////////
     // Getter Methods
@@ -30,6 +33,36 @@ public class Club extends ParseObject {
             e.printStackTrace();
         }
         return getString(KEY_NAME);
+    }
+
+    public boolean isMembersVisible() {
+        try {
+            boolean rv = fetchIfNeeded().getBoolean(KEY_MEMBERS_VISIBLE);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isFollowable() {
+        try {
+            boolean rv = fetchIfNeeded().getBoolean(KEY_IS_FOLLOWABLE);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean getMembersCanCreateRooms() {
+        try {
+            boolean rv = fetchIfNeeded().getBoolean(KEY_MEMBERS_CAN_CREATE_ROOMS);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public String getDescription() {
@@ -111,6 +144,20 @@ public class Club extends ParseObject {
         put(KEY_IMAGE, newImage);
     }
 
+    private void setMembersVisible(boolean isVisible) {
+        put(KEY_MEMBERS_VISIBLE, isVisible);
+    }
+
+    private void setFollowable(boolean isVisible) {
+        put(KEY_IS_FOLLOWABLE, isVisible);
+
+    }
+
+    private void setMembersCanCreateRooms(boolean canCreate) {
+        put(KEY_MEMBERS_CAN_CREATE_ROOMS, canCreate);
+
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////
     // Update Methods: automatically calls saveInBackground on ParseUser to effect updates
     ////////////////////////////////////////////////////////////////////////////////////////////
@@ -179,6 +226,24 @@ public class Club extends ParseObject {
 
     public boolean updateDescription(String description) {
         setDescription(description);
+        saveInBackground();
+        return true;
+    }
+
+    public boolean updateMembersCanCreateRooms(boolean canCreate) {
+        setMembersCanCreateRooms(canCreate);
+        saveInBackground();
+        return true;
+    }
+
+    public boolean updateFollowable(boolean isFollowable) {
+        setFollowable(isFollowable);
+        saveInBackground();
+        return true;
+    }
+
+    public boolean updateMembersVisible(boolean isVisible) {
+        setMembersCanCreateRooms(isVisible);
         saveInBackground();
         return true;
     }
