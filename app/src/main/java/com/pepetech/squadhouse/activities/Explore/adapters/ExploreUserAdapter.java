@@ -106,7 +106,7 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
                 @Override
                 public void onClick(View v) {
                     Log.i(TAG, userElement.getFirstName() + " was selected!");
-                    Toast.makeText(v.getContext(), "Selected " + userElement.getFirstName(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(v.getContext(), "Selected " + userElement.getFirstName(), Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(context, ExploreUserActivity.class);
                     i.putExtra("user", Parcels.wrap(userElement));
                     context.startActivity(i);
@@ -146,7 +146,7 @@ public class ExploreUserAdapter extends RecyclerView.Adapter<ExploreUserAdapter.
             btnFollow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "Follow button clicked!", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Follow button clicked!", Toast.LENGTH_SHORT).show();
                     Log.i(TAG, "Follow button clicked!");
                     // on button click and not followed --> action to follow
                     if (!userElement.isFollowed && !userElement.getParseUser().getObjectId().equals(currentUser.getParseUser().getObjectId())) {

@@ -140,8 +140,8 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
                 public void onClick(View v) {
                     Log.i(TAG, "Room: " + tvClubName.getText() + " " + tvRoomName.getText() + " clicked!");
                     // TODO: add routing of room data here for joining the conference
-                    Toast.makeText(context, "Room: " + tvClubName.getText() + " " + tvRoomName.getText() + " clicked!",
-                            Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Room: " + tvClubName.getText() + " " + tvRoomName.getText() + " clicked!",
+//                            Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(v.getContext(), RoomActivity.class);
 
                     // check if the user entering is in the existing list
@@ -218,8 +218,8 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
                 @Override
                 public void onClick(View v) {
                     Log.i(TAG, "Explore cell tapped... routing to Explore Activity");
-                    Toast.makeText(context, "Explore cell tapped... routing to Explore Activity",
-                            Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Explore cell tapped... routing to Explore Activity",
+//                            Toast.LENGTH_SHORT).show();
                     Activity activity = (Activity) v.getContext();
                     Intent i;
                     i = new Intent(v.getContext(), ExploreActivity.class);

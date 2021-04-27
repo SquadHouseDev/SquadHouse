@@ -47,8 +47,8 @@ public class UpdateFullNameActivity extends AppCompatActivity {
                 Log.i(TAG, lastname);
                 user.updateFirstName(firstname);
                 user.updateLastName(lastname);
-                Toast t = Toast.makeText(v.getContext(), "Update Complete!", Toast.LENGTH_SHORT);
-                t.show();
+//                Toast t = Toast.makeText(v.getContext(), "Update Complete!", Toast.LENGTH_SHORT);
+//                t.show();
             }
         });
     }

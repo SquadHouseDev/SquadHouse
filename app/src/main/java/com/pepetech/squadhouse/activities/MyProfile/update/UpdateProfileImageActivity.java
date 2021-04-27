@@ -57,8 +57,8 @@ public class UpdateProfileImageActivity extends AppCompatActivity {
             @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Profile image clicked!", Toast.LENGTH_SHORT);
-                t.show();
+//                Toast t = Toast.makeText(v.getContext(), "Profile image clicked!", Toast.LENGTH_SHORT);
+//                t.show();
                 Log.i(TAG, "Profile Image clicked!");
                 // TODO: fix broken navigation to previous activity
                 PhotoUploadBottomSheetDialog bottomSheet = new PhotoUploadBottomSheetDialog();
@@ -69,7 +69,7 @@ public class UpdateProfileImageActivity extends AppCompatActivity {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Done clicked!", Toast.LENGTH_SHORT);
+//                Toast t = Toast.makeText(v.getContext(), "Done clicked!", Toast.LENGTH_SHORT);
                 finish();
             }
         });

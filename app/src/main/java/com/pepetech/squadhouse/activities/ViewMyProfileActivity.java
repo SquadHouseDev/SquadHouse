@@ -112,7 +112,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
 //                Toast t = Toast.makeText(v.getContext(), "Settings button clicked!", Toast.LENGTH_SHORT);
 //                t.show();
                 Log.i(TAG, "Settings button clicked!");
-                // TODO: Call a bottom sheet here
+//                 TODO: Call a bottom sheet here
                 goToSettingsActivity();
             }
         });
@@ -166,7 +166,7 @@ public class ViewMyProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                Toast.makeText(ProfileActivity.this, "Biography clicked!", Toast.LENGTH_SHORT).show();
 //                Toast.makeText(getConte, "Biography clicked!", Toast.LENGTH_SHORT).show();
-                Toast.makeText(v.getContext(), "Biography clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "Biography clicked!", Toast.LENGTH_SHORT).show();
 //                t.show();
                 Log.i(TAG, "Biography clicked!");
 //                ParseObject nominator = user.getNominator()
@@ -239,9 +239,6 @@ public class ViewMyProfileActivity extends AppCompatActivity {
     }
 
     private void goToViewAProfileActivity() {
-//        Intent i = new Intent(this, SettingsActivity.class);
-//        startActivity(i);
-//        overridePendingTransition(R.anim.slide_to_top, R.anim.slide_to_left);
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
 
