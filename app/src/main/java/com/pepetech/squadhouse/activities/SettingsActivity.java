@@ -62,6 +62,12 @@ public class SettingsActivity extends AppCompatActivity {
                 openWebURL("https://squadhousedev.github.io/Privacy/");
             }
         });
+        btnFAQ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWebURL("https://squadhousedev.github.io/FAQ/");
+            }
+        });
 
     }
 
