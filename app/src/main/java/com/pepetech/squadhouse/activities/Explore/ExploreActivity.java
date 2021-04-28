@@ -132,7 +132,7 @@ public class ExploreActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean isValidKeyword = false;
-                Toast.makeText(v.getContext(), "Search button clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "Search button clicked!", Toast.LENGTH_SHORT).show();
                 // qualify if there exists a keyword search entry
                 if (etSearch.getText().toString().length() > 1) {
                     // check state of toggle switch for selecting which adapter to use when populating
@@ -155,9 +155,9 @@ public class ExploreActivity extends AppCompatActivity {
         });
         // DEBUG
         if (switchUserClub.isChecked()) {
-            Toast.makeText(getBaseContext(), "Search for Users", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getBaseContext(), "Search for Users", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getBaseContext(), "Search for Clubs", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getBaseContext(), "Search for Clubs", Toast.LENGTH_SHORT).show();
         }
     }
 

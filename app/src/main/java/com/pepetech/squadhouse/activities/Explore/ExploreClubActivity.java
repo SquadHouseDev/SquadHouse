@@ -124,7 +124,7 @@ public class ExploreClubActivity extends AppCompatActivity {
         btnClubFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Follow button clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "Follow button clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Follow button clicked!");
                 // toggle button follow
                 if (wasFollowed) {
@@ -161,7 +161,7 @@ public class ExploreClubActivity extends AppCompatActivity {
         btnClubFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Follow button clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "Follow button clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Follow button clicked!");
                 // toggle button follow
                 if (wasFollowed) {

@@ -1,14 +1,12 @@
 package com.pepetech.squadhouse.activities.Home;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,14 +24,27 @@ import com.pepetech.squadhouse.activities.Explore.ExploreActivity;
 import com.pepetech.squadhouse.activities.Home.adapters.HomeMultiViewAdapter;
 import com.pepetech.squadhouse.activities.MyProfile.MyProfileActivity;
 import com.pepetech.squadhouse.activities.SetUpRoomActivity;
+import com.pepetech.squadhouse.models.Event;
 import com.pepetech.squadhouse.models.Follow;
 import com.pepetech.squadhouse.models.Room;
 import com.pepetech.squadhouse.models.RoomRoute;
 import com.pepetech.squadhouse.models.User;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+/**
+ * Maintains the collection of mixced object types for display:
+ * 1. Integer - count 1
+ * 2. Event - count varies
+ * 3. Room - count varies
+ * <p>
+ * collection maintains the list of all objects that are used by the hetero recycler
+ */
 public class HomeActivity extends AppCompatActivity {
     public static final String TAG = "HomeActivity";
 
@@ -41,14 +52,36 @@ public class HomeActivity extends AppCompatActivity {
     FloatingActionButton fabCreateRoomWithFollowers;
     RecyclerView rvRooms;
     HomeMultiViewAdapter viewAdapter;
-    List<Object> allRooms;
+    List<Object> collection;
+    List<Event> allEvents;
+    List<Room> allRooms;
     List<RoomRoute> availableRoutes;
     SwipeRefreshLayout swipeContainer;
+
+    private void initCollection() {
+        collection = new ArrayList<>();
+        allEvents = new ArrayList<>();
+        allRooms = new ArrayList<>();
+    }
+
+    /**
+     * Main method chain caller for querying for the collection of mixed object dtypes.
+     * Resets the currection mixed dtype collection and adds an integer signifying the explore cell.
+     * A query for events is called and any items found are added to the mixed collection. A query for
+     * rooms is sent out by the queryEvents method after it is done. This maintains the order in which items are
+     * added in while providing the refresh functionality.
+     */
+    private void queryCollection() {
+        collection.clear();
+        collection.add(1);
+        queryEvents();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        setTitle("HOME");
 
         ////////////////////////////////////////////////////////////
         // Setup buttons
@@ -60,15 +93,13 @@ public class HomeActivity extends AppCompatActivity {
         ////////////////////////////////////////////////////////////
         // Setup recycler view
         ////////////////////////////////////////////////////////////
-        allRooms = new ArrayList<>();
-        // configure hetero recycler using dummy values
-        allRooms.add(1);    // any integer value denotes the explore cell
-        allRooms.add("future"); // any future string denotes the cell of personalized future events for the user
+        initCollection();
         rvRooms = findViewById(R.id.rvHomeFeed);
         availableRoutes = new ArrayList<>();
-        viewAdapter = new HomeMultiViewAdapter(this, allRooms);
+        viewAdapter = new HomeMultiViewAdapter(this, collection);
         rvRooms.setAdapter(viewAdapter);
         rvRooms.setLayoutManager(new LinearLayoutManager(this));
+        queryCollection();
 
         ////////////////////////////////////////////////////////////
         // Setup swipe to refresh feature
@@ -83,10 +114,10 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 Log.i(TAG, "Refresh called -> fetching new data!");
-                queryRooms();
+                queryCollection();
+                refreshMyFollowerCount();
             }
         });
-        queryRooms();
         // needed to refresh for any app user
         refreshMyFollowerCount();
     }
@@ -98,7 +129,7 @@ public class HomeActivity extends AppCompatActivity {
         btnCreateRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Create room clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getBaseContext(), "Create room clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Create room clicked!");
 
                 Intent i = new Intent(HomeActivity.this, SetUpRoomActivity.class);
@@ -114,7 +145,30 @@ public class HomeActivity extends AppCompatActivity {
         fabCreateRoomWithFollowers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Create room with follower(s) clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "Create room with follower(s) clicked!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     *
+     */
+    public void queryRooms() {
+        ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
+        allRooms.clear();
+        query.whereEqualTo(Room.KEY_IS_ACTIVE, true);
+        query.orderByDescending(Room.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<Room>() {
+            @Override
+            public void done(List<Room> rooms, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+                allRooms.addAll(rooms);
+                collection.addAll(allRooms);
+                viewAdapter.notifyDataSetChanged();
+                swipeContainer.setRefreshing(false);
             }
         });
     }
@@ -124,12 +178,14 @@ public class HomeActivity extends AppCompatActivity {
      * populating the MultiViewAdapter. This function is called when the User
      * performs a pull-to-refresh to show the newest active rooms.
      */
-    private void queryRooms() {
+    public void queryRoomsDeprecated() {
         ParseQuery<Room> query = ParseQuery.getQuery(Room.class);
         // case in which there exists rooms
-        if (allRooms.size() > 2) {
-            Log.i(TAG, String.valueOf(((Room) allRooms.get(allRooms.size() - 1)).getCreatedAt()));
-            query.whereGreaterThan(Room.KEY_CREATED_AT, ((Room) allRooms.get(2)).getCreatedAt());
+
+        // the constant value of 2 needs to be the value that varies based upon the sum of 1 + len(allEvents)
+        if (collection.size() > 2) {
+            Log.i(TAG, String.valueOf(((Room) collection.get(collection.size() - 1)).getCreatedAt()));
+            query.whereGreaterThan(Room.KEY_CREATED_AT, ((Room) collection.get(2)).getCreatedAt());
             query.whereEqualTo(Room.KEY_IS_ACTIVE, true);
             query.orderByDescending(Room.KEY_CREATED_AT);
             query.findInBackground(new FindCallback<Room>() {
@@ -145,7 +201,8 @@ public class HomeActivity extends AppCompatActivity {
                     // 0 --> explore cell
                     // 1 --> future cell
                     // 2 --> active of the previously most recent room
-                    allRooms.addAll(2, rooms);
+
+                    collection.addAll(2, rooms);
                     viewAdapter.notifyDataSetChanged();
                     swipeContainer.setRefreshing(false);
                 }
@@ -162,7 +219,7 @@ public class HomeActivity extends AppCompatActivity {
                         Log.e(TAG, "Issue with getting posts", e);
                         return;
                     }
-                    allRooms.addAll(rooms);
+                    collection.addAll(rooms);
                     viewAdapter.notifyDataSetChanged();
                     swipeContainer.setRefreshing(false);
                 }
@@ -191,7 +248,7 @@ public class HomeActivity extends AppCompatActivity {
         Intent i;
         switch (item.getItemId()) {
             case R.id.action_calendar:
-                Toast.makeText(this, "Calendar clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Calendar clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Calendar clicked!");
                 i = new Intent(this, EventActivity.class);
                 startActivity(i);
@@ -201,14 +258,14 @@ public class HomeActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 return true;
             case R.id.action_history:
-                Toast.makeText(this, "History clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "History clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "History clicked!");
                 // arg_1: page to navigate to slides from the right
                 // arg_2: page navigating from slides to the left
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 return true;
             case R.id.action_invite:
-                Toast.makeText(this, "Invite clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Invite clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Invite clicked!");
                 // arg_1: page to navigate to slides from the right
                 // arg_2: page navigating from slides to the left
@@ -216,7 +273,7 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_profile:
-                Toast.makeText(this, "Profile clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Profile clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Profile clicked!");
                 i = new Intent(this, MyProfileActivity.class);
                 this.startActivity(i);
@@ -225,7 +282,7 @@ public class HomeActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 return true;
             case R.id.action_search:
-                Toast.makeText(this, "Search clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Search clicked!", Toast.LENGTH_SHORT).show();
                 i = new Intent(this, ExploreActivity.class);
                 this.startActivity(i);
                 // arg_1: page to navigate to slides from the right
@@ -264,6 +321,38 @@ public class HomeActivity extends AppCompatActivity {
                     ParseUser.getCurrentUser().saveInBackground();
                 } else {
                 }
+            }
+        });
+    }
+
+    /**
+     * <p>Pre: allEvents empty</p>
+     * <p>Post: allEvents updated</p>
+     */
+    private void queryEvents() {
+        allEvents.clear();
+        ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
+        // case in which there exists rooms
+        // create variable of today
+        // query for Event.scheduledFor > today
+
+        // TEST query for all user's events
+        DateTime dateTime = new DateTime(); // Initializes with the current date and time
+        Date now = dateTime.toDate();
+        query.whereGreaterThan(Event.KEY_SCHEDULED_FOR, now);
+        query.findInBackground(new FindCallback<Event>() {
+            @Override
+            public void done(List<Event> events, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+                allEvents.addAll(events);
+                collection.addAll(allEvents);
+                viewAdapter.notifyDataSetChanged();
+                Log.i(TAG, "# events found: " + allEvents.size());
+                queryRooms();
+//                collection.addAll(allEvents);
             }
         });
     }

@@ -9,10 +9,10 @@
     tools:context=".activities.MyProfile.MyProfileActivity">
 
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rlProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="207dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <ImageButton
             android:id="@+id/btnSettings"
@@ -22,6 +22,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="15dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_settings_24" />
 
         <Button
@@ -32,18 +34,22 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_toStartOf="@+id/btnSettings"
-            android:text="Sign Out" />
+            android:text="Sign Out"
+            app:layout_constraintRight_toLeftOf="@id/btnSettings"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivProfile"
-            android:layout_width="250dp"
+            android:layout_width="125dp"
             android:layout_height="125dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="255dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_person_24" />
 
         <TextView
@@ -54,10 +60,13 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="255dp"
             android:layout_marginBottom="5dp"
             android:text="John Doe"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivProfile" />
 
         <TextView
             android:id="@+id/tvUsername"
@@ -67,16 +76,23 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="258dp"
             android:layout_marginBottom="5dp"
-            android:text="\@johndoe" />
+            android:text="\@johndoe"
+            app:layout_constraintLeft_toLeftOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@id/tvFullName" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clFollowersAndFollowing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp">
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+
+            app:layout_constraintTop_toBottomOf="@id/tvUsername">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clFollowers"
@@ -87,7 +103,7 @@
 
                 <TextView
                     android:id="@+id/tvFollowersLabel"
-                    android:layout_width="68dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="186dp"
@@ -113,6 +129,7 @@
                 android:id="@+id/clFollowing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 app:layout_constraintStart_toEndOf="@id/clFollowers"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -121,7 +138,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="-150dp"
                     android:layout_marginBottom="5dp"
                     android:text="69696969"
                     android:textStyle="bold"
@@ -141,11 +157,9 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
         android:id="@+id/svProfile"
@@ -165,10 +179,11 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="125dp"
                 android:text="I like Jane Doe's..." />
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/rlNominator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -176,7 +191,7 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivProfileNominator"
-                    android:layout_width="250dp"
+                    android:layout_width="125dp"
                     android:layout_height="125dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
@@ -184,6 +199,8 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="255dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_baseline_person_24" />
 
                 <TextView
@@ -194,9 +211,10 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="175dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="87dp"
-                    android:text="Joined Jan 1, 2021" />
+                    android:text="Joined Jan 1, 2021"
+                    app:layout_constraintLeft_toLeftOf="@id/ivProfileNominator"
+                    app:layout_constraintTop_toTopOf="@id/ivProfileNominator" />
 
                 <TextView
                     android:id="@+id/tvNominatorLabel"
@@ -206,7 +224,9 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="175dp"
                     android:layout_marginTop="5dp"
-                    android:text="Nominated by" />
+                    android:text="Nominated by"
+                    app:layout_constraintLeft_toLeftOf="@id/ivProfileNominator"
+                    app:layout_constraintTop_toBottomOf="@id/tvUserJoinDate" />
 
                 <TextView
                     android:id="@+id/tvNominatorName"
@@ -217,9 +237,11 @@
                     android:layout_marginTop="0dp"
                     android:layout_toEndOf="@+id/tvNominatorLabel"
                     android:text="Jane"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toRightOf="@id/tvNominatorLabel"
+                    app:layout_constraintTop_toTopOf="@id/tvNominatorLabel" />
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clClubs"
@@ -243,32 +265,18 @@
                         android:textStyle="bold"></TextView>
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:orientation="horizontal"
                         android:id="@+id/rvClubIcons"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tvMemberOf"
                         android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_marginEnd="15dp"
-                        android:layout_marginTop="5dp" />
+                        android:orientation="horizontal" />
 
                 </RelativeLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="@id/clClubs"
-                    app:layout_constraintTop_toBottomOf="@+id/rlClubs">
-
-                </androidx.recyclerview.widget.RecyclerView>
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
         </LinearLayout>
-
-
     </ScrollView>
-
 </LinearLayout>

@@ -9,22 +9,22 @@ import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.parse.GetCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -45,7 +45,6 @@ import com.twilio.voice.Voice;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -62,21 +61,20 @@ public class RoomActivity extends AppCompatActivity {
     public final String API_KEY = BuildConfig.API_KEY;
     public final String API_SECRET = BuildConfig.API_SECRET;
     public static AccessToken accessToken;
-
+    private final Handler handler = new Handler();
+    boolean isActive;
     User user;
-
-
     Room room;
-
+    boolean newlyCreated;
     Button invite_button;
     Button end_button;
     RecyclerView rvParticipants;
     ParticipantAdapter adapter;
     Button display_button;
 
-    RelativeLayout roomLayout;
+    LinearLayout roomLayout;
     //make room model/class push to back4app
-    List<ParseObject> allUsers;
+    ArrayList<ParseObject> allParticipants;
     //create room here, instantiate participant list, in inviteactivity, make calls to back4app
     //to update room.participantList
 
@@ -94,19 +92,22 @@ public class RoomActivity extends AppCompatActivity {
         roomLayout = findViewById(R.id.roomLayout);
         invite_button = findViewById(R.id.invite_button);
         end_button = findViewById(R.id.end_button);
+        isActive = true;
+        allParticipants = new ArrayList<>();
         rvParticipants = findViewById(R.id.rvParticipants);
-
-        allUsers = new ArrayList<>();
-        rvParticipants = findViewById(R.id.rvParticipants);
-        adapter = new ParticipantAdapter(this, allUsers);
+        adapter = new ParticipantAdapter(this, allParticipants);
         rvParticipants.setAdapter(adapter);
-        rvParticipants.setLayoutManager(new LinearLayoutManager(this));
+        rvParticipants.setLayoutManager(new GridLayoutManager(this, 3));
 
         display_button = findViewById(R.id.display_button);
         user = new User(ParseUser.getCurrentUser());
 
         Intent i = getIntent();
         room = i.getParcelableExtra("Room");
+        if (room.getObjectId() == null){
+            Log.i(TAG, "null room id");
+            queryRoom();
+        }
         Log.i(TAG, "objectID " + room.getObjectId());
 
         queryUsers();
@@ -155,6 +156,25 @@ public class RoomActivity extends AppCompatActivity {
                 .params(params)
                 .build();
         activeCall = Voice.connect(RoomActivity.this, connectOptions, callListener);
+        doTheAutoRefresh();
+    }
+
+    private void queryRoom() {
+        ParseQuery<Room> roomQuery = new ParseQuery<Room>(Room.class);
+        roomQuery.whereEqualTo(Room.KEY_TITLE, room.getTitle());
+        roomQuery.whereEqualTo(Room.KEY_HOST, ParseUser.getCurrentUser());
+        roomQuery.whereEqualTo(Room.KEY_DESCRIPTION, room.getDescription());
+        roomQuery.whereEqualTo(Room.KEY_IS_ACTIVE, room.isActive());
+        roomQuery.getFirstInBackground(new GetCallback<Room>() {
+            @Override
+            public void done(Room object, ParseException e) {
+                if (e == null) {
+                    Log.i(TAG, object.getObjectId());
+                    room = object;
+                    room.saveInBackground();
+                }
+            }
+        });
     }
 
     private void queryNumbers() {
@@ -169,10 +189,40 @@ public class RoomActivity extends AppCompatActivity {
         //use usableList[0] for new room creation
     }
 
-
     private void queryUsers() {
 
         //based on room.participantList, display ppl with adapter??
+    }
+
+    private void doTheAutoRefresh() {
+        if (isActive) {
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Log.i(TAG, "auto refreshed list of participants@roomid: " + room.getObjectId());
+                    // Write code for your refresh logic
+                    ParseQuery<Room> roomQuery = new ParseQuery<Room>(Room.class);
+                    roomQuery.whereEqualTo(room.KEY_OBJECT_ID, room.getObjectId());
+                    roomQuery.getFirstInBackground(new GetCallback<Room>() {
+                        @Override
+                        public void done(Room object, ParseException e) {
+                            if (e == null) {
+                                Log.i(TAG, "Updated participant list for " + room.getObjectId());
+                                room = object;
+                                allParticipants.clear();
+                                allParticipants.addAll(room.getParticipants());
+                                Log.i(TAG, "# of participants: " + String.valueOf(room.getParticipants().size()));
+                                adapter.notifyDataSetChanged();
+                            } else {
+                                Log.e(TAG, e.toString());
+                            }
+                        }
+                    });
+                    adapter.notifyDataSetChanged();
+                    doTheAutoRefresh();
+                }
+            }, 5000);
+        }
     }
 
     private void setOnClickListeners() {
@@ -180,7 +230,7 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "invite button clicked");
-                Toast.makeText(v.getContext(), "Invite clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "Invite clicked!", Toast.LENGTH_SHORT).show();
 
                 Intent i = new Intent(RoomActivity.this, InviteActivity.class);
                 startActivity(i);
@@ -191,11 +241,12 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "end button clicked");
-                Toast.makeText(v.getContext(), "End Button clicked!", Toast.LENGTH_SHORT).show();
-
+//                Toast.makeText(v.getContext(), "End Button clicked!", Toast.LENGTH_SHORT).show();
+                isActive = false;
                 if (activeCall != null && room.getHost().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
                     activeCall.disconnect();
                     activeCall = null;
+
 
                     //query roomroute and set availability back to true.
                     ParseQuery<RoomRoute> mainQuery = new ParseQuery<RoomRoute>(RoomRoute.class);
@@ -218,21 +269,26 @@ public class RoomActivity extends AppCompatActivity {
                                 Log.i(TAG, "objectID " + room.getObjectId());
                                 object.setActiveState(false);
                                 object.saveInBackground();
-
-
                             } else {
                                 Log.e(TAG, e.toString());
                             }
                         }
                     });
-
+                }
+                // non-host end call
+                else if (activeCall != null) {
+                    activeCall.disconnect();
+                    activeCall = null;
                 }
                 // ----------------------------------------------------
+                room.removeParticipant(ParseUser.getCurrentUser());
+                room.saveInBackground();
+                adapter.notifyDataSetChanged();
                 Intent i = new Intent(RoomActivity.this, HomeActivity.class);
                 startActivity(i);
+                finish();
             }
         });
-
     }
 
     private Call.Listener callListener() {
@@ -275,6 +331,7 @@ public class RoomActivity extends AppCompatActivity {
                 //applyFabState(inputSwitchFab, fileAndMicAudioDevice.isMusicPlaying());
                 Log.d(TAG, "Connected " + call.getSid());
                 activeCall = call;
+                doTheAutoRefresh();
             }
 
             @Override
