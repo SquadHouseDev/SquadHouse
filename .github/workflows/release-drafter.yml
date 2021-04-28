@@ -12,7 +12,7 @@ on:
     types: [opened, reopened, synchronize]
 
 jobs:
-  update_release_draft:
+  Update-Release-Draft:
     runs-on: ubuntu-latest
     steps:
       # (Optional) GitHub Enterprise requires GHE_HOST variable set
