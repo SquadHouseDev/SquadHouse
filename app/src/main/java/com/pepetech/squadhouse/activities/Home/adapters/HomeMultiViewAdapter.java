@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +18,8 @@ import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.Explore.ExploreActivity;
 import com.pepetech.squadhouse.activities.RoomActivity;
+import com.pepetech.squadhouse.models.Club;
+import com.pepetech.squadhouse.models.Event;
 import com.pepetech.squadhouse.models.Room;
 
 import java.util.List;
@@ -41,7 +42,7 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
     private List<Object> objectList;
 
     // View Holder Item Type Mapping
-    private final int ACTIVE = 0, FUTURE = 1, SEARCH = 2;
+    private final int ACTIVE = 0, EVENT = 1, SEARCH = 2;
 
     /**
      * @param context
@@ -55,8 +56,8 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
     //Returns the view type of the item at position for the purposes of view recycling.
     @Override
     public int getItemViewType(int position) {
-        if (objectList.get(position) instanceof String) {
-            return FUTURE;
+        if (objectList.get(position) instanceof Event) {
+            return EVENT;
         } else if (objectList.get(position) instanceof Room) {
             return ACTIVE;
         } else if (objectList.get(position) instanceof Integer) {
@@ -84,10 +85,10 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
                 View v1 = inflater.inflate(R.layout.cell_home_room_active, parent, false);
                 viewHolder = new ViewHolderActive(v1);
                 break;
-            case FUTURE:
+            case EVENT:
                 Log.i(TAG, String.valueOf(viewType));
-                View v2 = inflater.inflate(R.layout.cell_home_room_future, parent, false);
-                viewHolder = new ViewHolderFuture(v2);
+                View v2 = inflater.inflate(R.layout.cell_home_event, parent, false);
+                viewHolder = new ViewHolderEvent(v2);
                 break;
             case SEARCH:
                 Log.i(TAG, String.valueOf(viewType));
@@ -95,7 +96,7 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
                 viewHolder = new ViewHolderExplore(v3);
                 break;
             default:
-                Log.i(TAG, String.valueOf(viewType));
+                Log.i(TAG, "onCreateViewHolder: " + String.valueOf(viewType));
                 View v = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
                 //TODO: Need to Update to proper ViewHolder Object
 //                viewHolder = new RecyclerViewSimpleTextViewHolder(v);
@@ -105,7 +106,7 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
         return viewHolder;
     }
 
-    class ViewHolderActive extends RecyclerView.ViewHolder {
+    class ViewHolderActive extends DefaultViewHolder {
         // Cell Room Active
         // view elements
         private TextView tvClubName;
@@ -171,30 +172,29 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
         return new String(Character.toChars(unicode));
     }
 
-    class ViewHolderFuture extends RecyclerView.ViewHolder {
-        // Cell Room Future
-        // view elements
-
+    class ViewHolderEvent extends DefaultViewHolder {
         private TextView tvClubName;
-        private TextView tvFutureRoomName;
+        private TextView tvEventName;
 
-        public ViewHolderFuture(View itemView) {
+        public ViewHolderEvent(View itemView) {
             super(itemView);
             tvClubName = itemView.findViewById(R.id.tvClubName);
-            tvFutureRoomName = itemView.findViewById(R.id.tvFutureRoomName);
+            tvEventName = itemView.findViewById(R.id.tvEventName);
         }
 
-        public void bind(String room) {
+        public void bind(Event event) {
             // Bind data of post to the view element
-            tvClubName.setText("FUTURE");
-            tvFutureRoomName.setText("FUTURE");
+            if (event.getParseObject(Event.KEY_HOST_CLUB) == null)
+                tvClubName.setVisibility(View.INVISIBLE);
+            else
+                tvClubName.setText(((Club)event.getParseObject(Event.KEY_HOST_CLUB)).getName());
+
+            tvEventName.setText(event.getString(Room.KEY_TITLE));
         }
 
     }
 
-    class ViewHolderExplore extends RecyclerView.ViewHolder {
-        // Cell Room Future
-        // view elements
+    class ViewHolderExplore extends DefaultViewHolder {
         private TextView tvClubName;
         private TextView tvFutureRoomName;
         private LinearLayout llExploreAction;
@@ -247,16 +247,16 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
                 ViewHolderActive vh1 = (ViewHolderActive) viewHolder;
                 configureViewHolderActiveCell(vh1, position);
                 break;
-            case FUTURE:
-                ViewHolderFuture vh2 = (ViewHolderFuture) viewHolder;
-                configureViewHolderFutureCell(vh2, position);
+            case EVENT:
+                ViewHolderEvent vh2 = (ViewHolderEvent) viewHolder;
+                configureViewHolderEventCell(vh2, position);
                 break;
             case SEARCH:
                 ViewHolderExplore vh3 = (ViewHolderExplore) viewHolder;
                 configureViewHolderExploreCell(vh3, position);
                 break;
             default:
-                HomeFeedAdapter.ViewHolder vh = (HomeFeedAdapter.ViewHolder) viewHolder;
+                DefaultViewHolder vh = (DefaultViewHolder) viewHolder;
                 configureDefaultViewHolder(vh, position);
                 break;
         }
@@ -265,13 +265,6 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public int getItemCount() {
         return this.objectList.size();
-    }
-
-    private void configureDefaultViewHolder(HomeFeedAdapter.ViewHolder vh, int position) {
-        Room room = (Room) objectList.get(position);
-        if (room != null) {
-            vh.bind(room);
-        }
     }
 
     /**
@@ -287,16 +280,40 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
+    private void configureDefaultViewHolder(HomeMultiViewAdapter.DefaultViewHolder vh, int position) {
+        Object o = objectList.get(position);
+        if (o != null) {
+            vh.bind(o);
+        }
+    }
+
+    static class DefaultViewHolder extends RecyclerView.ViewHolder {
+        // view elements
+        private TextView tvClubName;
+        private TextView tvRoomName;
+        private TextView tvParticipants;
+        private LinearLayout llActiveRoom;
+
+        public DefaultViewHolder(@NonNull View itemView) {
+            super(itemView);
+//            tvClubName = itemView.findViewById(R.id.tvClubName);
+        }
+
+        public void bind(Object o) {
+        }
+    }
+
+
     /**
      * Method for binding object data to the Future Cell View Holder
      *
-     * @param viewHolderFuture
+     * @param viewHolderEvent
      * @param position
      */
-    private void configureViewHolderFutureCell(ViewHolderFuture viewHolderFuture, int position) {
-        String futureStr = (String) objectList.get(position);
-        if (futureStr != null) {
-            viewHolderFuture.bind(futureStr);
+    private void configureViewHolderEventCell(ViewHolderEvent viewHolderEvent, int position) {
+        Event event = (Event) objectList.get(position);
+        if (event != null) {
+            viewHolderEvent.bind(event);
         }
     }
 
