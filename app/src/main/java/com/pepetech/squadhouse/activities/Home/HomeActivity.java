@@ -30,9 +30,11 @@ import com.pepetech.squadhouse.models.Room;
 import com.pepetech.squadhouse.models.RoomRoute;
 import com.pepetech.squadhouse.models.User;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -334,8 +336,8 @@ public class HomeActivity extends AppCompatActivity {
         // query for Event.scheduledFor > today
 
         // TEST query for all user's events
-//        query.whereEqualTo(Room.KEY_HOST, ParseUser.getCurrentUser());
-        LocalDateTime now = LocalDateTime.now(); // Gets the current date and time
+        DateTime dateTime = new DateTime(); // Initializes with the current date and time
+        Date now = dateTime.toDate();
         query.whereGreaterThan(Event.KEY_SCHEDULED_FOR, now);
         query.findInBackground(new FindCallback<Event>() {
             @Override
