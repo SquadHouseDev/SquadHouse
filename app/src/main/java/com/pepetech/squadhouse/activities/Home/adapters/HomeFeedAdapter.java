@@ -72,9 +72,9 @@ public class HomeFeedAdapter extends RecyclerView.Adapter<HomeFeedAdapter.ViewHo
             tvRoomName.setText(room.getTitle());
             String emojiStr = getEmojiByUnicode(0x1F4AC);
 
-            String newText = tvParticipants.getText() + " " + getEmojiByUnicode(0x1F4AC);
-            tvParticipants.setText(newText); // DEBUG with emoji in unicode format
-            Log.i(TAG, newText);
+//            String newText = tvParticipants.getText() + " " + getEmojiByUnicode(0x1F4AC);
+//            tvParticipants.setText(newText); // DEBUG with emoji in unicode format
+//            Log.i(TAG, newText);
             llActiveRoom.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
