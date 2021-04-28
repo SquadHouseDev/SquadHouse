@@ -10,12 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.models.User;
+import com.pepetech.squadhouse.util.PhotoUploadBottomSheetDialog;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,12 +22,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class PhotoUploadBottomSheetDialog extends BottomSheetDialogFragment {
-    public static final String TAG = "BottomSheetDialogActivity";
-    private static final int REQUEST_CODE = 1;
+public class UserPhotoUploadBottomSheetDialog extends PhotoUploadBottomSheetDialog {
+    public static final String TAG = "UserPhotoUploadBottomSheetDialog";
     ParseUser parseUser;
     User user;
 
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         parseUser = ParseUser.getCurrentUser();
         user = new User(parseUser);
@@ -48,18 +47,10 @@ public class PhotoUploadBottomSheetDialog extends BottomSheetDialogFragment {
             @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                PhotoUploadBottomSheetDialog.super.dismiss();
+                UserPhotoUploadBottomSheetDialog.super.dismiss();
             }
         });
         return v;
-    }
-
-    //Allows user to select image from Gallery
-    private void galleryIntent() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select File"), REQUEST_CODE);
     }
 
     @SuppressLint("LongLogTag")
@@ -74,33 +65,6 @@ public class PhotoUploadBottomSheetDialog extends BottomSheetDialogFragment {
             File f = new File(path);
             user.updateImage(f);
         }
-    }
-
-    public String getRealPathFromURI(Context c, Uri uri)
-    {
-        final ContentResolver contentresolver = getContext().getContentResolver();
-        if(contentresolver == null)
-                return null;
-            //create file path inside app's data dir
-        String filePath = getContext().getApplicationInfo().dataDir + File.separator + System.currentTimeMillis();
-        File file = new File(filePath);
-        try {
-            InputStream inputStream = contentresolver.openInputStream(uri);
-            if(inputStream == null)
-                return null;
-            OutputStream outputstream = new FileOutputStream(file);
-            byte[] buf = new byte[1024];
-            int len;
-            while((len = inputStream.read(buf)) > 0)
-            {
-                outputstream.write(buf,0,len);
-            }
-            outputstream.close();
-            inputStream.close();
-        } catch (IOException ignore) {
-            return null;
-        }
-        return file.getAbsolutePath();
     }
 }
 /*
