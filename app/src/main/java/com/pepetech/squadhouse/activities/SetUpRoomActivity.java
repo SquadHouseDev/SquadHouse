@@ -88,7 +88,6 @@ public class SetUpRoomActivity extends AppCompatActivity {
                                 Log.i(TAG, allRoutes.get(0).getPhoneNumber());
                                 newRoom.setActiveState(true);
                                 newRoom.setAPSID(allRoutes.get(0).getAPSID());
-                                newRoom.isPosted = false;
                                 newRoom.saveInBackground();
                                 ParseQuery<Room> roomQuery = new ParseQuery<Room>(Room.class);
                                 roomQuery.whereEqualTo(Room.KEY_TITLE, newRoom.getTitle());
