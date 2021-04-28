@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -15,7 +14,7 @@ import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
-import com.pepetech.squadhouse.activities.MyProfile.fragments.PhotoUploadBottomSheetDialog;
+import com.pepetech.squadhouse.activities.MyProfile.fragments.UserPhotoUploadBottomSheetDialog;
 import com.pepetech.squadhouse.models.User;
 
 public class UpdateProfileImageActivity extends AppCompatActivity {
@@ -61,7 +60,7 @@ public class UpdateProfileImageActivity extends AppCompatActivity {
 //                t.show();
                 Log.i(TAG, "Profile Image clicked!");
                 // TODO: fix broken navigation to previous activity
-                PhotoUploadBottomSheetDialog bottomSheet = new PhotoUploadBottomSheetDialog();
+                UserPhotoUploadBottomSheetDialog bottomSheet = new UserPhotoUploadBottomSheetDialog();
                 bottomSheet.show(getSupportFragmentManager(), "ModalBottomSheet");
             }
         });
