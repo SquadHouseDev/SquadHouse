@@ -25,6 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="5dp"
+        android:hint="01-01-01 01:01"
         android:padding="5dp">
 
     </TextView>
@@ -34,10 +35,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
+        android:layout_marginStart="5dp"
         android:textStyle="bold"
         tools:text="Dank Memes Pawg" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginStart="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
