@@ -30,11 +30,10 @@ public class Room extends ParseObject {
     public static final String KEY_AP_SID = "AP_SID";
     public static final String KEY_OBJECT_ID = "objectId";
 
-    public Room() {
-    }
+    public Room(){};
 
     //work on refactoring cohosts to be list of strings of the objectIDS???
-    public Room(String title, String description, String clubName, ParseUser host, ArrayList<ParseObject> cohosts) {
+    public Room(String title, String description, String clubName, ParseUser host, ArrayList<ParseObject> cohosts){
         this.setTitle(title);
         this.setDescription(description);
         this.setClubName(clubName);
@@ -42,12 +41,11 @@ public class Room extends ParseObject {
         this.setCohosts(cohosts);
     }
 
+
     ////////////////////////////////////////////////////////////
     // Getters
     ////////////////////////////////////////////////////////////
-    public String getDescription() {
-        return getString(KEY_DESCRIPTION);
-    }
+    public String getDescription() { return getString(KEY_DESCRIPTION); }
 
     public String getTitle() {
         return getString(KEY_TITLE);
@@ -136,13 +134,9 @@ public class Room extends ParseObject {
         put(KEY_HOST, newParseUser);
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        put(KEY_PHONE_NUMBER, phoneNumber);
-    }
+    public void setPhoneNumber(String phoneNumber) {put(KEY_PHONE_NUMBER, phoneNumber);}
 
-    public void setAPSID(String AP_SID) {
-        put(KEY_AP_SID, AP_SID);
-    }
+    public void setAPSID(String AP_SID) {put(KEY_AP_SID, AP_SID);}
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     // Update Methods: automatically calls saveInBackground on ParseUser to effect updates
@@ -175,9 +169,10 @@ public class Room extends ParseObject {
     public boolean addCohost(ParseObject cohost) {
         ArrayList<ParseObject> cohosts = getCohosts();
         ArrayList<ParseObject> participants = getParticipants();
-        if (!cohosts.contains(cohost) && participants.contains(cohost)) {
+        if (!cohosts.contains(cohost) && participants.contains(cohost)){
             cohosts.add(cohost);
-        } else
+        }
+        else
             return false;
         setCohosts(cohosts);
         saveInBackground();
@@ -187,9 +182,10 @@ public class Room extends ParseObject {
     public boolean removeCohost(ParseObject cohost) {
         ArrayList<ParseObject> cohosts = getCohosts();
         ArrayList<ParseObject> participants = getParticipants();
-        if (cohosts.contains(cohost) && participants.contains(cohost)) {
+        if (cohosts.contains(cohost) && participants.contains(cohost)){
             cohosts.remove(cohost);
-        } else
+        }
+        else
             return false;
         setCohosts(cohosts);
         saveInBackground();

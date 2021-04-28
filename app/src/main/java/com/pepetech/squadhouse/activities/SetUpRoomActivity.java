@@ -83,8 +83,7 @@ public class SetUpRoomActivity extends AppCompatActivity {
                                 newRoom.setHost(ParseUser.getCurrentUser());
                                 newRoom.setPhoneNumber(allRoutes.get(0).getPhoneNumber());
                                 // add current user as a participant
-                                newRoom.addUnique(Room.KEY_PARTICIPANTS, ParseUser.getCurrentUser());
-//                                newRoom.addParticipant(ParseUser.getCurrentUser());
+                                newRoom.addParticipant(ParseUser.getCurrentUser());
                                 Log.i(TAG, allRoutes.get(0).getPhoneNumber());
                                 newRoom.setActiveState(true);
                                 newRoom.setAPSID(allRoutes.get(0).getAPSID());
@@ -101,11 +100,15 @@ public class SetUpRoomActivity extends AppCompatActivity {
                                             Log.i(TAG, object.getObjectId());
                                             newRoom = object;
                                             newRoom.saveInBackground();
+                                            //set room availability to false
+                                            allRoutes.get(0).lockNumber();
+                                            i = new Intent(SetUpRoomActivity.this, RoomActivity.class);
+                                            i.putExtra("Room", newRoom);
+                                            //i.putExtra("AP_SID", allRoutes.get(0).getAPSID());
+                                            startActivity(i);
                                         }
                                     }
                                 });
-                                allRoutes.get(0).lockNumber();
-                                allRoutes.get(0).saveInBackground();
                             } else {
 //                                Toast.makeText(getBaseContext(), "Error creating room", Toast.LENGTH_SHORT).show();
                             }
@@ -113,11 +116,9 @@ public class SetUpRoomActivity extends AppCompatActivity {
                             // add handling if there are issues with querying
                             Log.i(TAG, "Error querying routes");
                         }
-                        i = new Intent(SetUpRoomActivity.this, RoomActivity.class);
-                        i.putExtra("Room", newRoom);
-                        startActivity(i);
                     }
                 });
+                //Log.i(TAG, String.valueOf(allRoutes.isEmpty()));
             }
         });
     }

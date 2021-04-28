@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="5dp"
     android:orientation="vertical">
@@ -9,37 +9,33 @@
         android:id="@+id/roomTitleTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Title: " />
+        android:text="Title: "
+        android:layout_margin="10dp"/>
 
 
     <EditText
-        android:padding="10dp"
         android:id="@+id/roomTitleEt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         android:layout_toEndOf="@+id/roomTitleTv"
-        android:ems="10"
-        android:gravity="top|left"></EditText>
+        android:layout_margin="10dp">
+    </EditText>
 
     <TextView
         android:id="@+id/roomDescriptionTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Description: "
         android:layout_below="@+id/roomTitleTv"
-        android:layout_margin="10dp"
-        android:text="Description: " />
+        android:layout_margin="10dp"/>
 
     <EditText
-        android:padding="10dp"
         android:id="@+id/roomDescriptionEt"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/roomDescriptionTv"
-        android:ems="10"
-        android:gravity="top|left"></EditText>
+        android:layout_margin="10dp">
+    </EditText>
 
     <Button
         android:id="@+id/startRoomButton"

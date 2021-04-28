@@ -20,7 +20,7 @@
         <activity android:name=".activities.Event.EventActivity" />
         <activity android:name=".activities.Interest.ClubInterestActivity" />
         <activity android:name=".activities.Following.FollowingActivity" />
-        <activity android:name=".activities.Club.ClubCreateActivity" />
+        <activity android:name=".activities.ClubActivity" />
         <activity
             android:name=".activities.Interest.MyInterestActivity"
             android:screenOrientation="portrait" />
