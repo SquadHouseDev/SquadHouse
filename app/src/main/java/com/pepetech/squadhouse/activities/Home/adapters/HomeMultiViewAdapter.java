@@ -129,10 +129,10 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
             tvClubName.setText(room.getClubName());
             tvDateCreated.setText(room.getCreatedAt().toString());
             tvRoomName.setText(room.getTitle());
-            String emojiStr = getEmojiByUnicode(0x1F4AC);
-            String newText = tvParticipants.getText() + " " + getEmojiByUnicode(0x1F4AC);
-            tvParticipants.setText(newText); // DEBUG with emoji in unicode format
-            Log.i(TAG, newText);
+//            String emojiStr = getEmojiByUnicode(0x1F4AC);
+//            String newText = tvParticipants.getText() + " " + getEmojiByUnicode(0x1F4AC);
+//            tvParticipants.setText(newText); // DEBUG with emoji in unicode format
+//            Log.i(TAG, newText);
 
             // On click for the active room and routing to new activities
             llActiveRoom.setOnClickListener(new View.OnClickListener() {
