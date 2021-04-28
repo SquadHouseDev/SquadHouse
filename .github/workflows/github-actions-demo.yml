@@ -32,7 +32,9 @@ jobs:
           versionSpec: '5.x.x'
           includePrerelease: false
       - run: dotnet-gitversion init
-  
+      - name: GitTools
+        uses: GitTools/actions@v0.9.9
+
           
 
 
