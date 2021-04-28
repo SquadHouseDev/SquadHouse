@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
+    android:padding="10dp"
+    android:background="@color/eggshell"
     android:orientation="vertical">
 
     <TextView
@@ -10,18 +11,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Title: " />
+        android:text="Title"
+        android:textStyle="bold" />
 
 
     <EditText
-        android:padding="10dp"
         android:id="@+id/roomTitleEt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_toEndOf="@+id/roomTitleTv"
+        android:background="@drawable/cell_white_background"
         android:ems="10"
-        android:gravity="top|left"></EditText>
+        android:gravity="top|left"
+        android:padding="10dp"></EditText>
 
     <TextView
         android:id="@+id/roomDescriptionTv"
@@ -29,17 +32,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/roomTitleTv"
         android:layout_margin="10dp"
-        android:text="Description: " />
+        android:text="Description: "
+        android:textStyle="bold" />
 
     <EditText
-        android:padding="10dp"
         android:id="@+id/roomDescriptionEt"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="10dp"
         android:layout_toEndOf="@+id/roomDescriptionTv"
+        android:background="@drawable/cell_white_background"
         android:ems="10"
-        android:gravity="top|left"></EditText>
+        android:gravity="top|left"
+        android:padding="10dp"></EditText>
 
     <Button
         android:id="@+id/startRoomButton"
