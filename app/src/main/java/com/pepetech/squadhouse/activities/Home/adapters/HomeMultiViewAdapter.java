@@ -7,12 +7,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.pepetech.squadhouse.R;
@@ -21,6 +25,7 @@ import com.pepetech.squadhouse.activities.RoomActivity;
 import com.pepetech.squadhouse.models.Club;
 import com.pepetech.squadhouse.models.Event;
 import com.pepetech.squadhouse.models.Room;
+import com.pepetech.squadhouse.models.User;
 
 import java.util.List;
 
@@ -83,7 +88,7 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
             case ACTIVE:
                 Log.i(TAG, String.valueOf(viewType));
                 View v1 = inflater.inflate(R.layout.cell_home_room_active, parent, false);
-                viewHolder = new ViewHolderActive(v1);
+                viewHolder = new ViewHolderRoom(v1);
                 break;
             case EVENT:
                 Log.i(TAG, String.valueOf(viewType));
@@ -100,27 +105,31 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
                 View v = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
                 //TODO: Need to Update to proper ViewHolder Object
 //                viewHolder = new RecyclerViewSimpleTextViewHolder(v);
-                viewHolder = new ViewHolderActive(v);
+                viewHolder = new ViewHolderRoom(v);
                 break;
         }
         return viewHolder;
     }
 
-    class ViewHolderActive extends DefaultViewHolder {
+    class ViewHolderRoom extends DefaultViewHolder {
         // Cell Room Active
         // view elements
         private TextView tvClubName;
         private TextView tvRoomName;
+        private TextView tvParticipantCount;
         private TextView tvParticipants;
         private LinearLayout llActiveRoom;
         TextView tvDateCreated;
+        ImageView ivHostProfile;
 
         // TODO: add swipe right on cell to reveal a button to hide the recommended active room
-        public ViewHolderActive(@NonNull View itemView) {
+        public ViewHolderRoom(@NonNull View itemView) {
             super(itemView);
             tvClubName = itemView.findViewById(R.id.tvClubName);
+            ivHostProfile = itemView.findViewById(R.id.ivHostProfile);
             tvDateCreated = itemView.findViewById(R.id.tvDateCreated);
             tvRoomName = itemView.findViewById(R.id.tvRoomName);
+            tvParticipantCount = itemView.findViewById(R.id.tvParticipantCount);
             tvParticipants = itemView.findViewById(R.id.tvParticipants);
             llActiveRoom = itemView.findViewById(R.id.llActiveRoom);
         }
@@ -130,6 +139,20 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
             tvClubName.setText(room.getClubName());
             tvDateCreated.setText(room.getCreatedAt().toString());
             tvRoomName.setText(room.getTitle());
+            tvParticipantCount.setText(String.valueOf(room.getParticipants().size()));
+            User host = new User((ParseUser) room.getHost());
+            tvParticipants.setText(host.getFirstName() + " " + host.getLastName());
+            ParseFile image = null;
+            try {
+                image = room.getHost().fetchIfNeeded().getParseFile("image");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            if (image != null)
+                Glide.with(this.itemView.getContext())
+                        .load(image.getUrl())
+                        .circleCrop()
+                        .into(ivHostProfile);
 //            String emojiStr = getEmojiByUnicode(0x1F4AC);
 //            String newText = tvParticipants.getText() + " " + getEmojiByUnicode(0x1F4AC);
 //            tvParticipants.setText(newText); // DEBUG with emoji in unicode format
@@ -147,8 +170,8 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                     // check if the user entering is in the existing list
                     boolean found = false;
-                    for (ParseObject u : room.getParticipants()){
-                        if (u.getObjectId().equals(ParseUser.getCurrentUser())){
+                    for (ParseObject u : room.getParticipants()) {
+                        if (u.getObjectId().equals(ParseUser.getCurrentUser())) {
                             found = true;
                             break;
                         }
@@ -187,7 +210,7 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
             if (event.getParseObject(Event.KEY_HOST_CLUB) == null)
                 tvClubName.setVisibility(View.INVISIBLE);
             else
-                tvClubName.setText(((Club)event.getParseObject(Event.KEY_HOST_CLUB)).getName());
+                tvClubName.setText(((Club) event.getParseObject(Event.KEY_HOST_CLUB)).getName());
 
             tvEventName.setText(event.getString(Room.KEY_TITLE));
         }
@@ -244,7 +267,7 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         switch (viewHolder.getItemViewType()) {
             case ACTIVE:
-                ViewHolderActive vh1 = (ViewHolderActive) viewHolder;
+                ViewHolderRoom vh1 = (ViewHolderRoom) viewHolder;
                 configureViewHolderActiveCell(vh1, position);
                 break;
             case EVENT:
@@ -270,13 +293,13 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
     /**
      * Method for binding object data to the Active Cell View Holder
      *
-     * @param viewHolderActive
+     * @param viewHolderRoom
      * @param position
      */
-    private void configureViewHolderActiveCell(ViewHolderActive viewHolderActive, int position) {
+    private void configureViewHolderActiveCell(ViewHolderRoom viewHolderRoom, int position) {
         Room room = (Room) objectList.get(position);
         if (room != null) {
-            viewHolderActive.bind(room);
+            viewHolderRoom.bind(room);
         }
     }
 
