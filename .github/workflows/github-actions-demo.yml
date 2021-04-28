@@ -18,7 +18,7 @@ jobs:
       - name: Install GitVersion
         uses: gittools/actions@v0.9
         with:
-        versionSpec: '5.1.x'
-        includePrerelease: false
+          versionSpec: '5.1.x'
+          includePrerelease: false
 
 
