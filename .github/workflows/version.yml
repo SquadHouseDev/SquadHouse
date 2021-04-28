@@ -4,11 +4,10 @@ name: Git Version
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code

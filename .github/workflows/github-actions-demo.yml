@@ -16,7 +16,6 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
   GitVersion:
-    lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
