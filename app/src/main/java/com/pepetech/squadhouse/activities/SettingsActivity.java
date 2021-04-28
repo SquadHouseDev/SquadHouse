@@ -1,6 +1,7 @@
 package com.pepetech.squadhouse.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -43,5 +44,31 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        btnGuidelines.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWebURL("https://squadhousedev.github.io/Community/");
+            }
+        });
+        btnTOS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWebURL("https://squadhousedev.github.io/TOS/");
+            }
+        });
+        btnPrivacyPolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWebURL("https://squadhousedev.github.io/Privacy/");
+            }
+        });
+
     }
+
+    public void openWebURL(String inURL) {
+        Intent browse = new Intent(Intent.ACTION_VIEW, Uri.parse(inURL));
+        startActivity(browse);
+    }
+
+
 }
