@@ -27,6 +27,7 @@ import com.pepetech.squadhouse.models.Event;
 import com.pepetech.squadhouse.models.Room;
 import com.pepetech.squadhouse.models.User;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -215,7 +216,9 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
                 tvClubName.setText(((Club) event.getParseObject(Event.KEY_HOST_CLUB)).getName());
 
             tvEventName.setText(event.getString(Room.KEY_TITLE));
-            tvEventDate.setText(event.getScheduledDate().toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd hh:mm aa");
+            String date = sdf.format(event.getScheduledDate());
+            tvEventDate.setText(date);
         }
 
     }
