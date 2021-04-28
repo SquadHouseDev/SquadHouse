@@ -20,5 +20,7 @@ jobs:
         with:
           versionSpec: '5.x.x'
           includePrerelease: false
+      - run: dotnet-gitversion init
+
 
 
