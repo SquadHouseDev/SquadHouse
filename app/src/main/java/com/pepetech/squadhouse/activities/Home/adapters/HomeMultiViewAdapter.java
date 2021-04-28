@@ -197,11 +197,13 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     class ViewHolderEvent extends DefaultViewHolder {
         private TextView tvClubName;
+        private TextView tvEventDate;
         private TextView tvEventName;
 
         public ViewHolderEvent(View itemView) {
             super(itemView);
             tvClubName = itemView.findViewById(R.id.tvClubName);
+            tvEventDate = itemView.findViewById(R.id.tvEventDate);
             tvEventName = itemView.findViewById(R.id.tvEventName);
         }
 
@@ -213,6 +215,7 @@ public class HomeMultiViewAdapter extends RecyclerView.Adapter<RecyclerView.View
                 tvClubName.setText(((Club) event.getParseObject(Event.KEY_HOST_CLUB)).getName());
 
             tvEventName.setText(event.getString(Room.KEY_TITLE));
+            tvEventDate.setText(event.getScheduledDate().toString());
         }
 
     }
