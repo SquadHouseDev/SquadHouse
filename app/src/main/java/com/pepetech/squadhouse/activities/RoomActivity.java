@@ -62,10 +62,10 @@ public class RoomActivity extends AppCompatActivity {
     public final String API_SECRET = BuildConfig.API_SECRET;
     public static AccessToken accessToken;
     private final Handler handler = new Handler();
-
+    boolean isActive;
     User user;
     Room room;
-
+    boolean newlyCreated;
     Button invite_button;
     Button end_button;
     RecyclerView rvParticipants;
@@ -92,19 +92,22 @@ public class RoomActivity extends AppCompatActivity {
         roomLayout = findViewById(R.id.roomLayout);
         invite_button = findViewById(R.id.invite_button);
         end_button = findViewById(R.id.end_button);
-
+        isActive = true;
         allParticipants = new ArrayList<>();
         rvParticipants = findViewById(R.id.rvParticipants);
         adapter = new ParticipantAdapter(this, allParticipants);
         rvParticipants.setAdapter(adapter);
         rvParticipants.setLayoutManager(new GridLayoutManager(this, 3));
-//        rvParticipants.setLayoutManager(new LinearLayoutManager(this));
 
         display_button = findViewById(R.id.display_button);
         user = new User(ParseUser.getCurrentUser());
 
         Intent i = getIntent();
         room = i.getParcelableExtra("Room");
+        if (room.getObjectId() == null){
+            Log.i(TAG, "null room id");
+            queryRoom();
+        }
         Log.i(TAG, "objectID " + room.getObjectId());
 
         queryUsers();
@@ -156,6 +159,24 @@ public class RoomActivity extends AppCompatActivity {
         doTheAutoRefresh();
     }
 
+    private void queryRoom() {
+        ParseQuery<Room> roomQuery = new ParseQuery<Room>(Room.class);
+        roomQuery.whereEqualTo(Room.KEY_TITLE, room.getTitle());
+        roomQuery.whereEqualTo(Room.KEY_HOST, ParseUser.getCurrentUser());
+        roomQuery.whereEqualTo(Room.KEY_DESCRIPTION, room.getDescription());
+        roomQuery.whereEqualTo(Room.KEY_IS_ACTIVE, room.isActive());
+        roomQuery.getFirstInBackground(new GetCallback<Room>() {
+            @Override
+            public void done(Room object, ParseException e) {
+                if (e == null) {
+                    Log.i(TAG, object.getObjectId());
+                    room = object;
+                    room.saveInBackground();
+                }
+            }
+        });
+    }
+
     private void queryNumbers() {
         //pull list of numbers
 
@@ -174,32 +195,34 @@ public class RoomActivity extends AppCompatActivity {
     }
 
     private void doTheAutoRefresh() {
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "auto refreshed list of participants");
-                // Write code for your refresh logic
-                ParseQuery<Room> roomQuery = new ParseQuery<Room>(Room.class);
-                roomQuery.whereEqualTo(room.KEY_OBJECT_ID, room.getObjectId());
-                roomQuery.getFirstInBackground(new GetCallback<Room>() {
-                    @Override
-                    public void done(Room object, ParseException e) {
-                        if (e == null) {
-                            Log.i(TAG, "Updated participant list for " + room.getObjectId());
-                            room = object;
-                            allParticipants.clear();
-                            allParticipants.addAll(room.getParticipants());
-                            Log.i(TAG, "# of participants: " + String.valueOf(room.getParticipants().size()));
-                            adapter.notifyDataSetChanged();
-                        } else {
-                            Log.e(TAG, e.toString());
+        if (isActive) {
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Log.i(TAG, "auto refreshed list of participants@roomid: " + room.getObjectId());
+                    // Write code for your refresh logic
+                    ParseQuery<Room> roomQuery = new ParseQuery<Room>(Room.class);
+                    roomQuery.whereEqualTo(room.KEY_OBJECT_ID, room.getObjectId());
+                    roomQuery.getFirstInBackground(new GetCallback<Room>() {
+                        @Override
+                        public void done(Room object, ParseException e) {
+                            if (e == null) {
+                                Log.i(TAG, "Updated participant list for " + room.getObjectId());
+                                room = object;
+                                allParticipants.clear();
+                                allParticipants.addAll(room.getParticipants());
+                                Log.i(TAG, "# of participants: " + String.valueOf(room.getParticipants().size()));
+                                adapter.notifyDataSetChanged();
+                            } else {
+                                Log.e(TAG, e.toString());
+                            }
                         }
-                    }
-                });
-                adapter.notifyDataSetChanged();
-                doTheAutoRefresh();
-            }
-        }, 5000);
+                    });
+                    adapter.notifyDataSetChanged();
+                    doTheAutoRefresh();
+                }
+            }, 5000);
+        }
     }
 
     private void setOnClickListeners() {
@@ -219,10 +242,11 @@ public class RoomActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i(TAG, "end button clicked");
 //                Toast.makeText(v.getContext(), "End Button clicked!", Toast.LENGTH_SHORT).show();
-
+                isActive = false;
                 if (activeCall != null && room.getHost().getObjectId().equals(ParseUser.getCurrentUser().getObjectId())) {
                     activeCall.disconnect();
                     activeCall = null;
+
 
                     //query roomroute and set availability back to true.
                     ParseQuery<RoomRoute> mainQuery = new ParseQuery<RoomRoute>(RoomRoute.class);
@@ -252,7 +276,7 @@ public class RoomActivity extends AppCompatActivity {
                     });
                 }
                 // non-host end call
-                else if (activeCall != null){
+                else if (activeCall != null) {
                     activeCall.disconnect();
                     activeCall = null;
                 }
@@ -262,6 +286,7 @@ public class RoomActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 Intent i = new Intent(RoomActivity.this, HomeActivity.class);
                 startActivity(i);
+                finish();
             }
         });
     }
