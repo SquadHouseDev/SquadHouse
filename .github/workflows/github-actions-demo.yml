@@ -15,6 +15,9 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+  Setup GitVersion:
+    runs-on: ubuntu-latest
+    steps:
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.5
         with:
