@@ -15,6 +15,10 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-      - name: GitTools
-        uses: GitTools/actions@v0.9.9
+      - name: Install GitVersion
+        uses: gittools/actions@v0.9
+        with:
+        versionSpec: '5.1.x'
+        includePrerelease: false
+
 
