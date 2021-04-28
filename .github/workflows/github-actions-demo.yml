@@ -16,7 +16,7 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - name: Install GitVersion
-        uses: gittools/actions@v0.9
+        uses: gittools/actions/gitversion/setup@v0.9
         with:
           versionSpec: '5.1.x'
           includePrerelease: false
