@@ -15,25 +15,18 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-  Setup-GitVersion:
+  GitVersion:
+    lint:
     runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
-      - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.5
-        with:
-          versionSpec: '5.x.x'
-          includePrerelease: false
-      - run: dotnet-gitversion init
-      - name: GitTools
-        uses: GitTools/actions@v0.9.9
+      steps:
+        - name: Checkout Code
+          uses: actions/checkout@v2
+          with:
+            ref: ${{ github.head_ref }}   # checkout the correct branch name
+            fetch-depth: 0                # fetch the whole repo history
+
+        - name: Git Version
+          uses: codacy/git-version@2.2.0
 
           
 
