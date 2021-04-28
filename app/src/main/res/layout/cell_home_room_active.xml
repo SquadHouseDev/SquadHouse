@@ -33,22 +33,39 @@
         android:id="@+id/tvRoomName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:padding="5dp"
         android:textStyle="bold"
         tools:text="Dank Memes Pawg" />
 
-    <TextView
-        android:id="@+id/tvParticipants"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:padding="5dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        android:text="Filthy Frank (Joji)"
-        tools:text="Filthy Frank (Joji)" />
+        <ImageView
+            android:id="@+id/ivHostProfile"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_person_24"></ImageView>
 
-    <RelativeLayout
+        <TextView
+            android:id="@+id/tvParticipants"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:padding="5dp"
+            android:text="Filthy Frank (Joji)"
+            app:layout_constraintStart_toEndOf="@id/ivHostProfile"
+
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Filthy Frank (Joji)" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -62,6 +79,8 @@
             android:padding="0dp"
             android:text="1"
             android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="1" />
 
         <ImageView
@@ -69,9 +88,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_toEndOf="@+id/tvParticipantCount"
+            app:layout_constraintStart_toEndOf="@id/tvParticipantCount"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_person_24"
             tools:layout_centerInParent="true"></ImageView>
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

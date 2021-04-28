@@ -1,4 +1,4 @@
-package com.pepetech.squadhouse.activities.MyProfile;
+package com.pepetech.squadhouse.activities.MyProfile.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
 import com.pepetech.squadhouse.R;
+import com.pepetech.squadhouse.activities.Club.ClubCreateActivity;
 import com.pepetech.squadhouse.activities.Explore.ExploreClubActivity;
 import com.pepetech.squadhouse.models.Club;
 
@@ -73,8 +74,8 @@ public class MyClubsAdapter extends RecyclerView.Adapter<MyClubsAdapter.ViewHold
                     @Override
                     public void onClick(View v) {
                         // TODO: add routing to club profile here
-                        Toast.makeText(context, club.getName() + " clicked!",
-                                Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, club.getName() + " clicked!",
+//                                Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(v.getContext(), ExploreClubActivity.class);
                         i.putExtra("club", Parcels.wrap(club));
                         v.getContext().startActivity(i);
@@ -84,9 +85,11 @@ public class MyClubsAdapter extends RecyclerView.Adapter<MyClubsAdapter.ViewHold
                 ivClubImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO: add routing to club profile here
-                        Toast.makeText(context, "Create Club Activity clicked!",
-                                Toast.LENGTH_SHORT).show();
+                        // TODO: add routing to create club activity
+                        Intent i = new Intent(v.getContext(), ClubCreateActivity.class);
+                        v.getContext().startActivity(i);
+//                        Toast.makeText(context, "Create Club Activity clicked!",
+//                                Toast.LENGTH_SHORT).show();
                     }
                 });
             }

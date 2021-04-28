@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:androidid="http://schemas.android.com/tools"
     android:focusable="true"
@@ -21,12 +21,12 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvPrompt"
-                android:layout_width="384dp"
+                android:id="@+id/tvFirstNameLabel"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="10dp"
-                android:text=" Firstname"
+                android:text="First Name"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -38,12 +38,12 @@
                 android:inputType="textPersonName" />
 
             <TextView
-                android:id="@+id/tvLastName"
+                android:id="@+id/tvLastNameLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="10dp"
-                android:text="Lastname"
+                android:text="Last Name"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 

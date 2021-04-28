@@ -107,7 +107,7 @@ public class ExploreUserActivity extends AppCompatActivity {
         ivProfileNominator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Nominator profile clicked!");
                 if (nominator != null) {
                     Intent i = new Intent(v.getContext(), ExploreUserActivity.class);
@@ -121,7 +121,7 @@ public class ExploreUserActivity extends AppCompatActivity {
         clFollowers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Followers clicked!");
                 // setup for routing to the next activity
                 Intent i = new Intent(v.getContext(), FollowersActivity.class);
@@ -135,7 +135,7 @@ public class ExploreUserActivity extends AppCompatActivity {
         clFollowing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "Followers clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Following clicked!");
                 Intent i = new Intent(v.getContext(), FollowingActivity.class);
                 User toPass = userSelected;
@@ -147,7 +147,7 @@ public class ExploreUserActivity extends AppCompatActivity {
         ivProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "Nominator profile clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "User profile clicked!");
 //                ParseObject nominator = user.getNominator()
 //                goToProfileActivity();
@@ -156,15 +156,15 @@ public class ExploreUserActivity extends AppCompatActivity {
         tvFullName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast t = Toast.makeText(v.getContext(), "Fullname clicked!", Toast.LENGTH_SHORT);
-                t.show();
+//                Toast t = Toast.makeText(v.getContext(), "Fullname clicked!", Toast.LENGTH_SHORT);
+//                t.show();
                 Log.i(TAG, "Fullname clicked!");
             }
         });
         tvBiography.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Biography clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "Biography clicked!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Biography clicked!");
             }
         });

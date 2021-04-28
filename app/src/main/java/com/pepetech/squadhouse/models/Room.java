@@ -1,6 +1,7 @@
 package com.pepetech.squadhouse.models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -25,11 +26,15 @@ public class Room extends ParseObject {
     public static final String KEY_STARTED_AT = "startedAt";
     public static final String KEY_ENDED_AT = "endedAt";
     public static final String KEY_IS_ACTIVE = "isActive";
+    public static final String KEY_PHONE_NUMBER = "phoneNumber";
+    public static final String KEY_AP_SID = "AP_SID";
+    public static final String KEY_OBJECT_ID = "objectId";
 
-    public Room(){};
+    public Room() {
+    }
 
     //work on refactoring cohosts to be list of strings of the objectIDS???
-    public Room(String title, String description, String clubName, ParseUser host, ArrayList<ParseObject> cohosts){
+    public Room(String title, String description, String clubName, ParseUser host, ArrayList<ParseObject> cohosts) {
         this.setTitle(title);
         this.setDescription(description);
         this.setClubName(clubName);
@@ -37,11 +42,12 @@ public class Room extends ParseObject {
         this.setCohosts(cohosts);
     }
 
-
     ////////////////////////////////////////////////////////////
     // Getters
     ////////////////////////////////////////////////////////////
-    public String getDescription() { return getString(KEY_DESCRIPTION); }
+    public String getDescription() {
+        return getString(KEY_DESCRIPTION);
+    }
 
     public String getTitle() {
         return getString(KEY_TITLE);
@@ -75,6 +81,30 @@ public class Room extends ParseObject {
         return (ArrayList<ParseObject>) rv;
     }
 
+    public String getPhoneNumber() {
+        String rv = null;
+        try {
+            rv = fetchIfNeeded().getString(KEY_PHONE_NUMBER);
+            return rv;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return rv;
+    }
+
+    public String getAPSID() {
+        String rv = null;
+        try {
+            rv = fetchIfNeeded().getString(KEY_AP_SID);
+            return rv;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return rv;
+    }
+
+
     ////////////////////////////////////////////////////////////
     // Setters
     ////////////////////////////////////////////////////////////
@@ -104,6 +134,14 @@ public class Room extends ParseObject {
 
     public void setHost(ParseUser newParseUser) {
         put(KEY_HOST, newParseUser);
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        put(KEY_PHONE_NUMBER, phoneNumber);
+    }
+
+    public void setAPSID(String AP_SID) {
+        put(KEY_AP_SID, AP_SID);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -137,10 +175,9 @@ public class Room extends ParseObject {
     public boolean addCohost(ParseObject cohost) {
         ArrayList<ParseObject> cohosts = getCohosts();
         ArrayList<ParseObject> participants = getParticipants();
-        if (!cohosts.contains(cohost) && participants.contains(cohost)){
+        if (!cohosts.contains(cohost) && participants.contains(cohost)) {
             cohosts.add(cohost);
-        }
-        else
+        } else
             return false;
         setCohosts(cohosts);
         saveInBackground();
@@ -150,37 +187,27 @@ public class Room extends ParseObject {
     public boolean removeCohost(ParseObject cohost) {
         ArrayList<ParseObject> cohosts = getCohosts();
         ArrayList<ParseObject> participants = getParticipants();
-        if (cohosts.contains(cohost) && participants.contains(cohost)){
+        if (cohosts.contains(cohost) && participants.contains(cohost)) {
             cohosts.remove(cohost);
-        }
-        else
+        } else
             return false;
         setCohosts(cohosts);
         saveInBackground();
         return true;
     }
 
-    public boolean addParticipant(ParseObject participant) {
-        ArrayList<ParseObject> participants = getParticipants();
-        if (!participants.contains(participant)){
-            participants.add(participant);
-        }
-        else
-            return false;
-        setParticipants(participants);
+    public boolean addParticipant(ParseUser participant) {
+        addUnique(KEY_PARTICIPANTS, participant);
         saveInBackground();
         return true;
     }
 
-    public boolean removeParticipant(ParseObject participant) {
-        ArrayList<ParseObject> participants = getParticipants();
-        if (participants.contains(participant)){
-            participants.remove(participant);
-        }
-        else
-            return false;
-        setParticipants(participants);
+    public boolean removeParticipant(ParseUser participant) {
+        ArrayList<ParseObject> toRemove = new ArrayList<>();
+        toRemove.add(participant);
+        removeAll(KEY_PARTICIPANTS, toRemove);
         saveInBackground();
         return true;
     }
+
 }

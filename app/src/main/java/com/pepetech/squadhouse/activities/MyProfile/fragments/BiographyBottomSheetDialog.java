@@ -1,14 +1,8 @@
-package com.pepetech.squadhouse.activities.MyProfile.helpers;
+package com.pepetech.squadhouse.activities.MyProfile.fragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.parse.Parse;
-import com.parse.ParseUser;
-import com.pepetech.squadhouse.R;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.parse.ParseUser;
+import com.pepetech.squadhouse.R;
 import com.pepetech.squadhouse.activities.MyProfile.MyProfileActivity;
 import com.pepetech.squadhouse.models.User;
 
@@ -28,8 +24,6 @@ import com.pepetech.squadhouse.models.User;
  * origin activity when completed.
  */
 public class BiographyBottomSheetDialog extends BottomSheetDialogFragment {
-
-    //    BottomSheetBehavior bottomSheetBehavior;
     User currentUser;
 
     @Override
@@ -44,9 +38,9 @@ public class BiographyBottomSheetDialog extends BottomSheetDialogFragment {
         btnBioUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),
-                        "Updated bio!", Toast.LENGTH_SHORT)
-                        .show();
+//                Toast.makeText(getActivity(),
+//                        "Updated bio!", Toast.LENGTH_SHORT)
+//                        .show();
                 // TODO: call method or definition body to apply changes to the user's profile here
                 String biography = etBiography.getText().toString();
                 currentUser.updateBiography(biography);

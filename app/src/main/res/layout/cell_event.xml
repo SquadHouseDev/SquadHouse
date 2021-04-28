@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/eggshell"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvEventDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="6:00 PM"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </TextView>
+
+    <TextView
+        android:textStyle="bold"
+        android:id="@+id/tvEventTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Hello World!"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvEventDate">
+
+    </TextView>
+
+    <ImageView
+        android:id="@+id/ivEventHost"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvEventTitle"
+        app:srcCompat="@drawable/ic_baseline_person_24"></ImageView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
